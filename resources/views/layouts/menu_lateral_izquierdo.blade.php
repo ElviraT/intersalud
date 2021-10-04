@@ -20,7 +20,7 @@
         </div>
         <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">{{'Inicio'}}</div>
         <ul class="pcoded-item pcoded-left-item">
-            <li class="active">
+            <li class="{{ @request()->routeIs('home') ? 'active' : ' ' }}">
                 <a href="{{ route('home')}}" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                     <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
@@ -30,7 +30,7 @@
         </ul> 
         <div class="pcoded-navigation-label" data-i18n="nav.category.forms">{{'Registros'}}</div>
         <ul class="pcoded-item pcoded-left-item">
-            <li class="pcoded-hasmenu">
+            <li class="{{ @request()->routeIs('urologia') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
                 <a href="javascript:void(0)" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
                     <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">{{'Historias Clínicas'}}</span>
@@ -38,7 +38,7 @@
                 </a>
                 <ul class="pcoded-submenu">
                   <li class=" ">
-                    <a href="#" class="waves-effect waves-dark">
+                    <a href="{{ route('urologia')}}" class="waves-effect waves-dark">
                       <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                       <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">{{'Urología'}}</span>
                       <span class="pcoded-mcaret"></span>

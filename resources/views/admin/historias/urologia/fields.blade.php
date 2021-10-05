@@ -33,11 +33,11 @@
         </div>
         <div class="tab-pane fade" id="pop3" role="tabpanel" aria-labelledby="pop3-tab">
              <div class="pt-3"></div>
-                       
+              @include('admin.historias.urologia.tabs.examen')     
         </div> 
         <div class="tab-pane fade" id="pop4" role="tabpanel" aria-labelledby="pop4-tab">
              <div class="pt-3"></div>
-                         
+              @include('admin.historias.urologia.tabs.laboratorios')            
         </div>         
       </div>
   </div>

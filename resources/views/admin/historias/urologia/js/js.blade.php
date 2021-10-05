@@ -12,7 +12,7 @@
 	$(document).ready(function() {
 	    var table = $('#example').DataTable( {
 	        lengthChange: false,
-	        buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
+	        buttons: ['excel', 'pdf', 'colvis' ],
 	        language: {
                 "decimal": "",
                 "emptyTable": "No hay información",
@@ -39,6 +39,7 @@
 	    table.buttons().container()
 	        .appendTo( '#example_wrapper .col-md-6:eq(0)' );
 	} );
+
 	$(document).ready(function() {
         $('.select2').select2({ 
             theme : "classic" });
@@ -65,6 +66,17 @@
             format: 'yyyy-mm-dd',
             viewMode: "years",
             endDate : dtn,
+            todayHighlight: true,
+            language: 'es'
+        });
+    });
+
+    $(function () {
+        //Date picker
+        $('#fecha').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd',
+            viewMode: "years",
             todayHighlight: true,
             language: 'es'
         });
@@ -283,4 +295,57 @@ $(function() {
 		}
     });
   })
+
+/*CODIGOS CANVAS*/
+
+$("#canvasC").click(function(e){
+     getPosition(e); 
+});
+
+var pointSize = 8;
+
+function getPosition(event){
+     var rect = canvasC.getBoundingClientRect();
+     var x = event.clientX - rect.left;
+     var y = event.clientY - rect.top;     
+   
+     drawCoordinates(x,y);
+}
+
+function drawCoordinates(x,y){  
+    var ctx = document.getElementById("canvasC").getContext("2d");
+    placeDiv(x,y);
+
+    ctx.fillStyle = "#ff2626"; // Red color
+    $('#x').val(x);
+    $('#y').val(y);
+    ctx.beginPath();
+    ctx.arc(x, y, pointSize, 0, Math.PI * 2, true);
+    ctx.fill();
+}
+function placeDiv(x, y) {
+ var d = document.getElementById('CDetalle');
+ d.style.display = 'block'
+ d.style.position = "absolute"; 
+ d.style.left = x+'px'; 
+ d.style.top = y+'px'; 
+ xx=  Math.trunc(x);
+ yy=  Math.trunc(y);
+}
+
+
+// tab
+$('#nav-tab a:first').tab('show');
+
+//for bootstrap 3 use 'shown.bs.tab' instead of 'shown' in the next line
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+//save the latest tab; use cookies if you like 'em better:
+localStorage.setItem('selectedTab', $(e.target).attr('id'));
+});
+
+//go to the latest tab, if it exists:
+var selectedTab = localStorage.getItem('selectedTab');
+if (selectedTab) {
+  $('#'+selectedTab).tab('show');
+}
 </script>

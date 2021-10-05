@@ -35,22 +35,26 @@
                 <table id="example" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Nombre</th>
+                            <th>Cedula</th>
+                            <th>Sexo</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <th>Acción</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
+                            <td>{{'Jon Doe'}}</td>
+                            <td>{{'5.246.009'}}</td>
+                            <td>{{'Masculino'}}</td>
+                            <td>{{'555-555-55-55'}}</td>
+                            <td>{{'.........'}}</td>
+                            <td>
+                              <button class="btn btn-success btn-xs" type="button"><i class="fa fa-edit"></i> {{'Editar'}}</button>
+                       
+                              <button class="btn btn-danger btn-xs" type="button"><i class="fa fa-trash-o"></i> {{'Eliminar'}}</button>
+                            </td>
                         </tr>
                     </tbody>                   
                 </table>

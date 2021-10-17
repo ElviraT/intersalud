@@ -4,9 +4,9 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Estado extends Model
+class Ciudad extends Model
 {
-    protected $table = 'estados';
+    protected $table = 'ciudades';
     public $timestamps = false;
 
 }

@@ -30,11 +30,11 @@
 	    table.buttons().container()
 	        .appendTo( '#example_wrapper .col-md-6:eq(0)' );
 	} );
-
-	$(document).ready(function() {
-        $('.select2').select2({ 
-            theme : "classic" });
-      });
+$(document).ready(function() {
+  $('.select2').select2({ 
+      theme : "classic" });
+  });
+	
 	$(function () {
         var dtn = new Date();
         dtn.setFullYear(new Date().getFullYear()-18);

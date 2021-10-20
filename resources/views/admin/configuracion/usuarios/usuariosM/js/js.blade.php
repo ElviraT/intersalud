@@ -95,6 +95,11 @@ $(document).ready(function() {
         removeTitle: 'Cancelar o restablecer cambios',
         elErrorContainer: '#kv-avatar-errors-2',
         msgErrorClass: 'alert alert-block alert-danger',
+          @if(isset($medico) && $medico->Foto_Medico != '' )
+            defaultPreviewContent: '<img src="{{ asset("avatars/".str_replace('\\','/', $medico->Foto_Medico)) }}" alt="Foto Perfil" style="width:100%"><h6 class="text-muted">Clic para seleccionar</h6>',
+          @else
+            defaultPreviewContent: '<img src="{{ asset("img/avatar.png") }}" alt="Foto Perfil" style="width:100%"><h6 class="text-muted">Clic para seleccionar</h6>',
+          @endif 
         layoutTemplates: {main2: '{preview} {remove} {browse}'},
         allowedFileExtensions: ["jpg", "png", "gif","jpeg"]
         });

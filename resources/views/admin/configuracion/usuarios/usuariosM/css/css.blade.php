@@ -34,11 +34,15 @@
         border-radius: 50% !important;
         display: inline !important;
         vertical-align: top !important;
-        width: 55px !important;
+        width: 50px !important;
         border: 1px solid grey !important;
         box-shadow: 1px 1px 5px rgba(0,0,0,.3) !important;
-        height: 55px !important;
-        padding: 2px 2px 0 2px !important; 
+        height: 50px !important;
+        padding: 2px 2px 2px 2px !important; 
+        
+    }
+    .table  td.avatar{
+    	text-align:center !important;
     }
 
 </style>

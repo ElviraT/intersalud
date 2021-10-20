@@ -47,9 +47,8 @@
                     <thead>
                         <tr>
                             <th>{{'Nombre'}}</th>
-                            <th>{{'Apellido'}}</th>
-                            <th>{{'Imagen Perfil'}}</th>
-                            <th>{{'Número Colegio de Médicos'}}</th>
+                            <th>{{'Foto Perfil'}}</th>
+                            <th>{{'N° Colegio de Médicos'}}</th>
                             <th>{{'Registro MPPS'}}</th>
                             <th>{{'Status'}}</th>
                             <th>{{'Acción'}}</th>
@@ -58,9 +57,8 @@
                     <tbody>
                       @foreach($usuariosM as $resultado)
                         <tr>
-                            <td>{{ $resultado->Nombres_Medico }}</td>
-                            <td>{{ $resultado->Apellidos_Medicos }}</td>
-                            <td class="avatar"><img alt="avatar" @if($resultado['Foto_Medico']  == '') src="{{ asset('img/avatar.png') }}" @else src="{{ ("storage/".str_replace('\\','/', $resultado['Foto_Medico'])) }}" @endif ></td>
+                            <td>{{ $resultado->Nombres_Medico.' '.$resultado->Apellidos_Medicos }}</td>
+                            <td class="avatar"><img alt="avatar" @if($resultado['Foto_Medico']  == '') src="{{ Avatar::create($resultado->Nombres_Medico.' '.$resultado->Apellidos_Medicos)->toBase64() }}" @else src="{{ ("avatars/".str_replace('\\','/', $resultado->Foto_Medico)) }}" @endif ></td>
                             <td>{{ $resultado->Numero_Colegio_de_Medico }}</td>
                             <td>{{ $resultado->Registro_MPPS }}</td>
                             @if($resultado->Status_Medico_id == 1)
@@ -69,7 +67,7 @@
                               <td style="background-color: red; color: #fff">{{ 'Inactivo' }}</td>
                             @endif
                             <td>
-                                <a href="#" type="button"  class="btn-transition btn btn-outline-success">
+                                <a href="{{ route('usuario_m.edit', $resultado['id_Medico'])}}" type="button"  class="btn-transition btn btn-outline-success">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                         <i class="ti-pencil"></i>
                                     </span>

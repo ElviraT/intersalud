@@ -1,10 +1,11 @@
 <div class="form-group col-md-12">
 	{!! Form::open(['route' => ['usuario_m.seniat'],  'method' => 'post',  'autocomplete'=> 'off', 'id'=>'registra_usuarioM' ]) !!}
     <input type="hidden" name="id" value="{{ isset(Session::get('medico')->Nombres_Medico) ? Session::get('medico')->id_Medico : null }}">
+    <input type="hidden" name="idS" value="{{ isset($seniat) ? $seniat->id_Datos_SENIAT : null }}">
     <div class="row">
         <div class="col-md-6 mb-3">
             <label>{{ 'RIF' }}</label>
-            <input type="text" class="form-control" name="rif" id="rif" placeholder="RIF" autofocus>
+            <input type="text" class="form-control" name="rif" id="rif" placeholder="RIF" autofocus value="{{ isset($seniat) ? $seniat->RIF : null }}">
         </div> 
         <div class="col-md-6 mb-3">
             <label>{{ 'Fecha' }}</label>
@@ -15,7 +16,7 @@
                     </span>
                 </div>
                  {!!
-                     Form::text('fecha', null, [
+                     Form::text('fecha', isset($seniat) ? $seniat->Fecha : null, [
                          'id' => 'fecha',
                          'placeholder'=>'Y-M-D',
                          'class' => 'form-control pull-right datepicker'] )
@@ -24,7 +25,7 @@
         </div>
         <div class="col-md-12 mb-3">
             <label>{{ 'Dirección' }}</label>
-            <textarea class="form-control" rows="5" name="direccion" id="direccion" placeholder="Dirección"></textarea>
+            <textarea class="form-control" rows="5" name="direccion" id="direccion" placeholder="Dirección">{{ isset($seniat) ? $seniat->Direccion : null }}</textarea>
         </div> 
     </div>
 

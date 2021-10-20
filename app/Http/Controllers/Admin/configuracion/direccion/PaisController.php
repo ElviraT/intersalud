@@ -58,7 +58,7 @@ class PaisController extends Controller
     {
        $id = (int)$request->input('id');
        $countries= Pais::where('id_Pais', $id)->delete();
-       Flash::error('Registro eliminado correctamente');
+       Flash::success('Registro eliminado correctamente');
        
       return redirect()->route('pais');
     }

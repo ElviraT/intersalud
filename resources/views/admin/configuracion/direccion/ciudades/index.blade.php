@@ -1,4 +1,7 @@
 @extends('layouts.Base')
+@section('css')
+@include('admin.configuracion.direccion.ciudades.css.css')
+@endsection
 
 @section('banner')
 <div class="col-md-8">
@@ -69,7 +72,7 @@
                                     {{'Editar'}}
                                 </a>
                             
-                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete2" data-record-id="{{$resultado->id_Ciudad}}" data-record-title="{{$resultado->Ciudad}}" class="btn-transition btn btn-outline-danger">
+                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete3" data-record-id="{{$resultado->id_Ciudad}}" data-record-title="{{$resultado->Ciudad}}" class="btn-transition btn btn-outline-danger">
                                         <span class="btn-icon-wrapper pr-2 opacity-7">
                                             <i class="ti-eraser"></i>
                                         </span>{{'Eliminar'}}

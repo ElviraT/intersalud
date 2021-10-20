@@ -5,10 +5,12 @@
    
     <script src= 'https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js'></script>
     <script src= 'https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js'></script>
+    <!--Toggle -->
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
-       var table_estados = $('#table_estados').DataTable({
+       var table = $('#table_municipios').DataTable({
             lengthChange: false,
             responsive: true,
             language: {
@@ -33,34 +35,43 @@
             },
         });
     });
-$('#modal_estado').on('show.bs.modal', function (e) {
+
+$(document).ready(function() {
+    $('.select2').select2({ 
+        theme : "classic",
+        dropdownParent: $('#modal_municipio'),
+         });
+    });
+$('#modal_municipio').on('show.bs.modal', function (e) {
     var modal = $(e.delegateTarget),
         data = $(e.relatedTarget).data();
-        $('#codigo').focus();
     if (data.recordId != undefined) {
         modal.addClass('loading');
-        $('.modal_registro_estado_id', modal).val(data.recordId);
+        $('.modal_registro_municipio_id', modal).val(data.recordId);
         $.getJSON(modal.data().consulta + '?id=' + data.recordId, function (data) {
             var obj = data[0];
-            $('#nombre', modal).val(obj.Estado);
+            $('#estado').val(obj.Estado_id);
+            $('#estado').change();
+            $('#nombre', modal).val(obj.Municipio);
             modal.removeClass('loading');
         });
     }
 });
-$('#modal_estado').on('hidden.bs.modal', function (e) {
+$('#modal_municipio').on('hidden.bs.modal', function (e) {
+    $('#estado').val('').change();
     $('#nombre').val('');
 });
-$('#confirm-delete2').on('click', '.btn-ok', function(e) {
+$('#confirm-delete4').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);
         $modalDiv.addClass('loading');
         setTimeout(function(){
-            $('#form_estado_eliminar').submit();
+            $('#form_municipio_eliminar').submit();
         }, 2000);
     });
-$('#confirm-delete2').on('show.bs.modal', function(e) {
+$('#confirm-delete4').on('show.bs.modal', function(e) {
     var data = $(e.relatedTarget).data();
-    $("#form_estado_eliminar",  this).attr('action', data.action);
-    $('#modal_registo_estado_id', this).val(data.recordId);
+    $("#form_municipio_eliminar",  this).attr('action', data.action);
+    $('#modal_registo_municipio_id', this).val(data.recordId);
     $('.title', this).text(data.recordTitle);
     $('.btn-ok', this).data('recordId', data.recordId);
 });

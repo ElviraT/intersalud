@@ -1,20 +1,21 @@
 @extends('layouts.Base')
 @section('css')
-@include('admin.configuracion.direccion.paises.css.css')
+@include('admin.configuracion.direccion.municipios.css.css')
 @endsection
+
 @section('banner')
 <div class="col-md-8">
   <div class="page-header-title">
       <h5 class="m-b-10">{{'Dirección'}}</h5>
-      <p class="m-b-0">{{'Paises'}}</p>
+      <p class="m-b-0">{{'Municipios'}}</p>
   </div>
 </div>
 <div class="col-md-4">
   <ul class="breadcrumb-title">
       <li class="breadcrumb-item">
-          <a href="{{ route('pais')}}"> <i class="fa fa-home"></i> </a>
+          <a href="{{ route('municipio')}}"> <i class="fa fa-home"></i> </a>
       </li>
-      <li class="breadcrumb-item"><a href="#!">{{'Paises'}}</a>
+      <li class="breadcrumb-item"><a href="#!">{{'Municipios'}}</a>
       </li>
   </ul>
 </div>
@@ -37,36 +38,35 @@
               </div>
             </div>
             <div class="card">
-              @if(count($paises) == 0)
+              @if(count($municipios) == 0)
                   <br>
                     <p class="text-center">No se encontraron registros coincidentes</p>
               @else
 
             <div class="col-md-12 mt-3">
-                <table id="table_paises" class="table table-striped table-bordered" width="100%">
+                <table id="table_municipios" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
-                            <th>{{'Código'}}</th>
-                            <th>{{'Nombre Corto'}}</th>
-                            <th>{{'Nombre Completo'}}</th>
+                            <th>{{'Estado'}}</th>
+                            <th>{{'Municipio'}}</th>
                             <th>{{'Acción'}}</th>
                         </tr>
                     </thead>
                     <tbody>
-                      @foreach($paises as $resultado)
+                      @foreach($municipios as $resultado)
+                      @php($estado = DB::select('select Estado from estados where id_Estado ='.$resultado['Estado_id']))
                         <tr>
-                            <td>{{ $resultado->Codigo }}</td>
-                            <td>{{ $resultado->iso3166a1 }}</td>
-                            <td>{{ $resultado->Pais }}</td>
+                            <td>{{ $estado[0]->Estado }}</td>
+                            <td>{{ $resultado->Municipio }}</td>
                             <td>
-                                <a href="#" type="button" data-toggle="modal" data-target="#modal_pais" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Pais'] }}">
+                                <a href="#" type="button" data-toggle="modal" data-target="#modal_municipio" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Municipio'] }}">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                         <i class="ti-pencil"></i>
                                     </span>
                                     {{'Editar'}}
                                 </a>
                             
-                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete1" data-record-id="{{$resultado->id_Pais}}" data-record-title="{{$resultado->Pais}}" class="btn-transition btn btn-outline-danger">
+                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete4" data-record-id="{{$resultado->id_Municipio}}" data-record-title="{{$resultado->Municipio}}" class="btn-transition btn btn-outline-danger">
                                         <span class="btn-icon-wrapper pr-2 opacity-7">
                                             <i class="ti-eraser"></i>
                                         </span>{{'Eliminar'}}
@@ -75,7 +75,14 @@
                         </tr>
                       @endforeach
 
-                    </tbody>                   
+                    </tbody> 
+                    <tfoot>
+                        <tr>
+                            <th>{{'Estado'}}</th>
+                            <th>{{'Municipio'}}</th>
+                            <th>{{'Acción'}}</th>
+                        </tr>
+                    </tfoot>                  
                 </table>
               </div>
                @endif
@@ -85,10 +92,10 @@
 </div>
 @endsection
 @section('modal')
-    @include('admin.configuracion.direccion.paises.modal_pais')
-    @include('admin.modales.elimina_pais')
+    @include('admin.configuracion.direccion.municipios.modal_municipio')
+    @include('admin.modales.elimina_municipio')
 @endsection
 
 @section('js')
-  @include('admin.configuracion.direccion.paises.js.js')
+  @include('admin.configuracion.direccion.municipios.js.js')
 @endsection

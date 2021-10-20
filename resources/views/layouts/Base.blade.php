@@ -9,7 +9,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-     <!-- Favicon icon -->
+    <!-- Favicon icon -->
       <link rel="icon" href="{{ asset('assets/images/favicon.ico')}}" type="image/x-icon">
       <!-- Google font-->
       <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
@@ -26,19 +26,11 @@
       <!-- scrollbar.css -->
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/jquery.mCustomScrollbar.css')}}">
         <!-- am chart export.css -->
-      <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css')}}" type="text/css" media="all" />
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
       <!-- Style.css -->
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}">
-      <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
-      <!-- css Datatable-->
-      <link href='https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css'rel="stylesheet">
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
 
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet"/>
-      <link href='https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css'rel="stylesheet">
-      <link href="https://cdn.datatables.net/fixedheader/3.2.0/css/fixedHeader.bootstrap4.min.css" rel="stylesheet"/>
-      <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" rel="stylesheet"/>
+      <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
       <style type="text/css">
       .modal.loading .modal-content:before {
@@ -159,15 +151,10 @@
     </div>
 
     <!-- Required Jquery -->
-    <script type="text/javascript" src="{{ asset('assets/js/jquery/jquery.min.js')}}"></script>
-    <script src= 'https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js'></script>
-    <script src= 'https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js'></script>
-    <script src= 'https://cdn.datatables.net/fixedheader/3.2.0/js/dataTables.fixedHeader.min.js'></script>
-    
+   <script type="text/javascript" src="{{ asset('assets/js/jquery/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery-ui/jquery-ui.min.js')}} "></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script type="text/javascript" src="{{ asset('assets/js/popper.js/popper.min.js')}}"></script>
-    
+    <script type="text/javascript" src="{{ asset('assets/js/bootstrap/js/bootstrap.min.js')}} "></script>
     <script type="text/javascript" src="{{ asset('assets/pages/widget/excanvas.js')}} "></script>
     <!-- waves js -->
     <script src="{{ asset('assets/pages/waves/js/waves.min.js')}}"></script>
@@ -181,7 +168,7 @@
     <!-- Chart js -->
     <script type="text/javascript" src="{{ asset('assets/js/chart.js/Chart.js')}}"></script>
     <!-- amchart js -->
-    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/amcharts.js')}}"></script>
     <script src="{{ asset('assets/pages/widget/amchart/gauge.js')}}"></script>
     <script src="{{ asset('assets/pages/widget/amchart/serial.js')}}"></script>
     <script src="{{ asset('assets/pages/widget/amchart/light.js')}}"></script>
@@ -191,23 +178,11 @@
     <script src="{{ asset('assets/js/pcoded.min.js')}}"></script>
     <script src="{{ asset('assets/js/vertical-layout.min.js')}} "></script>
     <!-- custom js -->
+    <script type="text/javascript" src="{{ asset('assets/pages/dashboard/custom-dashboard.js')}}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/script.js')}} "></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<!-- DATATABLE -->
-
-    <script src= 'https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js'></script>
-    <script src= 'https://cdn.datatables.net/buttons/2.0.1/js/buttons.bootstrap4.min.js'></script>
-    <script src= 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js'></script>
-    <script src= 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js'></script>
-    <script src= 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
-    <script src= 'https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js'></script>
-    <script src= 'https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js'></script>
-    <script src= 'https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js'></script>
     @include('layouts.validaciones')
     @yield('js')
 

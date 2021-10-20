@@ -52,7 +52,7 @@ class EstadoController extends Controller
     {
        $id = (int)$request->input('id');
        $states= Estado::where('id_estado', $id)->delete();
-        Flash::error('Registro eliminado correctamente');
+        Flash::success('Registro eliminado correctamente');
          
       return redirect()->route('estado');
     }

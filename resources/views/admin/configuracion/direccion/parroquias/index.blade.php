@@ -1,20 +1,21 @@
 @extends('layouts.Base')
 @section('css')
-@include('admin.configuracion.direccion.paises.css.css')
+@include('admin.configuracion.direccion.parroquias.css.css')
 @endsection
+
 @section('banner')
 <div class="col-md-8">
   <div class="page-header-title">
       <h5 class="m-b-10">{{'Dirección'}}</h5>
-      <p class="m-b-0">{{'Paises'}}</p>
+      <p class="m-b-0">{{'Parroquias'}}</p>
   </div>
 </div>
 <div class="col-md-4">
   <ul class="breadcrumb-title">
       <li class="breadcrumb-item">
-          <a href="{{ route('pais')}}"> <i class="fa fa-home"></i> </a>
+          <a href="{{ route('parroquia')}}"> <i class="fa fa-home"></i> </a>
       </li>
-      <li class="breadcrumb-item"><a href="#!">{{'Paises'}}</a>
+      <li class="breadcrumb-item"><a href="#!">{{'Parroquias'}}</a>
       </li>
   </ul>
 </div>
@@ -37,36 +38,35 @@
               </div>
             </div>
             <div class="card">
-              @if(count($paises) == 0)
+              @if(count($parroquias) == 0)
                   <br>
                     <p class="text-center">No se encontraron registros coincidentes</p>
               @else
 
             <div class="col-md-12 mt-3">
-                <table id="table_paises" class="table table-striped table-bordered" width="100%">
+                <table id="table_parroquias" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
-                            <th>{{'Código'}}</th>
-                            <th>{{'Nombre Corto'}}</th>
-                            <th>{{'Nombre Completo'}}</th>
+                            <th>{{'Municipio'}}</th>
+                            <th>{{'Nombre'}}</th>
                             <th>{{'Acción'}}</th>
                         </tr>
                     </thead>
                     <tbody>
-                      @foreach($paises as $resultado)
+                      @foreach($parroquias as $resultado)
+                      @php($municipio = DB::select('select Municipio from municipios where id_Municipio ='.$resultado['Municipio_id']))
                         <tr>
-                            <td>{{ $resultado->Codigo }}</td>
-                            <td>{{ $resultado->iso3166a1 }}</td>
-                            <td>{{ $resultado->Pais }}</td>
+                            <td>{{ $municipio[0]->Municipio }}</td>
+                            <td>{{ $resultado->Parroquia }}</td>
                             <td>
-                                <a href="#" type="button" data-toggle="modal" data-target="#modal_pais" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Pais'] }}">
+                                <a href="#" type="button" data-toggle="modal" data-target="#modal_parroquia" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Parroquia'] }}">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                         <i class="ti-pencil"></i>
                                     </span>
                                     {{'Editar'}}
                                 </a>
                             
-                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete1" data-record-id="{{$resultado->id_Pais}}" data-record-title="{{$resultado->Pais}}" class="btn-transition btn btn-outline-danger">
+                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete5" data-record-id="{{$resultado->id_Parroquia}}" data-record-title="{{$resultado->Parroquia}}" class="btn-transition btn btn-outline-danger">
                                         <span class="btn-icon-wrapper pr-2 opacity-7">
                                             <i class="ti-eraser"></i>
                                         </span>{{'Eliminar'}}
@@ -75,7 +75,14 @@
                         </tr>
                       @endforeach
 
-                    </tbody>                   
+                    </tbody> 
+                    <tfoot>
+                        <tr>
+                            <th>{{'Parroquia'}}</th>
+                            <th>{{'Nombre'}}</th>
+                            <th>{{'Acción'}}</th>
+                        </tr>
+                    </tfoot>                  
                 </table>
               </div>
                @endif
@@ -85,10 +92,10 @@
 </div>
 @endsection
 @section('modal')
-    @include('admin.configuracion.direccion.paises.modal_pais')
-    @include('admin.modales.elimina_pais')
+    @include('admin.configuracion.direccion.parroquias.modal_parroquia')
+    @include('admin.modales.elimina_parroquia')
 @endsection
 
 @section('js')
-  @include('admin.configuracion.direccion.paises.js.js')
+  @include('admin.configuracion.direccion.parroquias.js.js')
 @endsection

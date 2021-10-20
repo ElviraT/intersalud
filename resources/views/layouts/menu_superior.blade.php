@@ -28,7 +28,7 @@
                   <li class="user-profile header-notification">
                       <a href="#!" class="waves-effect waves-light">
                           <img src="{{ asset('assets/images/avatar-4.jpg')}}" class="img-radius" alt="User-Profile-Image">
-                          <span>Admin</span>
+                          <span> {{auth()->user()->name}} </span>
                           <i class="ti-angle-down"></i>
                       </a>
                       <ul class="show-notification profile-notification">
@@ -39,9 +39,14 @@
                               </a>
                           </li>                                  
                           <li class="waves-effect waves-light">
-                              <a href="#">
-                                  <i class="ti-layout-sidebar-left"></i> Logout
-                              </a>
+                              <a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="ti-layout-sidebar-left"></i>                  
+                                    {{ 'Logout' }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form> 
                           </li>
                       </ul>
                   </li>

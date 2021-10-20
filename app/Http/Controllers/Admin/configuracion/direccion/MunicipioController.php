@@ -5,32 +5,26 @@ namespace App\Http\Controllers\Admin\configuracion\direccion;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection as Collection;
+use App\Model\Municipio;
 use App\Model\Estado;
-use App\Model\Ciudad;
 use Flash;
 
-class CiudadController extends Controller
+class MunicipioController extends Controller
 {
-     public function index(Ciudad $model)
+    public function index(Municipio $model)
   	{    	
   		$states= Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado");
-  		return view('admin.configuracion.direccion.ciudades.index', ['ciudades' => $model->all(), 'estados'=> $states]);
+  		return view('admin.configuracion.direccion.municipios.index', ['municipios' => $model->all(), 'estados'=> $states]);
   	}
   	public function add (Request $request)
     {   
-    	if ($request['capital'] == 'on') {
-    		$capital = 1;
-    	}else{
-    		$capital = 0;
-    	}
     	
        if($request->id == 0){
             try {
-                $city= new Ciudad();
-                $city->Estado_id = $request['estado'];
-                $city->Ciudad = ucfirst($request['nombre']);
-                $city->Capital = $capital;
-                $city->save();
+                $municipality= new Municipio();
+                $municipality->Estado_id = $request['estado'];
+                $municipality->Municipio = ucfirst($request['nombre']);
+                $municipality->save();
 
                 Flash::success("Registro Agregado Correctamente");            
             } catch (\Illuminate\Database\QueryException $e) {
@@ -39,10 +33,9 @@ class CiudadController extends Controller
         }else{
             try{
                 $id = (int)$request->id;
-                 Ciudad::where('id_Ciudad', $id)->update([
+                 Municipio::where('id_Municipio', $id)->update([
                     'Estado_id'=>$request->estado,
-                    'Ciudad'=>ucfirst($request->nombre),
-                    'Capital'=>$capital,
+                    'Municipio'=>ucfirst($request->nombre)
                 ]);
 
                 Flash::success("Registro Modificado Correctamente");
@@ -50,22 +43,22 @@ class CiudadController extends Controller
                 Flash::error('Ocurrió un error, por favor intente de nuevo');
             }
         }
-        return redirect()->route('ciudad');
+        return redirect()->route('municipio');
     }
 
   	public function edit(Request $request)
     {
         $id = (int)$request->input('id');
 
-        $cities= Ciudad::where('id_Ciudad','=', $id)->first();
-        return response()->json([$cities]);
+        $municipalities= Municipio::where('id_Municipio','=', $id)->first();
+        return response()->json([$municipalities]);
     }
     public function destroy(Request $request)
     {
        $id = (int)$request->input('id');
-       $cities= Ciudad::where('id_Ciudad', $id)->delete();
+       $municipalities= Municipio::where('id_Municipio', $id)->delete();
         Flash::success('Registro eliminado correctamente');
          
-      return redirect()->route('ciudad');
+      return redirect()->route('municipio');
     }
 }

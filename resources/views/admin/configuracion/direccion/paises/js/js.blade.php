@@ -1,3 +1,10 @@
+<!-- DATATABLE -->
+    <script src= 'https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js'></script>
+    <script src= 'https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js'></script>
+   
+    <script src= 'https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js'></script>
+    <script src= 'https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js'></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
        var table_paises = $('#table_paises').DataTable({
@@ -24,8 +31,8 @@
                 }
             },
         });
-       new $.fn.dataTable.FixedHeader( table_paises );
     });
+
 $('#modal_pais').on('show.bs.modal', function (e) {
     var modal = $(e.delegateTarget),
         data = $(e.relatedTarget).data();
@@ -37,7 +44,7 @@ $('#modal_pais').on('show.bs.modal', function (e) {
             var obj = data[0];
             $('#codigo', modal).val(obj.Codigo);
             $('#nombre', modal).val(obj.iso3166a1);
-            $('#nombre', modal).val(obj.iso3166a2);
+            $('#nombre2', modal).val(obj.iso3166a2);
             $('#pais', modal).val(obj.Pais);
             modal.removeClass('loading');
         });
@@ -46,7 +53,7 @@ $('#modal_pais').on('show.bs.modal', function (e) {
 $('#modal_pais').on('hidden.bs.modal', function (e) {
     $('#codigo').val('');
     $('#nombre').val('');
-    $('#nombre').val('');
+    $('#nombre2').val('');
     $('#pais').val('');
 });
 $('#confirm-delete1').on('click', '.btn-ok', function(e) {

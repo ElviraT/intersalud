@@ -12,7 +12,7 @@
 <div class="col-md-4">
   <ul class="breadcrumb-title">
       <li class="breadcrumb-item">
-          <a href="{{ route('usuario_m')}}"> <i class="fa fa-home"></i> </a>
+          <a href="{{ route('usuario_m')}}" onclick="loading_show();"> <i class="fa fa-home"></i> </a>
       </li>
       <li class="breadcrumb-item"><a href="#">{{'Usuarios Médicos'}}</a>
       </li>
@@ -27,7 +27,7 @@
           @include('flash::message')
            <div class="card">
               <div class="col-md-4 mt-2 mb-2">
-                <a href="{{ route('usuario_m.create')}}" type="button" class="btn-transition btn btn-outline-primary" >
+                <a href="{{ route('usuario_m.create')}}" type="button" class="btn-transition btn btn-outline-primary" onclick="loading_show();">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fa fa-plus-circle"></i>
                     </span>
@@ -67,7 +67,7 @@
                               <td style="background-color: red; color: #fff">{{ 'Inactivo' }}</td>
                             @endif
                             <td>
-                                <a href="{{ route('usuario_m.edit', $resultado['id_Medico'])}}" type="button"  class="btn-transition btn btn-outline-success">
+                                <a href="{{ route('usuario_m.edit', $resultado['id_Medico'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                         <i class="ti-pencil"></i>
                                     </span>

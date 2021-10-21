@@ -1,28 +1,23 @@
 <!-- DATATABLE -->
-    <script src= 'https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js'></script>
-    <script src= 'https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js'></script>
-   
-    <script src= 'https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js'></script>
-    <script src= 'https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js'></script>
+<script src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('js/dataTables.bootstrap4.min.js')}}"></script>
+
+<script src="{{ asset('js/dataTables.responsive.min.js')}}"></script>
+<script src="{{ asset('js/responsive.bootstrap.min.js')}}"></script>
+
 {{--datepicker--}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+<script src="{{ asset('js/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{ asset('js/bootstrap-datepicker.es.js')}}"></script>
 
 {{--fileinput--}}
+<script src="{{ asset('js/piexif.min.js')}}"></script>
+<script src="{{ asset('js/sortable.min.js')}}"></script>
+<script src="{{ asset('js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ asset('js/fileinput.min.js')}}"></script>
+<script src="{{ asset('js/LANG.js')}}"></script>
 
-<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/piexif.min.js" type="text/javascript"></script>
- 
-<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/sortable.min.js" type="text/javascript"></script>
- 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
- 
-<!-- the main fileinput plugin script JS file -->
-<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
- 
-<!-- following theme script is needed to use the Font Awesome 5.x theme (`fas`). Uncomment if needed. -->
-<!-- script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/themes/fas/theme.min.js"></script -->
- 
-<!-- optionally if you need translation for your language then include the locale file as mentioned below (replace LANG.js with your language locale) -->
-<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/locales/LANG.js"></script>
+<!-- Select2 -->
+<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -30,24 +25,7 @@
             lengthChange: false,
             responsive: true,
             language: {
-                "decimal": "",
-                "emptyTable": "No hay información",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ Entradas",
-                "loadingRecords": "Cargando...",
-                "processing": "Procesando...",
-                "search": "Buscar:",
-                "zeroRecords": "Sin resultados encontrados",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Ultimo",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
+                url: "{{ asset('js/Spanish.json') }}",
             },
         });
     });

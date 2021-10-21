@@ -30,7 +30,8 @@
       <!-- Style.css -->
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}">
 
-      <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+      <!-- Loading -->
+      <link href="{{ asset('css/jquery.loadingModal.css')}}" rel="stylesheet" type="text/css" />
 
       <style type="text/css">
       .modal.loading .modal-content:before {
@@ -59,17 +60,6 @@
     <div class="theme-loader">
         <div class="loader-track">
             <div class="preloader-wrapper">
-                <div class="spinner-layer spinner-blue">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="gap-patch">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
                 <div class="spinner-layer spinner-red">
                     <div class="circle-clipper left">
                         <div class="circle"></div>
@@ -81,28 +71,6 @@
                         <div class="circle"></div>
                     </div>
                 </div>            
-                <div class="spinner-layer spinner-yellow">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="gap-patch">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>            
-                <div class="spinner-layer spinner-green">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="gap-patch">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -180,8 +148,8 @@
     <!-- custom js -->
     <script type="text/javascript" src="{{ asset('assets/pages/dashboard/custom-dashboard.js')}}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/script.js')}} "></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- Loading -->
+     <script src="{{ asset('js/jquery.loadingModal.js') }}" type="text/javascript"></script>
 
     @include('layouts.validaciones')
     @yield('js')

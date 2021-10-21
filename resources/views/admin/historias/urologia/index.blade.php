@@ -1,5 +1,7 @@
 @extends('layouts.Base')
-
+@section('css')
+@include('admin.historias.urologia.css.css')
+@endsection
 @section('banner')
 <div class="col-md-8">
   <div class="page-header-title">
@@ -51,9 +53,9 @@
                             <td>{{'555-555-55-55'}}</td>
                             <td>{{'.........'}}</td>
                             <td>
-                              <button class="btn btn-success btn-xs" type="button"><i class="fa fa-edit"></i> {{'Editar'}}</button>
+                              <button class="btn-transition btn btn-outline-success" type="button"><i class="ti-pencil"></i> {{'Editar'}}</button>
                        
-                              <button class="btn btn-danger btn-xs" type="button"><i class="fa fa-trash-o"></i> {{'Eliminar'}}</button>
+                              <button class="btn-transition btn btn-outline-danger" type="button"><i class="ti-eraser"></i> {{'Eliminar'}}</button>
                             </td>
                         </tr>
                     </tbody>                   

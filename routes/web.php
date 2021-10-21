@@ -52,6 +52,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('parroquia/edit', ['as' => 'parroquia.edit', 'uses' => 'Admin\configuracion\direccion\ParroquiaController@edit']);
 	Route::post('parroquia/destroy', ['as' => 'parroquia.destroy', 'uses' => 'Admin\configuracion\direccion\ParroquiaController@destroy']);
 
+	//CONFIGURACIÓN-PREFIJO DNI
+	Route::get('prefijo', ['as' => 'prefijo', 'uses' => 'Admin\configuracion\PrefijoDniController@index']);
+	Route::post('prefijo/add', ['as' => 'prefijo.add', 'uses' => 'Admin\configuracion\PrefijoDniController@add']);
+	Route::get('prefijo/edit', ['as' => 'prefijo.edit', 'uses' => 'Admin\configuracion\PrefijoDniController@edit']);
+	Route::post('prefijo/destroy', ['as' => 'prefijo.destroy', 'uses' => 'Admin\configuracion\PrefijoDniController@destroy']);
+
 	//CONFIGURACIÓN-USUARIOS-MEDICO
 	Route::get('usuario_m', ['as' => 'usuario_m', 'uses' => 'Admin\configuracion\usuarios\UsuarioMController@index']);
 	Route::get('usuario_m/create', ['as' => 'usuario_m.create', 'uses' => 'Admin\configuracion\usuarios\UsuarioMController@create']);

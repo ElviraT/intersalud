@@ -1,4 +1,4 @@
 
- <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" type="text/css" media="all" />
+<link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
  
- <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" type="text/css" media="all" />
+<link rel="stylesheet" type="text/css" href="{{ asset('css/responsive.bootstrap.min.css')}}">

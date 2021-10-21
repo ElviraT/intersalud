@@ -29,7 +29,7 @@
         <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">{{'Inicio'}}</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="{{ @request()->routeIs('home') ? 'active' : ' ' }}">
-                <a href="{{ route('home')}}" class="waves-effect waves-dark">
+                <a href="{{ route('home')}}"  onclick="loading_show();" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                     <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
                     <span class="pcoded-mcaret"></span>
@@ -38,7 +38,7 @@
         </ul> 
         <div class="pcoded-navigation-label" data-i18n="nav.category.forms">{{'Registros'}}</div>
         <ul class="pcoded-item pcoded-left-item">
-          <li class="{{ @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
+          <li class="{{ @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
               <a href="javascript:void(0)" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-settings"></i><b>C</b></span>
                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">{{'Configuración'}}</span>
@@ -53,41 +53,48 @@
                       </a>
                       <ul class="{{ @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
                           <li class="{{ @request()->routeIs('pais') ? 'active' : ''}}">
-                              <a href="{{route('pais')}}" class="waves-effect waves-dark">
+                              <a href="{{route('pais')}}" onclick="loading_show();" class="waves-effect waves-dark">
                                   <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'País'}}</span>
                                   <span class="pcoded-mcaret"></span>
                               </a>
                           </li>
                           <li class="{{ @request()->routeIs('estado') ? 'active' : ''}}">
-                              <a href="{{route('estado')}}" class="waves-effect waves-dark">
+                              <a href="{{route('estado')}}" onclick="loading_show();" class="waves-effect waves-dark">
                                   <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'Estado'}}</span>
                                   <span class="pcoded-mcaret"></span>
                               </a>
                           </li>
                           <li class="{{ @request()->routeIs('ciudad') ? 'active' : ''}}">
-                              <a href="{{ route('ciudad')}}" class="waves-effect waves-dark">
+                              <a href="{{ route('ciudad')}}" onclick="loading_show();" class="waves-effect waves-dark">
                                   <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'Ciudad'}}</span>
                                   <span class="pcoded-mcaret"></span>
                               </a>
                           </li>
                           <li class="{{ @request()->routeIs('municipio') ? 'active' : ''}}">
-                              <a href="{{ route('municipio')}}" class="waves-effect waves-dark">
+                              <a href="{{ route('municipio')}}" onclick="loading_show();" class="waves-effect waves-dark">
                                   <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'Municipio'}}</span>
                                   <span class="pcoded-mcaret"></span>
                               </a>
                           </li>
                           <li class="{{ @request()->routeIs('parroquia') ? 'active' : ''}}">
-                              <a href="{{route('parroquia')}}" class="waves-effect waves-dark">
+                              <a href="{{route('parroquia')}}" onclick="loading_show();" class="waves-effect waves-dark">
                                   <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'Parroquia'}}</span>
                                   <span class="pcoded-mcaret"></span>
                               </a>
                           </li>
                       </ul>
+                  </li>
+                  <li class="{{ @request()->routeIs('prefijo') ? 'active' : ' ' }}">
+                      <a href="{{ route('prefijo')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                          <span class="pcoded-micon"><i class="ti-id-badge"></i><b>P</b></span>
+                          <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Prefijo DNI'}}</span>
+                          <span class="pcoded-mcaret"></span>
+                      </a>
                   </li>
                   <li class="{{ @request()->routeIs('usuario_m*') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
                       <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -97,7 +104,7 @@
                       </a>
                       <ul class="{{ @request()->routeIs('usuario_m*') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
                           <li class="{{ @request()->routeIs('usuario_m*') ? 'active' : ''}}">
-                              <a href="{{route('usuario_m')}}" class="waves-effect waves-dark">
+                              <a href="{{route('usuario_m')}}" onclick="loading_show();" class="waves-effect waves-dark">
                                   <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'Médicos'}}</span>
                                   <span class="pcoded-mcaret"></span>
@@ -145,7 +152,7 @@
                 </a>
                 <ul class="pcoded-submenu">
                   <li class=" ">
-                    <a href="{{ route('urologia')}}" class="waves-effect waves-dark">
+                    <a href="{{ route('urologia')}}" onclick="loading_show();" class="waves-effect waves-dark">
                       <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                       <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">{{'Urología'}}</span>
                       <span class="pcoded-mcaret"></span>

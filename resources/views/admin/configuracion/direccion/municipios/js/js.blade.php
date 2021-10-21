@@ -1,12 +1,12 @@
 <!-- DATATABLE -->
+<script src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('js/dataTables.bootstrap4.min.js')}}"></script>
 
-    <script src= 'https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js'></script>
-    <script src= 'https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js'></script>
-   
-    <script src= 'https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js'></script>
-    <script src= 'https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js'></script>
-    <!--Toggle -->
-    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+<script src="{{ asset('js/dataTables.responsive.min.js')}}"></script>
+<script src="{{ asset('js/responsive.bootstrap.min.js')}}"></script>
+
+<!-- Select2 -->
+<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -14,25 +14,8 @@
             lengthChange: false,
             responsive: true,
             language: {
-                "decimal": "",
-                "emptyTable": "No hay información",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ Entradas",
-                "loadingRecords": "Cargando...",
-                "processing": "Procesando...",
-                "search": "Buscar:",
-                "zeroRecords": "Sin resultados encontrados",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Ultimo",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
-            },
+                url: "{{ asset('js/Spanish.json') }}",
+              },
         });
     });
 
@@ -45,6 +28,7 @@ $(document).ready(function() {
 $('#modal_municipio').on('show.bs.modal', function (e) {
     var modal = $(e.delegateTarget),
         data = $(e.relatedTarget).data();
+        loading_hide();
     if (data.recordId != undefined) {
         modal.addClass('loading');
         $('.modal_registro_municipio_id', modal).val(data.recordId);
@@ -54,6 +38,7 @@ $('#modal_municipio').on('show.bs.modal', function (e) {
             $('#estado').change();
             $('#nombre', modal).val(obj.Municipio);
             modal.removeClass('loading');
+            loading_hide();
         });
     }
 });
@@ -74,6 +59,7 @@ $('#confirm-delete4').on('show.bs.modal', function(e) {
     $('#modal_registo_municipio_id', this).val(data.recordId);
     $('.title', this).text(data.recordTitle);
     $('.btn-ok', this).data('recordId', data.recordId);
+    loading_hide();
 });
 
 </script>

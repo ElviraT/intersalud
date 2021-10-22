@@ -38,7 +38,7 @@
         </ul> 
         <div class="pcoded-navigation-label" data-i18n="nav.category.forms">{{'Registros'}}</div>
         <ul class="pcoded-item pcoded-left-item">
-          <li class="{{ @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
+          <li class="{{ @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
               <a href="javascript:void(0)" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-settings"></i><b>C</b></span>
                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">{{'Configuración'}}</span>
@@ -95,6 +95,43 @@
                           <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Prefijo DNI'}}</span>
                           <span class="pcoded-mcaret"></span>
                       </a>
+                  </li>
+                  <li class="{{ @request()->routeIs('sexo') ? 'active' : ' ' }}">
+                      <a href="{{ route('sexo')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                          <span class="pcoded-micon"><i class="ti-minus"></i><b>S</b></span>
+                          <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Sexo'}}</span>
+                          <span class="pcoded-mcaret"></span>
+                      </a>
+                  </li>
+                  <li class="{{ @request()->routeIs('civil') ? 'active' : ' ' }}">
+                      <a href="{{ route('civil')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                          <span class="pcoded-micon"><i class="ti-minus"></i><b>EC</b></span>
+                          <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Estado Civil'}}</span>
+                          <span class="pcoded-mcaret"></span>
+                      </a>
+                  </li>
+                  <li class="{{ @request()->routeIs('status_m') || @request()->routeIs('status_c') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
+                      <a href="javascript:void(0)" class="waves-effect waves-dark">
+                          <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                          <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.main">{{'Estatus'}}</span>
+                          <span class="pcoded-mcaret"></span>
+                      </a>
+                      <ul class="{{ @request()->routeIs('status_m') || @request()->routeIs('status_c') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
+                          <li class="{{ @request()->routeIs('status_m') ? 'active' : ''}}">
+                              <a href="{{route('status_m')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'Estatus Médico'}}</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                          </li>
+                          <li class="{{ @request()->routeIs('status_c') ? 'active' : ''}}">
+                              <a href="{{route('status_c')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'Estatus Consulta'}}</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                          </li>
+                      </ul>
                   </li>
                   <li class="{{ @request()->routeIs('usuario_m*') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
                       <a href="javascript:void(0)" class="waves-effect waves-dark">

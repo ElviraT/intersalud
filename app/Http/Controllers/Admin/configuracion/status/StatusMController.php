@@ -1,26 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\Admin\configuracion;
+namespace App\Http\Controllers\Admin\configuracion\status;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\PrefijoDNI;
+use App\Model\StatusM;
 use Flash;
 
-class PrefijoDniController extends Controller
+class StatusMController extends Controller
 {
-    public function index(PrefijoDNI $model)
-  	{    	
-  		return view('admin.configuracion.prefijos.index', ['prefijos' => $model->all()]);
+    public function index(StatusM $model)
+  	{   	
+  		return view('admin.configuracion.status.StatusM.index', ['statusms' => $model->all()]);
   	}
   	public function add (Request $request)
     {   
   
        if($request->id == 0){
             try {
-                $prefix= new PrefijoDNI();
-                $prefix->Prefijo_CIDNI = ucfirst($request['nombre']);
-                $prefix->save();
+                $statusm= new StatusM();
+                $statusm->Status_Medico = ucfirst($request['nombre']);
+                $statusm->color = $request['color'];
+                $statusm->Nota = $request['nota'];
+                $statusm->save();
 
                 Flash::success("Registro Agregado Correctamente");            
             } catch (\Illuminate\Database\QueryException $e) {
@@ -29,8 +31,10 @@ class PrefijoDniController extends Controller
         }else{
             try{
                 $id = (int)$request->id;
-                 PrefijoDNI::where('id_Prefijo_CIDNI', $id)->update([
-                    'Prefijo_CIDNI'=>ucfirst($request->nombre),
+                 StatusM::where('id_Status_Medico', $id)->update([
+                    'Status_Medico'=>ucfirst($request->nombre),
+                    'color'=>$request->color,
+                    'Nota'=>$request->nota,
                 ]);
 
                 Flash::success("Registro Modificado Correctamente");
@@ -38,22 +42,22 @@ class PrefijoDniController extends Controller
                 Flash::error('Ocurrió un error, por favor intente de nuevo');
             }
         }
-        return redirect()->route('prefijo');
+        return redirect()->route('status_m');
     }
 
   	public function edit(Request $request)
     {
         $id = (int)$request->input('id');
 
-        $prefixes= PrefijoDNI::where('id_Prefijo_CIDNI','=', $id)->first();
-        return response()->json([$prefixes]);
+        $statusMs= StatusM::where('id_Status_Medico','=', $id)->first();
+        return response()->json([$statusMs]);
     }
     public function destroy(Request $request)
     {
        $id = (int)$request->input('id');
-       $prefixes= PrefijoDNI::where('id_Prefijo_CIDNI', $id)->delete();
+       $statusMs= StatusM::where('id_Status_Medico', $id)->delete();
         Flash::success('Registro eliminado correctamente');
          
-      return redirect()->route('prefijo');
+      return redirect()->route('status_m');
     }
 }

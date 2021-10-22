@@ -58,6 +58,30 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('prefijo/edit', ['as' => 'prefijo.edit', 'uses' => 'Admin\configuracion\PrefijoDniController@edit']);
 	Route::post('prefijo/destroy', ['as' => 'prefijo.destroy', 'uses' => 'Admin\configuracion\PrefijoDniController@destroy']);
 
+	//CONFIGURACIÓN-SEXO
+	Route::get('sexo', ['as' => 'sexo', 'uses' => 'Admin\configuracion\SexoController@index']);
+	Route::post('sexo/add', ['as' => 'sexo.add', 'uses' => 'Admin\configuracion\SexoController@add']);
+	Route::get('sexo/edit', ['as' => 'sexo.edit', 'uses' => 'Admin\configuracion\SexoController@edit']);
+	Route::post('sexo/destroy', ['as' => 'sexo.destroy', 'uses' => 'Admin\configuracion\SexoController@destroy']);
+
+	//CONFIGURACIÓN-ESTADO CIVIL
+	Route::get('civil', ['as' => 'civil', 'uses' => 'Admin\configuracion\CivilController@index']);
+	Route::post('civil/add', ['as' => 'civil.add', 'uses' => 'Admin\configuracion\CivilController@add']);
+	Route::get('civil/edit', ['as' => 'civil.edit', 'uses' => 'Admin\configuracion\CivilController@edit']);
+	Route::post('civil/destroy', ['as' => 'civil.destroy', 'uses' => 'Admin\configuracion\CivilController@destroy']);
+
+	//CONFIGURACIÓN-STATUS-STATUS MEDICO
+	Route::get('status_m', ['as' => 'status_m', 'uses' => 'Admin\configuracion\status\StatusMController@index']);
+	Route::post('status_m/add', ['as' => 'status_m.add', 'uses' => 'Admin\configuracion\status\StatusMController@add']);
+	Route::get('status_m/edit', ['as' => 'status_m.edit', 'uses' => 'Admin\configuracion\status\StatusMController@edit']);
+	Route::post('status_m/destroy', ['as' => 'status_m.destroy', 'uses' => 'Admin\configuracion\status\StatusMController@destroy']);
+
+	//CONFIGURACIÓN-STATUS-STATUS CONSULTA
+	Route::get('status_c', ['as' => 'status_c', 'uses' => 'Admin\configuracion\status\StatusCController@index']);
+	Route::post('status_c/add', ['as' => 'status_c.add', 'uses' => 'Admin\configuracion\status\StatusCController@add']);
+	Route::get('status_c/edit', ['as' => 'status_c.edit', 'uses' => 'Admin\configuracion\status\StatusCController@edit']);
+	Route::post('status_c/destroy', ['as' => 'status_c.destroy', 'uses' => 'Admin\configuracion\status\StatusCController@destroy']);
+
 	//CONFIGURACIÓN-USUARIOS-MEDICO
 	Route::get('usuario_m', ['as' => 'usuario_m', 'uses' => 'Admin\configuracion\usuarios\UsuarioMController@index']);
 	Route::get('usuario_m/create', ['as' => 'usuario_m.create', 'uses' => 'Admin\configuracion\usuarios\UsuarioMController@create']);

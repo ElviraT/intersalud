@@ -4,23 +4,23 @@ namespace App\Http\Controllers\Admin\configuracion;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\PrefijoDNI;
+use App\Model\Sexo;
 use Flash;
 
-class PrefijoDniController extends Controller
+class SexoController extends Controller
 {
-    public function index(PrefijoDNI $model)
+    public function index(Sexo $model)
   	{    	
-  		return view('admin.configuracion.prefijos.index', ['prefijos' => $model->all()]);
+  		return view('admin.configuracion.sexos.index', ['sexos' => $model->all()]);
   	}
   	public function add (Request $request)
     {   
   
        if($request->id == 0){
             try {
-                $prefix= new PrefijoDNI();
-                $prefix->Prefijo_CIDNI = ucfirst($request['nombre']);
-                $prefix->save();
+                $sex= new Sexo();
+                $sex->Sexo = ucfirst($request['nombre']);
+                $sex->save();
 
                 Flash::success("Registro Agregado Correctamente");            
             } catch (\Illuminate\Database\QueryException $e) {
@@ -29,8 +29,8 @@ class PrefijoDniController extends Controller
         }else{
             try{
                 $id = (int)$request->id;
-                 PrefijoDNI::where('id_Prefijo_CIDNI', $id)->update([
-                    'Prefijo_CIDNI'=>ucfirst($request->nombre),
+                 Sexo::where('id_Sexo', $id)->update([
+                    'Sexo'=>ucfirst($request->nombre),
                 ]);
 
                 Flash::success("Registro Modificado Correctamente");
@@ -38,22 +38,22 @@ class PrefijoDniController extends Controller
                 Flash::error('Ocurrió un error, por favor intente de nuevo');
             }
         }
-        return redirect()->route('prefijo');
+        return redirect()->route('sexo');
     }
 
   	public function edit(Request $request)
     {
         $id = (int)$request->input('id');
 
-        $prefixes= PrefijoDNI::where('id_Prefijo_CIDNI','=', $id)->first();
-        return response()->json([$prefixes]);
+        $sexes= Sexo::where('id_Sexo','=', $id)->first();
+        return response()->json([$sexes]);
     }
     public function destroy(Request $request)
     {
        $id = (int)$request->input('id');
-       $prefixes= PrefijoDNI::where('id_Prefijo_CIDNI', $id)->delete();
+       $sexes= Sexo::where('id_Sexo', $id)->delete();
         Flash::success('Registro eliminado correctamente');
          
-      return redirect()->route('prefijo');
+      return redirect()->route('sexo');
     }
 }

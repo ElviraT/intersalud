@@ -56,16 +56,13 @@
                     </thead>
                     <tbody>
                       @foreach($usuariosM as $resultado)
+                      {{--dd($resultado->StatusM->color)--}}
                         <tr>
                             <td>{{ $resultado->Nombres_Medico.' '.$resultado->Apellidos_Medicos }}</td>
                             <td class="avatar"><img alt="avatar" @if($resultado['Foto_Medico']  == '') src="{{ Avatar::create($resultado->Nombres_Medico.' '.$resultado->Apellidos_Medicos)->toBase64() }}" @else src="{{ ("avatars/".str_replace('\\','/', $resultado->Foto_Medico)) }}" @endif ></td>
                             <td>{{ $resultado->Numero_Colegio_de_Medico }}</td>
                             <td>{{ $resultado->Registro_MPPS }}</td>
-                            @if($resultado->Status_Medico_id == 1)
-                              <td style="background-color: green; color: #fff">{{ 'Activo' }}</td>
-                            @else
-                              <td style="background-color: red; color: #fff">{{ 'Inactivo' }}</td>
-                            @endif
+                              <td style="background-color: {{$resultado->StatusM->color}}; color: #fff">{{ $resultado->StatusM->Status_Medico }}</td>
                             <td>
                                 <a href="{{ route('usuario_m.edit', $resultado['id_Medico'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">

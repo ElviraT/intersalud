@@ -75,6 +75,14 @@
                     <label>{{ 'Número del colegio de medicos' }}</label>
                     <input type="text" class="form-control" name="ncm" id="ncm" placeholder="Número del colegio de medicos" value="{{ isset($medico) ? $medico->Numero_Colegio_de_Medico : null }}">
                 </div>
+                <div class="col-md-6 mb-3">
+                    {!! Form::label('statusm', 'Status:') !!}
+                    {!! Form::select('statusm',$statusM, isset($medico) ? $medico->Status_Medico_id : null, [
+                        'placeholder' => 'Seleccione', 
+                        'class' => 'select2 form-control required',
+                        'id' => 'statusm'
+                        ]) !!}
+                </div>
             </div>
         </div>
         <div class="col-md-12 col-lg-5">

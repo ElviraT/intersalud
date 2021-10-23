@@ -4,25 +4,25 @@ namespace App\Http\Controllers\Admin\configuracion\status;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\StatusC;
+use App\Model\StatusT;
 use Flash;
 
-class StatusCController extends Controller
+class StatusTController extends Controller
 {
-   public function index(StatusC $model)
+    public function index(StatusT $model)
   	{   	
-  		return view('admin.configuracion.status.statusC.index', ['statuscs' => $model->all()]);
+  		return view('admin.configuracion.status.statusT.index', ['statusts' => $model->all()]);
   	}
   	public function add (Request $request)
     {   
   
        if($request->id == 0){
             try {
-                $statusc= new StatusC();
-                $statusc->Consulta = ucfirst($request['nombre']);
-                $statusc->color = $request['color'];
-                $statusc->Nota = $request['nota'];
-                $statusc->save();
+                $statust= new StatusT();
+                $statust->Tasa = ucfirst($request['nombre']);
+                $statust->color = $request['color'];
+                $statust->Nota = $request['nota'];
+                $statust->save();
 
                 Flash::success("Registro Agregado Correctamente");            
             } catch (\Illuminate\Database\QueryException $e) {
@@ -31,8 +31,8 @@ class StatusCController extends Controller
         }else{
             try{
                 $id = (int)$request->id;
-                 StatusC::where('id_Consulta', $id)->update([
-                    'Consulta'=>ucfirst($request->nombre),
+                 StatusT::where('id_Status_Tasa', $id)->update([
+                    'Tasa'=>ucfirst($request->nombre),
                     'color'=>$request->color,
                     'Nota'=>$request->nota,
                 ]);
@@ -42,22 +42,22 @@ class StatusCController extends Controller
                 Flash::error('Ocurrió un error, por favor intente de nuevo');
             }
         }
-        return redirect()->route('status_c');
+        return redirect()->route('status_t');
     }
 
   	public function edit(Request $request)
     {
         $id = (int)$request->input('id');
 
-        $statuscs= StatusC::where('id_Consulta','=', $id)->first();
-        return response()->json([$statuscs]);
+        $statusts= StatusT::where('id_Status_Tasa','=', $id)->first();
+        return response()->json([$statusts]);
     }
     public function destroy(Request $request)
     {
        $id = (int)$request->input('id');
-       $statuscs= StatusC::where('id_Consulta', $id)->delete();
+       $statusts= StatusT::where('id_Status_Tasa', $id)->delete();
         Flash::success('Registro eliminado correctamente');
          
-      return redirect()->route('status_c');
+      return redirect()->route('status_t');
     }
 }

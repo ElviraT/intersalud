@@ -38,7 +38,7 @@
         </ul> 
         <div class="pcoded-navigation-label" data-i18n="nav.category.forms">{{'Registros'}}</div>
         <ul class="pcoded-item pcoded-left-item">
-          <li class="{{ @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
+          <li class="{{ @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
               <a href="javascript:void(0)" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-settings"></i><b>C</b></span>
                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">{{'Configuración'}}</span>
@@ -110,17 +110,17 @@
                           <span class="pcoded-mcaret"></span>
                       </a>
                   </li>
-                  <li class="{{ @request()->routeIs('status_m') || @request()->routeIs('status_c') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
+                  <li class="{{ @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
                       <a href="javascript:void(0)" class="waves-effect waves-dark">
                           <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
                           <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.main">{{'Estatus'}}</span>
                           <span class="pcoded-mcaret"></span>
                       </a>
-                      <ul class="{{ @request()->routeIs('status_m') || @request()->routeIs('status_c') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
-                          <li class="{{ @request()->routeIs('status_m') ? 'active' : ''}}">
-                              <a href="{{route('status_m')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                      <ul class="{{ @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
+                          <li class="{{ @request()->routeIs('status') ? 'active' : ''}}">
+                              <a href="{{route('status')}}" onclick="loading_show();" class="waves-effect waves-dark">
                                   <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                  <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'Estatus Médico'}}</span>
+                                  <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'Estatus'}}</span>
                                   <span class="pcoded-mcaret"></span>
                               </a>
                           </li>
@@ -128,6 +128,27 @@
                               <a href="{{route('status_c')}}" onclick="loading_show();" class="waves-effect waves-dark">
                                   <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'Estatus Consulta'}}</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                          </li>
+                          <li class="{{ @request()->routeIs('status_f') ? 'active' : ''}}">
+                              <a href="{{route('status_f')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'Estatus Factura'}}</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                          </li>
+                          <li class="{{ @request()->routeIs('status_m') ? 'active' : ''}}">
+                              <a href="{{route('status_m')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'Estatus Médico'}}</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                          </li>                        
+                          <li class="{{ @request()->routeIs('status_t') ? 'active' : ''}}">
+                              <a href="{{route('status_t')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'Estatus Tasas'}}</span>
                                   <span class="pcoded-mcaret"></span>
                               </a>
                           </li>

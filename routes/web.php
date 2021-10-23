@@ -82,6 +82,24 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('status_c/edit', ['as' => 'status_c.edit', 'uses' => 'Admin\configuracion\status\StatusCController@edit']);
 	Route::post('status_c/destroy', ['as' => 'status_c.destroy', 'uses' => 'Admin\configuracion\status\StatusCController@destroy']);
 
+	//CONFIGURACIÓN-STATUS-STATUS FACTURA
+	Route::get('status_f', ['as' => 'status_f', 'uses' => 'Admin\configuracion\status\StatusFController@index']);
+	Route::post('status_f/add', ['as' => 'status_f.add', 'uses' => 'Admin\configuracion\status\StatusFController@add']);
+	Route::get('status_f/edit', ['as' => 'status_f.edit', 'uses' => 'Admin\configuracion\status\StatusFController@edit']);
+	Route::post('status_f/destroy', ['as' => 'status_f.destroy', 'uses' => 'Admin\configuracion\status\StatusFController@destroy']);
+
+	//CONFIGURACIÓN-STATUS-STATUS TASAS
+	Route::get('status_t', ['as' => 'status_t', 'uses' => 'Admin\configuracion\status\StatusTController@index']);
+	Route::post('status_t/add', ['as' => 'status_t.add', 'uses' => 'Admin\configuracion\status\StatusTController@add']);
+	Route::get('status_t/edit', ['as' => 'status_t.edit', 'uses' => 'Admin\configuracion\status\StatusTController@edit']);
+	Route::post('status_t/destroy', ['as' => 'status_t.destroy', 'uses' => 'Admin\configuracion\status\StatusTController@destroy']);
+
+	//CONFIGURACIÓN-STATUS-STATUS
+	Route::get('status', ['as' => 'status', 'uses' => 'Admin\configuracion\status\StatusController@index']);
+	Route::post('status/add', ['as' => 'status.add', 'uses' => 'Admin\configuracion\status\StatusController@add']);
+	Route::get('status/edit', ['as' => 'status.edit', 'uses' => 'Admin\configuracion\status\StatusController@edit']);
+	Route::post('status/destroy', ['as' => 'status.destroy', 'uses' => 'Admin\configuracion\status\StatusController@destroy']);
+
 	//CONFIGURACIÓN-USUARIOS-MEDICO
 	Route::get('usuario_m', ['as' => 'usuario_m', 'uses' => 'Admin\configuracion\usuarios\UsuarioMController@index']);
 	Route::get('usuario_m/create', ['as' => 'usuario_m.create', 'uses' => 'Admin\configuracion\usuarios\UsuarioMController@create']);

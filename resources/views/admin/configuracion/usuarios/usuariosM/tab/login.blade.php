@@ -4,6 +4,7 @@
     <input type="hidden" name="nombre_usuario" value="{{ isset(Session::get('medico')->Nombres_Medico) ? Session::get('medico')->Nombres_Medico .' '. Session::get('medico')->Apellidos_Medicos : null }}">
     <input type="hidden" name="id" value="{{ isset(Session::get('medico')->Nombres_Medico) ? Session::get('medico')->id_Medico : null }}">
     <input type="hidden" name="idL" value="{{ isset($login) ? $login->id_Login_Trabajador : null }}">
+    <input type="hidden" name="statusm" value="{{ isset(Session::get('medico')->Status_Medico_id) ? Session::get('medico')->Status_Medico_id : null }}">
     
     <div class="row">
         <div class="col-md-6 mb-3">

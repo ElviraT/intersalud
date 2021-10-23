@@ -12,6 +12,10 @@ use App\Model\LoginT;
 use App\Model\Seniat;
 use App\User;
 use App\Model\Pais;
+use App\Model\Sexo;
+use App\Model\PrefijoDNI;
+use App\Model\Civil;
+use App\Model\StatusM;
 use App\Model\HistoricoT;
 use Session;
 use Image;
@@ -28,12 +32,13 @@ class UsuarioMController extends Controller
 
   	public function create()
   	{
-    	$sexo=['1'=> 'Mujer','2'=> 'Hombre','3'=> 'Otro'];
-    	$prefijo=['1'=> 'V-','2'=> 'E-','3'=> 'J-'];
-    	$estadoC=['1'=> 'Soltero(a)','2'=> 'Casado(a)','3'=> 'Divorciado(a)','4'=> 'Viudo(a)','5'=> 'Otro'];
+    	$sexo=Collection::make(Sexo::select(['id_Sexo','Sexo'])->orderBy('Sexo')->get())->pluck("Sexo", "id_Sexo");
+    	$prefijo=Collection::make(PrefijoDNI::select(['id_Prefijo_CIDNI','Prefijo_CIDNI'])->orderBy('Prefijo_CIDNI')->get())->pluck("Prefijo_CIDNI", "id_Prefijo_CIDNI");
+    	$estadoC=Collection::make(Civil::select(['id_Civil','Civil'])->orderBy('Civil')->get())->pluck("Civil", "id_Civil");
+    	$statusM=Collection::make(StatusM::select(['id_Status_Medico','Status_Medico'])->orderBy('Status_Medico')->get())->pluck("Status_Medico", "id_Status_Medico");
     	$nacionalidad = Collection::make(Pais::select(['id_Pais','Pais'])->orderBy('Pais')->get())->pluck("Pais", "id_Pais");
 
-    	return view('admin.configuracion.usuarios.usuariosM.create')->with(compact('sexo', 'prefijo', 'estadoC', 'nacionalidad')); 
+    	return view('admin.configuracion.usuarios.usuariosM.create')->with(compact('sexo','prefijo','estadoC','statusM','nacionalidad')); 
   	}
 	public function add(Request $request)
 	{
@@ -48,7 +53,7 @@ class UsuarioMController extends Controller
 		        $medico->Sexo_id = $request['sexo'];
 		        $medico->Registro_MPPS = $request['registro'];
 		        $medico->Numero_Colegio_de_Medico = $request['ncm'];
-		        $medico->Status_Medico_id = 1;
+		        $medico->Status_Medico_id = $request['statusm'];
 		        $medico->Civil_id = $request['civil'];
 		        $medico->Pais_id = $request['nacionalidad'];
 		        $medico->save();
@@ -75,10 +80,21 @@ class UsuarioMController extends Controller
 			        'Sexo_id' => $request['sexo'],
 			        'Registro_MPPS' => $request['registro'],
 			        'Numero_Colegio_de_Medico' => $request['ncm'],
-			        'Status_Medico_id' => 1,
+			        'Status_Medico_id' => $request['statusm'],
 			        'Civil_id' => $request['civil'],
 			        'Pais_id' => $request['nacionalidad'],
 	            ]);
+
+	             $login = LoginT::where('Medico_id', $id)->first();
+	             if (count($login) != 0 ) {
+	             	LoginT::where('Medico_id', $id)->update([
+				        'Status_Medico_id' => $request['statusm'],
+		            ]);
+
+		            User::where('id_usuario', $id)->update([
+				        'status' => $request['statusm']
+		            ]);
+	             }
 
 	            $this->_procesarArchivo($request, $id, 'medico');
 	            Flash::success("Registro Actualizado Correctamente");
@@ -92,17 +108,18 @@ class UsuarioMController extends Controller
 	public function edit($id)
 	{
 		$medico = UsuarioM::where('id_Medico', $id)->first();
-		$login = LoginT::where('Status_Medico_id', $medico->id_Medico)->first();
+		$login = LoginT::where('Medico_id', $medico->id_Medico)->first();
 		$seniat = Seniat::where('Medico_id', $medico->id_Medico)->first();
 
 		Session::put('medico', $medico);
 
 		//COMBOS
-		$sexo=['1'=> 'Mujer'];
-    	$prefijo=['1'=> 'V-'];
-    	$estadoC=['1'=> 'Soltero(a)'];
+		$sexo=Collection::make(Sexo::select(['id_Sexo','Sexo'])->orderBy('Sexo')->get())->pluck("Sexo", "id_Sexo");
+    	$prefijo=Collection::make(PrefijoDNI::select(['id_Prefijo_CIDNI','Prefijo_CIDNI'])->orderBy('Prefijo_CIDNI')->get())->pluck("Prefijo_CIDNI", "id_Prefijo_CIDNI");
+    	$estadoC=Collection::make(Civil::select(['id_Civil','Civil'])->orderBy('Civil')->get())->pluck("Civil", "id_Civil");
+    	$statusM=Collection::make(StatusM::select(['id_Status_Medico','Status_Medico'])->orderBy('Status_Medico')->get())->pluck("Status_Medico", "id_Status_Medico");
     	$nacionalidad = Collection::make(Pais::select(['id_Pais','Pais'])->orderBy('Pais')->get())->pluck("Pais", "id_Pais");
-		return view('admin.configuracion.usuarios.usuariosM.edit')->with(compact('medico','login','seniat','sexo','prefijo','estadoC','nacionalidad'));
+		return view('admin.configuracion.usuarios.usuariosM.edit')->with(compact('medico','login','seniat','sexo','prefijo','estadoC','statusM','nacionalidad'));
 	}
 
 	public function login(Request $request)
@@ -112,22 +129,23 @@ class UsuarioMController extends Controller
 		        $login= new LoginT();
 		        $login->Usuario = ucfirst($request['nombre_usuario']);
 		        $login->Correo = $request['correo'];
-		        $login->Status_Medico_id = $request['id'];
+		        $login->Status_Medico_id = $request['statusm'];
 		        $login->Contrasena = Hash::make($request['contrasena']);
 		        $login->Nivel = $request['nivel'];
+		        $login->Medico_id = $request['id'];
 		        $login->save();
 
 		        $login2= new User();
 		        $login2->name = ucfirst($request['nombre_usuario']);
 		        $login2->email = $request['correo'];
 		        $login2->password = Hash::make($request['contrasena']);
-		        $login2->status = 1;
+		        $login2->status = $request['statusm'];
 		        $login2->id_usuario = $request['id'];
 		        $login2->save();
 
 				Flash::success("Registro Agregado Correctamente");            
 		    } catch (\Illuminate\Database\QueryException $e) {
-		        Flash::error('Ocurrió un error, por favor intente de nuevo');    
+		        Flash::error($e.'Ocurrió un error, por favor intente de nuevo');  
 		    }
 
 	    	return redirect()->route('usuario_m.edit', $request['id']);
@@ -142,20 +160,19 @@ class UsuarioMController extends Controller
 	         	return redirect()->route('usuario_m.edit', $id);
 	         }else{
 				try{
-		            LoginT::where('Status_Medico_id', $id)->update([
+		            LoginT::where('Medico_id', $id)->update([
 		             	'Usuario' => ucfirst($request['nombre_usuario']),
 				        'Correo' => $request['correo'],
-				        'Status_Medico_id' => $request['id'],
+				        'Status_Medico_id' => $request['statusm'],
 				        'Contrasena' => Hash::make($request['contrasena']),
-				        'Nivel' => $request['nivel'],
+				        'Nivel' => $request['nivel']
 		            ]);
 
 		            User::where('id_usuario', $id)->update([
 		             	'name' => ucfirst($request['nombre_usuario']),
 				        'email' => $request['correo'],
 				        'password' => Hash::make($request['contrasena']),
-				        'status' => 1,
-				        'id_usuario' => $request['id'],
+				        'status' => $request['statusm']
 		            ]);
 
 		            $loginh= new HistoricoT();

@@ -1,10 +1,3 @@
-<!-- DATATABLE -->
-<script src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
-<script src="{{ asset('js/dataTables.bootstrap4.min.js')}}"></script>
-
-<script src="{{ asset('js/dataTables.responsive.min.js')}}"></script>
-<script src="{{ asset('js/responsive.bootstrap.min.js')}}"></script>
-
 <!-- Select2 -->
 <script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
 

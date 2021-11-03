@@ -17,12 +17,21 @@ use App\Model\PrefijoDNI;
 use App\Model\Civil;
 use App\Model\StatusM;
 use App\Model\HistoricoT;
+use Spatie\Permission\Models\Role;
 use Session;
 use Image;
+use DB;
 use Flash;
 
 class UsuarioMController extends Controller
 {
+	 public function __construct()
+    {
+      $this->middleware('can:usuario_m')->only('index');
+      $this->middleware('can:usuario_m.add')->only('add','create','login','seniat');
+      $this->middleware('can:usuario_m.edit')->only('edit','update');
+      $this->middleware('can:usuario_m.destroy')->only('destroy');
+    }
 	const UPLOAD_PATH = 'medico';
     public function index(UsuarioM $model)
   	{   
@@ -37,8 +46,9 @@ class UsuarioMController extends Controller
     	$estadoC=Collection::make(Civil::select(['id_Civil','Civil'])->orderBy('Civil')->get())->pluck("Civil", "id_Civil");
     	$statusM=Collection::make(StatusM::select(['id_Status_Medico','Status_Medico'])->orderBy('Status_Medico')->get())->pluck("Status_Medico", "id_Status_Medico");
     	$nacionalidad = Collection::make(Pais::select(['id_Pais','Pais'])->orderBy('Pais')->get())->pluck("Pais", "id_Pais");
+    	$roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
 
-    	return view('admin.configuracion.usuarios.usuariosM.create')->with(compact('sexo','prefijo','estadoC','statusM','nacionalidad')); 
+    	return view('admin.configuracion.usuarios.usuariosM.create')->with(compact('sexo','prefijo','estadoC','statusM','nacionalidad','roles')); 
   	}
 	public function add(Request $request)
 	{
@@ -86,7 +96,7 @@ class UsuarioMController extends Controller
 	            ]);
 
 	             $login = LoginT::where('Medico_id', $id)->first();
-	             if (count($login) != 0 ) {
+	             if (isset($login)) {
 	             	LoginT::where('Medico_id', $id)->update([
 				        'Status_Medico_id' => $request['statusm'],
 		            ]);
@@ -110,6 +120,7 @@ class UsuarioMController extends Controller
 		$medico = UsuarioM::where('id_Medico', $id)->first();
 		$login = LoginT::where('Medico_id', $medico->id_Medico)->first();
 		$seniat = Seniat::where('Medico_id', $medico->id_Medico)->first();
+		$rol = DB::select("SELECT m.role_id FROM model_has_roles as m, users as u WHERE m.model_id = u.id and u.id_usuario ='$id'");
 
 		Session::put('medico', $medico);
 
@@ -119,7 +130,9 @@ class UsuarioMController extends Controller
     	$estadoC=Collection::make(Civil::select(['id_Civil','Civil'])->orderBy('Civil')->get())->pluck("Civil", "id_Civil");
     	$statusM=Collection::make(StatusM::select(['id_Status_Medico','Status_Medico'])->orderBy('Status_Medico')->get())->pluck("Status_Medico", "id_Status_Medico");
     	$nacionalidad = Collection::make(Pais::select(['id_Pais','Pais'])->orderBy('Pais')->get())->pluck("Pais", "id_Pais");
-		return view('admin.configuracion.usuarios.usuariosM.edit')->with(compact('medico','login','seniat','sexo','prefijo','estadoC','statusM','nacionalidad'));
+
+    	$roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
+		return view('admin.configuracion.usuarios.usuariosM.edit')->with(compact('medico','login','seniat','sexo','prefijo','estadoC','statusM','nacionalidad','roles','rol'));
 	}
 
 	public function login(Request $request)
@@ -143,9 +156,11 @@ class UsuarioMController extends Controller
 		        $login2->id_usuario = $request['id'];
 		        $login2->save();
 
+		        $login2->assignRole($request['rol']);
+
 				Flash::success("Registro Agregado Correctamente");            
 		    } catch (\Illuminate\Database\QueryException $e) {
-		        Flash::error($e.'Ocurrió un error, por favor intente de nuevo');  
+		        Flash::error('Ocurrió un error, por favor intente de nuevo');  
 		    }
 
 	    	return redirect()->route('usuario_m.edit', $request['id']);
@@ -174,6 +189,13 @@ class UsuarioMController extends Controller
 				        'password' => Hash::make($request['contrasena']),
 				        'status' => $request['statusm']
 		            ]);
+
+						$rolesToRemove = array('Médico', 'Admin','Asistente');
+						foreach ($rolesToRemove as $role) {
+						   $login->removeRole($role);
+						}
+		        		
+		        		$login->assignRole($request['rol']);
 
 		            $loginh= new HistoricoT();
 			        $loginh->Login_Tranajador_id = $login->id;

@@ -11,6 +11,12 @@ use Flash;
 
 class CiudadController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('can:ciudad')->only('index');
+      $this->middleware('can:ciudad.add')->only('add');
+      $this->middleware('can:ciudad.edit')->only('edit');
+    }
      public function index(Ciudad $model)
   	{    	
   		$states= Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado");

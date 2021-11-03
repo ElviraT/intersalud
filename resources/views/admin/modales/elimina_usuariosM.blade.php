@@ -9,7 +9,7 @@
                 {!! Form::open(['action' => ['Admin\configuracion\usuarios\UsuarioMController@destroy'], 'id'=>'form_usuariosM_eliminar']) !!}
                 {{ Form::hidden('id', null, ['id'=>'modal_registo_usuariosM_id'] ) }}
 
-                    <p>Vas a eliminar al usuario<b><i class="title"></i></b>, este proceso es irreversible.</p>
+                    <p>Vas a eliminar al usuario <b><i class="title"></i></b>, este proceso es irreversible.</p>
                     <p>¿Deseas continuar?</p>
                       
             </div>

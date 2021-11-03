@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            {!! Form::open(['route' => ['status.add'],  'method' => 'post' ]) !!}
+            {!! Form::open(['route' => ['status.add'],  'method' => 'post', 'autocomplete' =>'off' ]) !!}
             <div class="modal-body">
                 {{ Form::hidden('id', 0, ['class'=>'modal_registro_status_id'] ) }}
                 

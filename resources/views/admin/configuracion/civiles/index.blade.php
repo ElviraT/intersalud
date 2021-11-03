@@ -27,13 +27,14 @@
           @include('flash::message')
            <div class="card">
               <div class="col-md-4 mt-2 mb-2">
+                @can('civil')
                 <button type="button" class="btn-transition btn btn-outline-primary" data-toggle="modal" data-target=".bd-example-modal-sm" onclick="loading_show();">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                             <i class="fa fa-plus-circle"></i>
                         </span>
                     {{'Agregar'}}
                 </button>
-
+                @endcan
               </div>
             </div>
             <div class="card">
@@ -55,18 +56,21 @@
                         <tr>
                             <td>{{ $resultado->Civil }}</td>
                             <td>
+                              @can('civil.edit')
                                 <a href="#" type="button" data-toggle="modal" data-target="#modal_civil" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Civil'] }}" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                         <i class="ti-pencil"></i>
                                     </span>
                                     {{'Editar'}}
                                 </a>
-                            
+                              @endcan
+                              @can('civil.destroy')
                                 <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete9" data-record-id="{{$resultado->id_Civil}}" data-record-title="{{$resultado->Civil}}" class="btn-transition btn btn-outline-danger" onclick="loading_show();">
                                         <span class="btn-icon-wrapper pr-2 opacity-7">
                                             <i class="ti-eraser"></i>
                                         </span>{{'Eliminar'}}
                                 </a>
+                              @endcan
                             </td>
                         </tr>
                       @endforeach

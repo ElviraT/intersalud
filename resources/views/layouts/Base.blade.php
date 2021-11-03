@@ -19,6 +19,9 @@
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap/css/bootstrap.min.css')}}">
       <!-- waves.css -->
       <link rel="stylesheet" href="{{ asset('assets/pages/waves/css/waves.min.css')}}" type="text/css" media="all">
+      <!--Datatable-->
+      <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"> 
+      <link href="{{ asset('css/responsive.bootstrap.min.css') }}" rel="stylesheet">
       <!-- themify icon -->
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/icon/themify-icons/themify-icons.css')}}">
       <!-- Font Awesome -->
@@ -130,6 +133,13 @@
     <script type="text/javascript" src="{{ asset('assets/js/jquery-slimscroll/jquery.slimscroll.js')}} "></script>
     <!-- modernizr js -->
     <script type="text/javascript" src="{{ asset('assets/js/modernizr/modernizr.js')}} "></script>
+    <!-- DATATABLE -->
+    <script src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.min.js')}}"></script>
+   
+    <script src="{{ asset('js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{ asset('js/responsive.bootstrap.min.js')}}"></script>
+
     <!-- slimscroll js -->
     <script type="text/javascript" src="{{ asset('assets/js/SmoothScroll.js')}}"></script>
     <script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js')}} "></script>

@@ -9,6 +9,12 @@ use Flash;
 
 class StatusCController extends Controller
 {
+  public function __construct()
+    {
+      $this->middleware('can:status_c')->only('index');
+      $this->middleware('can:status_c.add')->only('add');
+      $this->middleware('can:status_c.edit')->only('edit');
+    }
    public function index(StatusC $model)
   	{   	
   		return view('admin.configuracion.status.statusC.index', ['statuscs' => $model->all()]);

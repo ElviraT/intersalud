@@ -9,6 +9,13 @@ use Flash;
 
 class PrefijoDniController extends Controller
 {
+   public function __construct()
+    {
+      $this->middleware('can:prefijo')->only('index');
+      $this->middleware('can:prefijo.add')->only('add');
+      $this->middleware('can:prefijo.edit')->only('edit');
+      $this->middleware('can:prefijo.destroy')->only('destroy');
+    }
     public function index(PrefijoDNI $model)
   	{    	
   		return view('admin.configuracion.prefijos.index', ['prefijos' => $model->all()]);

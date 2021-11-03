@@ -11,6 +11,12 @@ use Flash;
 
 class ParroquiaController extends Controller
 {
+  public function __construct()
+    {
+      $this->middleware('can:parroquia')->only('index');
+      $this->middleware('can:parroquia.add')->only('add');
+      $this->middleware('can:parroquia.edit')->only('edit');
+    }
     public function index(Parroquia $model)
   	{    	
   		$municipality= Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio");

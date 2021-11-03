@@ -9,6 +9,13 @@ use Flash;
 
 class CivilController extends Controller
 {
+   public function __construct()
+    {
+      $this->middleware('can:civil')->only('index');
+      $this->middleware('can:civil.add')->only('add');
+      $this->middleware('can:civil.edit')->only('edit');
+      $this->middleware('can:civil.destroy')->only('destroy');
+    }
     public function index(Civil $model)
   	{    	
   		return view('admin.configuracion.civiles.index', ['civiles' => $model->all()]);

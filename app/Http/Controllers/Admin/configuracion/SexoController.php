@@ -9,6 +9,14 @@ use Flash;
 
 class SexoController extends Controller
 {
+
+   public function __construct()
+    {
+      $this->middleware('can:sexo')->only('index');
+      $this->middleware('can:sexo.add')->only('add');
+      $this->middleware('can:sexo.edit')->only('edit');
+      $this->middleware('can:sexo.destroy')->only('destroy');
+    }
     public function index(Sexo $model)
   	{    	
   		return view('admin.configuracion.sexos.index', ['sexos' => $model->all()]);

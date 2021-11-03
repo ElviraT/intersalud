@@ -9,6 +9,12 @@ use Flash;
 
 class EstadoController extends Controller
 {
+  public function __construct()
+    {
+      $this->middleware('can:estado')->only('index');
+      $this->middleware('can:estado.add')->only('add');
+      $this->middleware('can:estado.edit')->only('edit');
+    }
    public function index(Estado $model)
   	{    	
   		return view('admin.configuracion.direccion.estados.index', ['estados' => $model->all()]);

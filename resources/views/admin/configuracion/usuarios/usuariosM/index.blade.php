@@ -27,13 +27,14 @@
           @include('flash::message')
            <div class="card">
               <div class="col-md-4 mt-2 mb-2">
+                @can('usuario_m')
                 <a href="{{ route('usuario_m.create')}}" type="button" class="btn-transition btn btn-outline-primary" onclick="loading_show();">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fa fa-plus-circle"></i>
                     </span>
                     {{'Agregar'}}
                 </a>
-
+                @endcan
               </div>
             </div>
             <div class="card">
@@ -56,26 +57,28 @@
                     </thead>
                     <tbody>
                       @foreach($usuariosM as $resultado)
-                      {{--dd($resultado->StatusM->color)--}}
                         <tr>
                             <td>{{ $resultado->Nombres_Medico.' '.$resultado->Apellidos_Medicos }}</td>
                             <td class="avatar"><img alt="avatar" @if($resultado['Foto_Medico']  == '') src="{{ Avatar::create($resultado->Nombres_Medico.' '.$resultado->Apellidos_Medicos)->toBase64() }}" @else src="{{ ("avatars/".str_replace('\\','/', $resultado->Foto_Medico)) }}" @endif ></td>
                             <td>{{ $resultado->Numero_Colegio_de_Medico }}</td>
                             <td>{{ $resultado->Registro_MPPS }}</td>
-                              <td style="background-color: {{$resultado->StatusM->color}}; color: #fff">{{ $resultado->StatusM->Status_Medico }}</td>
+                            <td style="background-color: {{$resultado->StatusM->color}}; color: #fff">{{ $resultado->StatusM->Status_Medico }}</td>
                             <td>
+                              @can('usuario_m.edit')
                                 <a href="{{ route('usuario_m.edit', $resultado['id_Medico'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                         <i class="ti-pencil"></i>
                                     </span>
                                     {{'Editar'}}
                                 </a>
-                            
+                              @endcan
+                              @can('usuario_m.destroy')
                                 <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete6" data-record-id="{{$resultado->id_Medico}}" data-record-title="{{$resultado->Nombres_Medico .' '.$resultado->Apellidos_Medicos}}" class="btn-transition btn btn-outline-danger">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                         <i class="ti-eraser"></i>
                                     </span>{{'Eliminar'}}
                                 </a>
+                              @endcan
                             </td>
                         </tr>
                       @endforeach

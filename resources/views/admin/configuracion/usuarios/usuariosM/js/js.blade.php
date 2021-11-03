@@ -1,10 +1,3 @@
-<!-- DATATABLE -->
-<script src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
-<script src="{{ asset('js/dataTables.bootstrap4.min.js')}}"></script>
-
-<script src="{{ asset('js/dataTables.responsive.min.js')}}"></script>
-<script src="{{ asset('js/responsive.bootstrap.min.js')}}"></script>
-
 {{--datepicker--}}
 <script src="{{ asset('js/bootstrap-datepicker.min.js')}}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.es.js')}}"></script>
@@ -31,9 +24,10 @@
     });
 
 $(document).ready(function() {
-  $('.select2').select2({ 
-      theme : "classic" });
-  });
+$('.select2').select2({ 
+    theme : "classic",
+     });
+});
     
     $(function () {
         var dtn = new Date();
@@ -47,6 +41,7 @@ $(document).ready(function() {
             todayHighlight: true,
             language: 'es'
         });
+
     });
     $(function () {
         var dtn = new Date();
@@ -149,5 +144,6 @@ $('#confirm-delete6').on('show.bs.modal', function(e) {
     $('#modal_registo_usuariosM_id', this).val(data.recordId);
     $('.title', this).text(data.recordTitle);
     $('.btn-ok', this).data('recordId', data.recordId);
+     loading_hide();
 });
 </script>

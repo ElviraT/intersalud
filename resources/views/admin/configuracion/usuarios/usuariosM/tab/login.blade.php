@@ -20,6 +20,14 @@
             <input type="password" class="form-control" name="contrasena2" id="contrasena2" placeholder="Confirma Contraseña">
         </div>
         <div class="col-md-6 mb-3">
+            {!! Form::label('rol', 'Rol:') !!}
+            {!! Form::select('rol',$roles, isset($rol[0]) ? $rol[0]->role_id : null, [
+                'placeholder' => 'Seleccione', 
+                'class' => 'select2 form-control required',
+                'id' => 'rol'
+                ]) !!}
+        </div>
+        <div class="col-md-6 mb-3">
             <label>{{ 'Nivel' }}</label>
             <input type="text" class="form-control" name="nivel" id="nivel" placeholder="Nivel" value="{{ isset($login) ? $login->Nivel : null }}">
         </div>

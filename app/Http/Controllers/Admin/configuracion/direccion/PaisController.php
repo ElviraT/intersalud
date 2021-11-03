@@ -9,6 +9,12 @@ use Flash;
 
 class PaisController extends Controller
 {
+  public function __construct()
+    {
+      $this->middleware('can:pais')->only('index');
+      $this->middleware('can:pais.add')->only('add');
+      $this->middleware('can:pais.edit')->only('edit');
+    }
     public function index(Pais $model)
   	{    	
   		return view('admin.configuracion.direccion.paises.index', ['paises' => $model->all()]);

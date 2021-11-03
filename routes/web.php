@@ -21,7 +21,16 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
 	/*DASHBOARD*/
-	Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/home', 'HomeController@index')->middleware('can:home')->name('home');
+
+	//CONFIGURACIÓN-ROLES
+	Route::get('rol', ['as' => 'rol', 'uses' => 'Admin\configuracion\RolController@index']);
+	Route::get('rol/create', ['as' => 'rol.create', 'uses' => 'Admin\configuracion\RolController@create']);
+	Route::post('rol/add', ['as' => 'rol.add', 'uses' => 'Admin\configuracion\RolController@add']);
+	Route::get('rol/edit/{role}', ['as' => 'rol.edit', 'uses' => 'Admin\configuracion\RolController@edit']);
+	Route::put('rol/update/{role}', ['as' => 'rol.update', 'uses' => 'Admin\configuracion\RolController@update']);
+	Route::post('rol/destroy', ['as' => 'rol.destroy', 'uses' => 'Admin\configuracion\RolController@destroy']);
+
 	//CONFIGURACIÓN-DIRECCIÓN-PAIS
 	Route::get('pais', ['as' => 'pais', 'uses' => 'Admin\configuracion\direccion\PaisController@index']);
 	Route::post('pais/add', ['as' => 'pais.add', 'uses' => 'Admin\configuracion\direccion\PaisController@add']);
@@ -115,6 +124,15 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 	Route::post('usuario_m/destroy', ['as' => 'usuario_m.destroy', 'uses' => 'Admin\configuracion\usuarios\UsuarioMController@destroy']);
+
+	//CONFIGURACIÓN-USUARIOS-ASISTENTE
+	Route::get('usuario_a', ['as' => 'usuario_a', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@index']);
+	Route::get('usuario_a/create', ['as' => 'usuario_a.create', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@create']);
+	Route::post('usuario_a/add', ['as' => 'usuario_a.add', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@add']);
+	Route::get('usuario_a/edit/{id}', ['as' => 'usuario_a.edit', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@edit']);
+	Route::post('usuario_a/update', ['as' => 'usuario_a.update', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@update']);
+	Route::post('usuario_a/login', ['as' => 'usuario_a.login', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@login']);
+	Route::post('usuario_a/destroy', ['as' => 'usuario_a.destroy', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@destroy']);
 
 	/*HISTORIAS CLINICAS - UROLOGIA*/
 	Route::get('historias/urologia', ['as' => 'urologia', 'uses' => 'Admin\historias\UrologiaController@index']);

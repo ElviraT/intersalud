@@ -1,7 +1,7 @@
 @extends('layouts.base_login')
 
 @section('content')
-    <form method="POST" action="{{ route('login') }}" class="md-float-material form-material">
+    <form method="POST" action="{{ route('login') }}" class="md-float-material form-material" autocomplete="off">
         @csrf
         <div class="text-center">
             <img src="assets/images/logo.png" alt="logo.png">

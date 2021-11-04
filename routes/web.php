@@ -134,6 +134,15 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('usuario_a/login', ['as' => 'usuario_a.login', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@login']);
 	Route::post('usuario_a/destroy', ['as' => 'usuario_a.destroy', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@destroy']);
 
+	//CONFIGURACIÓN-USUARIOS-PACIENTES
+	Route::get('usuario_p', ['as' => 'usuario_p', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@index']);
+	Route::get('usuario_p/create', ['as' => 'usuario_p.create', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@create']);
+	Route::post('usuario_p/add', ['as' => 'usuario_p.add', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@add']);
+	Route::get('usuario_p/edit/{id}', ['as' => 'usuario_p.edit', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@edit']);
+	Route::post('usuario_p/update', ['as' => 'usuario_p.update', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@update']);
+	Route::post('usuario_p/login', ['as' => 'usuario_p.login', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@login']);
+	Route::post('usuario_p/destroy', ['as' => 'usuario_p.destroy', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@destroy']);
+
 	/*HISTORIAS CLINICAS - UROLOGIA*/
 	Route::get('historias/urologia', ['as' => 'urologia', 'uses' => 'Admin\historias\UrologiaController@index']);
 	Route::get('historias/urologia/create', ['as' => 'urologia.create', 'uses' => 'Admin\historias\UrologiaController@create']);

@@ -14,4 +14,9 @@ class Status extends Model
     {
         return $this->hasOne('App\Model\UsuarioA', 'id_Status');
     }
+
+    public function UsuarioP()
+    {
+        return $this->hasOne('App\Model\UsuarioP', 'id_Status');
+    }
 }

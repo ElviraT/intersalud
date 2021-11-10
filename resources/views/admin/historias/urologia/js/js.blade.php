@@ -5,6 +5,10 @@
 <!-- Select2 -->
 <script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
 
+<!--Toggle -->
+<script src="{{ asset('js/bootstrap4-toggle.min.js')}}"></script>
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
 	    var table = $('#example').DataTable( {

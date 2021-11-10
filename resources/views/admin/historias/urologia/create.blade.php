@@ -1,5 +1,7 @@
 @extends('layouts.Base')
-
+@section('css')
+@include('admin.historias.urologia.css.css')
+@endsection
 @section('banner')
 <div class="col-md-8">
   <div class="page-header-title">

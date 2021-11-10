@@ -13,8 +13,8 @@ class RolController extends Controller
      public function __construct()
     {
       $this->middleware('can:rol')->only('index');
-      $this->middleware('can:rol.add')->only('add');
-      $this->middleware('can:rol.edit')->only('edit');
+      $this->middleware('can:rol.add')->only('add','create');
+      $this->middleware('can:rol.edit')->only('edit','update');
       $this->middleware('can:rol.destroy')->only('destroy');
     }
     public function index()

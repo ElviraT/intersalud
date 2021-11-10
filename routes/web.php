@@ -143,6 +143,18 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('usuario_p/login', ['as' => 'usuario_p.login', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@login']);
 	Route::post('usuario_p/destroy', ['as' => 'usuario_p.destroy', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@destroy']);
 
+	//CONFIGURACIÓN-BANCOS
+	Route::get('banco', ['as' => 'banco', 'uses' => 'Admin\configuracion\BancosController@index']);
+	Route::post('banco/add', ['as' => 'banco.add', 'uses' => 'Admin\configuracion\BancosController@add']);
+	Route::get('banco/edit', ['as' => 'banco.edit', 'uses' => 'Admin\configuracion\BancosController@edit']);
+	Route::post('banco/destroy', ['as' => 'banco.destroy', 'uses' => 'Admin\configuracion\BancosController@destroy']);
+
+	//CONFIGURACIÓN-BANCOS
+	Route::get('cripto', ['as' => 'cripto', 'uses' => 'Admin\configuracion\CriptosController@index']);
+	Route::post('cripto/add', ['as' => 'cripto.add', 'uses' => 'Admin\configuracion\CriptosController@add']);
+	Route::get('cripto/edit', ['as' => 'cripto.edit', 'uses' => 'Admin\configuracion\CriptosController@edit']);
+	Route::post('cripto/destroy', ['as' => 'cripto.destroy', 'uses' => 'Admin\configuracion\CriptosController@destroy']);
+
 	/*HISTORIAS CLINICAS - UROLOGIA*/
 	Route::get('historias/urologia', ['as' => 'urologia', 'uses' => 'Admin\historias\UrologiaController@index']);
 	Route::get('historias/urologia/create', ['as' => 'urologia.create', 'uses' => 'Admin\historias\UrologiaController@create']);

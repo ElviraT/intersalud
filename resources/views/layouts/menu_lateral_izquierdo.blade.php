@@ -38,7 +38,7 @@
         </ul> 
         <div class="pcoded-navigation-label" data-i18n="nav.category.forms">{{'Registros'}}</div>
         <ul class="pcoded-item pcoded-left-item">
-          <li class="{{ @request()->routeIs('rol') || @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') || @request()->routeIs('usuario_a*') || @request()->routeIs('usuario_p*') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
+          <li class="{{ @request()->routeIs('rol*') || @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') || @request()->routeIs('usuario_a*') || @request()->routeIs('usuario_p*') || @request()->routeIs('banco') || @request()->routeIs('cripto') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
               <a href="javascript:void(0)" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-settings"></i><b>C</b></span>
                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">{{'Configuración'}}</span>
@@ -46,7 +46,7 @@
               </a>
               <ul class="pcoded-submenu">
                 @can('rol')
-                  <li class="{{ @request()->routeIs('rol') ? 'active' : ' ' }}">
+                  <li class="{{ @request()->routeIs('rol*') ? 'active' : ' ' }}">
                       <a href="{{ route('rol')}}" onclick="loading_show();" class="waves-effect waves-dark">
                           <span class="pcoded-micon"><i class="ti-id-badge"></i><b>P</b></span>
                           <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Roles'}}</span>
@@ -224,28 +224,46 @@
                          
                       </ul>
                   </li>
+                  @can('banco')
+                  <li class="{{ @request()->routeIs('banco') ? 'active' : ' ' }}">
+                      <a href="{{ route('banco')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                          <span class="pcoded-micon"><i class="ti-minus"></i><b>B</b></span>
+                          <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Bancos'}}</span>
+                          <span class="pcoded-mcaret"></span>
+                      </a>
+                  </li>
+                  @endcan
+                  @can('cripto')
+                  <li class="{{ @request()->routeIs('cripto') ? 'active' : ' ' }}">
+                      <a href="{{ route('cripto')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                          <span class="pcoded-micon"><i class="ti-minus"></i><b>B</b></span>
+                          <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Criptos'}}</span>
+                          <span class="pcoded-mcaret"></span>
+                      </a>
+                  </li>
+                  @endcan
               </ul>
           </li>
       </ul>
-        <ul class="pcoded-item pcoded-left-item">
-            <li class="{{ @request()->routeIs('urologia') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
-                <a href="javascript:void(0)" class="waves-effect waves-dark">
-                    <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                    <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">{{'Historias Clínicas'}}</span>
-                    <span class="pcoded-mcaret"></span>
+      <ul class="pcoded-item pcoded-left-item">
+        <li class="{{ @request()->routeIs('urologia*') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
+            <a href="javascript:void(0)" class="waves-effect waves-dark">
+                <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
+                <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">{{'Historias Clínicas'}}</span>
+                <span class="pcoded-mcaret"></span>
+            </a>
+            <ul class="pcoded-submenu">
+              @can('urologia')
+              <li class="{{ @request()->routeIs('urologia*') ? 'active' : ''}}">
+                <a href="{{ route('urologia')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                  <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                  <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">{{'Urología'}}</span>
+                  <span class="pcoded-mcaret"></span>
                 </a>
-                <ul class="pcoded-submenu">
-                  @can('urologia')
-                  <li class="{{ @request()->routeIs('urologia*') ? 'active' : ''}}">
-                    <a href="{{ route('urologia')}}" onclick="loading_show();" class="waves-effect waves-dark">
-                      <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                      <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">{{'Urología'}}</span>
-                      <span class="pcoded-mcaret"></span>
-                    </a>
-                  </li>
-                  @endcan
-                </ul>
-            </li>        
-        </ul>
+              </li>
+              @endcan
+            </ul>
+        </li>        
+      </ul>
     </div>
 </nav>

@@ -19,4 +19,14 @@ class Status extends Model
     {
         return $this->hasOne('App\Model\UsuarioP', 'id_Status');
     }
+
+    public function Banco()
+    {
+        return $this->hasOne('App\Model\Banco', 'id_Status');
+    }
+
+    public function Cripto()
+    {
+        return $this->hasOne('App\Model\Cripto', 'id_Status');
+    }
 }

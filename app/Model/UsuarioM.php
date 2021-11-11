@@ -19,4 +19,13 @@ class UsuarioM extends Model
     {
         return $this->hasOne('App\Model\UsuarioA', 'id_asistente','id_Medico',);
     }
+
+    public function Billetera()
+    {
+        return $this->hasOne('App\Model\Billetera', 'id_Billetera_Cripto','id_Medico');
+    }
+    public function CuentaBanco()
+    {
+        return $this->hasOne('App\Model\CuentaBanco', 'id_Cuenta_Bancaria_BS','id_Medico');
+    }
 }

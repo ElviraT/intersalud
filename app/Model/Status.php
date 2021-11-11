@@ -29,4 +29,12 @@ class Status extends Model
     {
         return $this->hasOne('App\Model\Cripto', 'id_Status');
     }
+    public function Billetera()
+    {
+        return $this->hasOne('App\Model\Billetera', 'id_Status');
+    }
+    public function CuentaBanco()
+    {
+        return $this->hasOne('App\Model\CuentaBanco', 'id_Status');
+    }
 }

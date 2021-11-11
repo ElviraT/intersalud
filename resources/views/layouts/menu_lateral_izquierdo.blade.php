@@ -38,7 +38,7 @@
         </ul> 
         <div class="pcoded-navigation-label" data-i18n="nav.category.forms">{{'Registros'}}</div>
         <ul class="pcoded-item pcoded-left-item">
-          <li class="{{ @request()->routeIs('rol*') || @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') || @request()->routeIs('usuario_a*') || @request()->routeIs('usuario_p*') || @request()->routeIs('banco') || @request()->routeIs('cripto') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
+          <li class="{{ @request()->routeIs('rol*') || @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') || @request()->routeIs('usuario_a*') || @request()->routeIs('usuario_p*') || @request()->routeIs('banco') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
               <a href="javascript:void(0)" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-settings"></i><b>C</b></span>
                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">{{'Configuración'}}</span>
@@ -108,33 +108,43 @@
                         @endcan
                       </ul>
                   </li>
-                  @can('prefijo')
-                  <li class="{{ @request()->routeIs('prefijo') ? 'active' : ' ' }}">
-                      <a href="{{ route('prefijo')}}" onclick="loading_show();" class="waves-effect waves-dark">
-                          <span class="pcoded-micon"><i class="ti-id-badge"></i><b>P</b></span>
-                          <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Prefijo DNI'}}</span>
+
+                  <li class="{{ @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
+                      <a href="javascript:void(0)" class="waves-effect waves-dark">
+                          <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                          <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.main">{{'Configuración Personas'}}</span>&nbsp;
                           <span class="pcoded-mcaret"></span>
                       </a>
+                      <ul class="{{ @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
+                        @can('prefijo')
+                        <li class="{{ @request()->routeIs('prefijo') ? 'active' : ' ' }}">
+                            <a href="{{ route('prefijo')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-id-badge"></i><b>P</b></span>
+                                <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Prefijo DNI'}}</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('sexo')
+                        <li class="{{ @request()->routeIs('sexo') ? 'active' : ' ' }}">
+                            <a href="{{ route('sexo')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-minus"></i><b>S</b></span>
+                                <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Sexo'}}</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('civil')
+                        <li class="{{ @request()->routeIs('civil') ? 'active' : ' ' }}">
+                            <a href="{{ route('civil')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-minus"></i><b>EC</b></span>
+                                <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Estado Civil'}}</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        @endcan
+                    </ul>
                   </li>
-                  @endcan
-                  @can('sexo')
-                  <li class="{{ @request()->routeIs('sexo') ? 'active' : ' ' }}">
-                      <a href="{{ route('sexo')}}" onclick="loading_show();" class="waves-effect waves-dark">
-                          <span class="pcoded-micon"><i class="ti-minus"></i><b>S</b></span>
-                          <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Sexo'}}</span>
-                          <span class="pcoded-mcaret"></span>
-                      </a>
-                  </li>
-                  @endcan
-                  @can('civil')
-                  <li class="{{ @request()->routeIs('civil') ? 'active' : ' ' }}">
-                      <a href="{{ route('civil')}}" onclick="loading_show();" class="waves-effect waves-dark">
-                          <span class="pcoded-micon"><i class="ti-minus"></i><b>EC</b></span>
-                          <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Estado Civil'}}</span>
-                          <span class="pcoded-mcaret"></span>
-                      </a>
-                  </li>
-                  @endcan
                   <li class="{{ @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
                       <a href="javascript:void(0)" class="waves-effect waves-dark">
                           <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
@@ -236,11 +246,29 @@
                   @can('cripto')
                   <li class="{{ @request()->routeIs('cripto') ? 'active' : ' ' }}">
                       <a href="{{ route('cripto')}}" onclick="loading_show();" class="waves-effect waves-dark">
-                          <span class="pcoded-micon"><i class="ti-minus"></i><b>B</b></span>
+                          <span class="pcoded-micon"><i class="ti-minus"></i><b>C</b></span>
                           <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Criptos'}}</span>
                           <span class="pcoded-mcaret"></span>
                       </a>
                   </li>
+                  @endcan
+                  @can('billetera')
+                    <li class="{{ @request()->routeIs('billetera') ? 'active' : ' ' }}">
+                        <a href="{{ route('billetera')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-minus"></i><b>B</b></span>
+                            <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Billeteras Criptos'}}</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                  @endcan
+                  @can('cuenta_banco')
+                    <li class="{{ @request()->routeIs('cuenta_banco') ? 'active' : ' ' }}">
+                        <a href="{{ route('cuenta_banco')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-minus"></i><b>CB</b></span>
+                            <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Cuentas de Banco'}}</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
                   @endcan
               </ul>
           </li>

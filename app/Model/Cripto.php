@@ -14,4 +14,9 @@ class Cripto extends Model
     {
         return $this->hasOne('App\Model\Status', 'id_Status','Status_id',);
     }
+
+    public function Billetera()
+    {
+        return $this->hasOne('App\Model\Billetera', 'id_Cripto');
+    }
 }

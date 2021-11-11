@@ -155,6 +155,18 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('cripto/edit', ['as' => 'cripto.edit', 'uses' => 'Admin\configuracion\CriptosController@edit']);
 	Route::post('cripto/destroy', ['as' => 'cripto.destroy', 'uses' => 'Admin\configuracion\CriptosController@destroy']);
 
+	//CONFIGURACIÓN-BILLETERAS CRIPTO
+	Route::get('billetera', ['as' => 'billetera', 'uses' => 'Admin\configuracion\BilleteraCriptosController@index']);
+	Route::post('billetera/add', ['as' => 'billetera.add', 'uses' => 'Admin\configuracion\BilleteraCriptosController@add']);
+	Route::get('billetera/edit', ['as' => 'billetera.edit', 'uses' => 'Admin\configuracion\BilleteraCriptosController@edit']);
+	Route::post('billetera/destroy', ['as' => 'billetera.destroy', 'uses' => 'Admin\configuracion\BilleteraCriptosController@destroy']);
+
+	//CONFIGURACIÓN-CUENTA BANCO BS
+	Route::get('cuenta_banco', ['as' => 'cuenta_banco', 'uses' => 'Admin\configuracion\CuentaBancoController@index']);
+	Route::post('cuenta_banco/add', ['as' => 'cuenta_banco.add', 'uses' => 'Admin\configuracion\CuentaBancoController@add']);
+	Route::get('cuenta_banco/edit', ['as' => 'cuenta_banco.edit', 'uses' => 'Admin\configuracion\CuentaBancoController@edit']);
+	Route::post('cuenta_banco/destroy', ['as' => 'cuenta_banco.destroy', 'uses' => 'Admin\configuracion\CuentaBancoController@destroy']);
+
 	/*HISTORIAS CLINICAS - UROLOGIA*/
 	Route::get('historias/urologia', ['as' => 'urologia', 'uses' => 'Admin\historias\UrologiaController@index']);
 	Route::get('historias/urologia/create', ['as' => 'urologia.create', 'uses' => 'Admin\historias\UrologiaController@create']);

@@ -14,4 +14,8 @@ class Banco extends Model
     {
         return $this->hasOne('App\Model\Status', 'id_Status','Status_Id',);
     }
+    public function CuentaBanco()
+    {
+        return $this->hasOne('App\Model\CuentaBanco', 'id_Cuenta_Bancaria_BS','Banco_id');
+    }
 }

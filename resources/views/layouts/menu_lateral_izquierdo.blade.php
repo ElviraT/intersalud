@@ -38,7 +38,7 @@
         </ul> 
         <div class="pcoded-navigation-label" data-i18n="nav.category.forms">{{'Registros'}}</div>
         <ul class="pcoded-item pcoded-left-item">
-          <li class="{{ @request()->routeIs('rol*') || @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') || @request()->routeIs('usuario_a*') || @request()->routeIs('usuario_p*') || @request()->routeIs('banco') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
+          <li class="{{ @request()->routeIs('rol*') || @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') || @request()->routeIs('usuario_a*') || @request()->routeIs('usuario_p*') || @request()->routeIs('banco') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') || @request()->routeIs('especialidad') || @request()->routeIs('consultorio') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
               <a href="javascript:void(0)" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-settings"></i><b>C</b></span>
                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">{{'Configuración'}}</span>
@@ -234,42 +234,97 @@
                          
                       </ul>
                   </li>
-                  @can('banco')
-                  <li class="{{ @request()->routeIs('banco') ? 'active' : ' ' }}">
-                      <a href="{{ route('banco')}}" onclick="loading_show();" class="waves-effect waves-dark">
-                          <span class="pcoded-micon"><i class="ti-minus"></i><b>B</b></span>
-                          <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Bancos'}}</span>
+                  <li class="{{ @request()->routeIs('banco') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
+                      <a href="javascript:void(0)" class="waves-effect waves-dark">
+                          <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                          <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.main">{{'Cuentas'}}</span>
                           <span class="pcoded-mcaret"></span>
                       </a>
+                      <ul class="{{ @request()->routeIs('banco') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
+                       @can('banco')
+                        <li class="{{ @request()->routeIs('banco') ? 'active' : ' ' }}">
+                            <a href="{{ route('banco')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-minus"></i><b>B</b></span>
+                                <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Bancos'}}</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('cripto')
+                        <li class="{{ @request()->routeIs('cripto') ? 'active' : ' ' }}">
+                            <a href="{{ route('cripto')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-minus"></i><b>C</b></span>
+                                <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Criptos'}}</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('billetera')
+                          <li class="{{ @request()->routeIs('billetera') ? 'active' : ' ' }}">
+                              <a href="{{ route('billetera')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-minus"></i><b>B</b></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Billeteras Criptos'}}</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                          </li>
+                        @endcan
+                        @can('cuenta_banco')
+                          <li class="{{ @request()->routeIs('cuenta_banco') ? 'active' : ' ' }}">
+                              <a href="{{ route('cuenta_banco')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-minus"></i><b>CB</b></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Cuentas de Banco'}}</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                          </li>
+                        @endcan
+                         
+                      </ul>
                   </li>
-                  @endcan
-                  @can('cripto')
-                  <li class="{{ @request()->routeIs('cripto') ? 'active' : ' ' }}">
-                      <a href="{{ route('cripto')}}" onclick="loading_show();" class="waves-effect waves-dark">
-                          <span class="pcoded-micon"><i class="ti-minus"></i><b>C</b></span>
-                          <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Criptos'}}</span>
+                  <li class="{{ @request()->routeIs('especialidad') || @request()->routeIs('consultorio') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
+                      <a href="javascript:void(0)" class="waves-effect waves-dark">
+                          <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                          <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.main">{{'Confg. Medico'}}</span>
                           <span class="pcoded-mcaret"></span>
                       </a>
+                      <ul class="{{ @request()->routeIs('especialidad') || @request()->routeIs('consultorio') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
+                       @can('especialidad')
+                        <li class="{{ @request()->routeIs('especialidad') ? 'active' : ' ' }}">
+                            <a href="{{ route('especialidad')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-minus"></i><b>EM</b></span>
+                                <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Especialidades Medicas'}}</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('consultorio')
+                        <li class="{{ @request()->routeIs('consultorio') ? 'active' : ' ' }}">
+                            <a href="{{ route('consultorio')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-minus"></i><b>C</b></span>
+                                <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Consultorios'}}</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        @endcan
+                       {{-- @can('billetera')
+                          <li class="{{ @request()->routeIs('billetera') ? 'active' : ' ' }}">
+                              <a href="{{ route('billetera')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-minus"></i><b>B</b></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Billeteras Criptos'}}</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                          </li>
+                        @endcan
+                        @can('cuenta_banco')
+                          <li class="{{ @request()->routeIs('cuenta_banco') ? 'active' : ' ' }}">
+                              <a href="{{ route('cuenta_banco')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-minus"></i><b>CB</b></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Cuentas de Banco'}}</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                          </li>
+                        @endcan --}}                        
+                      </ul>
                   </li>
-                  @endcan
-                  @can('billetera')
-                    <li class="{{ @request()->routeIs('billetera') ? 'active' : ' ' }}">
-                        <a href="{{ route('billetera')}}" onclick="loading_show();" class="waves-effect waves-dark">
-                            <span class="pcoded-micon"><i class="ti-minus"></i><b>B</b></span>
-                            <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Billeteras Criptos'}}</span>
-                            <span class="pcoded-mcaret"></span>
-                        </a>
-                    </li>
-                  @endcan
-                  @can('cuenta_banco')
-                    <li class="{{ @request()->routeIs('cuenta_banco') ? 'active' : ' ' }}">
-                        <a href="{{ route('cuenta_banco')}}" onclick="loading_show();" class="waves-effect waves-dark">
-                            <span class="pcoded-micon"><i class="ti-minus"></i><b>CB</b></span>
-                            <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Cuentas de Banco'}}</span>
-                            <span class="pcoded-mcaret"></span>
-                        </a>
-                    </li>
-                  @endcan
               </ul>
           </li>
       </ul>

@@ -1,31 +1,18 @@
-<div id="modal_banco" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" data-consulta="{{ action('Admin\configuracion\BancosController@edit') }}">
+<div id="modal_especialidad" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" data-consulta="{{ action('Admin\configuracion\EspecialidadController@edit') }}">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Agregar Banco</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Agregar Especialidad Medica</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            {!! Form::open(['route' => ['banco.add'],  'method' => 'post', 'autocomplete' =>'off' ]) !!}
+            {!! Form::open(['route' => ['especialidad.add'],  'method' => 'post', 'autocomplete' =>'off' ]) !!}
             <div class="modal-body">
-                {{ Form::hidden('id', 0, ['class'=>'modal_registro_banco_id'] ) }}
-                
+                {{ Form::hidden('id', 0, ['class'=>'modal_registro_especialidad_id'] ) }}                
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Nombre'}}</label>
                     <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true">
-                </div>
-                <div class="col-md-12 mb-3">
-                    <label for="validationCustom01">{{'Codigo'}}</label>
-                    <input type="text" name="codigo" class="form-control" id="codigo" placeholder="Codigo" required>
-                </div>
-                 <div class="col-md-12 mb-3">
-                    {!! Form::label('status', 'Status:') !!}
-                    {!! Form::select('status',$status, null, [
-                        'placeholder' => 'Seleccione', 
-                        'class' => 'select2 form-control required',
-                        'id' => 'status'
-                        ]) !!}
                 </div>
             </div>
             <div class="modal-footer">

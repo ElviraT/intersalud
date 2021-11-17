@@ -1,15 +1,15 @@
-<div id="modal_banco" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" data-consulta="{{ action('Admin\configuracion\BancosController@edit') }}">
+<div id="modal_consultorio" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" data-consulta="{{ action('Admin\configuracion\ConsultorioController@edit') }}">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Agregar Banco</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Agregar Consultorio</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            {!! Form::open(['route' => ['banco.add'],  'method' => 'post', 'autocomplete' =>'off' ]) !!}
+            {!! Form::open(['route' => ['consultorio.add'],  'method' => 'post', 'autocomplete' =>'off' ]) !!}
             <div class="modal-body">
-                {{ Form::hidden('id', 0, ['class'=>'modal_registro_banco_id'] ) }}
+                {{ Form::hidden('id', 0, ['class'=>'modal_registro_consultorio_id'] ) }}
                 
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Nombre'}}</label>

@@ -167,6 +167,18 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('cuenta_banco/edit', ['as' => 'cuenta_banco.edit', 'uses' => 'Admin\configuracion\CuentaBancoController@edit']);
 	Route::post('cuenta_banco/destroy', ['as' => 'cuenta_banco.destroy', 'uses' => 'Admin\configuracion\CuentaBancoController@destroy']);
 
+	//CONFIGURACIÓN-CONFG. MEDICOS- ESPECIALIDAD MEDICA
+	Route::get('especialidad', ['as' => 'especialidad', 'uses' => 'Admin\configuracion\EspecialidadController@index']);
+	Route::post('especialidad/add', ['as' => 'especialidad.add', 'uses' => 'Admin\configuracion\EspecialidadController@add']);
+	Route::get('especialidad/edit', ['as' => 'especialidad.edit', 'uses' => 'Admin\configuracion\EspecialidadController@edit']);
+	Route::post('especialidad/destroy', ['as' => 'especialidad.destroy', 'uses' => 'Admin\configuracion\EspecialidadController@destroy']);
+
+	//CONFIGURACIÓN-CONFG. MEDICOS - CONSULTORIOS
+	Route::get('consultorio', ['as' => 'consultorio', 'uses' => 'Admin\configuracion\ConsultorioController@index']);
+	Route::post('consultorio/add', ['as' => 'consultorio.add', 'uses' => 'Admin\configuracion\ConsultorioController@add']);
+	Route::get('consultorio/edit', ['as' => 'consultorio.edit', 'uses' => 'Admin\configuracion\ConsultorioController@edit']);
+	Route::post('consultorio/destroy', ['as' => 'consultorio.destroy', 'uses' => 'Admin\configuracion\ConsultorioController@destroy']);
+
 	/*HISTORIAS CLINICAS - UROLOGIA*/
 	Route::get('historias/urologia', ['as' => 'urologia', 'uses' => 'Admin\historias\UrologiaController@index']);
 	Route::get('historias/urologia/create', ['as' => 'urologia.create', 'uses' => 'Admin\historias\UrologiaController@create']);

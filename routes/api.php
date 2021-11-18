@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::match(['get','post'],'/ciudad.json', 'Controller@ciudad')->name('ciudad_dependiente');
+Route::match(['get','post'],'/municipio.json', 'Controller@municipio')->name('municipio_dependiente');
+Route::match(['get','post'],'/parroquia.json', 'Controller@parroquia')->name('parroquia_dependiente');

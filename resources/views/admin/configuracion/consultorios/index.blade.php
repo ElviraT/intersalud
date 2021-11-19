@@ -62,8 +62,8 @@
                                 <td>{{ $resultado->Telefono }}</td>
                                 <td>{{ $resultado->Celular }}</td>
                                 <td>{{ $resultado->Correo }}</td>
-                                <td>{{ $resultado->Especialidad_Medica_id }}</td>
-                                <td>{{ $resultado->Status_id }}</td>
+                                <td>{{ $resultado->Especialidad->Espacialiadad_Medica }}</td>
+                                <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
                                 <td>
                                   @can('consultorio.edit')
                                     <a href="#" type="button" data-toggle="modal" data-target="#modal_consultorio" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Consultorio'] }}" onclick="loading_show();">

@@ -37,4 +37,8 @@ class Status extends Model
     {
         return $this->hasOne('App\Model\CuentaBanco', 'id_Status');
     }
+    public function Consultorio()
+    {
+        return $this->hasOne('App\Model\Consultorio', 'id_Status');
+    }
 }

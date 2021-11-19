@@ -36,15 +36,16 @@ $('#modal_consultorio').on('show.bs.modal', function (e) {
             $('#correo', modal).val(obj.Correo);
             $('#especialidad').val(obj.Especialidad_Medica_id);
             $('#especialidad').change();
+            $('#estado').select2({
+                    data: Estado_id
+                });
             $('#ciudad').val(obj.Ciudad_id);
             $('#ciudad').change();
-            $('#estado').val(obj.Estado_id);
-            $('#estado').change();
             $('#municipio').val(obj.Municipio_id);
             $('#municipio').change();
             $('#parroquia').val(obj.Parroquia_id);
             $('#parroquia').change();
-            $('#status').val(obj.Status_Id);
+            $('#status').val(obj.Status_id);
             $('#status').change();
             modal.removeClass('loading');
             loading_hide();

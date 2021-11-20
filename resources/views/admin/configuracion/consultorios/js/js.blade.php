@@ -1,5 +1,5 @@
 <!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/select2.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -36,9 +36,8 @@ $('#modal_consultorio').on('show.bs.modal', function (e) {
             $('#correo', modal).val(obj.Correo);
             $('#especialidad').val(obj.Especialidad_Medica_id);
             $('#especialidad').change();
-            $('#estado').select2({
-                    data: Estado_id
-                });
+            $('#estado').val(obj.Estado_id);
+            $('#estado').change();
             $('#ciudad').val(obj.Ciudad_id);
             $('#ciudad').change();
             $('#municipio').val(obj.Municipio_id);
@@ -52,9 +51,9 @@ $('#modal_consultorio').on('show.bs.modal', function (e) {
         });
     }
 });
-
-$('#estado').change(function(e){
-    $.getJSON('{{ route('ciudad_dependiente') }}?estado='+e.target.value, function(objC){
+$('#estado').on('select2:select', function (e) {
+   var estado = $('#estado').val();
+    $.getJSON('{{ route('ciudad_dependiente') }}?estado='+estado, function(objC){
         var opcion = $('#ciudad').val();
         $('#ciudad').empty();
         $('#ciudad').prop('disabled', true);
@@ -73,9 +72,8 @@ $('#estado').change(function(e){
             $("#ciudad option:first").attr("selected", "selected");
         }        
     });
-}); 
-$('#estado').change(function(e){
-    $.getJSON('{{ route('municipio_dependiente') }}?estado='+e.target.value, function(objM){
+
+    $.getJSON('{{ route('municipio_dependiente') }}?estado='+estado, function(objM){
         var opcion = $('#municipio').val();
         $('#municipio').empty();
         $('#municipio').prop('disabled', true);
@@ -96,8 +94,9 @@ $('#estado').change(function(e){
     
 });
 
-$('#municipio').change(function(e){
-    $.getJSON('{{ route('parroquia_dependiente') }}?municipio='+e.target.value, function(objP){
+$('#municipio').on('select2:select', function (e) {
+    var municipio = $('#municipio').val();
+    $.getJSON('{{ route('parroquia_dependiente') }}?municipio='+municipio, function(objP){
         var opcion = $('#parroquia').val();
         $('#parroquia').empty();
         $('#parroquia').prop('disabled', true);
@@ -124,8 +123,8 @@ $('#modal_consultorio').on('hidden.bs.modal', function (e) {
     $('#celular').val('');
     $('#correo').val('');
     $('#especialidad').val('').change();
-    $('#ciudad').val('').change();
     $('#estado').val('').change();
+    $('#ciudad').val('').change();
     $('#municipio').val('').change();
     $('#parroquia').val('').change();
     $('#status').val('').change();

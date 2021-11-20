@@ -58,7 +58,7 @@
 
       @yield('css')
 </head>
-<body>
+<body onloadstart='loading_show();'>
     <!-- Pre-loader start -->
     <div class="theme-loader">
         <div class="loader-track">
@@ -163,7 +163,9 @@
 
     @include('layouts.validaciones')
     @yield('js')
-
+    <script type="text/javascript">
+      loading_hide();
+    </script>
 </body>
 
 </html>

@@ -149,7 +149,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('banco/edit', ['as' => 'banco.edit', 'uses' => 'Admin\configuracion\BancosController@edit']);
 	Route::post('banco/destroy', ['as' => 'banco.destroy', 'uses' => 'Admin\configuracion\BancosController@destroy']);
 
-	//CONFIGURACIÓN-BANCOS
+	//CONFIGURACIÓN-TIPOS DE CUENTAS
+	Route::get('tipoC', ['as' => 'tipoC', 'uses' => 'Admin\configuracion\TipoCuentaController@index']);
+	Route::post('tipoC/add', ['as' => 'tipoC.add', 'uses' => 'Admin\configuracion\TipoCuentaController@add']);
+	Route::get('tipoC/edit', ['as' => 'tipoC.edit', 'uses' => 'Admin\configuracion\TipoCuentaController@edit']);
+	Route::post('tipoC/destroy', ['as' => 'tipoC.destroy', 'uses' => 'Admin\configuracion\TipoCuentaController@destroy']);
+
+	//CONFIGURACIÓN-CRIPTO
 	Route::get('cripto', ['as' => 'cripto', 'uses' => 'Admin\configuracion\CriptosController@index']);
 	Route::post('cripto/add', ['as' => 'cripto.add', 'uses' => 'Admin\configuracion\CriptosController@add']);
 	Route::get('cripto/edit', ['as' => 'cripto.edit', 'uses' => 'Admin\configuracion\CriptosController@edit']);
@@ -161,11 +167,17 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('billetera/edit', ['as' => 'billetera.edit', 'uses' => 'Admin\configuracion\BilleteraCriptosController@edit']);
 	Route::post('billetera/destroy', ['as' => 'billetera.destroy', 'uses' => 'Admin\configuracion\BilleteraCriptosController@destroy']);
 
-	//CONFIGURACIÓN-CUENTA BANCO BS
+	//CONFIGURACIÓN-CUENTA-BANCO BS
 	Route::get('cuenta_banco', ['as' => 'cuenta_banco', 'uses' => 'Admin\configuracion\CuentaBancoController@index']);
 	Route::post('cuenta_banco/add', ['as' => 'cuenta_banco.add', 'uses' => 'Admin\configuracion\CuentaBancoController@add']);
 	Route::get('cuenta_banco/edit', ['as' => 'cuenta_banco.edit', 'uses' => 'Admin\configuracion\CuentaBancoController@edit']);
 	Route::post('cuenta_banco/destroy', ['as' => 'cuenta_banco.destroy', 'uses' => 'Admin\configuracion\CuentaBancoController@destroy']);
+
+	//CONFIGURACIÓN-CUENTA-ENTIDADES USD
+	Route::get('entidad', ['as' => 'entidad', 'uses' => 'Admin\configuracion\EntidadesUSDController@index']);
+	Route::post('entidad/add', ['as' => 'entidad.add', 'uses' => 'Admin\configuracion\EntidadesUSDController@add']);
+	Route::get('entidad/edit', ['as' => 'entidad.edit', 'uses' => 'Admin\configuracion\EntidadesUSDController@edit']);
+	Route::post('entidad/destroy', ['as' => 'entidad.destroy', 'uses' => 'Admin\configuracion\EntidadesUSDController@destroy']);
 
 	//CONFIGURACIÓN-CONFG. MEDICOS- ESPECIALIDAD MEDICA
 	Route::get('especialidad', ['as' => 'especialidad', 'uses' => 'Admin\configuracion\EspecialidadController@index']);

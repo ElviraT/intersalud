@@ -25,6 +25,11 @@ class Status extends Model
         return $this->hasOne('App\Model\Banco', 'id_Status');
     }
 
+    public function EntidadesUSD()
+    {
+        return $this->hasOne('App\Model\EntidadesUSD', 'id_Status');
+    }
+
     public function Cripto()
     {
         return $this->hasOne('App\Model\Cripto', 'id_Status');

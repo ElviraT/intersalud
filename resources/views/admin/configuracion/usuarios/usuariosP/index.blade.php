@@ -61,7 +61,7 @@
                             <td>{{ $resultado->Prefijo_CIDNI_id.' '.$resultado->CIDNI }}</td>
                             <td>{{ $resultado->Sexo->Sexo }}</td>
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
-                            <td>
+                            <td width="20">
                               @can('usuario_p.edit')
                                 <a href="{{ route('usuario_p.edit', $resultado['id_Paciente'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">

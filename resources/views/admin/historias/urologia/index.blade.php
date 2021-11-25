@@ -52,7 +52,7 @@
                             <td>{{'Masculino'}}</td>
                             <td>{{'555-555-55-55'}}</td>
                             <td>{{'.........'}}</td>
-                            <td>
+                            <td width="20">
                               <button class="btn-transition btn btn-outline-success" type="button"><i class="ti-pencil"></i> {{'Editar'}}</button>
                        
                               <button class="btn-transition btn btn-outline-danger" type="button"><i class="ti-eraser"></i> {{'Eliminar'}}</button>

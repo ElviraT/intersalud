@@ -55,7 +55,7 @@
                       @foreach($civiles as $resultado)
                         <tr>
                             <td>{{ $resultado->Civil }}</td>
-                            <td>
+                            <td width="20">
                               @can('civil.edit')
                                 <a href="#" type="button" data-toggle="modal" data-target="#modal_civil" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Civil'] }}" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">

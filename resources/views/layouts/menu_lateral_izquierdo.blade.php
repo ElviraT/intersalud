@@ -38,7 +38,7 @@
         </ul> 
         <div class="pcoded-navigation-label" data-i18n="nav.category.forms">{{'Registros'}}</div>
         <ul class="pcoded-item pcoded-left-item">
-          <li class="{{ @request()->routeIs('rol*') || @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') || @request()->routeIs('usuario_a*') || @request()->routeIs('usuario_p*') || @request()->routeIs('banco') || @request()->routeIs('tipoC') || @request()->routeIs('entidad') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') || @request()->routeIs('especialidad') || @request()->routeIs('consultorio') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
+          <li class="{{ @request()->routeIs('rol*') || @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') || @request()->routeIs('usuario_a*') || @request()->routeIs('usuario_p*') || @request()->routeIs('banco') || @request()->routeIs('tipoC') || @request()->routeIs('cuentaUSD') || @request()->routeIs('entidad') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') || @request()->routeIs('especialidad') || @request()->routeIs('consultorio') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
               <a href="javascript:void(0)" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-settings"></i><b>C</b></span>
                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">{{'Configuración'}}</span>
@@ -48,7 +48,7 @@
                 @can('rol')
                   <li class="{{ @request()->routeIs('rol*') ? 'active' : ' ' }}">
                       <a href="{{ route('rol')}}" onclick="loading_show();" class="waves-effect waves-dark">
-                          <span class="pcoded-micon"><i class="ti-id-badge"></i><b>P</b></span>
+                          <span class="pcoded-micon"><i class="ti-id-badge"></i><b>R</b></span>
                           <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Roles'}}</span>
                           <span class="pcoded-mcaret"></span>
                       </a>
@@ -234,13 +234,13 @@
                          
                       </ul>
                   </li>
-                  <li class="{{ @request()->routeIs('banco') || @request()->routeIs('tipoC') || @request()->routeIs('entidad') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
+                  <li class="{{ @request()->routeIs('banco') || @request()->routeIs('cuentaUSD') || @request()->routeIs('tipoC') || @request()->routeIs('entidad') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
                       <a href="javascript:void(0)" class="waves-effect waves-dark">
                           <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
                           <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.main">{{'Cuentas'}}</span>
                           <span class="pcoded-mcaret"></span>
                       </a>
-                      <ul class="{{ @request()->routeIs('banco') || @request()->routeIs('tipoC') || @request()->routeIs('entidad') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
+                      <ul class="{{ @request()->routeIs('banco') || @request()->routeIs('cuentaUSD') || @request()->routeIs('tipoC') || @request()->routeIs('entidad') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
                        @can('banco')
                         <li class="{{ @request()->routeIs('banco') ? 'active' : ' ' }}">
                             <a href="{{ route('banco')}}" onclick="loading_show();" class="waves-effect waves-dark">
@@ -264,6 +264,15 @@
                             <a href="{{ route('entidad')}}" onclick="loading_show();" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-minus"></i><b>EU</b></span>
                                 <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Entidades USD'}}</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('cuentaUSD')
+                        <li class="{{ @request()->routeIs('cuentaUSD') ? 'active' : ' ' }}">
+                            <a href="{{ route('cuentaUSD')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-minus"></i><b>CU</b></span>
+                                <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Cuentas USD'}}</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>

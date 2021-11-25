@@ -14,4 +14,9 @@ class EntidadesUSD extends Model
     {
         return $this->hasOne('App\Model\Status', 'id_Status','Status_id',);
     }
+
+    public function CuentaUSD()
+    {
+        return $this->hasOne('App\Model\CuentaUSD', 'id_Cuenta_USD','Entidad_USD_id');
+    }
 }

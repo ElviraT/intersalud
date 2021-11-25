@@ -56,7 +56,7 @@
                       @foreach($estados as $resultado)
                         <tr>
                             <td>{{ $resultado->Estado }}</td>
-                            <td>
+                            <td width="20">
                                 <a href="#" type="button" data-toggle="modal" data-target="#modal_estado" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Estado'] }}" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                         <i class="ti-pencil"></i>

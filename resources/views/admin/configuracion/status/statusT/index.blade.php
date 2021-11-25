@@ -57,7 +57,7 @@
                         <tr>
                             <td>{{ $resultado->Tasa }}</td>
                             <td style="background-color:{{ $resultado->color }}; color:#FFF;">{{ $resultado->color }}</td>
-                            <td>
+                            <td width="20">
                               @can('status_t.edit')
                                 <a href="#" type="button" data-toggle="modal" data-target="#modal_statust" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Status_Tasa'] }}" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">

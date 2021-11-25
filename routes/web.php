@@ -173,6 +173,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('cuenta_banco/edit', ['as' => 'cuenta_banco.edit', 'uses' => 'Admin\configuracion\CuentaBancoController@edit']);
 	Route::post('cuenta_banco/destroy', ['as' => 'cuenta_banco.destroy', 'uses' => 'Admin\configuracion\CuentaBancoController@destroy']);
 
+	//CONFIGURACIÓN-CUENTA-USD
+	Route::get('cuentaUSD', ['as' => 'cuentaUSD', 'uses' => 'Admin\configuracion\CuentaUSDController@index']);
+	Route::post('cuentaUSD/add', ['as' => 'cuentaUSD.add', 'uses' => 'Admin\configuracion\CuentaUSDController@add']);
+	Route::get('cuentaUSD/edit', ['as' => 'cuentaUSD.edit', 'uses' => 'Admin\configuracion\CuentaUSDController@edit']);
+	Route::post('cuentaUSD/destroy', ['as' => 'cuentaUSD.destroy', 'uses' => 'Admin\configuracion\CuentaUSDController@destroy']);
+
 	//CONFIGURACIÓN-CUENTA-ENTIDADES USD
 	Route::get('entidad', ['as' => 'entidad', 'uses' => 'Admin\configuracion\EntidadesUSDController@index']);
 	Route::post('entidad/add', ['as' => 'entidad.add', 'uses' => 'Admin\configuracion\EntidadesUSDController@add']);

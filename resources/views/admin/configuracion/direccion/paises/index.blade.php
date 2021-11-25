@@ -59,7 +59,7 @@
                             <td>{{ $resultado->Codigo }}</td>
                             <td>{{ $resultado->iso3166a1 }}</td>
                             <td>{{ $resultado->Pais }}</td>
-                            <td>
+                            <td width="20">
                               @can('pais.edit')
                                 <a href="#" type="button" data-toggle="modal" data-target="#modal_pais" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Pais'] }}" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">

@@ -1,23 +1,23 @@
-<div id="modal_cuenta_banco" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" data-consulta="{{ action('Admin\configuracion\CuentaBancoController@edit') }}">
+<div id="modal_cuentaUSD" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" data-consulta="{{ action('Admin\configuracion\CuentaUSDController@edit') }}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Agregar Cuenta de Banco</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Agregar Cuenta USD</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            {!! Form::open(['route' => ['cuenta_banco.add'],  'method' => 'post', 'autocomplete' =>'off' ]) !!}
+            {!! Form::open(['route' => ['cuentaUSD.add'],  'method' => 'post', 'autocomplete' =>'off' ]) !!}
             <div class="modal-body">
-                {{ Form::hidden('id', 0, ['class'=>'modal_registro_cuenta_banco_id'] ) }}
+                {{ Form::hidden('id', 0, ['class'=>'modal_registro_cuentaUSD_id'] ) }}
                 <div class="col-md-12">
                     <div class="row">                        
                         <div class="col-md-6 mb-3">
-                            {!! Form::label('banco', 'Banco:') !!}
-                            {!! Form::select('banco',$banco, null, [
+                            {!! Form::label('entidad', 'Entidad USD:') !!}
+                            {!! Form::select('entidad',$entidades, null, [
                                 'placeholder' => 'Seleccione', 
                                 'class' => 'select2 form-control required',
-                                'id' => 'banco'
+                                'id' => 'entidad'
                                 ]) !!}
                         </div>
                         <div class="col-md-6 mb-3">
@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom01">{{'Número de cuenta'}}</label>
-                            <input type="text" name="numero" class="form-control" id="numero" placeholder="Número de cuenta" required autofocus="true">
+                            <input type="text" name="numero" class="form-control" id="numero" placeholder="Número de cuenta" required autofocus="true" maxlength="20">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom01">{{'Tipo'}}</label>

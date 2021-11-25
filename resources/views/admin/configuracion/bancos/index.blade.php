@@ -59,7 +59,7 @@
                             <td>{{ $resultado->Bancos }}</td>
                             <td>{{ $resultado->Codigo_Bancario }}</td>
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
-                            <td>
+                            <td width="20">
                               @can('banco.edit')
                                 <a href="#" type="button" data-toggle="modal" data-target="#modal_banco" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Bancos_Bs'] }}" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">

@@ -56,7 +56,7 @@
                         <tr>
                             <td>{{ $role->name }}</td>
                             
-                            <td width="10px">
+                            <td width="20">
                               @can('rol.edit')
                                 <a href="{{ route('rol.edit', $role) }}" type="button" class="btn-transition btn btn-outline-success" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">

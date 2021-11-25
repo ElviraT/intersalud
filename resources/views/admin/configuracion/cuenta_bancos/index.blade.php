@@ -62,10 +62,10 @@
                             <td>{{ $resultado->Banco->Bancos }}</td>
                             <td>{{ $resultado->UsuarioM->Nombres_Medico.' '.$resultado->UsuarioM->Apellidos_Medicos }}</td>
                             <td>{{ $resultado->Numero_Cuenta }}</td>
-                            <td>{{ $resultado->Tipo }}</td>
+                            <td>{{ $resultado->TipoCuenta->descripcion }}</td>
                             <td>{{ date('Y-m-d', strtotime($resultado->Fecha)) }}</td>
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
-                            <td>
+                            <td width="20">
                               @can('cuenta_banco.edit')
                                 <a href="#" type="button" data-toggle="modal" data-target="#modal_cuenta_banco" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Cuenta_Bancaria_BS'] }}" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">

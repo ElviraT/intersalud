@@ -63,7 +63,7 @@
                             <td>{{ $resultado->Numero_Colegio_de_Medico }}</td>
                             <td>{{ $resultado->Registro_MPPS }}</td>
                             <td style="background-color: {{$resultado->StatusM->color}}; color: #fff">{{ $resultado->StatusM->Status_Medico }}</td>
-                            <td>
+                            <td width="20">
                               @can('usuario_m.edit')
                                 <a href="{{ route('usuario_m.edit', $resultado['id_Medico'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">

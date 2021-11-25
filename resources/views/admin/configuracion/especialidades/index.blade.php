@@ -55,7 +55,7 @@
                       @foreach($especialidades as $resultado)
                         <tr>
                             <td>{{ $resultado->Espacialiadad_Medica }}</td>
-                            <td width="30">
+                            <td width="20">
                               @can('especialidad.edit')
                                 <a href="#" type="button" data-toggle="modal" data-target="#modal_especialidad" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Especialidad_Medica'] }}" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">

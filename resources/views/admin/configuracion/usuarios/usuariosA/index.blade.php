@@ -59,7 +59,7 @@
                             <td>{{ $resultado->Nombre_Asistente.' '.$resultado->Apellidos_Asistente}}</td>
                             <td>{{ $resultado->UsuarioM->Nombres_Medico.' '.$resultado->UsuarioM->Apellidos_Medicos}}</td>
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
-                            <td>
+                            <td width="20">
                               @can('usuario_a.edit')
                                 <a href="{{ route('usuario_a.edit', $resultado['id_asistente'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">

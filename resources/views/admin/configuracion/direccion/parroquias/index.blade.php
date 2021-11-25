@@ -59,7 +59,7 @@
                         <tr>
                             <td>{{ $municipio[0]->Municipio }}</td>
                             <td>{{ $resultado->Parroquia }}</td>
-                            <td>
+                            <td width="20">
                               @can('parroquia.edit')
                                 <a href="#" type="button" data-toggle="modal" data-target="#modal_parroquia" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Parroquia'] }}" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">

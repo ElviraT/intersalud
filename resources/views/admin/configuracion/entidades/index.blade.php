@@ -59,7 +59,7 @@
                             <td>{{ $resultado->Entidad_USD }}</td>
                             <td>{{ $resultado->Referencia }}</td>
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
-                            <td>
+                            <td width="20">
                               @can('entidad.edit')
                                 <a href="#" type="button" data-toggle="modal" data-target="#modal_entidad" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Entidad_USD'] }}" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">

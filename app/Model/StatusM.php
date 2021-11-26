@@ -15,4 +15,8 @@ class StatusM extends Model
         return $this->hasOne('App\Model\UsuarioM', 'id_Status_Medico');
     }
 
+    public function ControlEspecialidades()
+    {
+        return $this->hasOne('App\Model\ControlEspecialidades', 'id_Status_Medico');
+    }
 }

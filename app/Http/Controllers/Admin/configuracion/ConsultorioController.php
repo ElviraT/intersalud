@@ -55,7 +55,7 @@ class ConsultorioController extends Controller
 
                 Flash::success("Registro Agregado Correctamente");            
             } catch (\Illuminate\Database\QueryException $e) {
-                Flash::error($e.'Ocurrió un error, por favor intente de nuevo');    
+                Flash::error('Ocurrió un error, por favor intente de nuevo');    
             }
         }else{
             try{
@@ -76,7 +76,7 @@ class ConsultorioController extends Controller
 
                 Flash::success("Registro Modificado Correctamente");
              }catch(\Illuminate\Database\QueryException $e){                    
-                Flash::error($e.'Ocurrió un error, por favor intente de nuevo');
+                Flash::error('Ocurrió un error, por favor intente de nuevo');
             }
         }
         return redirect()->route('consultorio');

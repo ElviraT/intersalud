@@ -12,12 +12,12 @@ class UsuarioM extends Model
 
    public function StatusM()
     {
-        return $this->hasOne('App\Model\StatusM', 'id_Status_Medico','Status_Medico_id',);
+        return $this->hasOne('App\Model\StatusM', 'id_Status_Medico','Status_Medico_id');
     }
 
     public function UsuarioA()
     {
-        return $this->hasOne('App\Model\UsuarioA', 'id_asistente','id_Medico',);
+        return $this->hasOne('App\Model\UsuarioA', 'id_asistente','id_Medico');
     }
 
     public function Billetera()
@@ -27,5 +27,10 @@ class UsuarioM extends Model
     public function CuentaBanco()
     {
         return $this->hasOne('App\Model\CuentaBanco', 'id_Cuenta_Bancaria_BS','id_Medico');
+    }
+
+     public function ControlEspecialidades()
+    {
+        return $this->hasOne('App\Model\ControlEspecialidades', 'id_Control_Especialidad','id_Medico');
     }
 }

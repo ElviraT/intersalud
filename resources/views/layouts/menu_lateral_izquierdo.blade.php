@@ -38,7 +38,7 @@
         </ul> 
         <div class="pcoded-navigation-label" data-i18n="nav.category.forms">{{'Registros'}}</div>
         <ul class="pcoded-item pcoded-left-item">
-          <li class="{{ @request()->routeIs('rol*') || @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') || @request()->routeIs('usuario_a*') || @request()->routeIs('usuario_p*') || @request()->routeIs('banco') || @request()->routeIs('tipoC') || @request()->routeIs('cuentaUSD') || @request()->routeIs('entidad') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') || @request()->routeIs('especialidad') || @request()->routeIs('consultorio') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
+          <li class="{{ @request()->routeIs('rol*') || @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') || @request()->routeIs('usuario_a*') || @request()->routeIs('usuario_p*') || @request()->routeIs('banco') || @request()->routeIs('tipoC') || @request()->routeIs('cuentaUSD') || @request()->routeIs('entidad') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') || @request()->routeIs('especialidad') || @request()->routeIs('controlE') || @request()->routeIs('consultorio') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
               <a href="javascript:void(0)" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-settings"></i><b>C</b></span>
                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">{{'Configuración'}}</span>
@@ -112,7 +112,7 @@
                   <li class="{{ @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
                       <a href="javascript:void(0)" class="waves-effect waves-dark">
                           <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
-                          <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.main">{{'Configuración Personas'}}</span>&nbsp;
+                          <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.main">{{'Config. Personas'}}</span>&nbsp;
                           <span class="pcoded-mcaret"></span>
                       </a>
                       <ul class="{{ @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
@@ -306,18 +306,27 @@
                         @endcan                         
                       </ul>
                   </li>
-                  <li class="{{ @request()->routeIs('especialidad') || @request()->routeIs('consultorio') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
+                  <li class="{{ @request()->routeIs('especialidad') || @request()->routeIs('consultorio') || @request()->routeIs('controlE') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
                       <a href="javascript:void(0)" class="waves-effect waves-dark">
                           <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
-                          <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.main">{{'Confg. Medico'}}</span>
+                          <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.main">{{'Config. Medico'}}</span>
                           <span class="pcoded-mcaret"></span>
                       </a>
-                      <ul class="{{ @request()->routeIs('especialidad') || @request()->routeIs('consultorio') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
+                      <ul class="{{ @request()->routeIs('especialidad') || @request()->routeIs('consultorio') || @request()->routeIs('controlE') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
                        @can('especialidad')
                         <li class="{{ @request()->routeIs('especialidad') ? 'active' : ' ' }}">
                             <a href="{{ route('especialidad')}}" onclick="loading_show();" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-minus"></i><b>EM</b></span>
                                 <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Especialidades Medicas'}}</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('controlE')
+                        <li class="{{ @request()->routeIs('controlE') ? 'active' : ' ' }}">
+                            <a href="{{ route('controlE')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-minus"></i><b>CM</b></span>
+                                <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Control Especialidades'}}</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>

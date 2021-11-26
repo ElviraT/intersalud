@@ -191,6 +191,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('especialidad/edit', ['as' => 'especialidad.edit', 'uses' => 'Admin\configuracion\EspecialidadController@edit']);
 	Route::post('especialidad/destroy', ['as' => 'especialidad.destroy', 'uses' => 'Admin\configuracion\EspecialidadController@destroy']);
 
+	//CONFIGURACIÓN-CONFG. MEDICOS- CONTROL ESPECIALIDAD
+	Route::get('controlE', ['as' => 'controlE', 'uses' => 'Admin\configuracion\ControlEspecialidadesController@index']);
+	Route::post('controlE/add', ['as' => 'controlE.add', 'uses' => 'Admin\configuracion\ControlEspecialidadesController@add']);
+	Route::get('controlE/edit', ['as' => 'controlE.edit', 'uses' => 'Admin\configuracion\ControlEspecialidadesController@edit']);
+	Route::post('controlE/destroy', ['as' => 'controlE.destroy', 'uses' => 'Admin\configuracion\ControlEspecialidadesController@destroy']);
+
 	//CONFIGURACIÓN-CONFG. MEDICOS - CONSULTORIOS
 	Route::get('consultorio', ['as' => 'consultorio', 'uses' => 'Admin\configuracion\ConsultorioController@index']);
 	Route::post('consultorio/add', ['as' => 'consultorio.add', 'uses' => 'Admin\configuracion\ConsultorioController@add']);

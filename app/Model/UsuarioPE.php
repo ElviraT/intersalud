@@ -4,10 +4,10 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UsuarioP extends Model
+class UsuarioPE extends Model
 {
-   protected $table = 'usuarios_pacientes';
-   protected $primary_key = 'id_Paciente';
+   protected $table = 'pacientes_especiales';
+   protected $primary_key = 'id_Pacientes_Especiales';
    public $timestamps = false;
 
    public function Status()
@@ -19,5 +19,4 @@ class UsuarioP extends Model
     {
         return $this->hasOne('App\Model\Sexo', 'id_Sexo','Sexo_id');
     }
-
 }

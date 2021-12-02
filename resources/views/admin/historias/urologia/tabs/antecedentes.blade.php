@@ -556,7 +556,7 @@
         <a href="{{ route('urologia')}}" class="mt-1 btn btn-outline-secondary">
             <span class="btn-icon-wrapper pr-2 opacity-7">
              <i class="fa fa-reply-all" aria-hidden="true"></i>
-            </span>{{'Cancelar'}}
+            </span>{{'Volver'}}
         </a>
         <button type="submit" class="mt-1 btn btn-outline-success">
             <span class="btn-icon-wrapper pr-2 opacity-7">

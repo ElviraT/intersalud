@@ -17,7 +17,7 @@
                 <button type="button" class="btn-transition btn btn-outline-secondary" data-dismiss="modal">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                      <i class="fa fa-reply-all"></i>
-                    </span>{{'Cancelar'}}
+                    </span>{{'Volver'}}
                 </button>
                 <button type="submit" class="btn-transition btn btn-outline-danger">
                     <span class="btn-icon-wrapper pr-2 opacity-7">

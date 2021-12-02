@@ -1,20 +1,20 @@
 @extends('layouts.Base')
 @section('css')
-@include('admin.configuracion.usuarios.usuariosP.css.css')
+@include('admin.configuracion.usuarios.usuariosPE.css.css')
 @endsection
 @section('banner')
 <div class="col-md-8">
   <div class="page-header-title">
       <h5 class="m-b-10">{{'Usuarios'}}</h5>
-      <p class="m-b-0">{{'Pacientes'}}</p>
+      <p class="m-b-0">{{'Pacientes Especiales'}}</p>
   </div>
 </div>
 <div class="col-md-4">
   <ul class="breadcrumb-title">
       <li class="breadcrumb-item">
-          <a href="{{ route('usuario_p')}}" onclick="loading_show();"> <i class="fa fa-home"></i> </a>
+          <a href="{{ route('usuario_pe' ,$id)}}" onclick="loading_show();"> <i class="fa fa-home"></i> </a>
       </li>
-      <li class="breadcrumb-item"><a href="#!">{{'Pacientes'}}</a>
+      <li class="breadcrumb-item"><a href="#!">{{'Pacientes Especiales'}}</a>
       </li>
   </ul>
 </div>
@@ -27,8 +27,8 @@
           @include('flash::message')
            <div class="card">
               <div class="col-md-4 mt-2 mb-2">
-                @can('usuario_p.create')
-                <a href="{{ route('usuario_p.create')}}" type="button" class="btn-transition btn btn-outline-primary btn-sm" onclick="loading_show();">
+                @can('usuario_pe.add')
+                <a href="{{ route('usuario_pe.agregar', $id)}}" type="button" class="btn-transition btn btn-outline-primary btn-sm" onclick="loading_show();">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fa fa-plus-circle"></i>
                     </span>
@@ -38,48 +38,42 @@
               </div>
             </div>
             <div class="card">
-              @if(count($usuariosP) == 0)
+              @if(count($usuariosPE) == 0)
                   <br>
                     <p class="text-center">No se encontraron registros coincidentes</p>
               @else
 
             <div class="col-md-12 mt-3">
-                <table id="table_usuariosP" class="table table-striped table-bordered" width="100%">
+                <table id="table_usuariosPE" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
                             <th>{{'Nombre'}}</th>
                             <th>{{'DNI'}}</th>
                             <th>{{'Sexo'}}</th>
+                            <th>{{'Parentesco'}}</th>
                             <th>{{'Status'}}</th>
                             <th>{{'Acción'}}</th>
                         </tr>
                     </thead>
                     <tbody>
-                      @foreach($usuariosP as $resultado)
+                      @foreach($usuariosPE as $resultado)
                         <tr>
-                            <td>{{ $resultado->Nombres_Paciente.' '.$resultado->Apellidos_Paciente}}</td>
+                            <td>{{ $resultado->Nombre_Paciente_Especial.' '.$resultado->Apellido_Paciente_Especial}}</td>
                             <td>{{ $resultado->Prefijo_CIDNI_id.' '.$resultado->CIDNI }}</td>
                             <td>{{ $resultado->Sexo->Sexo }}</td>
+                            <td>{{ $resultado->Parentesco_Familiar }}</td>
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
                             <td width="20">
-                              @can('usuario_p.edit')
-                                <a href="{{ route('usuario_p.edit', $resultado['id_Paciente'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success btn-sm">
+                              @can('usuario_pe.edit')
+                                <a href="{{ route('usuario_pe.edit', $resultado['id_Pacientes_Especiales'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success btn-sm">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
-                                      <i class="ti-pencil"></i>
+                                        <i class="ti-pencil"></i>
                                     </span>
                                     {{'EDITAR'}}
                                 </a>
                               @endcan
-                              @can('usuario_pe')
-                                <a href="{{ route('usuario_pe', $resultado['id_Paciente'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-info btn-sm">
-                                    <span class="btn-icon-wrapper pr-2 opacity-7">
-                                      <i class="fa fa-plus-circle"></i>
-                                    </span>
-                                    {{'FAMILIAR'}}
-                                </a>
-                              @endcan
-                              @can('usuario_p.destroy')
-                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete17" data-record-id="{{$resultado->id_Paciente}}" data-record-title="{{$resultado->Nombres_Paciente.' '.$resultado->Apellidos_Paciente}}" class="btn-transition btn btn-outline-danger btn-sm" onclick="loading_show();">
+                              @can('usuario_pe.destroy')
+                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete28" data-record-id="{{$resultado->id_Pacientes_Especiales}}" data-record-title="{{$resultado->Nombre_Paciente_Especial.' '.$resultado->Apellido_Paciente_Especial}}" class="btn-transition btn btn-outline-danger btn-sm" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                         <i class="ti-eraser"></i>
                                     </span>{{'ELIMINAR'}}
@@ -98,9 +92,9 @@
 </div>
 @endsection
 @section('modal')
-    @include('admin.modales.elimina_paciente')
+    @include('admin.modales.elimina_paciente_especial')
 @endsection
 
 @section('js')
-  @include('admin.configuracion.usuarios.usuariosP.js.js')
+  @include('admin.configuracion.usuarios.usuariosPE.js.js')
 @endsection

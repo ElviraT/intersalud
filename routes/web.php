@@ -143,6 +143,16 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('usuario_p/login', ['as' => 'usuario_p.login', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@login']);
 	Route::post('usuario_p/destroy', ['as' => 'usuario_p.destroy', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@destroy']);
 
+	//CONFIGURACIÓN-USUARIOS-PACIENTES-ESPECIALES
+	Route::get('paciente-especial/{id}', ['as' => 'usuario_pe', 'uses' => 'Admin\configuracion\usuarios\UsuarioPEController@index']);
+	Route::get('paciente-especial/{idp}/agregar', ['as' => 'usuario_pe.agregar', 'uses' => 'Admin\configuracion\usuarios\UsuarioPEController@agregar']);
+	Route::post('paciente-especial/add', ['as' => 'usuario_pe.add', 'uses' => 'Admin\configuracion\usuarios\UsuarioPEController@add']);
+	Route::get('paciente-especial/edit/{id}', ['as' => 'usuario_pe.edit', 'uses' => 'Admin\configuracion\usuarios\UsuarioPEController@edit']);
+	Route::post('paciente-especial/update', ['as' => 'usuario_pe.update', 'uses' => 'Admin\configuracion\usuarios\UsuarioPEController@update']);
+	Route::post('paciente-especial/login', ['as' => 'usuario_pe.login', 'uses' => 'Admin\configuracion\usuarios\UsuarioPEController@login']);
+	Route::post('paciente-especial/destroy', ['as' => 'usuario_pe.destroy', 'uses' => 'Admin\configuracion\usuarios\UsuarioPEController@destroy']);
+
+
 	//CONFIGURACIÓN-BANCOS
 	Route::get('banco', ['as' => 'banco', 'uses' => 'Admin\configuracion\BancosController@index']);
 	Route::post('banco/add', ['as' => 'banco.add', 'uses' => 'Admin\configuracion\BancosController@add']);

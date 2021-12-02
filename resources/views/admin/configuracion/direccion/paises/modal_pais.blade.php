@@ -31,7 +31,7 @@
                 <button type="button" class="mt-1 btn-transition btn btn-outline-secondary" data-dismiss="modal">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                      <i class="ti-back-left"></i>
-                    </span>{{'Cancelar'}}
+                    </span>{{'Volver'}}
                 </button>
                 <button type="submit" class="mt-1 btn-transition btn btn-outline-primary">
                     <span class="btn-icon-wrapper pr-2 opacity-7">

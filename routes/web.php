@@ -142,6 +142,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('usuario_p/update', ['as' => 'usuario_p.update', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@update']);
 	Route::post('usuario_p/login', ['as' => 'usuario_p.login', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@login']);
 	Route::post('usuario_p/destroy', ['as' => 'usuario_p.destroy', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@destroy']);
+	Route::post('usuario_p/direccion', ['as' => 'usuario_p.direccion', 'uses' => 'Admin\configuracion\usuarios\DireccionPController@add']);
+
 
 	//CONFIGURACIÓN-USUARIOS-PACIENTES-ESPECIALES
 	Route::get('paciente-especial/{id}', ['as' => 'usuario_pe', 'uses' => 'Admin\configuracion\usuarios\UsuarioPEController@index']);

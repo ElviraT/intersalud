@@ -26,15 +26,27 @@
         <div class="col-md-12">
           @include('flash::message')
            <div class="card">
-              <div class="col-md-4 mt-2 mb-2">
-                @can('usuario_pe.add')
-                <a href="{{ route('usuario_pe.agregar', $id)}}" type="button" class="btn-transition btn btn-outline-primary btn-sm" onclick="loading_show();">
-                    <span class="btn-icon-wrapper pr-2 opacity-7">
-                        <i class="fa fa-plus-circle"></i>
-                    </span>
-                    {{'AGREGAR'}}
-                </a>
-                @endcan
+              <div class="col-md-12 mt-2 mb-2">
+                <div class="row">
+                  <div class="col-md-6">
+                    @can('usuario_pe.add')
+                    <a href="{{ route('usuario_pe.agregar', $id)}}" type="button" class="btn-transition btn btn-outline-primary btn-sm" onclick="loading_show();">
+                        <span class="btn-icon-wrapper pr-2 opacity-7">
+                            <i class="fa fa-plus-circle"></i>
+                        </span>
+                        {{'AGREGAR'}}
+                    </a>
+                    @endcan
+                  </div>
+                  <div class="col-md-6" align="right">
+                    <a href="{{ route('usuario_p') }}" type="button" class="btn-transition btn btn-outline-secondary btn-sm" onclick="loading_show();">
+                      <span class="btn-icon-wrapper pr-2 opacity-7">
+                            <i class="ti-back-left"></i>
+                        </span>
+                        {{'VOLVER'}}
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="card">
@@ -59,7 +71,7 @@
                       @foreach($usuariosPE as $resultado)
                         <tr>
                             <td>{{ $resultado->Nombre_Paciente_Especial.' '.$resultado->Apellido_Paciente_Especial}}</td>
-                            <td>{{ $resultado->Prefijo_CIDNI_id.' '.$resultado->CIDNI }}</td>
+                            <td>{{ $resultado->PrefijoDNI->Prefijo_CIDNI.' '.$resultado->CIDNI }}</td>
                             <td>{{ $resultado->Sexo->Sexo }}</td>
                             <td>{{ $resultado->Parentesco_Familiar }}</td>
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>

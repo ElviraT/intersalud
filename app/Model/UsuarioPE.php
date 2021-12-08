@@ -19,4 +19,8 @@ class UsuarioPE extends Model
     {
         return $this->hasOne('App\Model\Sexo', 'id_Sexo','Sexo_id');
     }
+    public function PrefijoDNI()
+    {
+        return $this->hasOne('App\Model\PrefijoDNI', 'id_Prefijo_CIDNI','Prefijo_CIDNI_id');
+    }
 }

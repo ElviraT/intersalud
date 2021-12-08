@@ -15,6 +15,11 @@ use App\Model\PrefijoDNI;
 use App\Model\Civil;
 use App\Model\Status;
 use App\Model\HistoricoP;
+use App\Model\Ciudad;
+use App\Model\Estado;
+use App\Model\Municipio;
+use App\Model\Parroquia;
+use App\Model\DireccionPaciente;
 use Spatie\Permission\Models\Role;
 use Flash;
 
@@ -30,6 +35,7 @@ class UsuarioPController extends Controller
 
      public function index(UsuarioP $model)
   	{   	
+      session()->forget('id_pariente');
   		return view('admin.configuracion.usuarios.usuariosP.index', ['usuariosP' => $model->all()]);
   	}
 
@@ -41,7 +47,12 @@ class UsuarioPController extends Controller
     	$status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status");
     	$nacionalidad = Collection::make(Pais::select(['id_Pais','Pais'])->orderBy('Pais')->get())->pluck("Pais", "id_Pais");
 
-    	return view('admin.configuracion.usuarios.usuariosP.create')->with(compact('sexo','prefijo','estadoC','status','nacionalidad')); 
+      $ciudad=Collection::make(Ciudad::select(['id_Ciudad','Ciudad'])->orderBy('Ciudad')->get())->pluck("Ciudad", "id_Ciudad"); 
+      $estado=Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado"); 
+      $municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
+      $parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia"); 
+
+    	return view('admin.configuracion.usuarios.usuariosP.create')->with(compact('sexo','prefijo','estadoC','status','nacionalidad','ciudad','estado','municipio','parroquia')); 
   	}
 
   	 public function add(Request $request)
@@ -107,7 +118,7 @@ class UsuarioPController extends Controller
     public function edit($id)
     {
       $login = LoginP::where('id_login_Pacientes', $id)->first();
-
+      $direccion= DireccionPaciente::where('Paciente_id', $id)->first();
       $paciente = UsuarioP::where('id_Paciente',$id)->first();
       $sexo=Collection::make(Sexo::select(['id_Sexo','Sexo'])->orderBy('Sexo')->get())->pluck("Sexo", "id_Sexo");
       $prefijo=Collection::make(PrefijoDNI::select(['id_Prefijo_CIDNI','Prefijo_CIDNI'])->orderBy('Prefijo_CIDNI')->get())->pluck("Prefijo_CIDNI", "id_Prefijo_CIDNI");
@@ -115,7 +126,12 @@ class UsuarioPController extends Controller
       $status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status");
       $nacionalidad = Collection::make(Pais::select(['id_Pais','Pais'])->orderBy('Pais')->get())->pluck("Pais", "id_Pais");
 
-      return view('admin.configuracion.usuarios.usuariosP.edit')->with(compact('paciente','sexo','prefijo','estadoC','status','nacionalidad','login')); 
+      $ciudad=Collection::make(Ciudad::select(['id_Ciudad','Ciudad'])->orderBy('Ciudad')->get())->pluck("Ciudad", "id_Ciudad"); 
+      $estado=Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado"); 
+      $municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
+      $parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia"); 
+
+      return view('admin.configuracion.usuarios.usuariosP.edit')->with(compact('paciente','sexo','prefijo','estadoC','status','nacionalidad','login','ciudad','estado','municipio','parroquia','direccion')); 
     }
 
     public function login(Request $request)

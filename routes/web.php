@@ -161,6 +161,18 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('banco/edit', ['as' => 'banco.edit', 'uses' => 'Admin\configuracion\BancosController@edit']);
 	Route::post('banco/destroy', ['as' => 'banco.destroy', 'uses' => 'Admin\configuracion\BancosController@destroy']);
 
+	//CONFIGURACIÓN-CUENTAS-TIPO PAGO
+	Route::get('tpago', ['as' => 'tpago', 'uses' => 'Admin\configuracion\TipoPagoController@index']);
+	Route::post('tpago/add', ['as' => 'tpago.add', 'uses' => 'Admin\configuracion\TipoPagoController@add']);
+	Route::get('tpago/edit', ['as' => 'tpago.edit', 'uses' => 'Admin\configuracion\TipoPagoController@edit']);
+	Route::post('tpago/destroy', ['as' => 'tpago.destroy', 'uses' => 'Admin\configuracion\TipoPagoController@destroy']);
+
+	//CONFIGURACIÓN-CUENTAS-TASA DE CAMBIO
+	Route::get('tcambio', ['as' => 'tcambio', 'uses' => 'Admin\configuracion\TasaCambioController@index']);
+	Route::post('tcambio/add', ['as' => 'tcambio.add', 'uses' => 'Admin\configuracion\TasaCambioController@add']);
+	Route::get('tcambio/edit', ['as' => 'tcambio.edit', 'uses' => 'Admin\configuracion\TasaCambioController@edit']);
+	Route::post('tcambio/destroy', ['as' => 'tcambio.destroy', 'uses' => 'Admin\configuracion\TasaCambioController@destroy']);
+
 	//CONFIGURACIÓN-TIPOS DE CUENTAS
 	Route::get('tipoC', ['as' => 'tipoC', 'uses' => 'Admin\configuracion\TipoCuentaController@index']);
 	Route::post('tipoC/add', ['as' => 'tipoC.add', 'uses' => 'Admin\configuracion\TipoCuentaController@add']);
@@ -214,6 +226,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('consultorio/add', ['as' => 'consultorio.add', 'uses' => 'Admin\configuracion\ConsultorioController@add']);
 	Route::get('consultorio/edit', ['as' => 'consultorio.edit', 'uses' => 'Admin\configuracion\ConsultorioController@edit']);
 	Route::post('consultorio/destroy', ['as' => 'consultorio.destroy', 'uses' => 'Admin\configuracion\ConsultorioController@destroy']);
+
+	//SERVICIOS
+	Route::get('servicio', ['as' => 'servicio', 'uses' => 'Admin\ServiciosController@index']);
+	Route::post('servicio/add', ['as' => 'servicio.add', 'uses' => 'Admin\ServiciosController@add']);
+	Route::get('servicio/edit', ['as' => 'servicio.edit', 'uses' => 'Admin\ServiciosController@edit']);
+	Route::post('servicio/destroy', ['as' => 'servicio.destroy', 'uses' => 'Admin\ServiciosController@destroy']);
 
 	/*HISTORIAS CLINICAS - UROLOGIA*/
 	Route::get('historias/urologia', ['as' => 'urologia', 'uses' => 'Admin\historias\UrologiaController@index']);

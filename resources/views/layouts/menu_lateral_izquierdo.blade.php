@@ -38,7 +38,7 @@
         </ul> 
         <div class="pcoded-navigation-label" data-i18n="nav.category.forms">{{'Registros'}}</div>
         <ul class="pcoded-item pcoded-left-item">
-          <li class="{{ @request()->routeIs('rol*') || @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') || @request()->routeIs('usuario_a*') || @request()->routeIs('usuario_p*') || @request()->routeIs('usuario_pe*') || @request()->routeIs('banco') || @request()->routeIs('tipoC') || @request()->routeIs('cuentaUSD') || @request()->routeIs('entidad') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') || @request()->routeIs('especialidad') || @request()->routeIs('controlE') || @request()->routeIs('consultorio') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
+          <li class="{{ @request()->routeIs('rol*') || @request()->routeIs('pais') || @request()->routeIs('estado') || @request()->routeIs('ciudad') || @request()->routeIs('municipio') || @request()->routeIs('parroquia') || @request()->routeIs('usuario_m*') || @request()->routeIs('prefijo') || @request()->routeIs('sexo') || @request()->routeIs('civil') || @request()->routeIs('status_m') || @request()->routeIs('status_c') || @request()->routeIs('status_f') || @request()->routeIs('status_t') || @request()->routeIs('status') || @request()->routeIs('usuario_a*') || @request()->routeIs('usuario_p*') || @request()->routeIs('usuario_pe*') || @request()->routeIs('banco') || @request()->routeIs('tipoC') || @request()->routeIs('cuentaUSD') || @request()->routeIs('entidad') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') || @request()->routeIs('especialidad') || @request()->routeIs('controlE') || @request()->routeIs('consultorio') || @request()->routeIs('tpago') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
               <a href="javascript:void(0)" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-settings"></i><b>C</b></span>
                   <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">{{'Configuración'}}</span>
@@ -234,13 +234,13 @@
                          
                       </ul>
                   </li>
-                  <li class="{{ @request()->routeIs('banco') || @request()->routeIs('cuentaUSD') || @request()->routeIs('tipoC') || @request()->routeIs('entidad') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
+                  <li class="{{ @request()->routeIs('banco') || @request()->routeIs('cuentaUSD') || @request()->routeIs('tipoC') || @request()->routeIs('entidad') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') || @request()->routeIs('tpago') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
                       <a href="javascript:void(0)" class="waves-effect waves-dark">
                           <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
                           <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.main">{{'Cuentas'}}</span>
                           <span class="pcoded-mcaret"></span>
                       </a>
-                      <ul class="{{ @request()->routeIs('banco') || @request()->routeIs('cuentaUSD') || @request()->routeIs('tipoC') || @request()->routeIs('entidad') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
+                      <ul class="{{ @request()->routeIs('banco') || @request()->routeIs('cuentaUSD') || @request()->routeIs('tipoC') || @request()->routeIs('entidad') || @request()->routeIs('cripto') || @request()->routeIs('billetera') || @request()->routeIs('cuenta_banco') || @request()->routeIs('tpago') ? 'active pcoded-submenu pcoded-trigger' : 'pcoded-submenu' }}">
                        @can('banco')
                         <li class="{{ @request()->routeIs('banco') ? 'active' : ' ' }}">
                             <a href="{{ route('banco')}}" onclick="loading_show();" class="waves-effect waves-dark">
@@ -303,7 +303,16 @@
                                   <span class="pcoded-mcaret"></span>
                               </a>
                           </li>
-                        @endcan                         
+                        @endcan 
+                        @can('tpago')
+                          <li class="{{ @request()->routeIs('tpago') ? 'active' : ' ' }}">
+                              <a href="{{ route('tpago')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-minus"></i><b>TP</b></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Tipo de Pago'}}</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                          </li>
+                        @endcan                       
                       </ul>
                   </li>
                   <li class="{{ @request()->routeIs('especialidad') || @request()->routeIs('consultorio') || @request()->routeIs('controlE') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }}">
@@ -363,6 +372,28 @@
               </ul>
           </li>
       </ul>
+      @can('tcambio')
+      <ul class="pcoded-item pcoded-left-item">
+          <li class="{{ @request()->routeIs('tcambio') ? 'active' : ' ' }}">
+              <a href="{{ route('tcambio')}}"  onclick="loading_show();" class="waves-effect waves-dark">
+                  <span class="pcoded-micon"><i class="ti-bar-chart"></i><b>TC</b></span>
+                  <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Tasa de Cambio'}}</span>
+                  <span class="pcoded-mcaret"></span>
+              </a>
+          </li>
+      </ul>
+      @endcan 
+      @can('servicio')
+      <ul class="pcoded-item pcoded-left-item">
+          <li class="{{-- @request()->routeIs('servicio') ? 'active' : ' ' --}}">
+              <a href="#{{-- route('servicio')--}}"  {{--onclick="loading_show();"--}} class="waves-effect waves-dark">
+                  <span class="pcoded-micon"><i class="ti-list"></i><b>S</b></span>
+                  <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Servicios'}}</span>
+                  <span class="pcoded-mcaret"></span>
+              </a>
+          </li>
+      </ul>
+      @endcan   
       <ul class="pcoded-item pcoded-left-item">
         <li class="{{ @request()->routeIs('urologia*') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
             <a href="javascript:void(0)" class="waves-effect waves-dark">

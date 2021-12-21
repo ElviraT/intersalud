@@ -385,8 +385,8 @@
       @endcan 
       @can('servicio')
       <ul class="pcoded-item pcoded-left-item">
-          <li class="{{-- @request()->routeIs('servicio') ? 'active' : ' ' --}}">
-              <a href="#{{-- route('servicio')--}}"  {{--onclick="loading_show();"--}} class="waves-effect waves-dark">
+          <li class="{{ @request()->routeIs('servicio') ? 'active' : ' ' }}">
+              <a href="{{route('servicio')}}"  onclick="loading_show();" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-list"></i><b>S</b></span>
                   <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Servicios'}}</span>
                   <span class="pcoded-mcaret"></span>

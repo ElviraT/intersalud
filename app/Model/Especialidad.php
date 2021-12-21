@@ -19,4 +19,9 @@ class Especialidad extends Model
     {
         return $this->hasOne('App\Model\ControlEspecialidades', 'id_Especialidad_Medica');
     }
+
+    public function Servicio()
+    {
+        return $this->hasOne('App\Model\Servicio', 'id_Especialidad_Medica');
+    }
 }

@@ -50,4 +50,8 @@ class Status extends Model
     {
         return $this->hasOne('App\Model\CuentaUSD', 'id_Status');
     }
+    public function Servicio()
+    {
+        return $this->hasOne('App\Model\Servicio', 'id_Status');
+    }
 }

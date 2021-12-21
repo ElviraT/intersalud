@@ -29,8 +29,13 @@ class UsuarioM extends Model
         return $this->hasOne('App\Model\CuentaBanco', 'id_Cuenta_Bancaria_BS','id_Medico');
     }
 
-     public function ControlEspecialidades()
+    public function ControlEspecialidades()
     {
         return $this->hasOne('App\Model\ControlEspecialidades', 'id_Control_Especialidad','id_Medico');
+    }
+
+    public function Servicio()
+    {
+        return $this->hasOne('App\Model\Servicio', 'id_Servicio','id_Medico');
     }
 }

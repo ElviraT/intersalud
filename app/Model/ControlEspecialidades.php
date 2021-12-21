@@ -20,7 +20,7 @@ class ControlEspecialidades extends Model
         return $this->hasOne('App\Model\Especialidad', 'id_Especialidad_Medica','Especialidades_Medicas_id');
     }
 
-     public function UsuarioM()
+    public function UsuarioM()
     {
         return $this->hasOne('App\Model\UsuarioM', 'id_Medico', 'Medico_id');
     }

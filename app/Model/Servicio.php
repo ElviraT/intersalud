@@ -10,4 +10,18 @@ class Servicio extends Model
    protected $primary_key = 'id_Servicio';
    public $timestamps = false;
 
+   public function Status()
+    {
+        return $this->hasOne('App\Model\Status', 'id_Status','Status_id');
+    }
+    
+    public function Especialidad()
+    {
+        return $this->hasOne('App\Model\Especialidad', 'id_Especialidad_Medica','Especialidad_Medica_id');
+    }
+
+    public function UsuarioM()
+    {
+        return $this->hasOne('App\Model\UsuarioM', 'id_Medico', 'Medico_id');
+    }
 }

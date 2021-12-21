@@ -1,6 +1,6 @@
 @extends('layouts.Base')
 @section('css')
-@include('admin.configuracion.tcambios.css.css')
+@include('admin.tcambios.css.css')
 @endsection
 @section('banner')
 <div class="col-md-8">
@@ -95,9 +95,9 @@
 </div>
 @endsection
 @section('modal')
-    @include('admin.configuracion.tcambios.modal_tcambio')
+    @include('admin.tcambios.modal_tcambio')
     @include('admin.modales.elimina_tcambio')
 @endsection
 @section('js')
-  @include('admin.configuracion.tcambios.js.js')
+  @include('admin.tcambios.js.js')
 @endsection

@@ -21,7 +21,7 @@ class TasaCambioController extends Controller
     public function index(TipoCambio $model)
   	{   
   		$status=Collection::make(StatusT::select(['id_Status_Tasa','Tasa'])->orderBy('Tasa')->get())->pluck("Tasa", "id_Status_Tasa"); 	
-  		return view('admin.configuracion.tcambios.index', ['tcambios' => $model->all(),'status'=>$status]);
+  		return view('admin.tcambios.index', ['tcambios' => $model->all(),'status'=>$status]);
   	}
   	public function add (Request $request)
     {   

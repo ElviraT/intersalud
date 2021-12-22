@@ -348,25 +348,7 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-                        @endcan
-                       {{-- @can('billetera')
-                          <li class="{{ @request()->routeIs('billetera') ? 'active' : ' ' }}">
-                              <a href="{{ route('billetera')}}" onclick="loading_show();" class="waves-effect waves-dark">
-                                  <span class="pcoded-micon"><i class="ti-minus"></i><b>B</b></span>
-                                  <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Billeteras Criptos'}}</span>
-                                  <span class="pcoded-mcaret"></span>
-                              </a>
-                          </li>
-                        @endcan
-                        @can('cuenta_banco')
-                          <li class="{{ @request()->routeIs('cuenta_banco') ? 'active' : ' ' }}">
-                              <a href="{{ route('cuenta_banco')}}" onclick="loading_show();" class="waves-effect waves-dark">
-                                  <span class="pcoded-micon"><i class="ti-minus"></i><b>CB</b></span>
-                                  <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Cuentas de Banco'}}</span>
-                                  <span class="pcoded-mcaret"></span>
-                              </a>
-                          </li>
-                        @endcan --}}                        
+                        @endcan                      
                       </ul>
                   </li>
               </ul>
@@ -396,8 +378,8 @@
       @endcan 
       @can('horario')
       <ul class="pcoded-item pcoded-left-item">
-          <li class="{{-- @request()->routeIs('horario') ? 'active' : ' ' --}}">
-              <a href="#"{{--route('horario')"  onclick="loading_show();"--}} class="waves-effect waves-dark">
+          <li class="{{ @request()->routeIs('horario') ? 'active' : ' ' }}">
+              <a href="{{route('horario')}}"  onclick="loading_show();" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-alarm-clock"></i><b>HC</b></span>
                   <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Horarios Citas'}}</span>
                   <span class="pcoded-mcaret"></span>

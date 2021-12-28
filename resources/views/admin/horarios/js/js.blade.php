@@ -18,17 +18,101 @@ $(document).ready(function() {
 });
 $(function () {
        $('#fecha_lunes1').datetimepicker({
-       	format: 'LT',
+       	format: 'HH:mm:ss',
        });
        $('#fecha_lunes2').datetimepicker({
 		   useCurrent: false, //Important! See issue #1075
-		   format: 'LT',
+		   format: 'HH:mm:ss',
 		   });
        $("#fecha_lunes1").on("dp.change", function (e) {
            $('#fecha_lunes2').data("DateTimePicker").minDate(e.date);
        });
        $("#fecha_lunes2").on("dp.change", function (e) {
            $('#fecha_lunes1').data("DateTimePicker").maxDate(e.date);
+       });
+
+       $('#fecha_martes1').datetimepicker({
+        format: 'HH:mm:ss',
+       });
+       $('#fecha_martes2').datetimepicker({
+       useCurrent: false, //Important! See issue #1075
+       format: 'HH:mm:ss',
+       });
+       $("#fecha_martes1").on("dp.change", function (e) {
+           $('#fecha_martes2').data("DateTimePicker").minDate(e.date);
+       });
+       $("#fecha_martes2").on("dp.change", function (e) {
+           $('#fecha_martes1').data("DateTimePicker").maxDate(e.date);
+       });
+
+       $('#fecha_miercoles1').datetimepicker({
+        format: 'HH:mm:ss',
+       });
+       $('#fecha_miercoles2').datetimepicker({
+       useCurrent: false, //Important! See issue #1075
+       format: 'HH:mm:ss',
+       });
+       $("#fecha_miercoles1").on("dp.change", function (e) {
+           $('#fecha_miercoles2').data("DateTimePicker").minDate(e.date);
+       });
+       $("#fecha_miercoles2").on("dp.change", function (e) {
+           $('#fecha_miercoles1').data("DateTimePicker").maxDate(e.date);
+       });
+
+       $('#fecha_jueves1').datetimepicker({
+        format: 'HH:mm:ss',
+       });
+       $('#fecha_jueves2').datetimepicker({
+       useCurrent: false, //Important! See issue #1075
+       format: 'HH:mm:ss',
+       });
+       $("#fecha_jueves1").on("dp.change", function (e) {
+           $('#fecha_jueves2').data("DateTimePicker").minDate(e.date);
+       });
+       $("#fecha_jueves2").on("dp.change", function (e) {
+           $('#fecha_jueves1').data("DateTimePicker").maxDate(e.date);
+       });
+
+       $('#fecha_viernes1').datetimepicker({
+        format: 'HH:mm:ss',
+       });
+       $('#fecha_viernes2').datetimepicker({
+       useCurrent: false, //Important! See issue #1075
+       format: 'HH:mm:ss',
+       });
+       $("#fecha_viernes1").on("dp.change", function (e) {
+           $('#fecha_viernes2').data("DateTimePicker").minDate(e.date);
+       });
+       $("#fecha_viernes2").on("dp.change", function (e) {
+           $('#fecha_viernes1').data("DateTimePicker").maxDate(e.date);
+       });
+
+       $('#fecha_sabado1').datetimepicker({
+        format: 'HH:mm:ss',
+       });
+       $('#fecha_sabado2').datetimepicker({
+       useCurrent: false, //Important! See issue #1075
+       format: 'HH:mm:ss',
+       });
+       $("#fecha_sabado1").on("dp.change", function (e) {
+           $('#fecha_sabado2').data("DateTimePicker").minDate(e.date);
+       });
+       $("#fecha_sabado2").on("dp.change", function (e) {
+           $('#fecha_sabado1').data("DateTimePicker").maxDate(e.date);
+       });
+
+       $('#fecha_domingo1').datetimepicker({
+        format: 'HH:mm:ss',
+       });
+       $('#fecha_domingo2').datetimepicker({
+       useCurrent: false, //Important! See issue #1075
+       format: 'HH:mm:ss',
+       });
+       $("#fecha_domingo1").on("dp.change", function (e) {
+           $('#fecha_domingo2').data("DateTimePicker").minDate(e.date);
+       });
+       $("#fecha_domingo2").on("dp.change", function (e) {
+           $('#fecha_domingo1').data("DateTimePicker").maxDate(e.date);
        });
    });
 $('#confirm-delete32').on('click', '.btn-ok', function(e) {
@@ -45,5 +129,65 @@ $('#confirm-delete32').on('show.bs.modal', function(e) {
     $('.title', this).text(data.recordTitle);
     $('.btn-ok', this).data('recordId', data.recordId);
     loading_hide();
+});
+
+$(function() {
+    $('#lunes').change(function() {      
+        var lu = $(this).prop('checked');
+    if(lu == true) {
+       document.getElementById('div_lunes').style.display = 'block';
+    }else{
+       document.getElementById('div_lunes').style.display = 'none';
+    }
+    });
+
+    $('#martes').change(function() {      
+        var ma = $(this).prop('checked');
+    if(ma == true) {
+       document.getElementById('div_martes').style.display = 'block';
+    }else{
+       document.getElementById('div_martes').style.display = 'none';
+    }
+    });
+    $('#miercoles').change(function() {      
+        var mi = $(this).prop('checked');
+    if(mi == true) {
+       document.getElementById('div_miercoles').style.display = 'block';
+    }else{
+       document.getElementById('div_miercoles').style.display = 'none';
+    }
+    });
+    $('#jueves').change(function() {      
+        var ju = $(this).prop('checked');
+    if(ju == true) {
+       document.getElementById('div_jueves').style.display = 'block';
+    }else{
+       document.getElementById('div_jueves').style.display = 'none';
+    }
+    });
+    $('#viernes').change(function() {      
+        var vi = $(this).prop('checked');
+    if(vi == true) {
+       document.getElementById('div_viernes').style.display = 'block';
+    }else{
+       document.getElementById('div_viernes').style.display = 'none';
+    }
+    });
+    $('#sabado').change(function() {      
+        var sa = $(this).prop('checked');
+    if(sa == true) {
+       document.getElementById('div_sabado').style.display = 'block';
+    }else{
+       document.getElementById('div_sabado').style.display = 'none';
+    }
+    });
+    $('#domingo').change(function() {      
+        var dom = $(this).prop('checked');
+    if(dom == true) {
+       document.getElementById('div_domingo').style.display = 'block';
+    }else{
+       document.getElementById('div_domingo').style.display = 'none';
+    }
+    });
 });
 </script>

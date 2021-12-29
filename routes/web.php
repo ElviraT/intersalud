@@ -237,7 +237,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('horario', ['as' => 'horario', 'uses' => 'Admin\HorariosController@index']);
 	Route::get('horario/create', ['as' => 'horario.create', 'uses' => 'Admin\HorariosController@create']);
 	Route::post('horario/add', ['as' => 'horario.add', 'uses' => 'Admin\HorariosController@add']);
-	Route::get('horario/edit', ['as' => 'horario.edit', 'uses' => 'Admin\HorariosController@edit']);
+	Route::get('horario/edit/{id}', ['as' => 'horario.edit', 'uses' => 'Admin\HorariosController@edit']);
 	Route::post('horario/destroy', ['as' => 'horario.destroy', 'uses' => 'Admin\HorariosController@destroy']);
 
 	/*HISTORIAS CLINICAS - UROLOGIA*/

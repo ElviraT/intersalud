@@ -28,8 +28,8 @@
            <div class="card">
               <div class="col-md-4 mt-2 mb-2">
                 @can('horario')
-                <a href="{{ route('horario.create') }}" class="btn-transition btn btn-outline-primary" onclick="loading_show();">
-                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                <a href="{{ route('horario.create') }}" class="btn-transition btn btn-outline-primary btn-xs" onclick="loading_show();">
+                    <span class="btn-icon-wrapper pr-1 opacity-7">
                             <i class="fa fa-plus-circle"></i>
                         </span>
                     {{'Agregar'}}
@@ -47,74 +47,51 @@
                 <table id="table_horarios" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
-                            <th>{{'Lunes'}}</th>
-                            <th>{{'Martes'}}</th>
-                            <th>{{'Miércoles'}}</th>
-                            <th>{{'Jueves'}}</th>
-                            <th>{{'Viernes'}}</th>
-                            <th>{{'Sábado'}}</th>
-                            <th>{{'Domingo'}}</th>
+                            <th>{{'Descripción'}}</th>
+                            <th>{{'Mañana'}}</th>
+                            <th>{{'Tarde'}}</th>
+                            <th>{{'Domicilio'}}</th>
                             <th>{{'Acción'}}</th>
                         </tr>
                     </thead>
                     <tbody>
                       @foreach($horarios as $resultado)
                         <tr>
-                          @if($resultado->Lunes == 1)
+                          <td>{{ $resultado->description }}</td>
+                          @if($resultado->Manana == 1)
                             <td>{{ 'Si' }}</td>
                           @else
                             <td>{{ 'No' }}</td>
                           @endif
-                          @if($resultado->Martes == 1)
+                          @if($resultado->Tarde == 1)
                             <td>{{ 'Si' }}</td>
                           @else
                             <td>{{ 'No' }}</td>
                           @endif
-                          @if($resultado->Miercoles == 1)
-                            <td>{{ 'Si' }}</td>
-                          @else
-                            <td>{{ 'No' }}</td>
-                          @endif
-                          @if($resultado->Jueves == 1)
-                            <td>{{ 'Si' }}</td>
-                          @else
-                            <td>{{ 'No' }}</td>
-                          @endif
-                          @if($resultado->Viernes == 1)
-                            <td>{{ 'Si' }}</td>
-                          @else
-                            <td>{{ 'No' }}</td>
-                          @endif
-                          @if($resultado->Sabado == 1)
-                            <td>{{ 'Si' }}</td>
-                          @else
-                            <td>{{ 'No' }}</td>
-                          @endif
-                          @if($resultado->Domingo == 1)
+                          @if($resultado->Domicilio == 1)
                             <td>{{ 'Si' }}</td>
                           @else
                             <td>{{ 'No' }}</td>
                           @endif                            
                             <td width="20">
                               @can('horario.edit')
-                                <a href="#" type="button" data-toggle="modal" data-target="#modal_horario" class="btn-transition btn btn-outline-success" data-record-id="{{ $resultado['id_Horario_Cita'] }}" onclick="loading_show();">
-                                    <span class="btn-icon-wrapper pr-2 opacity-7">
-                                        <i class="ti-pencil"></i>
-                                    </span>
-                                    {{'Editar'}}
+                                <a href="{{ route('horario.edit', $resultado->id_Horario_Cita) }}" type="button" class="btn-transition btn btn-outline-success btn-xs"onclick="loading_show();">
+                                  <span class="btn-icon-wrapper pr-1 opacity-7">
+                                      <i class="ti-pencil"></i>
+                                  </span>
+                                  {{'Editar'}}
                                 </a>
                               @endcan
                               @can('horario.destroy')
-                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete32" data-record-id="{{$resultado->id_Horario_Cita}}" data-record-title="{{$resultado->id_Horario_Cita}}" class="btn-transition btn btn-outline-danger" onclick="loading_show();">
-                                        <span class="btn-icon-wrapper pr-2 opacity-7">
-                                            <i class="ti-eraser"></i>
-                                        </span>{{'Eliminar'}}
+                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete32" data-record-id="{{$resultado->id_Horario_Cita}}" data-record-title="{{$resultado->description}}" class="btn-transition btn btn-outline-danger btn-xs" onclick="loading_show();">
+                                  <span class="btn-icon-wrapper pr-1 opacity-7">
+                                      <i class="ti-eraser"></i>
+                                  </span>{{'Eliminar'}}
                                 </a>
                               @endcan
                             </td>
                         </tr>
                       @endforeach
-
                     </tbody>                   
                 </table>
               </div>

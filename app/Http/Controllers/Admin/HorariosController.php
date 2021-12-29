@@ -92,6 +92,7 @@ class HorariosController extends Controller
       if($request->id == 0){
             try {
                 $horario= new Horario();
+                $horario->description = $request->descripcion;
                 $horario->Manana = $manana;
                 $horario->Tarde = $tarde;
                 $horario->Domicilio = $domicilio;
@@ -126,6 +127,7 @@ class HorariosController extends Controller
             try{
                 $id = (int)$request->id;
                  Horario::where('id_Horario_Cita', $id)->update([
+                    'description' => $request->descripcion,
                     'Manana'=>$manana,
                     'Tarde'=>$tarde,
                     'Domicilio'=>$domicilio,
@@ -158,5 +160,20 @@ class HorariosController extends Controller
             }
         }
         return redirect()->route('horario');
+    }
+
+    public function edit($id)
+    {
+      $horarios = Horario::where('id_Horario_Cita', $id)->first();
+      return view('admin.horarios.edit')->with(compact('horarios'));
+    }
+    
+    public function destroy(Request $request)
+    {
+       $id = (int)$request->input('id');
+       $horario= Horario::where('id_Horario_Cita', $id)->delete();
+        Flash::success('Registro eliminado correctamente');
+         
+       return redirect()->route('horario');
     }
 }

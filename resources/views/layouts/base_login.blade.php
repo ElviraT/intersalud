@@ -27,7 +27,7 @@
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/icon/font-awesome/css/font-awesome.min.css')}}">
       <!-- Style.css -->
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}">
-     
+     @yield('css')
 </head>
 <body themebg-pattern="theme1">
     <!-- Pre-loader start -->
@@ -108,6 +108,7 @@
     <script type="text/javascript" src="{{ asset('assets/js/SmoothScroll.js')}}"></script>
     <script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js')}} "></script>
     <script type="text/javascript" src="{{ asset('assets/js/common-pages.js')}}"></script>
+    @yield('js')
 </body>
 
 </html>

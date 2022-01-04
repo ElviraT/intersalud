@@ -18,6 +18,12 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/volver', ['as' => 'paciente.volver', 'uses' => 'PacienteController@volver']);
+Route::get('paciente/create', ['as' => 'paciente.create', 'uses' => 'PacienteController@create']);
+Route::post('paciente/login', ['as' => 'paciente.login', 'uses' => 'PacienteController@login']);
+Route::post('paciente/add', ['as' => 'paciente.add', 'uses' => 'PacienteController@add']);
+Route::get('paciente/edit/{id}', ['as' => 'paciente.edit', 'uses' => 'PacienteController@edit']);
+
 
 Route::group(['middleware' => 'auth'], function () {
 	/*DASHBOARD*/

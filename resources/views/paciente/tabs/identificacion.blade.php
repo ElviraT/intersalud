@@ -1,4 +1,4 @@
- {!! Form::open(['route' => ['usuario_p.add'],  'method' => 'post', 'autocomplete' =>'off' ]) !!}
+ {!! Form::open(['route' => ['paciente.add'],  'method' => 'post', 'autocomplete' =>'off' ]) !!}
     <div class="form-group col-md-12">
         <div class="row">
             {{ Form::hidden('id', isset($paciente) ? $paciente->id_Paciente : null, ['class'=>'modal_registro_usuariop_id'] ) }}
@@ -78,7 +78,7 @@
         </div>
     </div>
 <div class="modal-footer">
-    <a href="{{ route('usuario_p')}}" class="mt-1 btn btn-outline-secondary">
+    <a href="{{ route('paciente.volver')}}" class="mt-1 btn btn-outline-secondary">
         <span class="btn-icon-wrapper pr-2 opacity-7">
          <i class="fa fa-reply-all" aria-hidden="true"></i>
         </span>{{'Volver'}}

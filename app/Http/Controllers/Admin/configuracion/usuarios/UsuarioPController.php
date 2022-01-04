@@ -28,7 +28,7 @@ class UsuarioPController extends Controller
     public function __construct()
     {
       $this->middleware('can:usuario_p')->only('index');
-      $this->middleware('can:usuario_p.add')->only('add');
+      //$this->middleware('can:usuario_p.add')->only('add');
       $this->middleware('can:usuario_p.edit')->only('edit','update');
       $this->middleware('can:usuario_p.destroy')->only('destroy');
     }
@@ -77,7 +77,7 @@ class UsuarioPController extends Controller
             Flash::success("Registro Agregado Correctamente");            
         return redirect()->route('usuario_p.edit', $paciente->id);
         } catch (\Illuminate\Database\QueryException $e) {
-            Flash::error($e.'Ocurrió un error, por favor intente de nuevo');
+            Flash::error('Ocurrió un error, por favor intente de nuevo');
             return redirect()->route('usuario_p.create');
         }
       }else{
@@ -207,7 +207,7 @@ class UsuarioPController extends Controller
                     Flash::success("Registro Actualizado Correctamente");
 
                 }catch(\Illuminate\Database\QueryException $e) {
-                  Flash::error($e.'Ocurrió un error, por favor intente de nuevo'); 
+                  Flash::error('Ocurrió un error, por favor intente de nuevo'); 
                 }
                 return redirect()->route('usuario_p.edit', $id);
           }

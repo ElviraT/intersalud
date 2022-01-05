@@ -66,15 +66,15 @@
             </div>
             <div class="col-md-6 mb-3">
                 <label>{{'Paciente Infantil'}}</label>
-                <input type="checkbox" name="pi" id="pi" data-toggle="toggle"  data-on="Si" data-off="No" data-size="xs" class="form-control checkbox" @if($paciente->Paciente_Infantil == 1) checked @endif> 
+                <input type="checkbox" name="pi" id="pi" data-toggle="toggle"  data-on="Si" data-off="No" data-size="xs" class="form-control checkbox" @if(isset($paciente) && $paciente->Paciente_Infantil == 1) checked @endif> 
             </div>
             <div class="col-md-6 mb-3">
                 <label>{{'Paciente Mayor'}}</label>
-                <input type="checkbox" name="pm" id="pm" data-toggle="toggle"  data-on="Si" data-off="No" data-size="xs" class="form-control checkbox" @if($paciente->Paciente_Mayor == 1) checked @endif> 
+                <input type="checkbox" name="pm" id="pm" data-toggle="toggle"  data-on="Si" data-off="No" data-size="xs" class="form-control checkbox" @if(isset($paciente) && $paciente->Paciente_Mayor == 1) checked @endif> 
             </div>
             <div class="col-md-6 mb-3">
                 <label>{{'Tiene Discapacidad'}}</label>
-                <input type="checkbox" name="pd" id="pd" data-toggle="toggle"  data-on="Si" data-off="No" data-size="xs" class="form-control checkbox" @if($paciente->Paciente_Discapacidad == 1) checked @endif> 
+                <input type="checkbox" name="pd" id="pd" data-toggle="toggle"  data-on="Si" data-off="No" data-size="xs" class="form-control checkbox" @if(isset($paciente) && $paciente->Paciente_Discapacidad == 1) checked @endif> 
             </div>
             <div class="col-md-6 mb-3">
                 <label>{{'Nota'}}</label>

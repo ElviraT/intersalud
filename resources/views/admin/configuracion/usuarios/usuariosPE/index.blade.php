@@ -71,7 +71,11 @@
                       @foreach($usuariosPE as $resultado)
                         <tr>
                             <td>{{ $resultado->Nombre_Paciente_Especial.' '.$resultado->Apellido_Paciente_Especial}}</td>
+                            @if($resultado->Prefijo_CIDNI_id)
                             <td>{{ $resultado->PrefijoDNI->Prefijo_CIDNI.' '.$resultado->CIDNI }}</td>
+                            @else
+                            <td>{{ 'Sin Cedula' }}</td>
+                            @endif
                             <td>{{ $resultado->Sexo->Sexo }}</td>
                             <td>{{ $resultado->Parentesco_Familiar }}</td>
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>

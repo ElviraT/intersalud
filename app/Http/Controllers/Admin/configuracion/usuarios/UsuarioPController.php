@@ -28,15 +28,20 @@ class UsuarioPController extends Controller
     public function __construct()
     {
       $this->middleware('can:usuario_p')->only('index');
-      //$this->middleware('can:usuario_p.add')->only('add');
+      $this->middleware('can:usuario_p.add')->only('add');
       $this->middleware('can:usuario_p.edit')->only('edit','update');
       $this->middleware('can:usuario_p.destroy')->only('destroy');
     }
 
      public function index(UsuarioP $model)
-  	{   	
+  	{  
       session()->forget('id_pariente');
-  		return view('admin.configuracion.usuarios.usuariosP.index', ['usuariosP' => $model->all()]);
+    if(auth()->user()->name == 'Admin'){
+      $usuariosP = UsuarioP::all();
+    }else{
+      $usuariosP = UsuarioP::where('id_Paciente', auth()->user()->id_usuarioP)->get();
+    }
+  		return view('admin.configuracion.usuarios.usuariosP.index', ['usuariosP' => $usuariosP]);
   	}
 
   	public function create()

@@ -4,9 +4,9 @@
     <form method="POST" action="{{ route('login') }}" class="md-float-material form-material" autocomplete="off">
         @csrf
         <div class="text-center">
-            <img src="assets/images/logo.png" alt="logo.png">
+            <img src="{{ asset('img/intersalud.png')}}" alt="logo.png" width="15%">
         </div>
-        <div class="auth-box card">
+        <div class="auth-box card" style="margin-top: -20px">
             <div class="card-block">
                 <div class="row m-b-20">
                     <div class="col-md-12">

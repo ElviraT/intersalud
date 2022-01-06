@@ -15083,6 +15083,10 @@ pre.line-numbers > code {
     .header-navbar .navbar-wrapper .navbar-logo {
       width: 100% !important; }
       .header-navbar .navbar-wrapper .navbar-logo a img {
+        width: 12%;
+        align-content: center !important;
+        margin:auto;
+        margin-top: -17px;
         display: block !important; }
       .header-navbar .navbar-wrapper .navbar-logo .mobile-menu {
         right: auto;

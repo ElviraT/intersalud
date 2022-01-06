@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\UsuarioM;
 
 
 class HomeController extends Controller
@@ -25,7 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $foto = UsuarioM::where('id_Medico',auth()->user()->id_usuario)->first();
+        return view('home')->with(compact('foto'));
     }
 
     

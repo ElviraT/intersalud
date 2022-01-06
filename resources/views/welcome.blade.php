@@ -8,12 +8,12 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
-        <link rel="icon" href="{{ asset('img/logo.png')}}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('img/intersalud.ico')}}" type="image/x-icon">
         <!-- Styles -->
         <style>
             html, body {
-                background: rgb(241,241,246);
-                background: linear-gradient(90deg, rgba(241,241,246,1) 0%, rgba(174,174,205,1) 20%, rgba(151,221,255,1) 100%);
+                background: rgb(45,182,188,0.5);
+                background: linear-gradient(to bottom right, rgba(207,31,64,0.4) 0%, rgba(230,156,45,0.5) 15%, rgba(230,156,45,0.1) 20%, rgba(230,156,45,0.1) 75%, rgba(230,156,45,0.3) 81%, rgba(207,31,64,0.4) 100%);
                 font-family: 'Georgia';
                 font-weight: 200;
                 height: 100vh;
@@ -49,13 +49,14 @@
             }
 
             .links > a {
-                color: #636b6f;
+                color: #303030;
                 padding: 0 25px;
                 font-size: 13px;
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
+                text-shadow: 2px 2px 2px #fff;
             }
 
             .m-b-md {
@@ -82,8 +83,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                   <h4>{{'INTERSALUD'}}</h4>
-                    <img src="{{ asset('img/imagen_fondo.png')}}" width="30%" style="margin-top: -100px;">
+                    <img src="{{ asset('img/intersalud.png')}}" width="70%">
                 </div>
             </div>
         </div>

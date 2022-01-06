@@ -38,4 +38,9 @@ class UsuarioM extends Model
     {
         return $this->hasOne('App\Model\Servicio', 'id_Servicio','id_Medico');
     }
+
+    public function User()
+    {
+        return $this->hasOne('App\User', 'id_usuario','id_Medico');
+    }
 }

@@ -6,7 +6,7 @@
             </a>
             <!-- logo -->
             <a href="#">
-                <img class="img-fluid" src="{{ asset('assets/images/logo.png')}}" alt="Theme-Logo" />
+                <img class="img-fluid" src="{{ asset('img/intersalud.png')}}" alt="Theme-Logo" width="45%" />
             </a>
               <!-- opcion movil-->
             <a class="mobile-options waves-effect waves-light">
@@ -27,7 +27,7 @@
               <ul class="nav-right">
                   <li class="user-profile header-notification">
                       <a href="#!" class="waves-effect waves-light">
-                          <img src="{{ asset('assets/images/avatar-4.jpg')}}" class="img-radius" alt="User-Profile-Image">
+                          <img @if(isset($foto->Foto_Medico) && $foto->Foto_Medico  == '')src="{{ ("avatars/".str_replace('\\','/', $foto->Foto_Medico)) }}"  @else src="{{ Avatar::create(auth()->user()->name)->toBase64() }}" @endif class="img-radius" alt="User-Profile-Image">
                           <span> {{auth()->user()->name}} </span>
                           <i class="ti-angle-down"></i>
                       </a>

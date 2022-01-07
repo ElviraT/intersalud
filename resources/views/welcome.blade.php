@@ -12,8 +12,6 @@
         <!-- Styles -->
         <style>
             html, body {
-                background: rgb(45,182,188,0.5);
-                background: linear-gradient(to bottom right, rgba(207,31,64,0.4) 0%, rgba(230,156,45,0.5) 15%, rgba(230,156,45,0.1) 20%, rgba(230,156,45,0.1) 75%, rgba(230,156,45,0.3) 81%, rgba(207,31,64,0.4) 100%);
                 font-family: 'Georgia';
                 font-weight: 200;
                 height: 100vh;
@@ -83,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <img src="{{ asset('img/intersalud.png')}}" width="70%">
+                    <img src="{{ asset('img/intersalud.png')}}" width="50%">
                 </div>
             </div>
         </div>

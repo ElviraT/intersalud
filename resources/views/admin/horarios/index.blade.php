@@ -28,7 +28,7 @@
            <div class="card">
               <div class="col-md-4 mt-2 mb-2">
                 @can('horario')
-                <a href="{{ route('horario.create') }}" class="btn-transition btn btn-outline-primary btn-xs" onclick="loading_show();">
+                <a href="{{ route('horario.create') }}" class="btn-transition btn btn-outline-primary" onclick="loading_show();">
                     <span class="btn-icon-wrapper pr-1 opacity-7">
                             <i class="fa fa-plus-circle"></i>
                         </span>
@@ -75,7 +75,7 @@
                           @endif                            
                             <td width="20">
                               @can('horario.edit')
-                                <a href="{{ route('horario.edit', $resultado->id_Horario_Cita) }}" type="button" class="btn-transition btn btn-outline-success btn-xs"onclick="loading_show();">
+                                <a href="{{ route('horario.edit', $resultado->id_Horario_Cita) }}" type="button" class="btn-transition btn btn-outline-success"onclick="loading_show();">
                                   <span class="btn-icon-wrapper pr-1 opacity-7">
                                       <i class="ti-pencil"></i>
                                   </span>
@@ -83,7 +83,7 @@
                                 </a>
                               @endcan
                               @can('horario.destroy')
-                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete32" data-record-id="{{$resultado->id_Horario_Cita}}" data-record-title="{{$resultado->description}}" class="btn-transition btn btn-outline-danger btn-xs" onclick="loading_show();">
+                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete32" data-record-id="{{$resultado->id_Horario_Cita}}" data-record-title="{{$resultado->description}}" class="btn-transition btn btn-outline-danger" onclick="loading_show();">
                                   <span class="btn-icon-wrapper pr-1 opacity-7">
                                       <i class="ti-eraser"></i>
                                   </span>{{'Eliminar'}}

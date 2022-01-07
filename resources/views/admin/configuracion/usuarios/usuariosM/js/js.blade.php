@@ -146,4 +146,69 @@ $('#confirm-delete6').on('show.bs.modal', function(e) {
     $('.btn-ok', this).data('recordId', data.recordId);
      loading_hide();
 });
+
+$('#estado').on('change', function (e) {
+   var estado = $('#estado').val();
+    $.getJSON('{{ route('ciudad_dependiente') }}?estado='+estado, function(objC){
+        var opcion = $('#ciudad').val();
+        $('#ciudad').empty();
+        $('#ciudad').prop('disabled', true);
+        $('#ciudad').change();
+
+        if(objC.length > 0){
+            $.each(objC, function (i, ciudad) {
+            $('#ciudad').append(
+                    $('<option>', {
+                        value: ciudad.id_Ciudad,
+                        text : ciudad.Ciudad
+                    })
+                );
+            });
+            $('#ciudad').prop('disabled', false);
+            $("#ciudad option:first").attr("selected", "selected");
+        }        
+    });
+
+    $.getJSON('{{ route('municipio_dependiente') }}?estado='+estado, function(objM){
+        var opcion = $('#municipio').val();
+        $('#municipio').empty();
+        $('#municipio').prop('disabled', true);
+        $('#municipio').change();
+
+        if(objM.length > 0){
+            $.each(objM, function (i, municipio) {
+            $('#municipio').append(
+                    $('<option>', {
+                        value: municipio.id_Municipio,
+                        text : municipio.Municipio
+                    })
+                );
+            });
+            $('#municipio').prop('disabled', false);
+        }        
+    });
+    
+});
+
+$('#municipio').on('change', function (e) {
+    var municipio = $('#municipio').val();
+    $.getJSON('{{ route('parroquia_dependiente') }}?municipio='+municipio, function(objP){
+        var opcion = $('#parroquia').val();
+        $('#parroquia').empty();
+        $('#parroquia').prop('disabled', true);
+        $('#parroquia').change();
+
+        if(objP.length > 0){
+            $.each(objP, function (i, parroquia) {
+            $('#parroquia').append(
+                    $('<option>', {
+                        value: parroquia.id_Parroquia,
+                        text : parroquia.Parroquia
+                    })
+                );
+            });
+            $('#parroquia').prop('disabled', false);
+        }        
+    });
+});
 </script>

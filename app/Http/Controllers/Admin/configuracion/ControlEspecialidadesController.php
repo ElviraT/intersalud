@@ -24,12 +24,22 @@ class ControlEspecialidadesController extends Controller
     public function index(ControlEspecialidades $model)
   	{   
   		$especialidad=Collection::make(Especialidad::select(['id_Especialidad_Medica','Espacialiadad_Medica'])->orderBy('Espacialiadad_Medica')->get())->pluck("Espacialiadad_Medica", "id_Especialidad_Medica"); 
+      if(auth()->user()->name == 'Admin'){
+         $medico=Collection::make(UsuarioM::select(['id_Medico',DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->where('Status_Medico_id',1)->orderBy('Nombres_Medico')->pluck("Nombre", "id_Medico"));
 
-  		$medico=Collection::make(UsuarioM::select(['id_Medico',DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->where('Status_Medico_id',1)->orderBy('Nombres_Medico')->pluck("Nombre", "id_Medico"));
+      }else{
+          $medico=Collection::make(UsuarioM::select(['id_Medico',DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->where('Status_Medico_id',1)->where('id_Medico',auth()->user()->id_usuario)->orderBy('Nombres_Medico')->pluck("Nombre", "id_Medico"));
 
+      }
+  		
   		$statusM=Collection::make(StatusM::select(['id_Status_Medico','Status_Medico'])->orderBy('Status_Medico')->get())->pluck("Status_Medico", "id_Status_Medico"); 
 
-  		return view('admin.configuracion.controlEs.index', ['controlEs' => $model->all(),'statusM'=>$statusM,'especialidad'=>$especialidad,'medico'=>$medico]);
+      if(auth()->user()->name == 'Admin'){
+          $controlEs = ControlEspecialidades::all();
+      }else{
+          $controlEs = ControlEspecialidades::where('Medico_id', auth()->user()->id_usuario)->get();
+      } 
+  		return view('admin.configuracion.controlEs.index', ['controlEs' => $controlEs,'statusM'=>$statusM,'especialidad'=>$especialidad,'medico'=>$medico]);
   	}
   	public function add (Request $request)
     {   

@@ -17,6 +17,10 @@ use App\Model\PrefijoDNI;
 use App\Model\Civil;
 use App\Model\StatusM;
 use App\Model\HistoricoT;
+use App\Model\Ciudad;
+use App\Model\Estado;
+use App\Model\Municipio;
+use App\Model\Parroquia;
 use Spatie\Permission\Models\Role;
 use Session;
 use Image;
@@ -35,8 +39,13 @@ class UsuarioMController extends Controller
 	const UPLOAD_PATH = 'medico';
     public function index(UsuarioM $model)
   	{   
-  		Session::put('medico', null); 	
-  		return view('admin.configuracion.usuarios.usuariosM.index', ['usuariosM' => $model->all()]);
+  		Session::put('medico', null); 
+  		if(auth()->user()->name == 'Admin'){
+		    $usuariosM = UsuarioM::all();
+		}else{
+		    $usuariosM = UsuarioM::where('id_Medico', auth()->user()->id_usuario)->get();
+		}	
+  		return view('admin.configuracion.usuarios.usuariosM.index', ['usuariosM' =>$usuariosM]);
   	}
 
   	public function create()
@@ -46,9 +55,13 @@ class UsuarioMController extends Controller
     	$estadoC=Collection::make(Civil::select(['id_Civil','Civil'])->orderBy('Civil')->get())->pluck("Civil", "id_Civil");
     	$statusM=Collection::make(StatusM::select(['id_Status_Medico','Status_Medico'])->orderBy('Status_Medico')->get())->pluck("Status_Medico", "id_Status_Medico");
     	$nacionalidad = Collection::make(Pais::select(['id_Pais','Pais'])->orderBy('Pais')->get())->pluck("Pais", "id_Pais");
+    	$ciudad=Collection::make(Ciudad::select(['id_Ciudad','Ciudad'])->orderBy('Ciudad')->get())->pluck("Ciudad", "id_Ciudad"); 
+        $estado=Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado"); 
+        $municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
+        $parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia"); 
     	$roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
 
-    	return view('admin.configuracion.usuarios.usuariosM.create')->with(compact('sexo','prefijo','estadoC','statusM','nacionalidad','roles')); 
+    	return view('admin.configuracion.usuarios.usuariosM.create')->with(compact('sexo','prefijo','estadoC','statusM','nacionalidad','ciudad','estado','municipio','parroquia','roles')); 
   	}
 	public function add(Request $request)
 	{
@@ -66,6 +79,10 @@ class UsuarioMController extends Controller
 		        $medico->Status_Medico_id = $request['statusm'];
 		        $medico->Civil_id = $request['civil'];
 		        $medico->Pais_id = $request['nacionalidad'];
+		        $medico->id_Estado = $request['estado'];
+		        $medico->id_Ciudad = $request['ciudad'];
+		        $medico->id_Municipio = $request['municipio'];
+		        $medico->id_Parroquia = $request['parroquia'];
 		        $medico->save();
 		        Session::put('medico', $medico);
 
@@ -93,6 +110,10 @@ class UsuarioMController extends Controller
 			        'Status_Medico_id' => $request['statusm'],
 			        'Civil_id' => $request['civil'],
 			        'Pais_id' => $request['nacionalidad'],
+			        'id_Estado' => $request['estado'],
+			        'id_Ciudad' => $request['ciudad'],
+		        	'id_Municipio' => $request['municipio'],
+		        	'id_Parroquia' => $request['parroquia'],
 	            ]);
 
 	             $login = LoginT::where('Medico_id', $id)->first();
@@ -130,9 +151,12 @@ class UsuarioMController extends Controller
     	$estadoC=Collection::make(Civil::select(['id_Civil','Civil'])->orderBy('Civil')->get())->pluck("Civil", "id_Civil");
     	$statusM=Collection::make(StatusM::select(['id_Status_Medico','Status_Medico'])->orderBy('Status_Medico')->get())->pluck("Status_Medico", "id_Status_Medico");
     	$nacionalidad = Collection::make(Pais::select(['id_Pais','Pais'])->orderBy('Pais')->get())->pluck("Pais", "id_Pais");
-
+    	$ciudad=Collection::make(Ciudad::select(['id_Ciudad','Ciudad'])->orderBy('Ciudad')->get())->pluck("Ciudad", "id_Ciudad"); 
+        $estado=Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado"); 
+        $municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
+        $parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia");
     	$roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
-		return view('admin.configuracion.usuarios.usuariosM.edit')->with(compact('medico','login','seniat','sexo','prefijo','estadoC','statusM','nacionalidad','roles','rol'));
+		return view('admin.configuracion.usuarios.usuariosM.edit')->with(compact('medico','login','seniat','sexo','prefijo','estadoC','statusM','nacionalidad','roles','ciudad','estado','municipio','parroquia','rol'));
 	}
 
 	public function login(Request $request)
@@ -144,7 +168,6 @@ class UsuarioMController extends Controller
 		        $login->Correo = $request['correo'];
 		        $login->Status_Medico_id = $request['statusm'];
 		        $login->Contrasena = Hash::make($request['contrasena']);
-		        $login->Nivel = $request['nivel'];
 		        $login->Medico_id = $request['id'];
 		        $login->save();
 
@@ -179,8 +202,7 @@ class UsuarioMController extends Controller
 		             	'Usuario' => ucfirst($request['nombre_usuario']),
 				        'Correo' => $request['correo'],
 				        'Status_Medico_id' => $request['statusm'],
-				        'Contrasena' => Hash::make($request['contrasena']),
-				        'Nivel' => $request['nivel']
+				        'Contrasena' => Hash::make($request['contrasena'])
 		            ]);
 
 		            User::where('id_usuario', $id)->update([

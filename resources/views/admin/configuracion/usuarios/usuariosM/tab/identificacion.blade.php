@@ -60,6 +60,45 @@
                         ]) !!}
                 </div>
                 <div class="col-md-6 mb-3">
+            {!! Form::label('estado', 'Estado:') !!}
+            {!! Form::select('estado',$estado, isset($medico) ? $medico->id_Estado : null, [
+                'placeholder' => 'Seleccione', 
+                'class' => 'select2 form-control required',
+                'id' => 'estado'
+                ])
+            !!}
+        </div>
+        <div class="col-md-6 mb-3">
+            {!! Form::label('ciudad', 'Ciudad:') !!}
+            {!! Form::select('ciudad',$ciudad, isset($medico) ? $medico->id_Ciudad : null, [
+                'placeholder' => 'Seleccione', 
+                'disabled' => 'disabled',
+                'class' => 'select2 form-control required',
+                'id' => 'ciudad'
+                ])
+            !!}
+        </div>
+        <div class="col-md-6 mb-3">
+            {!! Form::label('municipio', 'Municipio:') !!}
+            {!! Form::select('municipio',$municipio, isset($medico) ? $medico->id_Municipio : null, [
+                'placeholder' => 'Seleccione',
+                'disabled' => 'disabled', 
+                'class' => 'select2 form-control required',
+                'id' => 'municipio'
+                ])
+            !!}
+        </div>
+        <div class="col-md-6 mb-3">
+            {!! Form::label('parroquia', 'Parroquia:') !!}
+            {!! Form::select('parroquia',$parroquia, isset($medico) ? $medico->id_Parroquia : null, [
+                'placeholder' => 'Seleccione', 
+                'disabled' => 'disabled',
+                'class' => 'select2 form-control required',
+                'id' => 'parroquia'
+                ])
+            !!}
+        </div> 
+                <div class="col-md-6 mb-3">
                     <label>{{ 'Estado Civil' }}</label>
                     {!! Form::select('civil',$estadoC, isset($medico) ? $medico->Civil_id : null, [
                         'placeholder' => 'Seleccione', 

@@ -31,8 +31,13 @@ class UsuarioAController extends Controller
     }
 
      public function index(UsuarioA $model)
-  	{   	
-  		return view('admin.configuracion.usuarios.usuariosA.index', ['usuariosA' => $model->all()]);
+  	{  
+    if(auth()->user()->name == 'Admin'){
+        $usuariosA = UsuarioA::all();
+    }else{
+        $usuariosA = UsuarioA::where('id_Medico', auth()->user()->id_usuario)->get();
+    }  	
+  		return view('admin.configuracion.usuarios.usuariosA.index', ['usuariosA' => $usuariosA]);
   	}
 
   	public function create()

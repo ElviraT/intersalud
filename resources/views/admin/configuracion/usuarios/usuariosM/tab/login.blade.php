@@ -27,10 +27,6 @@
                 'id' => 'rol'
                 ]) !!}
         </div>
-        <div class="col-md-6 mb-3">
-            <label>{{ 'Nivel' }}</label>
-            <input type="text" class="form-control" name="nivel" id="nivel" placeholder="Nivel" value="{{ isset($login) ? $login->Nivel : null }}">
-        </div>
     </div>
 
     <div class="modal-footer">

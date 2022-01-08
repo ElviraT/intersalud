@@ -22,6 +22,7 @@ use App\Model\Parroquia;
 use App\Model\DireccionPaciente;
 use Spatie\Permission\Models\Role;
 use Flash;
+use DB;
 
 class UsuarioPController extends Controller
 {
@@ -142,12 +143,13 @@ class UsuarioPController extends Controller
     public function login(Request $request)
   {
     if($request->idL == null){
+       DB::beginTransaction();
       try {
             $login= new LoginP();
             $login->Paciente_id = $request['id'];
             $login->Usuario = ucfirst($request['nombre_usuario']);
             $login->Correo = $request['correo'];
-            $login->Status_id = $request['status'];
+            $login->Status_id = 1;
             $login->Contrasena = Hash::make($request['contrasena']);
             $login->save();
 
@@ -155,14 +157,15 @@ class UsuarioPController extends Controller
             $login2->name = ucfirst($request['nombre_usuario']);
             $login2->email = $request['correo'];
             $login2->password = Hash::make($request['contrasena']);
-            $login2->status = $request['status'];
+            $login2->status = 1;
             $login2->id_usuarioP = $request['id'];
             $login2->save();
 
             $login2->assignRole('Paciente');
-
+            DB::commit();
         Flash::success("Registro Agregado Correctamente");            
         } catch (\Illuminate\Database\QueryException $e) {
+          DB::rollback();
             Flash::error('Ocurrió un error, por favor intente de nuevo');  
         }
 
@@ -179,6 +182,7 @@ class UsuarioPController extends Controller
             Flash::error('Debe ingresar una contraseña distinta a las anterior');
             return redirect()->route('usuario_p.edit', $id);
            }else{
+             DB::beginTransaction();
             try{
                     LoginP::where('Paciente_id', $id)->update([
                     'Usuario' => ucfirst($request['nombre_usuario']),
@@ -208,10 +212,11 @@ class UsuarioPController extends Controller
                   $loginh->Correo = $login->email;
                   $loginh->Nota = '';
                   $loginh->save();
-
+                DB::commit();
                     Flash::success("Registro Actualizado Correctamente");
 
                 }catch(\Illuminate\Database\QueryException $e) {
+                  DB::rollback();
                   Flash::error('Ocurrió un error, por favor intente de nuevo'); 
                 }
                 return redirect()->route('usuario_p.edit', $id);

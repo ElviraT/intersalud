@@ -40,9 +40,6 @@
                 text-shadow: 2px 2px 2px #fff;
             }
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
             h1 {
                 letter-spacing: .1rem;
                 color: #636b6f;
@@ -62,7 +59,7 @@
                 <tr>
                     <h2><i class="fa fa-hand-o-left" aria-hidden="true"> <a href="javascript:history.back(1)">Volver a la página anterior</a></i></h2><br><br>
                
-                   <h2><i class="fa fa-users" aria-hidden="true"> <a href="https://www.soporte.mainframe.com.ve/">Soporte</a></i></h2>
+                   <!--h2><i class="fa fa-users" aria-hidden="true"> <a href="https://www.soporte.mainframe.com.ve/">Soporte</a></i></h2 --> 
                 </tr>  
             </table>
         </div>

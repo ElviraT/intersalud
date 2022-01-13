@@ -5,11 +5,11 @@
 	  	<div class="row">
 	  		<div class="col-md-5 mt-3">
 	  			<div class="row">
-	  				<div class="col-md-3">
+	  				<div class="col-md-4">
 	  					<label>{{'Descripción'}}</label>  					
 	  				</div>
-	  				<div class="col-md-9">
-	  					<input type="text" name="descripcion" class="form-control mb-3" id="descripcion" autofocus="true" value="{{isset($horarios) ? $horarios->description : null}}">  					
+	  				<div class="col-md-8">
+	  					<input type="text" name="descripcion" class="form-control mb-3" id="descripcion" autofocus="true" value="{{isset($horarios) ? $horarios->description : null}}" required>  					
 	  				</div>
 	  			</div>
 	  		</div>

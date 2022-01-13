@@ -19,24 +19,27 @@
                 {!! Form::label('medico', 'Medico:') !!}
                 {!! Form::select('medico',$medico, null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control required',
-                    'id' => 'medico'
+                    'class' => 'select2 form-control',
+                    'id' => 'medico',
+                    'required'=>'required'
                     ]) !!}
                 </div>
                 <div class="col-md-12 mb-3">
                 {!! Form::label('cripto', 'Criptos:') !!}
                 {!! Form::select('cripto',$cripto, null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control required',
-                    'id' => 'cripto'
+                    'class' => 'select2 form-control',
+                    'id' => 'cripto',
+                    'required'=>'required'
                     ]) !!}
                 </div>
                 <div class="col-md-12 mb-3">
                 {!! Form::label('status', 'Status:') !!}
                 {!! Form::select('status',$status, null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control required',
-                    'id' => 'status'
+                    'class' => 'select2 form-control',
+                    'id' => 'status',
+                    'required'=>'required'
                     ]) !!}
                 </div>
             </div>

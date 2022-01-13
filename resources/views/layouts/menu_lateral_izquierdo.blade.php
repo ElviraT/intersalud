@@ -9,24 +9,8 @@
       <div class="main-menu-header">
         <img class="img-80 img-radius" @if(isset($foto->Foto_Medico) && $foto->Foto_Medico  == '')src="{{ ("avatars/".str_replace('\\','/', $foto->Foto_Medico)) }}"  @else src="{{ Avatar::create(auth()->user()->name)->toBase64() }}" @endif alt="User-Profile-Image">
         <div class="user-details">
-          <span id="more-details">{{auth()->user()->name}}<i class="fa fa-caret-down"></i></span>
+          <span id="more-details">{{auth()->user()->name}}</i></span>
         </div>
-      </div>
-      <div class="main-menu-content">
-        <ul>
-            <li class="more-details">
-                <a href="#"><i class="ti-user"></i>{{'Perfil'}}</a>
-                <a class="dropdown-item" href="{{ route('logout') }}"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="ti-layout-sidebar-left"></i>                  
-                    {{ 'Logout' }}
-                </a>
-
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>   
-            </li>
-        </ul>
       </div>
     </div>
     <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">{{'Inicio'}}

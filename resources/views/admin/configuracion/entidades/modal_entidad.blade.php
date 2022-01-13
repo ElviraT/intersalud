@@ -23,8 +23,9 @@
                     {!! Form::label('status', 'Status:') !!}
                     {!! Form::select('status',$status, null, [
                         'placeholder' => 'Seleccione', 
-                        'class' => 'select2 form-control required',
-                        'id' => 'status'
+                        'class' => 'select2 form-control',
+                        'id' => 'status',
+                        'required'=>'required'
                         ]) !!}
                 </div>
             </div>

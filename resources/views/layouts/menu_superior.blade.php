@@ -33,11 +33,11 @@
                       </a>
                       <ul class="show-notification profile-notification">
                           
-                          <li class="waves-effect waves-light">
+                          <!--li class="waves-effect waves-light">
                               <a href="#">
                                   <i class="ti-user"></i> Perfil
                               </a>
-                          </li>                                  
+                          </li -->                                  
                           <li class="waves-effect waves-light">
                               <a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="ti-layout-sidebar-left"></i>                  

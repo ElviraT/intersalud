@@ -1,5 +1,5 @@
 <!-- Select2 -->
-<script src="{{ asset('js/select2.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -88,6 +88,7 @@ $('#estado').on('select2:select', function (e) {
                     })
                 );
             });
+            $('#municipio').change();
             $('#municipio').prop('disabled', false);
         }        
     });

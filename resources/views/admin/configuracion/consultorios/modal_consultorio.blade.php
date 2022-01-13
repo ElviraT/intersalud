@@ -32,8 +32,9 @@
                             {!! Form::label('especialidad', 'Especialidad Medica:') !!}
                             {!! Form::select('especialidad',$especialidad, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control required',
-                                'id' => 'especialidad'
+                                'class' => 'select2 form-control',
+                                'id' => 'especialidad',
+                                'required'=>'required'
                                 ])
                             !!}
                         </div>
@@ -41,8 +42,9 @@
                             {!! Form::label('estado', 'Estado:') !!}
                             {!! Form::select('estado',$estado, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control required',
-                                'id' => 'estado'
+                                'class' => 'select2 form-control',
+                                'id' => 'estado',
+                                'required'=>'required'
                                 ])
                             !!}
                         </div>
@@ -51,8 +53,9 @@
                             {!! Form::select('ciudad',$ciudad, null, [
                                 'placeholder' => 'Seleccione', 
                                 'disabled' => 'disabled',
-                                'class' => 'select2 form-control required',
-                                'id' => 'ciudad'
+                                'class' => 'select2 form-control',
+                                'id' => 'ciudad',
+                                'required'=>'required'
                                 ])
                             !!}
                         </div>
@@ -61,8 +64,9 @@
                             {!! Form::select('municipio',$municipio, null, [
                                 'placeholder' => 'Seleccione',
                                 'disabled' => 'disabled', 
-                                'class' => 'select2 form-control required',
-                                'id' => 'municipio'
+                                'class' => 'select2 form-control',
+                                'id' => 'municipio',
+                                'required'=>'required'
                                 ])
                             !!}
                         </div>
@@ -71,8 +75,9 @@
                             {!! Form::select('parroquia',$parroquia, null, [
                                 'placeholder' => 'Seleccione', 
                                 'disabled' => 'disabled',
-                                'class' => 'select2 form-control required',
-                                'id' => 'parroquia'
+                                'class' => 'select2 form-control',
+                                'id' => 'parroquia',
+                                'required'=>'required'
                                 ])
                             !!}
                         </div>
@@ -80,14 +85,15 @@
                             {!! Form::label('status', 'Status:') !!}
                             {!! Form::select('status',$status, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control required',
-                                'id' => 'status'
+                                'class' => 'select2 form-control',
+                                'id' => 'status',
+                                'required'=>'required'
                                 ])
                             !!}
                         </div>
                         <div class="col-md-12 mb-3">
                             <label>{{'Direccion'}}</label>
-                            <textarea name="direccion" id="direccion" class="form-control" rows="3"></textarea>
+                            <textarea name="direccion" id="direccion" class="form-control" rows="3" required></textarea>
                         </div>
                     </div>
                 </div>

@@ -142,6 +142,8 @@ $('#estado').on('change', function (e) {
                     })
                 );
             });
+            $('#municipio').change();
+            $('#parroquia').prop('disabled', false);
             $('#municipio').prop('disabled', false);
         }        
     });

@@ -6,8 +6,9 @@
                 <label for="validationCustom01">{{'Médico'}}</label>
                 {!! Form::select('id_medico',$medicos, isset($asistente) ? $asistente->id_Medico : null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control required',
-                    'id' => 'id_medico'
+                    'class' => 'select2 form-control',
+                    'id' => 'id_medico',
+                    'required'=>'required'
                     ])
                 !!}
             </div>
@@ -25,12 +26,13 @@
                     <div class="col-md-5">
                         {!! Form::select('prefijo',$prefijo, isset($asistente) ? $asistente->Prefijo_CIDNI_id : null, [
                             'placeholder' => '...', 
-                            'class' => 'select2 form-control required',
-                            'id' => 'prefijo'
+                            'class' => 'select2 form-control',
+                            'id' => 'prefijo',
+                            'required'=>'required'
                             ]) !!}
                     </div>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" name="cedula" id="cedula" placeholder="Cedula" onkeypress = 'return SoloNumeros(event)' value="{{ isset($asistente) ? $asistente->CIDNI : null }}">
+                        <input type="text" class="form-control" name="cedula" id="cedula" placeholder="Cedula" onkeypress = 'return SoloNumeros(event)' value="{{ isset($asistente) ? $asistente->CIDNI : null }}" required>
                     </div>
                 </div>
             </div>
@@ -39,7 +41,8 @@
                 {!! Form::select('sexo',$sexo, isset($asistente) ? $asistente->Sexo_id : null, [
                     'placeholder' => 'Seleccione', 
                     'class' => 'select2 form-control required',
-                    'id' => 'sexo'
+                    'id' => 'sexo',
+                    'required'=>'required'
                     ]) !!}
             </div>
             <div class="col-md-6 mb-3">
@@ -54,7 +57,8 @@
                          Form::text('fechNacA', isset($asistente) ? $asistente->Fecha_Nacimiento_Asistente : null, [
                              'id' => 'fechNacA',
                              'placeholder'=>'Y-M-D',
-                             'class' => 'form-control pull-right datepicker'] )
+                             'class' => 'form-control pull-right datepicker',
+                             'required'=>'required'] )
                       !!}
                  </div>
             </div>
@@ -62,24 +66,27 @@
                 <label>{{ 'Lugar de Nacimiento' }}</label>
                 {!! Form::select('nacionalidad',$nacionalidad, isset($asistente) ? $asistente->Pais_id : null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control required',
-                    'id' => 'nacionalidad'
+                    'class' => 'select2 form-control',
+                    'id' => 'nacionalidad',
+                    'required'=>'required'
                     ]) !!}
             </div>
             <div class="col-md-6 mb-3">
                 <label>{{ 'Estado Civil' }}</label>
                 {!! Form::select('civil',$estadoC, isset($asistente) ? $asistente->Civil_id : null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control required',
-                    'id' => 'civil'
+                    'class' => 'select2 form-control',
+                    'id' => 'civil',
+                    'required'=>'required'
                     ]) !!}
             </div>
             <div class="col-md-6 mb-3">
                 {!! Form::label('status', 'Status:') !!}
                 {!! Form::select('status',$status, isset($asistente) ? $asistente->Status_id : null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control required',
-                    'id' => 'status'
+                    'class' => 'select2 form-control',
+                    'id' => 'status',
+                    'required'=>'required'
                     ]) !!}
             </div>
         </div>

@@ -16,15 +16,15 @@
                 </div>
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Nombre Corto'}}</label>
-                    <input type="text" name="nombre" class="form-control" id="nombre" placeholder="iso3166a1" required onkeypress = 'return soloLetras(event)'>
+                    <input type="text" name="nombre" class="form-control" id="nombre" placeholder="iso3166a1" required onkeypress = 'return soloLetras(event)' maxlength="2">
                 </div>
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Nombre Corto2'}}</label>
-                    <input type="text" name="nombre2" class="form-control" id="nombre2" placeholder="iso3166a2" required onkeypress = 'return soloLetras(event)'>
+                    <input type="text" name="nombre2" class="form-control" id="nombre2" placeholder="iso3166a2" required onkeypress = 'return soloLetras(event)' maxlength="5">
                 </div>
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Nombre Completo'}}</label>
-                    <input type="text" name="pais" class="form-control" id="pais" placeholder="Nombre" required onkeypress = 'return soloLetras(event)'>
+                    <input type="text" name="pais" class="form-control" id="pais" placeholder="Nombre" required onkeypress = 'return soloLetras(event)' maxlength="128">
                 </div>
             </div>
             <div class="modal-footer">

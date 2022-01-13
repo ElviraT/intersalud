@@ -142,7 +142,6 @@ class UsuarioAController extends Controller
             $login->Correo = $request['correo'];
             $login->Status_Medico_id = $request['status'];
             $login->Contrasena = Hash::make($request['contrasena']);
-            $login->Nivel = 2;
             $login->Asistente_id = $request['id'];
             $login->save();
 
@@ -158,7 +157,7 @@ class UsuarioAController extends Controller
 
         Flash::success("Registro Agregado Correctamente");            
         } catch (\Illuminate\Database\QueryException $e) {
-            Flash::error('Ocurrió un error, por favor intente de nuevo');  
+            Flash::error($e->getMessage().'Ocurrió un error, por favor intente de nuevo');  
         }
 
         return redirect()->route('usuario_a.edit', $request['id']);
@@ -177,8 +176,7 @@ class UsuarioAController extends Controller
                     'Usuario' => ucfirst($request['nombre_usuario']),
                     'Correo' => $request['correo'],
                     'Status_Medico_id' => $request['status'],
-                    'Contrasena' => Hash::make($request['contrasena']),
-                    'Nivel' => 2
+                    'Contrasena' => Hash::make($request['contrasena'])
                     ]);
 
                     User::where('id_usuarioA', $id)->update([
@@ -207,7 +205,7 @@ class UsuarioAController extends Controller
                     Flash::success("Registro Actualizado Correctamente");
 
                 }catch(\Illuminate\Database\QueryException $e) {
-                  Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+                  Flash::error($e->getMessage().'Ocurrió un error, por favor intente de nuevo'); 
                 }
                 return redirect()->route('usuario_a.edit', $id);
           }

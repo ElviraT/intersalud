@@ -14,8 +14,9 @@
                     {!! Form::label('medico', 'Medico:') !!}
                     {!! Form::select('medico',$medico, null, [
                         'placeholder' => 'Seleccione', 
-                        'class' => 'select2 form-control required',
-                        'id' => 'medico'
+                        'class' => 'select2 form-control',
+                        'id' => 'medico',
+                        'required'=>'required'
                         ])
                     !!}
                 </div>
@@ -23,8 +24,9 @@
                     {!! Form::label('especialidad', 'Especialidad Medica:') !!}
                     {!! Form::select('especialidad',$especialidad, null, [
                         'placeholder' => 'Seleccione', 
-                        'class' => 'select2 form-control required',
-                        'id' => 'especialidad'
+                        'class' => 'select2 form-control',
+                        'id' => 'especialidad',
+                        'required'=>'required'
                         ])
                     !!}
                 </div>
@@ -32,8 +34,9 @@
                     {!! Form::label('status', 'Status:') !!}
                     {!! Form::select('status',$statusM, null, [
                         'placeholder' => 'Seleccione', 
-                        'class' => 'select2 form-control required',
-                        'id' => 'status'
+                        'class' => 'select2 form-control',
+                        'id' => 'status',
+                        'required'=>'required'
                         ])
                     !!}
                 </div>

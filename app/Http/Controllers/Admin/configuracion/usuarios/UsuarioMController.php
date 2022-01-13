@@ -140,6 +140,7 @@ class UsuarioMController extends Controller
 	{
 		$medico = UsuarioM::where('id_Medico', $id)->first();
 		$login = LoginT::where('Medico_id', $medico->id_Medico)->first();
+		//dd($login);
 		$seniat = Seniat::where('Medico_id', $medico->id_Medico)->first();
 		$rol = DB::select("SELECT m.role_id FROM model_has_roles as m, users as u WHERE m.model_id = u.id and u.id_usuario ='$id'");
 

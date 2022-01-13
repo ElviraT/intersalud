@@ -184,6 +184,7 @@ $('#estado').on('change', function (e) {
                     })
                 );
             });
+            $('#municipio').change();
             $('#municipio').prop('disabled', false);
         }        
     });

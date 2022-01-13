@@ -16,16 +16,18 @@
                             {!! Form::label('banco', 'Banco:') !!}
                             {!! Form::select('banco',$banco, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control required',
-                                'id' => 'banco'
+                                'class' => 'select2 form-control',
+                                'id' => 'banco',
+                                'required'=>'required'
                                 ]) !!}
                         </div>
                         <div class="col-md-6 mb-3">
                             {!! Form::label('medico', 'Medico:') !!}
                             {!! Form::select('medico',$medico, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control required',
-                                'id' => 'medico'
+                                'class' => 'select2 form-control',
+                                'id' => 'medico',
+                                'required'=>'required'
                                 ]) !!}
                         </div>
                         <div class="col-md-6 mb-3">
@@ -36,8 +38,9 @@
                             <label for="validationCustom01">{{'Tipo'}}</label>
                             {!! Form::select('tipo',$tipo, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control required',
-                                'id' => 'tipo'
+                                'class' => 'select2 form-control',
+                                'id' => 'tipo',
+                                'required'=>'required'
                                 ]) !!}
                         </div>
                         <div class="col-md-6 mb-3">
@@ -52,7 +55,8 @@
                                      Form::text('fecha', null, [
                                          'id' => 'fecha',
                                          'placeholder'=>'Y-M-D',
-                                         'class' => 'form-control pull-right datepicker'] )
+                                         'class' => 'form-control pull-right datepicker',
+                                         'required'=>'required'] )
                                   !!}
                              </div>
                         </div>
@@ -60,8 +64,9 @@
                             {!! Form::label('status', 'Status:') !!}
                             {!! Form::select('status',$status, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control required',
-                                'id' => 'status'
+                                'class' => 'select2 form-control',
+                                'id' => 'status',
+                                'required'=>'required'
                                 ]) !!}
                         </div>
                     </div>                    

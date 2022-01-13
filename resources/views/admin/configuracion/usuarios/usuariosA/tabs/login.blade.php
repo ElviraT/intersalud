@@ -13,23 +13,24 @@
     <div class="row">
         <div class="col-md-6 mb-3">
             <label>{{ 'Correo' }}</label>
-            <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo" value="{{ isset($login) ? $login->Correo : null }}">
+            <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo" value="{{ isset($login) ? $login->Correo : null }}" required>
         </div> 
         <div class="col-md-6 mb-3">
             <label>{{ 'Contraseña' }}</label>
-            <input type="password" class="form-control" name="contrasena" id="contrasena" placeholder="Contraseña">
+            <input type="password" class="form-control" name="contrasena" id="contrasena" placeholder="Contraseña" required>
         </div>
         <div class="col-md-6 mb-3">
             <label>{{ 'Confirma Contraseña' }}</label>
-            <input type="password" class="form-control" name="contrasena2" id="contrasena2" placeholder="Confirma Contraseña">
+            <input type="password" class="form-control" name="contrasena2" id="contrasena2" placeholder="Confirma Contraseña" required>
         </div>
         @can('rol')
         <div class="col-md-6 mb-3">
             {!! Form::label('rol', 'Rol:') !!}
             {!! Form::select('rol',$roles, isset($rol[0]) ? $rol[0]->role_id : null, [
                 'placeholder' => 'Seleccione', 
-                'class' => 'select2 form-control required',
-                'id' => 'rol'
+                'class' => 'select2 form-control',
+                'id' => 'rol',
+                'required'=>'required'
                 ]) !!}
         </div>
         @endcan

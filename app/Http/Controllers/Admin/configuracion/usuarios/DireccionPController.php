@@ -58,7 +58,7 @@ class DireccionPController extends Controller
             }catch(\Illuminate\Database\QueryException $e) {
               Flash::error($e.'Ocurrió un error, por favor intente de nuevo'); 
             }
-            return redirect()->route('usuario_p.edit', $id);
+            return redirect()->route('usuario_p.edit', $request['idP']);
       }
     }
 }

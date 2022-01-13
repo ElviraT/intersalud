@@ -10,8 +10,9 @@
             {!! Form::label('estado', 'Estado:') !!}
             {!! Form::select('estado',$estado, isset($direccion) ? $direccion->Estado_id : null, [
                 'placeholder' => 'Seleccione', 
-                'class' => 'select2 form-control required',
-                'id' => 'estado'
+                'class' => 'select2 form-control',
+                'id' => 'estado',
+                'required'=>'required'
                 ])
             !!}
         </div>
@@ -20,8 +21,9 @@
             {!! Form::select('ciudad',$ciudad, isset($direccion) ? $direccion->Cuidad_id : null, [
                 'placeholder' => 'Seleccione', 
                 'disabled' => 'disabled',
-                'class' => 'select2 form-control required',
-                'id' => 'ciudad'
+                'class' => 'select2 form-control',
+                'id' => 'ciudad',
+                'required'=>'required'
                 ])
             !!}
         </div>
@@ -30,8 +32,9 @@
             {!! Form::select('municipio',$municipio, isset($direccion) ? $direccion->Municipio_id : null, [
                 'placeholder' => 'Seleccione',
                 'disabled' => 'disabled', 
-                'class' => 'select2 form-control required',
-                'id' => 'municipio'
+                'class' => 'select2 form-control',
+                'id' => 'municipio',
+                'required'=>'required'
                 ])
             !!}
         </div>
@@ -40,30 +43,31 @@
             {!! Form::select('parroquia',$parroquia, isset($direccion) ? $direccion->Parroquia_id : null, [
                 'placeholder' => 'Seleccione', 
                 'disabled' => 'disabled',
-                'class' => 'select2 form-control required',
-                'id' => 'parroquia'
+                'class' => 'select2 form-control',
+                'id' => 'parroquia',
+                'required'=>'required'
                 ])
             !!}
         </div> 
     	<div class="col-md-12 mb-3">
             <label>{{ 'Dirección' }}</label>
-            <textarea name="direccion" id="direccion" class="form-control" rows="3">{{ isset($direccion) ? $direccion->Direccion : null }}</textarea>
+            <textarea name="direccion" id="direccion" class="form-control" rows="3" required>{{ isset($direccion) ? $direccion->Direccion : null }}</textarea>
         </div> 
         <div class="col-md-6 mb-3">
             <label>{{ 'Número de casa' }}</label>
-            <input type="text" class="form-control" name="ncasa" id="ncasa" placeholder="Número de casa" maxlength="50" value="{{ isset($direccion) ? $direccion->Numero_Casa : null }}">
+            <input type="text" class="form-control" name="ncasa" id="ncasa" placeholder="Número de casa" maxlength="50" value="{{ isset($direccion) ? $direccion->Numero_Casa : null }}" required>
         </div> 
         <div class="col-md-6 mb-3">
             <label>{{ 'Teléfono' }}</label>
-            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Teléfono" maxlength="50" value="{{ isset($direccion) ? $direccion->Telefono : null }}">
+            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Teléfono" maxlength="50" value="{{ isset($direccion) ? $direccion->Telefono : null }}" required>
         </div>
         <div class="col-md-6 mb-3">
             <label>{{ 'Celular' }}</label>
-            <input type="text" class="form-control" name="celular" id="celular" placeholder="Celular" maxlength="50" value="{{ isset($direccion) ? $direccion->Celular : null }}">
+            <input type="text" class="form-control" name="celular" id="celular" placeholder="Celular" maxlength="50" value="{{ isset($direccion) ? $direccion->Celular : null }}" required>
         </div>
         <div class="col-md-6 mb-3">
             <label>{{ 'Correo' }}</label>
-            <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo" maxlength="50" value="{{ isset($direccion) ? $direccion->Correo : null }}">
+            <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo" maxlength="50" value="{{ isset($direccion) ? $direccion->Correo : null }}" required>
         </div> 
         
     </div>

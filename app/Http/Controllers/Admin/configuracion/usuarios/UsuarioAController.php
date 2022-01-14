@@ -192,9 +192,9 @@ class UsuarioAController extends Controller
                 }
                     
                     $login->assignRole('Asistente');
-
+                    $loginT = LoginT::where('Asistente_id', $id)->first();
                   $loginh= new HistoricoT();
-                  $loginh->Login_Tranajador_id = $login->id;
+                  $loginh->Login_Tranajador_id = $loginT->id_Login_Trabajador;
                   $loginh->Old_Constrasena = Hash::make($login->password);
                   $loginh->Fecha = $fecha;
                   $loginh->Asistente_id = $id;

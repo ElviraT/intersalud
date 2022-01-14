@@ -92,7 +92,7 @@ class UsuarioMController extends Controller
 		        Flash::success("Registro Agregado Correctamente");            
 	    	return redirect()->route('usuario_m.edit', $medico->id);
 		    } catch (\Illuminate\Database\QueryException $e) {
-		        Flash::error('Ocurrió un error, por favor intente de nuevo');
+		        Flash::error( $e->getMessage().'Ocurrió un error, por favor intente de nuevo');
 		        return redirect()->route('usuario_m.create');
 		    }
 		}else{
@@ -131,7 +131,7 @@ class UsuarioMController extends Controller
 	            Flash::success("Registro Actualizado Correctamente");
 
 	        }catch(\Illuminate\Database\QueryException $e) {
-		        Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+		        Flash::error($e->getMessage().'Ocurrió un error, por favor intente de nuevo'); 
 	        }
 	        return redirect()->route('usuario_m.edit', $id);
 		}
@@ -184,7 +184,7 @@ class UsuarioMController extends Controller
 
 				Flash::success("Registro Agregado Correctamente");            
 		    } catch (\Illuminate\Database\QueryException $e) {
-		        Flash::error('Ocurrió un error, por favor intente de nuevo');  
+		        Flash::error($e->getMessage().'Ocurrió un error, por favor intente de nuevo');  
 		    }
 
 	    	return redirect()->route('usuario_m.edit', $request['id']);
@@ -194,7 +194,7 @@ class UsuarioMController extends Controller
 			$login= User::where('id_usuario', $id)->first();
 	        $fecha= date('Y-m-d');
 
-	         if(password_verify($request['contrasena'], $login->password)){
+	         if(isset($login->password) && password_verify($request['contrasena'], $login->password)){
 	         	Flash::error('Debe ingresar una contraseña distinta a las anterior');
 	         	return redirect()->route('usuario_m.edit', $id);
 	         }else{
@@ -208,7 +208,6 @@ class UsuarioMController extends Controller
 
 		            User::where('id_usuario', $id)->update([
 		             	'name' => ucfirst($request['nombre_usuario']),
-				        'email' => $request['correo'],
 				        'password' => Hash::make($request['contrasena']),
 				        'status' => $request['statusm']
 		            ]);
@@ -219,9 +218,10 @@ class UsuarioMController extends Controller
 						}
 		        		
 		        		$login->assignRole($request['rol']);
-
+		        		$loginT = LoginT::where('Medico_id', $id)->first();
+		        		//dd($loginT);
 		            $loginh= new HistoricoT();
-			        $loginh->Login_Tranajador_id = $login->id;
+			        $loginh->Login_Tranajador_id = $loginT->id_Login_Trabajador;
 			        $loginh->Old_Constrasena = Hash::make($login->password);
 			        $loginh->Fecha = $fecha;
 			        $loginh->Medico_id = $id;
@@ -232,7 +232,7 @@ class UsuarioMController extends Controller
 		            Flash::success("Registro Actualizado Correctamente");
 
 		        }catch(\Illuminate\Database\QueryException $e) {
-			        Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+			        Flash::error($e->getMessage().'Ocurrió un error, por favor intente de nuevo'); 
 		        }
 		        return redirect()->route('usuario_m.edit', $id);
 			}

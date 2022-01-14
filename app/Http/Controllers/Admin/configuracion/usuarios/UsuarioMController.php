@@ -213,11 +213,11 @@ class UsuarioMController extends Controller
 		            ]);
 
 						$rolesToRemove = array('Médico', 'Admin','Asistente');
-						if(!empty($login->roles())){
+		        		$login->assignRole($request['rol']);
+
 							foreach ($rolesToRemove as $role) {
 							   $login->removeRole($role);
-							}							
-						}
+							}	
 		        		
 		        		$login->assignRole($request['rol']);
 		        		$loginT = LoginT::where('Medico_id', $id)->first();

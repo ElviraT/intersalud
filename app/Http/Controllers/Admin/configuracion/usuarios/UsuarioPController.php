@@ -199,11 +199,11 @@ class UsuarioPController extends Controller
                     ]);
 
                 $rolesToRemove = array('Médico', 'Admin','Asistente','Paciente');
-               if(!empty($login->roles())){
+              $login->assignRole($request['rol']);
+
               foreach ($rolesToRemove as $role) {
                  $login->removeRole($role);
-              }             
-            }
+              } 
                     
                   $login_rol->assignRole('Paciente');
                   $loginh= new HistoricoP();

@@ -210,14 +210,14 @@ class UsuarioMController extends Controller
 		             	'name' => ucfirst($request['nombre_usuario']),
 				        'password' => Hash::make($request['contrasena']),
 				        'status' => $request['statusm']
-		            ]);
+		            ])->assignRole($request['rol']);
 
-						
-		        		$login->assignRole('Médico');
+                    
+                    //$login->assignRole('Médico');
 
 							
-		        		$loginT = LoginT::where('Medico_id', $id)->first();
-		        		//dd($loginT);
+		        	$loginT = LoginT::where('Medico_id', $id)->first();
+		        		
 		            $loginh= new HistoricoT();
 			        $loginh->Login_Tranajador_id = $loginT->id_Login_Trabajador;
 			        $loginh->Old_Constrasena = Hash::make($login->password);

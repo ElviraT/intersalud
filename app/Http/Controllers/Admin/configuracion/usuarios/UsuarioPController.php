@@ -199,7 +199,7 @@ class UsuarioPController extends Controller
                     ]);
 
                
-                    $login->assignRole('Paciente');
+                    $login_rol->assignRole('Paciente');
 
              
                   $loginh= new HistoricoP();

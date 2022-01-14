@@ -199,8 +199,10 @@ class UsuarioPController extends Controller
                     ]);
 
                 $rolesToRemove = array('Médico', 'Admin','Asistente','Paciente');
-                foreach ($rolesToRemove as $role) {
-                   $login_rol->removeRole($role);
+               if(isset($login->roles()->first()->name)){
+                  foreach ($rolesToRemove as $role) {
+                     $login->removeRole($role);
+                  }             
                 }
                     
                   $login_rol->assignRole('Paciente');

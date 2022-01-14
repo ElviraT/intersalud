@@ -184,15 +184,9 @@ class UsuarioAController extends Controller
                     'email' => $request['correo'],
                     'password' => Hash::make($request['contrasena']),
                     'status' => $request['status']
-                    ]);
+                    ])->assignRole($request['rol']);
 
-                $rolesToRemove = array('Médico', 'Admin','Asistente','Paciente');
-              
-                  foreach ($rolesToRemove as $role) {
-                     $login->removeRole($role);
-                  } 
-                    
-                    $login->assignRole('Asistente');
+                
                     $loginT = LoginT::where('Asistente_id', $id)->first();
                   $loginh= new HistoricoT();
                   $loginh->Login_Tranajador_id = $loginT->id_Login_Trabajador;

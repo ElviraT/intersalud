@@ -211,10 +211,6 @@ class UsuarioMController extends Controller
 				        'password' => Hash::make($request['contrasena']),
 				        'status' => $request['statusm']
 		            ])->assignRole($request['rol']);
-
-                    
-                    //$login->assignRole('Médico');
-
 							
 		        	$loginT = LoginT::where('Medico_id', $id)->first();
 		        		

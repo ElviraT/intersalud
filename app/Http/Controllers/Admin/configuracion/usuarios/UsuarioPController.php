@@ -196,12 +196,8 @@ class UsuarioPController extends Controller
                     'email' => $request['correo'],
                     'password' => Hash::make($request['contrasena']),
                     'status' => $request['status']
-                    ]);
+                    ])->assignRole($request['rol']);
 
-               
-                    $login_rol->assignRole('Paciente');
-
-             
                   $loginh= new HistoricoP();
                   $loginh->Login_Pacientes_id = $login->Paciente_id;
                   $loginh->Old_contrasena = Hash::make($login->password);

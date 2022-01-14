@@ -212,14 +212,10 @@ class UsuarioMController extends Controller
 				        'status' => $request['statusm']
 		            ]);
 
-						$rolesToRemove = array('Médico', 'Admin','Asistente');
-		        		$login->assignRole($request['rol']);
+						
+		        		$login->assignRole('Médico');
 
-							foreach ($rolesToRemove as $role) {
-							   $login->removeRole($role);
-							}	
-		        		
-		        		$login->assignRole($request['rol']);
+							
 		        		$loginT = LoginT::where('Medico_id', $id)->first();
 		        		//dd($loginT);
 		            $loginh= new HistoricoT();

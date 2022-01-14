@@ -198,14 +198,10 @@ class UsuarioPController extends Controller
                     'status' => $request['status']
                     ]);
 
-                $rolesToRemove = array('Médico', 'Admin','Asistente','Paciente');
-              $login->assignRole($request['rol']);
+               
+                    $login->assignRole('Paciente');
 
-              foreach ($rolesToRemove as $role) {
-                 $login->removeRole($role);
-              } 
-                    
-                  $login_rol->assignRole('Paciente');
+             
                   $loginh= new HistoricoP();
                   $loginh->Login_Pacientes_id = $login->Paciente_id;
                   $loginh->Old_contrasena = Hash::make($login->password);

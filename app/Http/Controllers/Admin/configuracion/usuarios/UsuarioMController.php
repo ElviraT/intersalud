@@ -213,8 +213,7 @@ class UsuarioMController extends Controller
 		            ]);
 
 						$rolesToRemove = array('Médico', 'Admin','Asistente');
-						
-						if($login->roles()->first()->name != null){
+						if(!empty($login->roles())){
 							foreach ($rolesToRemove as $role) {
 							   $login->removeRole($role);
 							}							

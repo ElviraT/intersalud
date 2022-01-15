@@ -171,6 +171,7 @@ class UsuarioAController extends Controller
             Flash::error('Debe ingresar una contraseña distinta a las anterior');
             return redirect()->route('usuario_a.edit', $id);
            }else{
+             DB::beginTransaction();
             try{
                     LoginT::where('Asistente_id', $id)->update([
                     'Usuario' => ucfirst($request['nombre_usuario']),
@@ -186,8 +187,11 @@ class UsuarioAController extends Controller
                     'status' => $request['status']
                     ])->assignRole($request['rol']);
 
-                
-                    $loginT = LoginT::where('Asistente_id', $id)->first();
+                    $rol= $login->roles()->first()->name;                
+                    $login->removeRole($rol);                  
+                    $login->assignRole($request['rol']);
+
+                  $loginT = LoginT::where('Asistente_id', $id)->first();
                   $loginh= new HistoricoT();
                   $loginh->Login_Tranajador_id = $loginT->id_Login_Trabajador;
                   $loginh->Old_Constrasena = Hash::make($login->password);
@@ -197,11 +201,13 @@ class UsuarioAController extends Controller
                   $loginh->Nota = '';
                   $loginh->save();
 
-                    Flash::success("Registro Actualizado Correctamente");
+                     DB::commit();
+                Flash::success("Registro Actualizado Correctamente");
 
-                }catch(\Illuminate\Database\QueryException $e) {
-                  Flash::error($e->getMessage().'Ocurrió un error, por favor intente de nuevo'); 
-                }
+            }catch(\Illuminate\Database\QueryException $e) {
+              DB::rollback();
+              Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+            }
                 return redirect()->route('usuario_a.edit', $id);
           }
     }

@@ -17,11 +17,11 @@
         </div> 
         <div class="col-md-6 mb-3">
             <label>{{ 'Contraseña' }}</label>
-            <input type="password" class="form-control" name="contrasena" id="contrasena" placeholder="Contraseña" required>
+            <input type="password" class="form-control" name="contrasena" id="contrasena" placeholder="Contraseña">
         </div>
         <div class="col-md-6 mb-3">
             <label>{{ 'Confirma Contraseña' }}</label>
-            <input type="password" class="form-control" name="contrasena2" id="contrasena2" placeholder="Confirma Contraseña" required>
+            <input type="password" class="form-control" name="contrasena2" id="contrasena2" placeholder="Confirma Contraseña">
         </div>
         @can('rol')
         <div class="col-md-6 mb-3">

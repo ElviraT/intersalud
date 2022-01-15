@@ -77,7 +77,7 @@
                             </a>
                         </li>
                       @endcan
-                      @can('muncipio')
+                      @can('municipio')
                         <li class="{{ @request()->routeIs('municipio') ? 'active' : ''}}">
                             <a href="{{ route('municipio')}}" onclick="loading_show();" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>

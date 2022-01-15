@@ -9,7 +9,7 @@
 	  					<label>{{'Descripción'}}</label>  					
 	  				</div>
 	  				<div class="col-md-8">
-	  					<input type="text" name="descripcion" class="form-control mb-3" id="descripcion" autofocus="true" value="{{isset($horarios) ? $horarios->description : null}}" required>  					
+	  					<input type="text" name="descripcion" class="form-control mb-3" id="descripcion" autofocus="true" value="{{isset($horarios) ? $horarios->description : null}}" required maxlength="100">  					
 	  				</div>
 	  			</div>
 	  		</div>

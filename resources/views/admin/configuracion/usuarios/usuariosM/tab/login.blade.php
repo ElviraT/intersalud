@@ -23,8 +23,9 @@
             {!! Form::label('rol', 'Rol:') !!}
             {!! Form::select('rol',$roles, isset($rol[0]) ? $rol[0]->role_id : null, [
                 'placeholder' => 'Seleccione', 
-                'class' => 'select2 form-control required',
-                'id' => 'rol'
+                'class' => 'select2 form-control',
+                'id' => 'rol',
+                'required'=>'required'
                 ]) !!}
         </div>
     </div>

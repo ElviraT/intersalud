@@ -12,7 +12,7 @@
                 {{ Form::hidden('id', 0, ['class'=>'modal_registro_especialidad_id'] ) }}                
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Nombre'}}</label>
-                    <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true">
+                    <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true" maxlength="150">
                 </div>
             </div>
             <div class="modal-footer">

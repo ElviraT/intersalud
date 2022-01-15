@@ -12,7 +12,7 @@
                 {{ Form::hidden('id', 0, ['class'=>'modal_registro_pais_id'] ) }}
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Código'}}</label>
-                    <input type="text" name="codigo" class="form-control" id="codigo" placeholder="Código" required autofocus onkeypress = 'return SoloNumeros(event)'>
+                    <input type="text" name="codigo" class="form-control" id="codigo" placeholder="Código" required autofocus onkeypress = 'return SoloNumeros(event)' maxlength="11">
                 </div>
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Nombre Corto'}}</label>

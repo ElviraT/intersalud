@@ -2,7 +2,7 @@
     <div class="form-group col-md-12">
         <div class="row">
             {{ Form::hidden('id', isset($asistente) ? $asistente->id_asistente : null, ['class'=>'modal_registro_usuarioa_id'] ) }}
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
                 <label for="validationCustom01">{{'Médico'}}</label>
                 {!! Form::select('id_medico',$medicos, isset($asistente) ? $asistente->id_Medico : null, [
                     'placeholder' => 'Seleccione', 
@@ -12,15 +12,15 @@
                     ])
                 !!}
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
                 <label for="validationCustom01">{{'Nombre'}}</label>
-                <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true" value="{{ isset($asistente) ? $asistente->Nombre_Asistente : null }}">
+                <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true" value="{{ isset($asistente) ? $asistente->Nombre_Asistente : null }}" maxlength="150">
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
                 <label for="validationCustom01">{{'Apellido'}}</label>
-                <input type="text" name="apellido" class="form-control" id="apellido" placeholder="Apellido" required value="{{ isset($asistente) ? $asistente->Apellidos_Asistente : null }}">
+                <input type="text" name="apellido" class="form-control" id="apellido" placeholder="Apellido" required value="{{ isset($asistente) ? $asistente->Apellidos_Asistente : null }}" maxlength="150">
             </div>
-             <div class="col-md-6 form-group mb-3">
+             <div class="col-md-4 form-group mb-3">
                 <label>{{ 'Cedula' }}</label>
                 <div class="row">
                     <div class="col-md-5">
@@ -32,11 +32,11 @@
                             ]) !!}
                     </div>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" name="cedula" id="cedula" placeholder="Cedula" onkeypress = 'return SoloNumeros(event)' value="{{ isset($asistente) ? $asistente->CIDNI : null }}" required>
+                        <input type="text" class="form-control" name="cedula" id="cedula" placeholder="Cedula" onkeypress = 'return SoloNumeros(event)' value="{{ isset($asistente) ? $asistente->CIDNI : null }}" required maxlength="20">
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
                 {!! Form::label('sexo', 'Sexo:') !!}
                 {!! Form::select('sexo',$sexo, isset($asistente) ? $asistente->Sexo_id : null, [
                     'placeholder' => 'Seleccione', 
@@ -45,7 +45,7 @@
                     'required'=>'required'
                     ]) !!}
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
                 <label>{{ 'Fecha de nacimiento' }}</label>
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -62,7 +62,7 @@
                       !!}
                  </div>
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
                 <label>{{ 'Lugar de Nacimiento' }}</label>
                 {!! Form::select('nacionalidad',$nacionalidad, isset($asistente) ? $asistente->Pais_id : null, [
                     'placeholder' => 'Seleccione', 
@@ -71,7 +71,7 @@
                     'required'=>'required'
                     ]) !!}
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
                 <label>{{ 'Estado Civil' }}</label>
                 {!! Form::select('civil',$estadoC, isset($asistente) ? $asistente->Civil_id : null, [
                     'placeholder' => 'Seleccione', 
@@ -80,7 +80,7 @@
                     'required'=>'required'
                     ]) !!}
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
                 {!! Form::label('status', 'Status:') !!}
                 {!! Form::select('status',$status, isset($asistente) ? $asistente->Status_id : null, [
                     'placeholder' => 'Seleccione', 

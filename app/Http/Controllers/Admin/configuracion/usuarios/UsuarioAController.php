@@ -119,8 +119,8 @@ class UsuarioAController extends Controller
     public function edit($id)
     {
       $login = LoginT::where('Asistente_id', $id)->first();
-      $rol = DB::select("SELECT m.role_id FROM model_has_roles as m, users as u WHERE m.model_id = u.id and u.id_usuario ='$id'");
-
+      $rol = DB::select("SELECT m.role_id FROM model_has_roles as m, users as u WHERE m.model_id = u.id and u.id_usuarioA ='$id'");
+     // dd($id);
       $asistente = UsuarioA::where('id_asistente',$id)->first();
       $medicos=Collection::make(UsuarioM::select(['id_Medico', DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
       $sexo=Collection::make(Sexo::select(['id_Sexo','Sexo'])->orderBy('Sexo')->get())->pluck("Sexo", "id_Sexo");
@@ -153,11 +153,11 @@ class UsuarioAController extends Controller
             $login2->id_usuarioA = $request['id'];
             $login2->save();
 
-            $login2->assignRole('Asistente');
+            $login2->assignRole($request['rol']);
 
         Flash::success("Registro Agregado Correctamente");            
         } catch (\Illuminate\Database\QueryException $e) {
-            Flash::error($e->getMessage().'Ocurrió un error, por favor intente de nuevo');  
+            Flash::error('Ocurrió un error, por favor intente de nuevo');  
         }
 
         return redirect()->route('usuario_a.edit', $request['id']);
@@ -185,7 +185,8 @@ class UsuarioAController extends Controller
                     'email' => $request['correo'],
                     'password' => Hash::make($request['contrasena']),
                     'status' => $request['status']
-                    ])->assignRole($request['rol']);
+                    ]);
+
 
                     $rol= $login->roles()->first()->name;                
                     $login->removeRole($rol);                  

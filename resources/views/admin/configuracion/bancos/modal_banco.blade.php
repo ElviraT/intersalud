@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Codigo'}}</label>
-                    <input type="text" name="codigo" class="form-control" id="codigo" placeholder="Codigo" required>
+                    <input type="text" name="codigo" class="form-control" id="codigo" placeholder="Codigo" required maxlength="11" onkeypress="return SoloNumeros(event)">
                 </div>
                  <div class="col-md-12 mb-3">
                     {!! Form::label('status', 'Status:') !!}

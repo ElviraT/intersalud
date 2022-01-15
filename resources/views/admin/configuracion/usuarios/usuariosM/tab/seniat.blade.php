@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-6 mb-3">
             <label>{{ 'RIF' }}</label>
-            <input type="text" class="form-control" name="rif" id="rif" placeholder="RIF" autofocus value="{{ isset($seniat) ? $seniat->RIF : null }}">
+            <input type="text" class="form-control" name="rif" id="rif" placeholder="RIF" autofocus value="{{ isset($seniat) ? $seniat->RIF : null }}" maxlength="20">
         </div> 
         <div class="col-md-6 mb-3">
             <label>{{ 'Fecha' }}</label>
@@ -25,7 +25,7 @@
         </div>
         <div class="col-md-12 mb-3">
             <label>{{ 'Dirección' }}</label>
-            <textarea class="form-control" rows="5" name="direccion" id="direccion" placeholder="Dirección">{{ isset($seniat) ? $seniat->Direccion : null }}</textarea>
+            <textarea class="form-control" rows="5" name="direccion" id="direccion" placeholder="Dirección" maxlength="200">{{ isset($seniat) ? $seniat->Direccion : null }}</textarea>
         </div> 
     </div>
 

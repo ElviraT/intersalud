@@ -13,11 +13,11 @@
                 
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Nombre'}}</label>
-                    <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true">
+                    <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true" maxlength="150">
                 </div>
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Referencia'}}</label>
-                    <input type="text" name="referencia" class="form-control" id="referencia" placeholder="Referencia" onkeypress = 'return SoloNumeros(event)' required>
+                    <input type="text" name="referencia" class="form-control" id="referencia" placeholder="Referencia" onkeypress = 'return SoloNumeros(event)' required maxlength="11">
                 </div>
                  <div class="col-md-12 mb-3">
                     {!! Form::label('status', 'Status:') !!}

@@ -32,7 +32,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom01">{{'Número de cuenta'}}</label>
-                            <input type="text" name="numero" class="form-control" id="numero" placeholder="Número de cuenta" required autofocus="true">
+                            <input type="text" name="numero" class="form-control" id="numero" placeholder="Número de cuenta" required autofocus="true" maxlength="30" onkeypress="return SoloNumeros(event)">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom01">{{'Tipo'}}</label>

@@ -52,6 +52,7 @@ $('#modal_cuentaUSD').on('show.bs.modal', function (e) {
             $('#status').change();
             $('#numero', modal).val(obj.Numero_Cuenta);
             $('#tipo', modal).val(obj.Tipo);
+            $('#tipo').change();
             $('#fecha', modal).val(obj.Fecha);
             modal.removeClass('loading');
             loading_hide();

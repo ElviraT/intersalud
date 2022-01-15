@@ -51,23 +51,23 @@
         </div> 
     	<div class="col-md-12 mb-3">
             <label>{{ 'Dirección' }}</label>
-            <textarea name="direccion" id="direccion" class="form-control" rows="3" required>{{ isset($direccion) ? $direccion->Direccion : null }}</textarea>
+            <textarea name="direccion" id="direccion" class="form-control" rows="3" required maxlength="200">{{ isset($direccion) ? $direccion->Direccion : null }}</textarea>
         </div> 
         <div class="col-md-6 mb-3">
             <label>{{ 'Número de casa' }}</label>
-            <input type="text" class="form-control" name="ncasa" id="ncasa" placeholder="Número de casa" maxlength="50" value="{{ isset($direccion) ? $direccion->Numero_Casa : null }}" required>
+            <input type="text" class="form-control" name="ncasa" id="ncasa" placeholder="Número de casa" maxlength="50" value="{{ isset($direccion) ? $direccion->Numero_Casa : null }}" required maxlength="30">
         </div> 
         <div class="col-md-6 mb-3">
             <label>{{ 'Teléfono' }}</label>
-            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Teléfono" maxlength="50" value="{{ isset($direccion) ? $direccion->Telefono : null }}" required>
+            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Teléfono" maxlength="50" value="{{ isset($direccion) ? $direccion->Telefono : null }}" required maxlength="25">
         </div>
         <div class="col-md-6 mb-3">
             <label>{{ 'Celular' }}</label>
-            <input type="text" class="form-control" name="celular" id="celular" placeholder="Celular" maxlength="50" value="{{ isset($direccion) ? $direccion->Celular : null }}" required>
+            <input type="text" class="form-control" name="celular" id="celular" placeholder="Celular" maxlength="50" value="{{ isset($direccion) ? $direccion->Celular : null }}" required maxlength="25">
         </div>
         <div class="col-md-6 mb-3">
             <label>{{ 'Correo' }}</label>
-            <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo" maxlength="50" value="{{ isset($direccion) ? $direccion->Correo : null }}" required>
+            <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo" maxlength="50" value="{{ isset($direccion) ? $direccion->Correo : null }}" required maxlength="150">
         </div> 
         
     </div>

@@ -13,15 +13,15 @@
                 
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Nombre'}}</label>
-                    <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true">
+                    <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true" maxlength="150">
                 </div>
                 <div class="col-md-12 mb-3">
                     <label>{{'Color'}}</label>                  
-                    <input id="color" type="color" class="form-control" name="color">                 
+                    <input id="color" type="color" class="form-control" name="color" maxlength="20">                 
                 </div>
                 <div class="col-md-12 mb-3">
                     <label>{{'Nota'}}</label>  
-                    <textarea id="nota" name="nota" class="form-control"></textarea>                
+                    <textarea id="nota" name="nota" class="form-control" maxlength="200"></textarea>                
                 </div>
             </div>
             <div class="modal-footer">

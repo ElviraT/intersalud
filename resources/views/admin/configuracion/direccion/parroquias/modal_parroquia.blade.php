@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Nombre'}}</label>
-                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required onkeypress = 'return soloLetras(event)'>
+                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required onkeypress = 'return soloLetras(event)' maxlength="100">
                 </div>
             </div>
             <div class="modal-footer">

@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label>{{'Servicio'}}</label>
-                            <input type="text" name="servicio" class="form-control" id="servicio" placeholder="Servicio" required autofocus="true">
+                            <input type="text" name="servicio" class="form-control" id="servicio" placeholder="Servicio" required autofocus="true" maxlength="200">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>{{'Costo'}}</label>

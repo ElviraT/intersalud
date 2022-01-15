@@ -13,11 +13,11 @@
                 
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Nombre'}}</label>
-                    <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true">
+                    <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true" maxlength="50">
                 </div>
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Siglas'}}</label>
-                    <input type="text" name="siglas" class="form-control" id="siglas" placeholder="Siglas" required>
+                    <input type="text" name="siglas" class="form-control" id="siglas" placeholder="Siglas" required maxlength="20">
                 </div>
                 <div class="col-md-12 mb-3">
                 {!! Form::label('status', 'Status:') !!}

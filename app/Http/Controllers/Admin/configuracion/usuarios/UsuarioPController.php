@@ -123,7 +123,8 @@ class UsuarioPController extends Controller
 
     public function edit($id)
     {
-      $login = LoginP::where('id_login_Pacientes', $id)->first();
+      $login = LoginP::where('Paciente_id', $id)->first();
+
       $direccion= DireccionPaciente::where('Paciente_id', $id)->first();
       $paciente = UsuarioP::where('id_Paciente',$id)->first();
       $sexo=Collection::make(Sexo::select(['id_Sexo','Sexo'])->orderBy('Sexo')->get())->pluck("Sexo", "id_Sexo");
@@ -136,7 +137,6 @@ class UsuarioPController extends Controller
       $estado=Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado"); 
       $municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
       $parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia"); 
-
       return view('admin.configuracion.usuarios.usuariosP.edit')->with(compact('paciente','sexo','prefijo','estadoC','status','nacionalidad','login','ciudad','estado','municipio','parroquia','direccion')); 
     }
 
@@ -161,12 +161,12 @@ class UsuarioPController extends Controller
             $login2->id_usuarioP = $request['id'];
             $login2->save();
 
-            $login2->assignRole('Paciente');
+            $login2->assignRole($request['rol']);
             DB::commit();
         Flash::success("Registro Agregado Correctamente");            
         } catch (\Illuminate\Database\QueryException $e) {
           DB::rollback();
-            Flash::error('Ocurrió un error, por favor intente de nuevo');  
+            Flash::error($e.'Ocurrió un error, por favor intente de nuevo');  
         }
 
         return redirect()->route('usuario_p.edit', $request['id']);

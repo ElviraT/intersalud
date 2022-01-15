@@ -15,19 +15,19 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom01">{{'Bolívares'}}</label>
-                            <input type="text" name="bs" class="form-control" id="bs" placeholder="Bs" required autofocus="true" onkeypress = 'return SoloNumeros(event)'>
+                            <input type="text" name="bs" class="form-control" id="bs" placeholder="Bs" required autofocus="true" onkeypress = 'return SoloNumeros(event)' maxlength="14">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom01">{{'Dolares'}}</label>
-                            <input type="text" name="usd" class="form-control" id="usd" placeholder="USD" required onkeypress = 'return SoloNumeros(event)'>
+                            <input type="text" name="usd" class="form-control" id="usd" placeholder="USD" required onkeypress = 'return SoloNumeros(event)' maxlength="14">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom01">{{'BitCoins'}}</label>
-                            <input type="text" name="btc" class="form-control" id="btc" placeholder="Btc" required onkeypress = 'return SoloNumeros(event)'>
+                            <input type="text" name="btc" class="form-control" id="btc" placeholder="Btc" required onkeypress = 'return SoloNumeros(event)' maxlength="14">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom01">{{'Ethereum'}}</label>
-                            <input type="text" name="eth" class="form-control" id="eth" placeholder="Eth" required onkeypress = 'return SoloNumeros(event)'>
+                            <input type="text" name="eth" class="form-control" id="eth" placeholder="Eth" required onkeypress = 'return SoloNumeros(event)' maxlength="14">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>{{ 'Fecha' }}</label>

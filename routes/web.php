@@ -246,6 +246,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('horario/edit/{id}', ['as' => 'horario.edit', 'uses' => 'Admin\HorariosController@edit']);
 	Route::post('horario/destroy', ['as' => 'horario.destroy', 'uses' => 'Admin\HorariosController@destroy']);
 
+	//AGENDA
+	Route::get('agenda', ['as' => 'agenda', 'uses' => 'Admin\configuracion\AgendaController@index']);
+	//Route::get('agenda/create', ['as' => 'agenda.create', 'uses' => 'Admin\configuracion\AgendaController@create']);
+	//Route::post('agenda/add', ['as' => 'agenda.add', 'uses' => 'Admin\configuracion\AgendaController@add']);
+	//Route::get('agenda/edit/{id}', ['as' => 'agenda.edit', 'uses' => 'Admin\configuracion\AgendaController@edit']);
+	//Route::post('agenda/destroy', ['as' => 'agenda.destroy', 'uses' => 'Admin\configuracion\AgendaController@destroy']);
+
 	/*HISTORIAS CLINICAS - UROLOGIA*/
 	Route::get('historias/urologia', ['as' => 'urologia', 'uses' => 'Admin\historias\UrologiaController@index']);
 	Route::get('historias/urologia/create', ['as' => 'urologia.create', 'uses' => 'Admin\historias\UrologiaController@create']);

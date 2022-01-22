@@ -43,4 +43,9 @@ class UsuarioM extends Model
     {
         return $this->hasOne('App\User', 'id_usuario','id_Medico');
     }
+
+    public function Horario()
+    {
+        return $this->hasOne('App\Model\Horario', 'id_Horario_Cita', 'id_Medico');
+    }
 }

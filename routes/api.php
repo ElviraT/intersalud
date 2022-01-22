@@ -20,3 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::match(['get','post'],'/ciudad.json', 'Controller@ciudad')->name('ciudad_dependiente');
 Route::match(['get','post'],'/municipio.json', 'Controller@municipio')->name('municipio_dependiente');
 Route::match(['get','post'],'/parroquia.json', 'Controller@parroquia')->name('parroquia_dependiente');
+Route::match(['get','post'],'/especialidad.json', 'Controller@especialidad')->name('especialidad_dependiente');
+Route::match(['get','post'],'/consultar_horario.json', 'Controller@consultar_horario')->name('consultar_horario');

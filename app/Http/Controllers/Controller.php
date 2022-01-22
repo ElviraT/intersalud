@@ -9,7 +9,9 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Model\Ciudad;
 use App\Model\Municipio;
+use App\Model\Especialidad;
 use App\Model\Parroquia;
+use App\Model\Horario;
 
 class Controller extends BaseController
 {
@@ -46,6 +48,34 @@ class Controller extends BaseController
                         ->orderBy('Parroquia')->get(); 
       }
         return response()->json($parroquias);
+    }
+
+     public function especialidad(Request $request){
+      $id = empty($request->input('medico')) ? 0 : $request->input('medico');
+      $especialidades = [];
+
+      if ($id > 0) {
+        $especialidades = Especialidad::
+       select('especialidades_medicas.id_Especialidad_Medica AS id', 'especialidades_medicas.Espacialiadad_Medica AS name')
+       ->join('control_especialidades', 'especialidades_medicas.id_Especialidad_Medica','control_especialidades.Especialidades_Medicas_id')
+       ->where('control_especialidades.Medico_id',$id)
+       ->get(); 
+      }
+        return response()->json($especialidades);
+    }
+
+    public function consultar_horario(Request $request){
+      $id_Medico = empty($request->input('medico')) ? 0 : $request->input('medico');
+      $id_espec = empty($request->input('espec')) ? 0 : $request->input('espec');
+
+      $horarios = [];
+
+      if ($id_espec > 0) {
+        $horarios = Horario::where('Medico_id', $id_Medico)
+                           ->where('Especialidad_id',$id_espec)
+                           ->first(); 
+      }
+        return response()->json($horarios);
     }
 
 }

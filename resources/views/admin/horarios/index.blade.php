@@ -47,7 +47,9 @@
                 <table id="table_horarios" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
-                            <th>{{'Descripción'}}</th>
+                            <th>{{'Medico'}}</th>
+                            <th>{{'Especialidad'}}</th>
+                            <th>{{'Maximo'}}<br>{{ 'de Pacientes'}}</th>
                             <th>{{'Mañana'}}</th>
                             <th>{{'Tarde'}}</th>
                             <th>{{'Domicilio'}}</th>
@@ -57,7 +59,9 @@
                     <tbody>
                       @foreach($horarios as $resultado)
                         <tr>
-                          <td>{{ $resultado->description }}</td>
+                          <td>{{ $resultado->UsuarioM->Nombres_Medico.' '.$resultado->UsuarioM->Apellidos_Medicos }}</td>
+                          <td>{{ $resultado->Especialidad->Espacialiadad_Medica }}</td>
+                          <td>{{ $resultado->mpaciente }}</td>
                           @if($resultado->Manana == 1)
                             <td>{{ 'Si' }}</td>
                           @else

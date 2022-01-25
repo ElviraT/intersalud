@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection as Collection;
 use App\Model\Agenda;
 use App\Model\UsuarioM;
+use App\Model\UsuarioP;
+use App\Model\UsuarioPE;
 use App\Model\Especialidad;
 use DB;
 
@@ -28,6 +30,14 @@ class AgendaController extends Controller
              ->where('control_especialidades.Medico_id',auth()->user()->id_usuario)
              ->get())->pluck('name','id'); 
       }
-    	return view('admin.configuracion.agendas.index')->with(compact('medico','especialidad'));
+
+      		$pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
+
+           	$pacientesE = Collection::make(UsuarioPE::
+             select(['pacientes_especiales.id_Pacientes_Especiales AS id', DB::raw('CONCAT(pacientes_especiales.Nombre_Paciente_Especial, " ",pacientes_especiales. Apellido_Paciente_Especial) AS name')])
+             ->join('usuarios_pacientes', 'pacientes_especiales.Paciente_id','usuarios_pacientes.id_Paciente')
+             ->get())->pluck('name','id'); 
+
+    	return view('admin.configuracion.agendas.index')->with(compact('medico','especialidad','pacientes','pacientesE'));
     }
 }

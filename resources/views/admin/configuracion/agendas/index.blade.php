@@ -54,6 +54,7 @@
                   </div>                  
                 </div>
               </div>
+              <div id='hora_seleccionada'></div>
              <div class="col-md-12 mt-5" id='calendar'></div>
             </div>
         </div>

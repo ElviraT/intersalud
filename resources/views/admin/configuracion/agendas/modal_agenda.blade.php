@@ -12,26 +12,57 @@
                 <div class="col-md-12">
                     <div class="row">
                         {{ Form::hidden('id', 0, ['class'=>'modal_registro_agenda_id'] ) }}
-                        <div class="col-md-3 mb-3">
-                            <label for="validationCustom01">{{'Local'}}</label>
-                            <input type="text" name="local" class="form-control" id="local" placeholder="Local" required autofocus="true">
+                        <div class="col-md-4 mb-3">
+                            {!! Form::label('paciente', 'Paciente:') !!}
+                            {!! Form::select('paciente',$pacientes, null, [
+                                'placeholder' => 'Seleccione', 
+                                'class' => 'select2 form-control',
+                                'id' => 'paciente',
+                                'required'=>'required'
+                            ]) !!}
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="validationCustom01">{{'Teléfono'}}</label>
-                            <input type="text" name="telefono" class="form-control" id="telefono" placeholder="Teléfono" required maxlength="20" onkeypress="return SoloNumeros(event)">
+                        <div class="col-md-4 mb-3">
+                            {!! Form::label('pacienteE', 'Paciente Especial:') !!}
+                            {!! Form::select('pacienteE',$pacientesE, null, [
+                                'placeholder' => 'Seleccione', 
+                                'class' => 'select2 form-control',
+                                'id' => 'pacienteE',
+                                'disabled'=>'disabled'
+                            ]) !!}
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="validationCustom01">{{'Celular'}}</label>
-                            <input type="text" name="celular" class="form-control" id="celular" placeholder="Celular" required maxlength="20" onkeypress="return SoloNumeros(event)">
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom01">{{'Maximo de Pacientes'}}</label>
+                            <input type="number" name="mpaciente" class="form-control" id="mpaciente" placeholder="Maximo de Pacientes" required>
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="validationCustom01">{{'Correo'}}</label>
-                            <input type="email" name="correo" class="form-control" id="correo" placeholder="Correo" required>
+                        <div class='col-md-4 mb-3'>
+                            <label>{{'Hora Inicio'}}</label>
+                          <div class="form-group">
+                             <div class='input-group date' id='hora_inicio'>
+                                <input type='text' class="form-control" name="hora_inicio" placeholder="Hora inicio"/>
+                                <span class="input-group-addon">
+                                <span class="ti-timer"></span>
+                                </span>
+                             </div>
+                          </div>
                         </div>
-                        
+                        <div class='col-md-4 mb-3'>
+                            <label>{{'Hora Fin'}}</label>
+                          <div class="form-group">
+                             <div class='input-group date' id='Hora_Fin'>
+                                <input type='text' class="form-control" name="Hora_Fin" placeholder="Hora fin"/>
+                                <span class="input-group-addon">
+                                <span class="ti-timer"></span>
+                                </span>
+                             </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom01">{{'Costo'}}</label>
+                            <input type="number" name="costo" class="form-control" id="costo" placeholder="Costo" required>
+                        </div>
                         <div class="col-md-12 mb-3">
-                            <label>{{'Direccion'}}</label>
-                            <textarea name="direccion" id="direccion" class="form-control" rows="3" required></textarea>
+                            <label>{{'Nota'}}</label>
+                            <textarea name="nota" id="nota" class="form-control" rows="3" required></textarea>
                         </div>
                     </div>
                 </div>

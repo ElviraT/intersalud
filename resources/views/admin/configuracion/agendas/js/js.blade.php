@@ -5,6 +5,10 @@
 <!-- Select2 -->
 <script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
 
+<!--datepicker-->
+<script src="{{ asset('js/moment.js')}}"></script>
+<script src="{{ asset('js/moment-with-locales.js')}}"></script>
+<script src="{{ asset('js/bootstrap-datetimepicker.min.js')}}"></script>
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -12,7 +16,54 @@ $(document).ready(function() {
         theme : "classic",
         closeOnSelect: true,
          });
+
+    $('#paciente').select2({ 
+    theme : "classic",
+    dropdownParent: $('#modal_agenda'),
+     });
+
+    $('#pacienteE').select2({ 
+    theme : "classic",
+    dropdownParent: $('#modal_agenda'),
+     });
     });
+$(function () {
+       $('#fecha_inicio').datetimepicker({
+        format: 'HH:mm:ss',
+       });
+       $('#fecha_fin').datetimepicker({
+       useCurrent: false, //Important! See issue #1075
+       format: 'HH:mm:ss',
+       });
+       $("#fecha_inicio").on("dp.change", function (e) {
+           $('#fecha_fin').data("DateTimePicker").minDate(e.date);
+       });
+       $("#fecha_fin").on("dp.change", function (e) {
+           $('#fecha_inicio').data("DateTimePicker").maxDate(e.date);
+       });
+});
+$('#paciente').on('change', function (e) {
+   var paciente = $('#paciente').val();
+    $.getJSON('{{ route('paciente_dependiente') }}?paciente='+paciente, function(objPE){
+        var opcion = $('#pacienteE').val();
+        $('#pacienteE').empty();
+        $('#pacienteE').prop('disabled', true);
+        $('#pacienteE').change();
+
+        if(objPE.length > 0){
+            $.each(objPE, function (i, pacienteE) {
+            $('#pacienteE').append(
+                    $('<option>', {
+                        value: pacienteE.id,
+                        text : pacienteE.name
+                    })
+                );
+            });
+            $('#pacienteE').prop('disabled', false);
+            $("#pacienteE option:first").attr("selected", "selected");
+        }        
+    });
+});
 
 $('#medico').on('change', function (e) {
    var medico = $('#medico').val();
@@ -69,18 +120,54 @@ if (objch['Domingo'] == 0) {
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
               locale:'es',
+              initialDate: new Date(),
+              initialView: 'timeGridWeek',
+              slotLabelFormat:{
+               hour: '2-digit',
+               minute: '2-digit',
+               hour12: true
+               },//se visualizara de esta manera 01:00 AM en la columna de horas
+              eventTimeFormat: {
+               hour: '2-digit',
+               minute: '2-digit',
+               hour12: true
+              },
+              nowIndicator: true,
+              headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+              },
+              navLinks: true, // can click day/week names to navigate views
+              editable: true,
+              selectable: true,
+              selectMirror: true,      
+              hiddenDays: array_dias,
+              dayMaxEvents: true, // allow "more" link when too many events
+              select: function(arg) {
+                console.log(arg);
+                $('#modal_agenda').modal();
+                calendar.unselect()
+              },
+               views: {
+                  timeGrid: {
+                    eventLimit: 3 // adjust to 3 only for timeGridWeek/timeGridDay
+                  }
+                },
+            });
+             /* defaultView: 'resourceTimeGridDay',
+             // allDaySlot: false,
               headerToolbar: {
                 left: 'prev,next,today',
-                center: 'title',
-                right: 'dayGridMonth,dayGridWeek,dayGridDay'
+                center: 'title'
               },
               initialDate: new Date(),
               eventLimit: true,
+              displayEventTime: true,
               navLinks: true, // can click day/week names to navigate views
-              fixedWeekCount:false,
-              showNonCurrentDates:false,
               selectable: true,
-              selectMirror: true,
+              showNonCurrentDates:false,
+             // selectMirror: true,
               select: function(arg) {
                 $('#modal_agenda').modal();
                 calendar.unselect()
@@ -92,7 +179,7 @@ if (objch['Domingo'] == 0) {
                     eventLimit: 3 // adjust to 3 only for timeGridWeek/timeGridDay
                   }
                 },
-            });
+            });*/
             calendar.render();
         });
 

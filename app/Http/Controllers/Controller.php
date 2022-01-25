@@ -11,7 +11,9 @@ use App\Model\Ciudad;
 use App\Model\Municipio;
 use App\Model\Especialidad;
 use App\Model\Parroquia;
+use App\Model\UsuarioPE;
 use App\Model\Horario;
+use DB;
 
 class Controller extends BaseController
 {
@@ -62,6 +64,20 @@ class Controller extends BaseController
        ->get(); 
       }
         return response()->json($especialidades);
+    }
+
+    public function paciente_especial(Request $request){
+      $id = empty($request->input('paciente')) ? 0 : $request->input('paciente');
+      $pacientesE = [];
+
+      if ($id > 0) {
+        $pacientesE = UsuarioPE::
+             select(['pacientes_especiales.id_Pacientes_Especiales AS id', DB::raw('CONCAT(pacientes_especiales.Nombre_Paciente_Especial, " ",pacientes_especiales. Apellido_Paciente_Especial) AS name')])
+             ->join('usuarios_pacientes', 'pacientes_especiales.Paciente_id','usuarios_pacientes.id_Paciente')
+             ->where('pacientes_especiales.Paciente_id',$id)
+             ->get();
+      }
+        return response()->json($pacientesE);
     }
 
     public function consultar_horario(Request $request){

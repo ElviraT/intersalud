@@ -22,3 +22,4 @@ Route::match(['get','post'],'/municipio.json', 'Controller@municipio')->name('mu
 Route::match(['get','post'],'/parroquia.json', 'Controller@parroquia')->name('parroquia_dependiente');
 Route::match(['get','post'],'/especialidad.json', 'Controller@especialidad')->name('especialidad_dependiente');
 Route::match(['get','post'],'/consultar_horario.json', 'Controller@consultar_horario')->name('consultar_horario');
+Route::match(['get','post'],'/paciente_dependiente.json', 'Controller@paciente_especial')->name('paciente_dependiente');

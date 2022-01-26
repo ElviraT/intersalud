@@ -3,7 +3,7 @@
   {{ Form::hidden('id', isset($horarios) ? $horarios->id_Horario_Cita : 0, ['id'=>'id'] ) }}
     <div class="col-md-12" style="border-bottom: 1px solid red">
 	  	<div class="row">
-			<div class="col-md-4 mt-3">
+			<div class="col-md-6 mt-3">
 	            {!! Form::label('medico', 'Medico:') !!}
 	            {!! Form::select('medico',$medico, isset($horarios) ? $horarios->Medico_id : null, [
 	                'placeholder' => 'Seleccione', 
@@ -13,7 +13,7 @@
 	                ])
 	            !!}
             </div>
-            <div class="col-md-4 mt-3">
+            <div class="col-md-6 mt-3">
                 {!! Form::label('especialidad', 'Especialidad Medica:') !!}
                 {!! Form::select('especialidad',$especialidad, isset($horarios) ? $horarios->Especialidad_id : null, [
                     'placeholder' => 'Seleccione', 
@@ -23,10 +23,6 @@
                     'required'=>'required'
                     ]) !!}
             </div>
-	  		<div class="col-md-4 mt-3">
-	  			<label>{{'Maximo de Pacientes'}}</label>	  				
-	  			<input type="number" name="mpaciente" class="form-control mb-3" id="mpaciente" autofocus="true" value="{{isset($horarios) ? $horarios->mpaciente : null}}" required maxlength="10">			
-	  		</div>
 		  	<div class="col-md-4 mb-3 mt-3">
 		  		<label>{{'Mañana'}}</label>
 				<input type="checkbox" name="manana" id="manana" data-toggle="toggle"  data-on="Si" data-off="No" data-size="xs" @if(isset($horarios) && $horarios->Manana == 1) checked @endif>

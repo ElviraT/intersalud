@@ -160,11 +160,13 @@
     <script type="text/javascript" src="{{ asset('assets/js/script.js')}} "></script>
     <!-- Loading -->
      <script src="{{ asset('js/jquery.loadingModal.js') }}" type="text/javascript"></script>
-
+    <!--sweetalert2-->
+    <script src="{{ asset('js/sweetalert.js')}}"></script>
     @include('layouts.validaciones')
     @yield('js')
     <script type="text/javascript">
       loading_hide();
+      $(".alert").alert(); window.setTimeout(function() { $(".alert").alert('close'); }, 5000);
     </script>
 </body>
 

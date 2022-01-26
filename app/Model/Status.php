@@ -10,11 +10,14 @@ class Status extends Model
    protected $primary_key = 'id_Status';
    public $timestamps = false;
 
-   public function UsuarioA()
+   public function Agenda()
+    {
+        return $this->hasOne('App\Model\Agenda', 'id_Agenda');
+    }
+    public function UsuarioA()
     {
         return $this->hasOne('App\Model\UsuarioA', 'id_Status');
     }
-
     public function UsuarioP()
     {
         return $this->hasOne('App\Model\UsuarioP', 'id_Status');

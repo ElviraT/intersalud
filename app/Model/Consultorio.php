@@ -10,7 +10,11 @@ class Consultorio extends Model
    protected $primary_key = 'id_Consultorio';
    public $timestamps = false;
 
-   public function Status()
+   public function Agenda()
+    {
+        return $this->hasOne('App\Model\Agenda', 'id_Agenda');
+    }
+    public function Status()
     {
         return $this->hasOne('App\Model\Status', 'id_Status','Status_id');
     }

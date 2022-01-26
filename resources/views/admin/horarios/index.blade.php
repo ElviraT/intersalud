@@ -49,7 +49,6 @@
                         <tr>
                             <th>{{'Medico'}}</th>
                             <th>{{'Especialidad'}}</th>
-                            <th>{{'Maximo'}}<br>{{ 'de Pacientes'}}</th>
                             <th>{{'Mañana'}}</th>
                             <th>{{'Tarde'}}</th>
                             <th>{{'Domicilio'}}</th>
@@ -61,7 +60,6 @@
                         <tr>
                           <td>{{ $resultado->UsuarioM->Nombres_Medico.' '.$resultado->UsuarioM->Apellidos_Medicos }}</td>
                           <td>{{ $resultado->Especialidad->Espacialiadad_Medica }}</td>
-                          <td>{{ $resultado->mpaciente }}</td>
                           @if($resultado->Manana == 1)
                             <td>{{ 'Si' }}</td>
                           @else

@@ -113,7 +113,6 @@ class HorariosController extends Controller
                 $horario= new Horario();
                 $horario->Medico_id = $request->medico;
                 $horario->Especialidad_id = $request->especialidad;
-                $horario->mpaciente = $request->mpaciente;
                 $horario->Manana = $manana;
                 $horario->Tarde = $tarde;
                 $horario->Domicilio = $domicilio;
@@ -150,7 +149,6 @@ class HorariosController extends Controller
                  Horario::where('id_Horario_Cita', $id)->update([
                     'Medico_id' => $request->medico,
                     'Especialidad_id' => $request->especialidad,
-                    'mpaciente' => $request->mpaciente,
                     'Manana'=>$manana,
                     'Tarde'=>$tarde,
                     'Domicilio'=>$domicilio,

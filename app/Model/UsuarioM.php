@@ -10,6 +10,11 @@ class UsuarioM extends Model
    protected $primary_key = 'id_Medico';
    public $timestamps = false;
 
+   public function Agenda()
+    {
+        return $this->hasOne('App\Model\Agenda', 'id_Agenda');
+    }
+    
    public function StatusM()
     {
         return $this->hasOne('App\Model\StatusM', 'id_Status_Medico','Status_Medico_id');

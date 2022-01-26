@@ -12,6 +12,7 @@ use App\Model\Municipio;
 use App\Model\Especialidad;
 use App\Model\Parroquia;
 use App\Model\UsuarioPE;
+use App\Model\Consultorio;
 use App\Model\Horario;
 use DB;
 
@@ -51,7 +52,16 @@ class Controller extends BaseController
       }
         return response()->json($parroquias);
     }
+    public function consultorio(Request $request){
+      $id = empty($request->input('especialidad')) ? 0 : $request->input('especialidad');
+      $consultorio = [];
 
+      if ($id > 0) {
+        $consultorio = Consultorio::where('Especialidad_Medica_id', $id)
+                        ->orderBy('Local')->get(); 
+      }
+        return response()->json($consultorio);
+    }
      public function especialidad(Request $request){
       $id = empty($request->input('medico')) ? 0 : $request->input('medico');
       $especialidades = [];

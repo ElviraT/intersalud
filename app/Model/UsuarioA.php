@@ -12,7 +12,7 @@ class UsuarioA extends Model
 
    public function Status()
     {
-        return $this->hasOne('App\Model\Status', 'id_Status','Status_id',);
+        return $this->hasOne('App\Model\Status', 'id_Status','Status_id');
     }
 
      public function UsuarioM()

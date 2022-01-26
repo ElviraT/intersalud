@@ -379,10 +379,19 @@
       </ul>
       @endcan  
       <ul class="pcoded-item pcoded-left-item">
-          <li class="{{ @request()->routeIs('agenda') ? 'active' : ' ' }}">
-              <a href="{{route('agenda')}}"  onclick="loading_show();" class="waves-effect waves-dark">
+          <li class="{{ @request()->routeIs('agendas') ? 'active' : ' ' }}">
+              <a href="{{route('agendas')}}"  onclick="loading_show();" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-calendar"></i><b>A</b></span>
                   <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Agenda'}}</span>
+                  <span class="pcoded-mcaret"></span>
+              </a>
+          </li>
+      </ul> 
+      <ul class="pcoded-item pcoded-left-item">
+          <li class="{{ @request()->routeIs('citas') ? 'active' : ' ' }}">
+              <a href="{{route('citas')}}"  onclick="loading_show();" class="waves-effect waves-dark">
+                  <span class="pcoded-micon"><i class="ti-bookmark-alt"></i><b>C</b></span>
+                  <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Citas Consulta'}}</span>
                   <span class="pcoded-mcaret"></span>
               </a>
           </li>

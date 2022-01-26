@@ -10,11 +10,14 @@ class Especialidad extends Model
     protected $primary_key = 'id_Especialidad_Medica';
     public $timestamps = false;
 
+    public function Agenda()
+    {
+        return $this->hasOne('App\Model\Agenda', 'id_Agenda');
+    }
     public function Consultorio()
     {
         return $this->hasOne('App\Model\Consultorio', 'id_Especialidad_Medica');
     }
-
     public function ControlEspecialidades()
     {
         return $this->hasOne('App\Model\ControlEspecialidades', 'id_Especialidad_Medica');

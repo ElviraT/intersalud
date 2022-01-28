@@ -86,6 +86,8 @@ $('#modal_agenda').on('show.bs.modal', function (e) {
             $('#medico').change();
             $('#especialidad', modal).val(obj.Especialidad_Medica);
             $('#especialidad').change();
+            $('#horario', modal).val(obj.Horario_Cita_id);
+            $('#horario').change();
             $('#consultorio', modal).val(obj.Consultorio_id);
             $('#consultorio').change();
             $('#costo', modal).val(obj.Costo_consulta);

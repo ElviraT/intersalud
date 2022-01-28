@@ -10,6 +10,7 @@ use App\Model\UsuarioM;
 use App\Model\UsuarioP;
 use App\Model\UsuarioPE;
 use App\Model\Especialidad;
+use App\Model\Citas;
 use DB;
 
 class CitasController extends Controller
@@ -32,6 +33,12 @@ class CitasController extends Controller
              ->get())->pluck('name','id'); 
       }
 
+      $agenda= Collection::make(Agenda::
+             select(['agendas.id_Agenda AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica ) AS name')])
+             ->join('usuarios_medicos', 'agendas.Medico_id','usuarios_medicos.id_Medico')
+             ->join('especialidades_medicas', 'agendas.Especialidad_Medica','especialidades_medicas.id_Especialidad_Medica',)
+             ->get())->pluck('name','id');
+
       		$pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
 
            	$pacientesE = Collection::make(UsuarioPE::
@@ -39,11 +46,12 @@ class CitasController extends Controller
              ->join('usuarios_pacientes', 'pacientes_especiales.Paciente_id','usuarios_pacientes.id_Paciente')
              ->get())->pluck('name','id'); 
 
-    	return view('admin.configuracion.citas.index')->with(compact('medico','especialidad','pacientes','pacientesE'));
+    	return view('admin.configuracion.citas.index')->with(compact('medico','especialidad','pacientes','pacientesE','agenda'));
     }
 
     public function add(Request $request)
     {
+      $cita= Citas::create($request->all());
     	return view('admin.configuracion.citas.index');
     }
 }

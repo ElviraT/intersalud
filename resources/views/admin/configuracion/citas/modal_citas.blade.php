@@ -8,14 +8,17 @@
                 </button>
             </div>
             
-            {!! Form::open(['route' => ['citas.add'],  'method' => 'post', 'autocomplete' =>'off' ]) !!}
             <div class="modal-body">
                 <div class="col-md-12">
+            <form action="" id="Myform">
+                 @csrf
+                 
                     <div class="row">
-                        {{ Form::hidden('id', 0, ['class'=>'modal_registro_citas_id'] ) }}
+                        {{ Form::hidden('id', 0, ['id'=>'id'] ) }}
+                        {{ Form::hidden('Agenda_id', 0, ['id'=>'Agenda_id'] ) }}
                         <div class="col-md-4 mb-3">
                             {!! Form::label('paciente', 'Paciente:') !!}
-                            {!! Form::select('paciente',$pacientes, null, [
+                            {!! Form::select('Paciente_id',$pacientes, null, [
                                 'placeholder' => 'Seleccione', 
                                 'class' => 'select2 form-control',
                                 'id' => 'paciente',
@@ -24,7 +27,7 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             {!! Form::label('pacienteE', 'Paciente Especial:') !!}
-                            {!! Form::select('pacienteE',$pacientesE, null, [
+                            {!! Form::select('Paciente_Especial_id',$pacientesE, null, [
                                 'placeholder' => 'Seleccione', 
                                 'class' => 'select2 form-control',
                                 'id' => 'pacienteE',
@@ -33,54 +36,50 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="validationCustom01">{{'Maximo de Pacientes'}}</label>
-                            <input type="number" name="mpaciente" class="form-control" id="mpaciente" placeholder="Maximo de Pacientes" required>
-                        </div>
-                        <div class='col-md-4 mb-3'>
-                            <label>{{'Hora Inicio'}}</label>
-                          <div class="form-group">
-                             <div class='input-group date' id='hora_inicio'>
-                                <input type='text' class="form-control" name="hora_inicio" placeholder="Hora inicio"/>
-                                <span class="input-group-addon">
-                                <span class="ti-timer"></span>
-                                </span>
-                             </div>
-                          </div>
-                        </div>
-                        <div class='col-md-4 mb-3'>
-                            <label>{{'Hora Fin'}}</label>
-                          <div class="form-group">
-                             <div class='input-group date' id='Hora_Fin'>
-                                <input type='text' class="form-control" name="Hora_Fin" placeholder="Hora fin"/>
-                                <span class="input-group-addon">
-                                <span class="ti-timer"></span>
-                                </span>
-                             </div>
-                          </div>
+                            <input type="number" name="Max_paciente" class="form-control" id="mpaciente" placeholder="Maximo de Pacientes" required>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="validationCustom01">{{'Costo'}}</label>
-                            <input type="number" name="costo" class="form-control" id="costo" placeholder="Costo" required>
+                            <input type="number" name="Costo" class="form-control" id="costo" placeholder="Costo" required>
                         </div>
                         <div class="col-md-12 mb-3">
                             <label>{{'Nota'}}</label>
-                            <textarea name="nota" id="nota" class="form-control" rows="3" required></textarea>
+                            <textarea name="Nota" id="nota" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom01">{{'Titulo'}}</label>
+                            <input type="text" name="title" class="form-control" id="title" placeholder="Titulo del evento" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom01">{{'start'}}</label>
+                            <input type="text" name="start" class="form-control" id="start" placeholder="start" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom01">{{'end'}}</label>
+                            <input type="text" name="end" class="form-control" id="end" placeholder="end" required>
                         </div>
                     </div>
+                </form>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="mt-1 btn-transition btn btn-outline-secondary" data-dismiss="modal">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
-                     <i class="ti-back-left"></i>
                     </span>{{'Volver'}}
                 </button>
-                <button type="submit" class="mt-1 btn-transition btn btn-outline-primary">
+                <button type="button" class="mt-1 btn-transition btn btn-outline-success" id="btnGuardar">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
-                     <i class="ti-save"></i>
                     </span>{{'Guardar'}}
                 </button>
+                <button type="button" class="mt-1 btn-transition btn btn-outline-warning" id="btnModificar">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                    </span>{{'Modificar'}}
+                </button>
+                <button type="button" class="mt-1 btn-transition btn btn-outline-danger" id="btnEliminar">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                    </span>{{'Eliminar'}}
+                </button>
             </div>
-            {!! Form::close() !!}
         </div>
     </div>
 </div>

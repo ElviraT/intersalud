@@ -14,6 +14,7 @@ use App\Model\Parroquia;
 use App\Model\UsuarioPE;
 use App\Model\Consultorio;
 use App\Model\Horario;
+use App\Model\Agenda;
 use DB;
 
 class Controller extends BaseController
@@ -52,7 +53,8 @@ class Controller extends BaseController
       }
         return response()->json($parroquias);
     }
-    public function consultorio(Request $request){
+    public function consultorio(Request $request)
+    {
       $id = empty($request->input('especialidad')) ? 0 : $request->input('especialidad');
       $consultorio = [];
 
@@ -91,17 +93,29 @@ class Controller extends BaseController
     }
 
     public function consultar_horario(Request $request){
-      $id_Medico = empty($request->input('medico')) ? 0 : $request->input('medico');
-      $id_espec = empty($request->input('espec')) ? 0 : $request->input('espec');
+      $agenda = empty($request->input('agenda')) ? 0 : $request->input('agenda');
 
       $horarios = [];
 
-      if ($id_espec > 0) {
-        $horarios = Horario::where('Medico_id', $id_Medico)
-                           ->where('Especialidad_id',$id_espec)
-                           ->first(); 
+      if ($agenda > 0) {
+         $horarios = Horario::select('*')
+             ->join('agendas', 'horarios_citas.id_Horario_Cita','agendas.Horario_Cita_id')
+             ->where('agendas.id_Agenda',$agenda)
+             ->first();
       }
-        return response()->json($horarios);
+
+      return response()->json($horarios);
     }
 
+    public function datos_agenda(Request $request){
+      $agenda2 = empty($request->input('agenda2')) ? 0 : $request->input('agenda2');
+
+      $Dagenda = [];
+
+      if ($agenda2 > 0) {
+         $Dagenda = Agenda::where('id_Agenda',$agenda2)->first();
+      }
+
+      return response()->json($Dagenda);
+    }
 }

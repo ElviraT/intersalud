@@ -65,57 +65,79 @@ $('#paciente').on('change', function (e) {
     });
 });
 
-$('#medico').on('change', function (e) {
-   var medico = $('#medico').val();
-    $.getJSON('{{ route('especialidad_dependiente') }}?medico='+medico, function(objC){
-        var opcion = $('#especialidad').val();
-        $('#especialidad').empty();
-        $('#especialidad').prop('disabled', true);
-        $('#especialidad').change();
-
-        if(objC.length > 0){
-            $.each(objC, function (i, especialidad) {
-            $('#especialidad').append(
-                    $('<option>', {
-                        value: especialidad.id,
-                        text : especialidad.name
-                    })
-                );
-            });
-            $('#especialidad').prop('disabled', false);
-            $("#especialidad option:first").attr("selected", "selected");
-        }        
-    });
-});
-
 function horario() {
-  var medico = $('#medico').val();
-  var espec  = $('#especialidad').val();
+  var formulario = document.getElementById("Myform");
+  var agenda = $('#agenda').val();
   var array_dias = [];
+  var array_businessHours = [];
 
-   $.getJSON('{{ route('consultar_horario') }}?medico='+medico+'&espec='+espec, function(objch){     
-if (objch['Lunes'] == 0) {
-    array_dias.push(1);
-}
-if (objch['Martes'] == 0) {
-    array_dias.push(2); 
-}
-if (objch['Miercoles'] == 0) {
-    array_dias.push(3);  
-}
-if (objch['Jueves'] == 0) {
-    array_dias.push(4);  
-}
-if (objch['Viernes'] == 0) {
-    array_dias.push(5); 
-}
-if (objch['Sabado'] == 0) {
-    array_dias.push(6);  
-}
-if (objch['Domingo'] == 0) {
-    array_dias.push(0);
-}
-      $(function() {
+   $.getJSON('{{ route('consultar_horario') }}?agenda='+agenda, function(objch){     
+        if (objch['Lunes'] == 0) {
+            array_dias.push(1);
+        }else{
+          array_businessHours.push({
+            daysOfWeek: [1],
+            startTime: objch['Hora_Inicio_Lunes'],
+            endTime: objch['Hora_Fin_Lunes']
+          });
+        }
+        if (objch['Martes'] == 0) {
+            array_dias.push(2); 
+        }else{
+          array_businessHours.push({
+            daysOfWeek: [2],
+            startTime: objch['Hora_Inicio_Martes'],
+            endTime: objch['Hora_Fin_Martes']
+          });
+        }
+        if (objch['Miercoles'] == 0) {
+            array_dias.push(3);  
+        }else{
+          array_businessHours.push({
+            daysOfWeek: [3],
+            startTime: objch['Horario_Inicio_Miercoles'],
+            endTime: objch['Horario_Fin_Miercoles']
+          });
+        }
+        if (objch['Jueves'] == 0) {
+            array_dias.push(4);  
+        }else{
+          array_businessHours.push({
+            daysOfWeek: [4],
+            startTime: objch['Horario_Inicio_Jueves'],
+            endTime: objch['Horario_Fin_Jueves']
+          });
+        }
+        if (objch['Viernes'] == 0) {
+            array_dias.push(5); 
+        }else{
+          array_businessHours.push({
+            daysOfWeek: [5],
+            startTime: objch['Horario_Inicio_Viernes'],
+            endTime: objch['Horario_Fin_Viernes']
+          });
+        }
+        if (objch['Sabado'] == 0) {
+            array_dias.push(6);  
+        }else{
+          array_businessHours.push({
+            daysOfWeek: [6],
+            startTime: objch['Horario_Inicio_Sabado'],
+            endTime: objch['Horario_Fin_Sabado']
+          });
+        }
+        if (objch['Domingo'] == 0) {
+            array_dias.push(0);
+        }else{
+          array_businessHours.push({
+            daysOfWeek: [0],
+            startTime: objch['Horario_inicio_Domingo'],
+            endTime: objch['Horario_Fin_Domingo']
+          });
+        };
+
+   $(function() {
+
             var calendarEl = document.getElementById('calendar');
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -138,16 +160,13 @@ if (objch['Domingo'] == 0) {
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
               },
-              navLinks: true, // can click day/week names to navigate views
-              editable: true,
-              selectable: true,
-              selectMirror: true,      
+             businessHours: array_businessHours,
+             forceEventDuration: true,
+              navLinks: true,     
               hiddenDays: array_dias,
               dayMaxEvents: true, // allow "more" link when too many events
-              select: function(arg) {
-                console.log(arg);
-                $('#modal_citas').modal();
-                calendar.unselect()
+              dateClick:function(info) {
+                $('#modal_citas').modal('show');
               },
                views: {
                   timeGrid: {
@@ -155,36 +174,34 @@ if (objch['Domingo'] == 0) {
                   }
                 },
             });
-             /* defaultView: 'resourceTimeGridDay',
-             // allDaySlot: false,
-              headerToolbar: {
-                left: 'prev,next,today',
-                center: 'title'
-              },
-              initialDate: new Date(),
-              eventLimit: true,
-              displayEventTime: true,
-              navLinks: true, // can click day/week names to navigate views
-              selectable: true,
-              showNonCurrentDates:false,
-             // selectMirror: true,
-              select: function(arg) {
-                $('#modal_citas').modal();
-                calendar.unselect()
-              },
-              editable: true,
-              hiddenDays: array_dias,
-              views: {
-                  timeGrid: {
-                    eventLimit: 3 // adjust to 3 only for timeGridWeek/timeGridDay
-                  }
-                },
-            });*/
             calendar.render();
+            document.getElementById('btnGuardar').addEventListener('click',function() {
+              const datos= new FormData(formulario);
+              console.log(datos);
+              console.log(formulario.title.value);
+
+              axios.post('http://localhost/clientes/intersalud/public/citas/add',datos).
+              then(
+                (respuesta) =>{
+                  $('#modal_citas').modal('hide');
+                }
+                ).catsh(
+                  error => {
+                    if (error.response) {
+                      console.log(error.response.data);
+                    }
+                  });
+            });
         });
-
-
    });
 }
-
+$('#modal_citas').on('show.bs.modal', function (e) {
+  var agenda2 = $('#agenda').val();
+   $.getJSON('{{ route('datos_agenda') }}?agenda2='+agenda2, function(objA){
+    //var objA = objA[0];
+     $('#Agenda_id').val(objA['id_Agenda']);
+     $('#mpaciente').val(objA['Max_pacientes']);
+     $('#costo').val(objA['Costo_consulta']);
+  });
+});
 </script>

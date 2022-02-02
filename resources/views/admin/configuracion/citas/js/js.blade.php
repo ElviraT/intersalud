@@ -9,6 +9,9 @@
 <script src="{{ asset('js/moment.js')}}"></script>
 <script src="{{ asset('js/moment-with-locales.js')}}"></script>
 <script src="{{ asset('js/bootstrap-datetimepicker.min.js')}}"></script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -135,14 +138,16 @@ function horario() {
             endTime: objch['Horario_Fin_Domingo']
           });
         };
-
+var id_Agenda= objch['id_Agenda'];
    $(function() {
+            var url = "{{ route('citas.mostrar', ':id') }}";
+            url = url.replace(':id', id_Agenda);
 
             var calendarEl = document.getElementById('calendar');
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
               locale:'es',
-              initialDate: new Date(),
+              timeZoneName:'short',
               initialView: 'timeGridWeek',
               slotLabelFormat:{
                hour: '2-digit',
@@ -154,7 +159,6 @@ function horario() {
                minute: '2-digit',
                hour12: true
               },
-              nowIndicator: true,
               headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
@@ -164,9 +168,50 @@ function horario() {
              forceEventDuration: true,
               navLinks: true,     
               hiddenDays: array_dias,
-              dayMaxEvents: true, // allow "more" link when too many events
+              dayMaxEvents: true, // allow "more" link when too many eventse
+              events: url,
+
               dateClick:function(info) {
+                formulario.reset();
+                formulario.start.value= moment(info.dateStr).format('YYYY-MM-DD');
+                formulario.end.value= moment(info.dateStr).format('YYYY-MM-DD');
                 $('#modal_citas').modal('show');
+
+                $('#modal_citas').on('show.bs.modal', function (e) {
+                  var agenda2 = $('#agenda').val();
+                   $.getJSON('{{ route('datos_agenda') }}?agenda2='+agenda2, function(objA){
+                    //var objA = objA[0];
+                     $('#Agenda_id').val(objA['id_Agenda']);
+                     $('#mpaciente').val(objA['Max_pacientes']);
+                     $('#costo').val(objA['Costo_consulta']);
+                  });
+                });
+              },
+              eventClick:function(info) {
+                var cita=info.event;
+                 var url_edit = "{{ route('citas.editar', ':id') }}";
+                  url_edit = url_edit.replace(':id', cita.id_Cita_Consulta);
+                axios.post(url_edit).
+                then(
+                  (respuesta) =>{
+                   $('#id').val(cita.extendedProps.id_Cita_Consulta);
+                   $('#Agenda_id').val(cita.extendedProps.Agenda_id);
+                   $('#paciente').val(cita.extendedProps.Paciente_id).change();
+                   $('#pacienteE').val(cita.extendedProps.Paciente_Especial_id).change();
+                   $('#mpaciente').val(cita.extendedProps.Max_paciente);
+                   $('#costo').val(cita.extendedProps.Costo);
+                   $('#nota').val(cita.extendedProps.Nota);
+                   $('#title').val(cita.title);
+                   $('#start').val(moment(cita.extendedProps.start).format('YYYY-MM-DD'));
+                   $('#end').val(moment(cita.extendedProps.end).format('YYYY-MM-DD'));
+                    $('#modal_citas').modal('show');
+                  }
+                  ).catch(
+                    error => {
+                      if (error.response) {
+                        console.log(error.response.data);
+                      }
+                    });
               },
                views: {
                   timeGrid: {
@@ -176,32 +221,40 @@ function horario() {
             });
             calendar.render();
             document.getElementById('btnGuardar').addEventListener('click',function() {
-              const datos= new FormData(formulario);
-              console.log(datos);
-              console.log(formulario.title.value);
 
-              axios.post('http://localhost/clientes/intersalud/public/citas/add',datos).
+              enviar_datos('{{ route('citas.add') }}');
+              
+            });
+            document.getElementById('btnEliminar').addEventListener('click',function() {
+              var id_cita= $('#id').val();
+              var url_borrar = "{{ route('citas.borrar', ':id') }}";
+                  url_borrar = url_borrar.replace(':id', id_cita);
+               enviar_datos(url_borrar);
+            });
+
+            document.getElementById('btnModificar').addEventListener('click',function() {
+              var id_cita= $('#id').val();
+              var url_actualizar = "{{ route('citas.actualizar', ':id') }}";
+                  url_actualizar = url_actualizar.replace(':id', id_cita);
+               enviar_datos(url_actualizar);
+            });
+             function enviar_datos(url) {
+               const datos= new FormData(formulario);
+
+              axios.post(url,datos).
               then(
                 (respuesta) =>{
+                  calendar.refetchEvents();
                   $('#modal_citas').modal('hide');
                 }
-                ).catsh(
+                ).catch(
                   error => {
                     if (error.response) {
                       console.log(error.response.data);
                     }
                   });
-            });
+             }
         });
    });
 }
-$('#modal_citas').on('show.bs.modal', function (e) {
-  var agenda2 = $('#agenda').val();
-   $.getJSON('{{ route('datos_agenda') }}?agenda2='+agenda2, function(objA){
-    //var objA = objA[0];
-     $('#Agenda_id').val(objA['id_Agenda']);
-     $('#mpaciente').val(objA['Max_pacientes']);
-     $('#costo').val(objA['Costo_consulta']);
-  });
-});
 </script>

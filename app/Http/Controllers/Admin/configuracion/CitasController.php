@@ -49,9 +49,30 @@ class CitasController extends Controller
     	return view('admin.configuracion.citas.index')->with(compact('medico','especialidad','pacientes','pacientesE','agenda'));
     }
 
-    public function add(Request $request)
+    public function show ($id)
+    {
+      $citas = Citas::where('Agenda_id', $id)->get();
+      return response()->json($citas);
+    }
+    public function store(Request $request)
     {
       $cita= Citas::create($request->all());
-    	return view('admin.configuracion.citas.index');
+    	return redirect()->route('citas');
+    }
+    public function edit($id)
+    {
+      $cita = Citas::where('id_Cita_Consulta', $id)->get();
+      return response()->json($cita);
+    }
+    public function destroy($id)
+    {
+      $cita = Citas::where('id_Cita_Consulta', $id)->delete();
+      return response()->json($cita);
+    }
+    public function update(Request $request)
+    {
+      $data = $request->except('_token','id');
+      $cita = Citas::where('id_Cita_Consulta', $request['id'])->update($data);
+      return response()->json($cita);
     }
 }

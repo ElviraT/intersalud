@@ -253,10 +253,12 @@ Route::group(['middleware' => 'auth'], function () {
 
 	//CITAS
 	Route::get('citas', ['as' => 'citas', 'uses' => 'Admin\configuracion\CitasController@index']);
-	Route::post('citas/add', ['as' => 'citas.add', 'uses' => 'Admin\configuracion\CitasController@add']);
-	//Route::get('agenda/create', ['as' => 'agenda.create', 'uses' => 'Admin\configuracion\AgendaController@create']);
-	//Route::get('agenda/edit/{id}', ['as' => 'agenda.edit', 'uses' => 'Admin\configuracion\AgendaController@edit']);
-	//Route::post('agenda/destroy', ['as' => 'agenda.destroy', 'uses' => 'Admin\configuracion\AgendaController@destroy']);
+	Route::get('citas/mostrar/{id}', ['as' => 'citas.mostrar', 'uses' => 'Admin\configuracion\CitasController@show']);
+	Route::post('citas/agregar', ['as' => 'citas.add', 'uses' => 'Admin\configuracion\CitasController@store']);
+	Route::post('citas/editar/{id}', ['as' => 'citas.editar', 'uses' => 'Admin\configuracion\CitasController@edit']);
+	Route::post('citas/borrar/{id}', ['as' => 'citas.borrar', 'uses' => 'Admin\configuracion\CitasController@destroy']);
+	Route::post('citas/actualizar/{cita}', ['as' => 'citas.actualizar', 'uses' => 'Admin\configuracion\CitasController@update']);
+	
 
 	/*HISTORIAS CLINICAS - UROLOGIA*/
 	Route::get('historias/urologia', ['as' => 'urologia', 'uses' => 'Admin\historias\UrologiaController@index']);

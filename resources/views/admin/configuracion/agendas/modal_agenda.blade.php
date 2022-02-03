@@ -12,23 +12,17 @@
             <div class="modal-body">
                 <div class="col-md-12">
                     <div class="row">
-                        {{ Form::hidden('id', 0, ['class'=>'modal_registro_agenda_id'] ) }}
-                        <div class="col-md-4 mb-3">
-                            {!! Form::label('medico', 'Medico:') !!}
-                            {!! Form::select('medico',$medico, null, [
-                                'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
-                                'id' => 'medico',
-                                'required'=>'required'
+                        {{ Form::hidden('id', 0, ['class'=>'modal_registro_agenda_id'] ) }}             
+                        {!! Form::text('medico', null, ['id' => 'medico'
                             ]) !!}
-                        </div>
+                        {!! Form::text('especialidad', null, ['id' => 'especialidad'
+                            ]) !!}
                         <div class="col-md-4 mb-3">
-                            {!! Form::label('especialidad', 'Especialidad Medica:') !!}
-                            {!! Form::select('especialidad',$especialidad, null, [
+                            {!! Form::label('horario', 'Horario:') !!}
+                            {!! Form::select('horario',$horarios, null, [
                                   'placeholder' => 'Seleccione', 
                                   'class' => 'select2 form-control',
-                                  'disabled' => 'disabled',
-                                  'id' => 'especialidad',
+                                  'id' => 'horario',
                                   'required'=>'required'
                             ]) !!}
                         </div>
@@ -39,15 +33,6 @@
                                   'class' => 'select2 form-control',
                                   'disabled' => 'disabled',
                                   'id' => 'consultorio',
-                                  'required'=>'required'
-                            ]) !!}
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            {!! Form::label('horario', 'Horario:') !!}
-                            {!! Form::select('horario',$horarios, null, [
-                                  'placeholder' => 'Seleccione', 
-                                  'class' => 'select2 form-control',
-                                  'id' => 'horario',
                                   'required'=>'required'
                             ]) !!}
                         </div>

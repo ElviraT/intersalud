@@ -118,4 +118,15 @@ class Controller extends BaseController
 
       return response()->json($Dagenda);
     }
+    public function horario_datos(Request $request){
+      $horario = empty($request->input('horario')) ? 0 : $request->input('horario');
+
+      $Dhorario = [];
+
+      if ($horario > 0) {
+        $Dhorario = Horario::where('id_Horario_Cita',$horario)->first();
+      }
+
+      return response()->json($Dhorario);
+    }
 }

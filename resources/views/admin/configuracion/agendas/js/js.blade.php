@@ -21,30 +21,16 @@ $(document).ready(function() {
     });
 
 
-$('#medico').on('change', function (e) {
-   var medico = $('#medico').val();
-    $.getJSON('{{ route('especialidad_dependiente') }}?medico='+medico, function(objC){
-        var opcion = $('#especialidad').val();
-        $('#especialidad').empty();
-        $('#especialidad').prop('disabled', true);
-
-        if(objC.length > 0){
-            $.each(objC, function (i, especialidad) {
-            $('#especialidad').append(
-                    $('<option>', {
-                        value: especialidad.id,
-                        text : especialidad.name
-                    })
-                );
-            });
-            $("#especialidad option:first").attr("selected", "selected");
-            $('#especialidad').change();
-            $('#especialidad').prop('disabled', false);
-        }        
+$('#horario').on('change', function (e) {
+   var horario = $('#horario').val();
+    $.getJSON('{{ route('horario_datos') }}?horario='+horario, function(objC){
+        $('#medico').val(objC['Medico_id']);
+        $('#especialidad').val(objC['Especialidad_id']).change();        
     });
   });
   $('#especialidad').on('change', function (e) {
    var especialidad = $('#especialidad').val();
+   $('#modal_agenda').addClass('loading');
     $.getJSON('{{ route('consultorio_dependiente') }}?especialidad='+especialidad, function(objE){
         var opcion = $('#consultorio').val();
         $('#consultorio').empty();
@@ -63,7 +49,10 @@ $('#medico').on('change', function (e) {
             $("#consultorio option:first").attr("selected", "selected");
             $('#consultorio').change();
             $('#consultorio').prop('disabled', false);
+             $('#modal_agenda').removeClass('loading');
         }else{
+            $('#modal_agenda').removeClass('loading');
+            $('#modal_agenda').modal('hide');
             Swal.fire(
               '¡Error!',
               'Esta especialidad no tiene consultorio',

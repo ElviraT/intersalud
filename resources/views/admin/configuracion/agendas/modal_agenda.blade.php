@@ -13,10 +13,8 @@
                 <div class="col-md-12">
                     <div class="row">
                         {{ Form::hidden('id', 0, ['class'=>'modal_registro_agenda_id'] ) }}             
-                        {!! Form::text('medico', null, ['id' => 'medico'
-                            ]) !!}
-                        {!! Form::text('especialidad', null, ['id' => 'especialidad'
-                            ]) !!}
+                        {!! Form::hidden('medico', null, ['id' => 'medico']) !!}
+                        {!! Form::hidden('especialidad', null, ['id' => 'especialidad']) !!}
                         <div class="col-md-4 mb-3">
                             {!! Form::label('horario', 'Horario:') !!}
                             {!! Form::select('horario',$horarios, null, [

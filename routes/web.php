@@ -250,6 +250,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('agendas', ['as' => 'agendas', 'uses' => 'Admin\configuracion\AgendaController@index']);
 	Route::post('agendas/add', ['as' => 'agendas.add', 'uses' => 'Admin\configuracion\AgendaController@add']);
 	Route::get('agendas/edit', ['as' => 'agendas.edit', 'uses' => 'Admin\configuracion\AgendaController@edit']);
+	Route::post('agendas/destroy', ['as' => 'agendas.destroy', 'uses' => 'Admin\configuracion\AgendaController@destroy']);
 
 	//CITAS
 	Route::get('citas', ['as' => 'citas', 'uses' => 'Admin\configuracion\CitasController@index']);

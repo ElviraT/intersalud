@@ -5,11 +5,6 @@
 <!-- Select2 -->
 <script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
 
-<!--datepicker-->
-<script src="{{ asset('js/moment.js')}}"></script>
-<script src="{{ asset('js/moment-with-locales.js')}}"></script>
-<script src="{{ asset('js/bootstrap-datetimepicker.min.js')}}"></script>
-
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script type="text/javascript">
@@ -30,22 +25,9 @@ $(document).ready(function() {
     dropdownParent: $('#modal_citas'),
      });
     });
-$(function () {
-       $('#fecha_inicio').datetimepicker({
-        format: 'HH:mm:ss',
-       });
-       $('#fecha_fin').datetimepicker({
-       useCurrent: false, //Important! See issue #1075
-       format: 'HH:mm:ss',
-       });
-       $("#fecha_inicio").on("dp.change", function (e) {
-           $('#fecha_fin').data("DateTimePicker").minDate(e.date);
-       });
-       $("#fecha_fin").on("dp.change", function (e) {
-           $('#fecha_inicio').data("DateTimePicker").maxDate(e.date);
-       });
-});
-$('#paciente').on('change', function (e) {
+
+$('#paciente').on('select2:select', function (e) {
+  $('#modal_citas').addClass('loading');
    var paciente = $('#paciente').val();
     $.getJSON('{{ route('paciente_dependiente') }}?paciente='+paciente, function(objPE){
         var opcion = $('#pacienteE').val();
@@ -66,6 +48,7 @@ $('#paciente').on('change', function (e) {
             $("#pacienteE option:first").attr("selected", "selected");
         }        
     });
+  $('#modal_citas').removeClass('loading');
 });
 
 function horario() {
@@ -73,8 +56,12 @@ function horario() {
   var agenda = $('#agenda').val();
   var array_dias = [];
   var array_businessHours = [];
+  var hora_minima='00:00:00';
+  var hora_maxima='11:59:59';
+  var color= '#378006';
 
    $.getJSON('{{ route('consultar_horario') }}?agenda='+agenda, function(objch){     
+  loading_show();
         if (objch['Lunes'] == 0) {
             array_dias.push(1);
         }else{
@@ -83,6 +70,8 @@ function horario() {
             startTime: objch['Hora_Inicio_Lunes'],
             endTime: objch['Hora_Fin_Lunes']
           });
+          hora_minima = objch['Hora_Inicio_Lunes'];
+          hora_maxima = objch['Hora_Fin_Lunes'];
         }
         if (objch['Martes'] == 0) {
             array_dias.push(2); 
@@ -92,6 +81,8 @@ function horario() {
             startTime: objch['Hora_Inicio_Martes'],
             endTime: objch['Hora_Fin_Martes']
           });
+          hora_minima = objch['Hora_Inicio_Martes'];
+          hora_maxima = objch['Hora_Fin_Martes'];
         }
         if (objch['Miercoles'] == 0) {
             array_dias.push(3);  
@@ -101,6 +92,8 @@ function horario() {
             startTime: objch['Horario_Inicio_Miercoles'],
             endTime: objch['Horario_Fin_Miercoles']
           });
+          hora_minima = objch['Horario_Inicio_Miercoles'];
+          hora_maxima = objch['Horario_Fin_Miercoles'];
         }
         if (objch['Jueves'] == 0) {
             array_dias.push(4);  
@@ -110,6 +103,8 @@ function horario() {
             startTime: objch['Horario_Inicio_Jueves'],
             endTime: objch['Horario_Fin_Jueves']
           });
+          hora_minima = objch['Horario_Inicio_Jueves'];
+          hora_maxima = objch['Horario_Fin_Jueves'];
         }
         if (objch['Viernes'] == 0) {
             array_dias.push(5); 
@@ -119,6 +114,8 @@ function horario() {
             startTime: objch['Horario_Inicio_Viernes'],
             endTime: objch['Horario_Fin_Viernes']
           });
+          hora_minima = objch['Horario_Inicio_Viernes'];
+          hora_maxima = objch['Horario_Fin_Viernes'];
         }
         if (objch['Sabado'] == 0) {
             array_dias.push(6);  
@@ -128,6 +125,8 @@ function horario() {
             startTime: objch['Horario_Inicio_Sabado'],
             endTime: objch['Horario_Fin_Sabado']
           });
+          hora_minima = objch['Horario_Inicio_Sabado'];
+          hora_maxima = objch['Horario_Fin_Sabado'];
         }
         if (objch['Domingo'] == 0) {
             array_dias.push(0);
@@ -137,6 +136,8 @@ function horario() {
             startTime: objch['Horario_inicio_Domingo'],
             endTime: objch['Horario_Fin_Domingo']
           });
+          hora_minima = objch['Horario_inicio_Domingo'];
+          hora_maxima = objch['Horario_Fin_Domingo'];
         };
 var id_Agenda= objch['id_Agenda'];
    $(function() {
@@ -170,27 +171,43 @@ var id_Agenda= objch['id_Agenda'];
               hiddenDays: array_dias,
               dayMaxEvents: true, // allow "more" link when too many eventse
               events: url,
-
               dateClick:function(info) {
+                loading_show();
                 formulario.reset();
-                formulario.start.value= moment(info.dateStr).format('YYYY-MM-DD');
-                formulario.end.value= moment(info.dateStr).format('YYYY-MM-DD');
-                $('#modal_citas').modal('show');
-
+                $('#paciente').val('').change();
+                $('#pacienteE').val('').change();
+                if(info.allDay){
+                  $('#start').val(info.dateStr);
+                  $('#end').val(info.dateStr);
+                }else{
+                  let fechaHora = info.dateStr.split("T");
+                  var fechaInicio= fechaHora[0]+' '+fechaHora[1].substring(0, 8);
+                  var fecha_minima = fechaHora[0]+' '+hora_minima;
+                  var fecha_maxima = fechaHora[0]+' '+hora_maxima;
+                  if(fechaHora[1].substring(0, 8) >= hora_minima){
+                      $('#start').val(fechaInicio);
+                  }else{
+                      $('#start').val(fecha_minima);
+                  }
+                  $('#end').val(fechaInicio);
+                  $('#end').attr('min',fechaInicio);
+                  $('#end').attr('max',fecha_maxima);
+                }
                 $('#modal_citas').on('show.bs.modal', function (e) {
                   var agenda2 = $('#agenda').val();
                    $.getJSON('{{ route('datos_agenda') }}?agenda2='+agenda2, function(objA){
-                    //var objA = objA[0];
                      $('#Agenda_id').val(objA['id_Agenda']);
                      $('#mpaciente').val(objA['Max_pacientes']);
                      $('#costo').val(objA['Costo_consulta']);
                   });
                 });
+                $('#modal_citas').modal('show');
+                loading_hide();
               },
               eventClick:function(info) {
                 var cita=info.event;
                  var url_edit = "{{ route('citas.editar', ':id') }}";
-                  url_edit = url_edit.replace(':id', cita.id_Cita_Consulta);
+                  url_edit = url_edit.replace(':id', cita.extendedProps.id_Cita_Consulta);
                 axios.post(url_edit).
                 then(
                   (respuesta) =>{
@@ -202,9 +219,9 @@ var id_Agenda= objch['id_Agenda'];
                    $('#costo').val(cita.extendedProps.Costo);
                    $('#nota').val(cita.extendedProps.Nota);
                    $('#title').val(cita.title);
-                   $('#start').val(moment(cita.extendedProps.start).format('YYYY-MM-DD'));
-                   $('#end').val(moment(cita.extendedProps.end).format('YYYY-MM-DD'));
-                    $('#modal_citas').modal('show');
+                   $('#start').val(respuesta.data[0].start);
+                   $('#end').val(respuesta.data[0].end);
+                   $('#modal_citas').modal('show');
                   }
                   ).catch(
                     error => {
@@ -213,13 +230,16 @@ var id_Agenda= objch['id_Agenda'];
                       }
                     });
               },
-               views: {
+              views: {
                   timeGrid: {
                     eventLimit: 3 // adjust to 3 only for timeGridWeek/timeGridDay
                   }
                 },
+
+              eventColor: color,
             });
             calendar.render();
+            loading_hide();
             document.getElementById('btnGuardar').addEventListener('click',function() {
 
               enviar_datos('{{ route('citas.add') }}');

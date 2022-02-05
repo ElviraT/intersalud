@@ -95,4 +95,12 @@ class AgendaController extends Controller
         $agenda= Agenda::where('id_Agenda', $id)->first();
         return response()->json([$agenda]);
     }
+    public function destroy(Request $request)
+    {
+       $id = (int)$request->input('id');
+        Agenda::where('id_Agenda', $id)->update(['Status_id'=>2]);
+        Flash::success('Registro desactivado correctamente');
+         
+      return redirect()->route('agendas');
+    }
 }

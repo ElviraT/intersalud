@@ -52,11 +52,11 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="validationCustom01">{{'start'}}</label>
-                            <input type="date" name="start" class="form-control" id="start" placeholder="start" required>
+                            <input type="datetime" name="start" class="form-control" id="start" placeholder="start" required readonly>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="validationCustom01">{{'end'}}</label>
-                            <input type="date" name="end" class="form-control" id="end" placeholder="end" required>
+                            <input type="datetime" name="end" class="form-control" id="end" placeholder="end" required step="5">
                         </div>
                     </div>
                 </form>

@@ -72,11 +72,11 @@
                                     {{'Editar'}}
                                 </a>
                               
-                                <!-- a href="#" type="button" data-toggle="modal" data-target="#confirm-delete18" data-record-id="{{$resultado->id_Agendas_Bs}}" data-record-title="{{$resultado->Agendas}}" class="btn-transition btn btn-outline-danger" onclick="loading_show();">
+                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete33" data-record-id="{{$resultado->id_Agenda}}" data-record-title="{{ $resultado->UsuarioM->Nombres_Medico.' '.$resultado->UsuarioM->Apellidos_Medicos }}-{{ $resultado->Especialidad->Espacialiadad_Medica }}" class="btn-transition btn btn-outline-danger" onclick="loading_show();">
                                         <span class="btn-icon-wrapper pr-2 opacity-7">
                                             <i class="ti-eraser"></i>
                                         </span>{{'Eliminar'}}
-                                </a -->
+                                </a>
                               
                             </td>
                         </tr>
@@ -92,7 +92,8 @@
 </div>
 @endsection
 @section('modal')
-   @include('admin.configuracion.agendas.modal_agenda')
+  @include('admin.configuracion.agendas.modal_agenda')
+  @include('admin.modales.elimina_agenda')
 @endsection
 
 @section('js')

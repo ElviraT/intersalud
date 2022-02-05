@@ -21,21 +21,19 @@ $(document).ready(function() {
     });
 
 
-$('#horario').on('change', function (e) {
+$('#horario').on('select2:select', function (e) {
+   $('#modal_agenda').addClass('loading');
    var horario = $('#horario').val();
     $.getJSON('{{ route('horario_datos') }}?horario='+horario, function(objC){
         $('#medico').val(objC['Medico_id']);
         $('#especialidad').val(objC['Especialidad_id']).change();        
     });
+    $('#modal_agenda').removeClass('loading');
   });
   $('#especialidad').on('change', function (e) {
    var especialidad = $('#especialidad').val();
    $('#modal_agenda').addClass('loading');
     $.getJSON('{{ route('consultorio_dependiente') }}?especialidad='+especialidad, function(objE){
-        var opcion = $('#consultorio').val();
-        $('#consultorio').empty();
-        $('#consultorio').prop('disabled', true);
-        $('#consultorio').change();
 
         if(objE.length > 0){
             $.each(objE, function (i, consultorio) {
@@ -49,15 +47,15 @@ $('#horario').on('change', function (e) {
             $("#consultorio option:first").attr("selected", "selected");
             $('#consultorio').change();
             $('#consultorio').prop('disabled', false);
-             $('#modal_agenda').removeClass('loading');
+            $('#modal_agenda').removeClass('loading');
         }else{
             $('#modal_agenda').removeClass('loading');
-            $('#modal_agenda').modal('hide');
             Swal.fire(
               '¡Error!',
               'Esta especialidad no tiene consultorio',
               'error'
             );
+            $('#modal_agenda').modal('hide');
         }        
     });
     
@@ -90,12 +88,29 @@ $('#modal_agenda').on('show.bs.modal', function (e) {
     }
 });
 $('#modal_agenda').on('hidden.bs.modal', function (e) {
-    $('#medico').val('').change();
-    $('#especialidad').val('').change();
+    $('#horario').val('').change();
+    $('#medico').val('');
+    $('#especialidad').val('');
     $('#consultorio').val('').change();
     $('#costo').val('');
     $('#mpaciente').val('');
     $('#status').val('').change();
     $('#nota').val('');
+});
+
+$('#confirm-delete33').on('click', '.btn-ok', function(e) {
+        var $modalDiv = $(e.delegateTarget);
+        $modalDiv.addClass('loading');
+        setTimeout(function(){
+            $('#form_agenda_eliminar').submit();
+        }, 2000);
+    });
+$('#confirm-delete33').on('show.bs.modal', function(e) {
+    var data = $(e.relatedTarget).data();
+    $("#form_agenda_eliminar",  this).attr('action', data.action);
+    $('#modal_registo_agenda_id', this).val(data.recordId);
+    $('.title', this).text(data.recordTitle);
+    $('.btn-ok', this).data('recordId', data.recordId);
+    loading_hide();
 });
 </script>

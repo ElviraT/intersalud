@@ -2,12 +2,21 @@
 <script src="{{ asset('js/main.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/es.js') }}" type="text/javascript"></script>
 
+<!--datepicker-->
+<script src="{{ asset('js/moment.js')}}"></script>
+<script src="{{ asset('js/moment-with-locales.js')}}"></script>
+<script src="{{ asset('js/bootstrap-datetimepicker.min.js')}}"></script>
+
+<!--Toggle -->
+<script src="{{ asset('js/bootstrap4-toggle.min.js')}}"></script>
+
 <!-- Select2 -->
 <script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script type="text/javascript">
+  var array_dias = [];
 
 $(document).ready(function() {
     $('.select2').select2({ 
@@ -54,11 +63,9 @@ $('#paciente').on('select2:select', function (e) {
 function horario() {
   var formulario = document.getElementById("Myform");
   var agenda = $('#agenda').val();
-  var array_dias = [];
   var array_businessHours = [];
   var hora_minima='00:00:00';
   var hora_maxima='11:59:59';
-  var color= '#378006';
 
    $.getJSON('{{ route('consultar_horario') }}?agenda='+agenda, function(objch){     
   loading_show();
@@ -217,6 +224,9 @@ var id_Agenda= objch['id_Agenda'];
                    $('#pacienteE').val(cita.extendedProps.Paciente_Especial_id).change();
                    $('#mpaciente').val(cita.extendedProps.Max_paciente);
                    $('#costo').val(cita.extendedProps.Costo);
+                   if (respuesta.data[0].confirmado == '1'){
+                      $('#confirmado').attr('checked', true);
+                   }
                    $('#nota').val(cita.extendedProps.Nota);
                    $('#title').val(cita.title);
                    $('#start').val(respuesta.data[0].start);
@@ -235,8 +245,6 @@ var id_Agenda= objch['id_Agenda'];
                     eventLimit: 3 // adjust to 3 only for timeGridWeek/timeGridDay
                   }
                 },
-
-              eventColor: color,
             });
             calendar.render();
             loading_hide();
@@ -277,4 +285,21 @@ var id_Agenda= objch['id_Agenda'];
         });
    });
 }
+$(function () {
+   $('#date-start').datetimepicker({
+    format: 'Y-MM-DD HH:mm',
+    locale: 'es',
+   });
+   $('#date-end').datetimepicker({
+   format: 'Y-MM-DD HH:mm',
+   locale: 'es',
+   daysOfWeekDisabled: array_dias,
+   });
+   $("#date-start").on("dp.change", function (e) {
+       $('#date-end').data("DateTimePicker").minDate(e.date);
+   });
+   $("#date-end").on("dp.change", function (e) {
+       $('#date-start').data("DateTimePicker").maxDate(e.date);
+   });
+});
 </script>

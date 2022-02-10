@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Agregar Cita</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">{{ 'Agregar Cita' }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -42,6 +42,10 @@
                             <label for="validationCustom01">{{'Costo'}}</label>
                             <input type="number" name="Costo" class="form-control" id="costo" placeholder="Costo" required>
                         </div>
+                        <div class="col-md-4 mt-4">
+                            <label>{{'Confirmar Cita'}}</label>
+                            <input type="checkbox" name="confirmado" id="confirmado" data-toggle="toggle"  data-on="Si" data-off="No">
+                        </div>
                         <div class="col-md-12 mb-3">
                             <label>{{'Nota'}}</label>
                             <textarea name="Nota" id="nota" class="form-control" rows="3" required></textarea>
@@ -50,13 +54,29 @@
                             <label for="validationCustom01">{{'Titulo'}}</label>
                             <input type="text" name="title" class="form-control" id="title" placeholder="Titulo del evento" required>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="validationCustom01">{{'start'}}</label>
-                            <input type="datetime" name="start" class="form-control" id="start" placeholder="start" required readonly>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="validationCustom01">{{'end'}}</label>
-                            <input type="datetime" name="end" class="form-control" id="end" placeholder="end" required step="5">
+                        <div class="row">
+                            <div class='col-md-6 mb-3'>
+                              <div class="form-group">
+                                <label>{{ 'Inicio' }}</label>
+                                 <div class='input-group date' id="date-start">
+                                    <input type='text' class="form-control" name="start" id="start" readonly/>
+                                    <span class="input-group-addon">
+                                    <span class="ti-timer"></span>
+                                    </span> 
+                                 </div>
+                              </div>
+                           </div>
+                           <div class='col-md-6 mb-3'>
+                              <div class="form-group date">
+                                <label>{{ 'Fin' }}</label>
+                                 <div class='input-group' id="date-end">
+                                    <input type='text' class="form-control" name="end" id="end" />
+                                    <span class="input-group-addon">
+                                    <span class="ti-timer"></span>
+                                    </span>
+                                 </div>
+                              </div>
+                           </div>
                         </div>
                     </div>
                 </form>

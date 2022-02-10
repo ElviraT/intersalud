@@ -67,7 +67,18 @@ class CitasController extends Controller
     }
     public function store(Request $request)
     {
-      $cita= Citas::create($request->all());
+      if($request['confirmado'] == 'on'){
+          $confirmado=1;
+          $color= '#378006';
+      }else{
+          $confirmado=0;
+          $color= '#f4b60b';
+      }
+                
+      $request->merge(['color' => $color,'confirmado' => $confirmado]);
+      $data = $request->all();
+      $cita= Citas::create($data);
+      
     	return redirect()->route('citas');
     }
     public function edit($id)
@@ -82,7 +93,18 @@ class CitasController extends Controller
     }
     public function update(Request $request)
     {
+      if($request['confirmado'] == 'on'){
+          $confirmado=1;
+          $color= '#378006';
+      }else{
+          $confirmado=0;
+          $color= '#f4b60b';
+      }
+                
+      $request->merge(['color' => $color,'confirmado' => $confirmado]);
+      $data = $request->all();
       $data = $request->except('_token','id');
+
       $cita = Citas::where('id_Cita_Consulta', $request['id'])->update($data);
       return response()->json($cita);
     }

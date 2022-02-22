@@ -15,7 +15,13 @@ use DB;
 
 class CitasController extends Controller
 {
-    
+   public function __construct()
+    {
+      $this->middleware('can:citas')->only('index');
+      $this->middleware('can:citas.add')->only('add');
+      $this->middleware('can:citas.edit')->only('edit');
+      $this->middleware('can:citas.destroy')->only('destroy');
+    } 
     public function index(Request $request)
     {
     	if(auth()->user()->name == 'Admin'){
@@ -35,7 +41,7 @@ class CitasController extends Controller
 
            $especialidad = Collection::make(Especialidad::
              select('especialidades_medicas.id_Especialidad_Medica AS id', 'especialidades_medicas.Espacialiadad_Medica AS name')
-             ->join('control_especialidades', 'especialidades_medicas.id','control_especialidades.Especialidades_Medicas_id')
+             ->join('control_especialidades', 'especialidades_medicas.id_Especialidad_Medica','control_especialidades.Especialidades_Medicas_id')
              ->where('control_especialidades.Medico_id',auth()->user()->id_usuario)
              ->get())->pluck('name','id'); 
 

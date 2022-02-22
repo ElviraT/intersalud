@@ -34,11 +34,11 @@
                                 'disabled'=>'disabled'
                             ]) !!}
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-4 mb-3" style="pointer-events: none">
                             <label for="validationCustom01">{{'Maximo de Pacientes'}}</label>
                             <input type="number" name="Max_paciente" class="form-control" id="mpaciente" placeholder="Maximo de Pacientes" required>
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-4 mb-3" style="pointer-events: none">
                             <label for="validationCustom01">{{'Costo'}}</label>
                             <input type="number" name="Costo" class="form-control" id="costo" placeholder="Costo" required>
                         </div>

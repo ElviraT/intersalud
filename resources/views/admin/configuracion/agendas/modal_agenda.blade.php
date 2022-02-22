@@ -36,11 +36,11 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="validationCustom01">{{'Costo'}}</label>
-                            <input type="number" name="costo" class="form-control" id="costo" placeholder="Costo" required>
+                            <input type="number" name="costo" class="form-control" id="costo" placeholder="Costo" required min="0">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="validationCustom01">{{'Maximo de Pacientes'}}</label>
-                            <input type="number" name="mpaciente" class="form-control" id="mpaciente" placeholder="Maximo de Pacientes" required>
+                            <input type="number" name="mpaciente" class="form-control" id="mpaciente" placeholder="Maximo de Pacientes" required min="0">
                         </div>
                         <div class="col-md-4 mb-3">
                             {!! Form::label('status', 'Status:') !!}

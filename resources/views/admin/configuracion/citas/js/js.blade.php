@@ -45,6 +45,12 @@ $('#paciente').on('select2:select', function (e) {
         $('#pacienteE').change();
 
         if(objPE.length > 0){
+            $('#pacienteE').append(
+                $('<option>', {
+                    value: '',
+                    text : 'Seleccione'
+                }),
+             );
             $.each(objPE, function (i, pacienteE) {
             $('#pacienteE').append(
                     $('<option>', {
@@ -54,7 +60,6 @@ $('#paciente').on('select2:select', function (e) {
                 );
             });
             $('#pacienteE').prop('disabled', false);
-            $("#pacienteE option:first").attr("selected", "selected");
         }        
     });
   $('#modal_citas').removeClass('loading');
@@ -178,9 +183,14 @@ var id_Agenda= objch['id_Agenda'];
               hiddenDays: array_dias,
               dayMaxEvents: true, // allow "more" link when too many eventse
               events: url,
+              @can('citas.add')
               dateClick:function(info) {
                 loading_show();
                 formulario.reset();
+                $('#btnGuardar').attr('hidden', false);
+                $('#btnModificar').attr('hidden', true);
+                $('#btnEliminar').attr('hidden', true);
+                $('#confirmado').attr('checked',false).change();
                 $('#paciente').val('').change();
                 $('#pacienteE').val('').change();
                 if(info.allDay){
@@ -211,7 +221,12 @@ var id_Agenda= objch['id_Agenda'];
                 $('#modal_citas').modal('show');
                 loading_hide();
               },
+              @endcan
+              @can('citas.edit')
               eventClick:function(info) {
+                $('#btnGuardar').attr('hidden', true);
+                $('#btnModificar').attr('hidden', false);
+                $('#btnEliminar').attr('hidden', false);
                 var cita=info.event;
                  var url_edit = "{{ route('citas.editar', ':id') }}";
                   url_edit = url_edit.replace(':id', cita.extendedProps.id_Cita_Consulta);
@@ -240,6 +255,7 @@ var id_Agenda= objch['id_Agenda'];
                       }
                     });
               },
+              @endcan
               views: {
                   timeGrid: {
                     eventLimit: 3 // adjust to 3 only for timeGridWeek/timeGridDay

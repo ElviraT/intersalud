@@ -32,7 +32,7 @@ $('#medico').on('change', function (e) {
     $.getJSON('{{ route('especialidad_dependiente') }}?medico='+medico, function(objC){
         var opcion = $('#especialidad').val();
         $('#especialidad').empty();
-        $('#especialidad').prop('disabled', true);
+        $('#especialidad').attr('readonly', true);
         $('#especialidad').change();
 
         if(objC.length > 0){
@@ -44,7 +44,7 @@ $('#medico').on('change', function (e) {
                     })
                 );
             });
-            $('#especialidad').prop('disabled', false);
+            $('#especialidad').attr('readonly', false);
             $("#especialidad option:first").attr("selected", "selected");
         }        
     });

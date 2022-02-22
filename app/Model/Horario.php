@@ -15,6 +15,11 @@ class Horario extends Model
         return $this->hasOne('App\Model\UsuarioM', 'id_Medico','Medico_id');
     }
 
+    public function Turno()
+    {
+        return $this->hasOne('App\Model\Turno', 'id_turno','turno_id');
+    }
+
     public function Especialidad()
     {
         return $this->hasOne('App\Model\Especialidad', 'id_Especialidad_Medica','Especialidad_id');

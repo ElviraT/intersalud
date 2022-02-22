@@ -49,8 +49,7 @@
                         <tr>
                             <th>{{'Medico'}}</th>
                             <th>{{'Especialidad'}}</th>
-                            <th>{{'Mañana'}}</th>
-                            <th>{{'Tarde'}}</th>
+                            <th>{{'Turno'}}</th>
                             <th>{{'Domicilio'}}</th>
                             <th>{{'Acción'}}</th>
                         </tr>
@@ -59,17 +58,8 @@
                       @foreach($horarios as $resultado)
                         <tr>
                           <td>{{ $resultado->UsuarioM->Nombres_Medico.' '.$resultado->UsuarioM->Apellidos_Medicos }}</td>
-                          <td>{{ $resultado->Especialidad->Espacialiadad_Medica }}</td>
-                          @if($resultado->Manana == 1)
-                            <td>{{ 'Si' }}</td>
-                          @else
-                            <td>{{ 'No' }}</td>
-                          @endif
-                          @if($resultado->Tarde == 1)
-                            <td>{{ 'Si' }}</td>
-                          @else
-                            <td>{{ 'No' }}</td>
-                          @endif
+                          <td>{{ $resultado->Especialidad->Espacialiadad_Medica }}</td>                  
+                          <td>{{ $resultado->Turno->nombre }}</td>                         
                           @if($resultado->Domicilio == 1)
                             <td>{{ 'Si' }}</td>
                           @else

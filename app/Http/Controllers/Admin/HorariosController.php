@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Model\Horario;
 use App\Model\UsuarioM;
 use App\Model\Especialidad;
+use App\Model\Turno;
 use Flash;
 use DB;
 
@@ -42,24 +43,14 @@ class HorariosController extends Controller
              ->get())->pluck('name','id'); 
       }
 
-    	return view('admin.horarios.create')->with(compact('medico','especialidad'));
+      $turnos = Collection::make(Turno::select(['id_turno','nombre'])->orderBy('nombre')->pluck("nombre", "id_turno"));
+
+    	return view('admin.horarios.create')->with(compact('medico','especialidad','turnos'));
     }
 
     public function add(Request $request)
     {
       //dd($request);
-      if($request->manana) {
-        $manana = 1;
-      }else{
-        $manana = 0;
-      }
-
-      if($request->tarde) {
-        $tarde = 1;
-      }else{
-        $tarde = 0;
-      }
-
       if($request->domicilio) {
         $domicilio = 1;
       }else{
@@ -113,8 +104,7 @@ class HorariosController extends Controller
                 $horario= new Horario();
                 $horario->Medico_id = $request->medico;
                 $horario->Especialidad_id = $request->especialidad;
-                $horario->Manana = $manana;
-                $horario->Tarde = $tarde;
+                $horario->turno_id  = $request->turno_id;
                 $horario->Domicilio = $domicilio;
                 $horario->Hora_Inicio_Lunes = $request->hora_lunes1;
                 $horario->Hora_Fin_Lunes = $request->hora_lunes2;
@@ -149,8 +139,7 @@ class HorariosController extends Controller
                  Horario::where('id_Horario_Cita', $id)->update([
                     'Medico_id' => $request->medico,
                     'Especialidad_id' => $request->especialidad,
-                    'Manana'=>$manana,
-                    'Tarde'=>$tarde,
+                    'turno_id'  => $request->turno_id,
                     'Domicilio'=>$domicilio,
                     'Hora_Inicio_Lunes'=>$request->hora_lunes1,
                     'Hora_Fin_Lunes'=>$request->hora_lunes2,
@@ -177,7 +166,7 @@ class HorariosController extends Controller
 
                 Flash::success("Registro Modificado Correctamente");
              }catch(\Illuminate\Database\QueryException $e){                    
-                Flash::error('Ocurrió un error, por favor intente de nuevo');
+                Flash::error($e.'Ocurrió un error, por favor intente de nuevo');
             }
         }
         return redirect()->route('horario');
@@ -200,7 +189,8 @@ class HorariosController extends Controller
              ->where('control_especialidades.Medico_id',auth()->user()->id_usuario)
              ->get())->pluck('name','id'); 
       }
-      return view('admin.horarios.edit')->with(compact('horarios','medico','especialidad'));
+      $turnos = Collection::make(Turno::select(['id_turno','nombre'])->orderBy('nombre')->pluck("nombre", "id_turno"));
+      return view('admin.horarios.edit')->with(compact('horarios','medico','especialidad','turnos'));
     }
     
     public function destroy(Request $request)

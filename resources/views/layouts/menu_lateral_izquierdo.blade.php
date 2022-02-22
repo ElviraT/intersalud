@@ -378,6 +378,7 @@
           </li>
       </ul>
       @endcan  
+      @can('agendas')
       <ul class="pcoded-item pcoded-left-item">
           <li class="{{ @request()->routeIs('agendas') ? 'active' : ' ' }}">
               <a href="{{route('agendas')}}"  onclick="loading_show();" class="waves-effect waves-dark">
@@ -386,7 +387,9 @@
                   <span class="pcoded-mcaret"></span>
               </a>
           </li>
-      </ul> 
+      </ul>
+      @endcan  
+      @can('citas') 
       <ul class="pcoded-item pcoded-left-item">
           <li class="{{ @request()->routeIs('citas') ? 'active' : ' ' }}">
               <a href="{{route('citas')}}"  onclick="loading_show();" class="waves-effect waves-dark">
@@ -395,7 +398,8 @@
                   <span class="pcoded-mcaret"></span>
               </a>
           </li>
-      </ul>  
+      </ul> 
+      @endcan
       <ul class="pcoded-item pcoded-left-item">
         <li class="{{ @request()->routeIs('urologia*') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
             <a href="javascript:void(0)" class="waves-effect waves-dark">

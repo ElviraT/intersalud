@@ -3,7 +3,7 @@
   {{ Form::hidden('id', isset($horarios) ? $horarios->id_Horario_Cita : 0, ['id'=>'id'] ) }}
     <div class="col-md-12" style="border-bottom: 1px solid red">
 	  	<div class="row">
-			<div class="col-md-6 mt-3">
+			<div class="col-md-4 mt-3">
 	            {!! Form::label('medico', 'Medico:') !!}
 	            {!! Form::select('medico',$medico, isset($horarios) ? $horarios->Medico_id : null, [
 	                'placeholder' => 'Seleccione', 
@@ -13,24 +13,25 @@
 	                ])
 	            !!}
             </div>
-            <div class="col-md-6 mt-3">
+            <div class="col-md-4 mt-3">
                 {!! Form::label('especialidad', 'Especialidad Medica:') !!}
                 {!! Form::select('especialidad',$especialidad, isset($horarios) ? $horarios->Especialidad_id : null, [
                     'placeholder' => 'Seleccione', 
                     'class' => 'select2 form-control',
-                    'disabled' => 'disabled',
+                    'readonly' => 'readonly',
                     'id' => 'especialidad',
                     'required'=>'required'
                     ]) !!}
             </div>
-		  	<div class="col-md-4 mb-3 mt-3">
-		  		<label>{{'Mañana'}}</label>
-				<input type="checkbox" name="manana" id="manana" data-toggle="toggle"  data-on="Si" data-off="No" data-size="xs" @if(isset($horarios) && $horarios->Manana == 1) checked @endif>
-			</div>
-			<div class="col-md-4 mb-3 mt-3">
-		  		<label>{{'Tarde'}}</label>
-				<input type="checkbox" name="tarde" id="tarde" data-toggle="toggle"  data-on="Si" data-off="No" data-size="xs" @if(isset($horarios) && $horarios->Tarde == 1) checked @endif>
-			</div>
+		  	<div class="col-md-4 mt-3">
+                {!! Form::label('turno', 'Turno:') !!}
+                {!! Form::select('turno_id',$turnos, isset($horarios) ? $horarios->turno_id : null, [
+                    'placeholder' => 'Seleccione', 
+                    'class' => 'select2 form-control',
+                    'id' => 'turno',
+                    'required'=>'required'
+                    ]) !!}
+            </div>
 			<div class="col-md-4 mb-3 mt-3">
 		  		<label>{{'Domicilio'}}</label>
 				<input type="checkbox" name="domicilio" id="domicilio" data-toggle="toggle"  data-on="Si" data-off="No" data-size="xs" @if(isset($horarios) && $horarios->Domicilio == 1) checked @endif>

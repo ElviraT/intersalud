@@ -18,13 +18,21 @@ use DB;
 
 class AgendaController extends Controller
 {
+  public function __construct()
+    {
+      $this->middleware('can:agendas')->only('index');
+      $this->middleware('can:agendas.add')->only('add');
+      $this->middleware('can:agendas.edit')->only('edit');
+      $this->middleware('can:agendas.destroy')->only('destroy');
+    }
     public function index(Request $request)
     {
     	if(auth()->user()->name == 'Admin'){
             $agendas = Agenda::all();
             $horarios= Collection::make(Horario::
-             select(['horarios_citas.id_Horario_Cita AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica ) AS name')])
+             select(['horarios_citas.id_Horario_Cita AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica," - ",turnos.nombre ) AS name')])
              ->join('usuarios_medicos', 'horarios_citas.Medico_id','usuarios_medicos.id_Medico')
+             ->join('turnos', 'horarios_citas.turno_id','turnos.id_turno')
              ->join('especialidades_medicas', 'horarios_citas.Especialidad_id','especialidades_medicas.id_Especialidad_Medica')
              ->get())->pluck('name','id'); 
 
@@ -32,8 +40,9 @@ class AgendaController extends Controller
 
         $agendas = Agenda::where('Medico_id',auth()->user()->id_usuario)->get();
         $horarios= Collection::make(Horario::
-             select(['horarios_citas.id_Horario_Cita AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica ) AS name')])
+             select(['horarios_citas.id_Horario_Cita AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica," - ",turnos.nombre ) AS name')])
              ->join('usuarios_medicos', 'horarios_citas.Medico_id','usuarios_medicos.id_Medico')
+             ->join('turnos', 'horarios_citas.turno_id','turnos.id_turno')
              ->join('especialidades_medicas', 'horarios_citas.Especialidad_id','especialidades_medicas.id_Especialidad_Medica')
              ->where('Medico_id',auth()->user()->id_usuario)
              ->get())->pluck('name','id'); 

@@ -47,13 +47,14 @@ class AgendaController extends Controller
              ->where('Medico_id',auth()->user()->id_usuario)
              ->get())->pluck('name','id'); 
       }
+        $especialidad=Collection::make(Especialidad::select(['id_Especialidad_Medica','Espacialiadad_Medica'])->orderBy('Espacialiadad_Medica')->get())->pluck("Espacialiadad_Medica", "id_Especialidad_Medica");
 
       	$consultorios = Collection::make(Consultorio::select(['id_Consultorio','Local'])->orderBy('Local')->get())->pluck("Local", "id_Consultorio");
 
       	$status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status");
       	           	
 
-    	return view('admin.configuracion.agendas.index')->with(compact('agendas','consultorios','status','horarios'));
+    	return view('admin.configuracion.agendas.index')->with(compact('agendas','consultorios','status','horarios','especialidad'));
     }
 
     public function add(Request $request)

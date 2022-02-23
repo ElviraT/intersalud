@@ -11,4 +11,7 @@
 .fc .fc-non-business{
 	background: #FADBD8 !important;
 }	
+.fc-event{
+    cursor: pointer;
+}
 </style>

@@ -34,19 +34,22 @@ $('#horario').on('select2:select', function (e) {
    var especialidad = $('#especialidad').val();
    $('#modal_agenda').addClass('loading');
     $.getJSON('{{ route('consultorio_dependiente') }}?especialidad='+especialidad, function(objE){
-
+         var opcion = $('#consultorio').val();
+            $('#consultorio').empty();
+            $('#consultorio').prop('disabled', true);
+            $('#consultorio').change();
+        
         if(objE.length > 0){
-            $.each(objE, function (i, consultorio) {
+            $.each(objE, function (i, consultorios) {
             $('#consultorio').append(
                     $('<option>', {
-                        value: consultorio.id_Consultorio,
-                        text : consultorio.Local
+                        value: consultorios.id_Consultorio,
+                        text : consultorios.Local
                     })
                 );
             });
-            $("#consultorio option:first").attr("selected", "selected");
-            $('#consultorio').change();
             $('#consultorio').prop('disabled', false);
+            $("#consultorio option:first").attr("selected", "selected");
             $('#modal_agenda').removeClass('loading');
         }else{
             $('#modal_agenda').removeClass('loading');

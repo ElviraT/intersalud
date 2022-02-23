@@ -14,7 +14,14 @@
                     <div class="row">
                         {{ Form::hidden('id', 0, ['class'=>'modal_registro_agenda_id'] ) }}             
                         {!! Form::hidden('medico', null, ['id' => 'medico']) !!}
-                        {!! Form::hidden('especialidad', null, ['id' => 'especialidad']) !!}
+                        <div class="col-md-4 mb-3" hidden>
+                            {!! Form::select('especialidad',$especialidad, null, [
+                                  'class' => 'select2 form-control',
+                                  'id' => 'especialidad',
+                                  'required'=>'required'
+                            ]) !!}
+                        </div>
+                        
                         <div class="col-md-4 mb-3">
                             {!! Form::label('horario', 'Horario:') !!}
                             {!! Form::select('horario',$horarios, null, [

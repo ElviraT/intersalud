@@ -26,3 +26,4 @@ Route::match(['get','post'],'/paciente_dependiente.json', 'Controller@paciente_e
 Route::match(['get','post'],'/consultorio.json', 'Controller@consultorio')->name('consultorio_dependiente');
 Route::match(['get','post'],'/datos_agenda.json', 'Controller@datos_agenda')->name('datos_agenda');
 Route::match(['get','post'],'/horario_datos.json', 'Controller@horario_datos')->name('horario_datos');
+Route::match(['get','post'],'/disponibilidad.json', 'Controller@disponibilidad')->name('disponibilidad');

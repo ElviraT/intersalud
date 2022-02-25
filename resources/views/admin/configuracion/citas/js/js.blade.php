@@ -13,7 +13,7 @@
 <!-- Select2 -->
 <script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{{ asset('js/axios.min.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
   var array_dias = [];
@@ -36,6 +36,8 @@ $(document).ready(function() {
     });
 
 $('#paciente').on('select2:select', function (e) {
+  var tituloP = $('select[name="Paciente_id"] option:selected').text();
+  $('#titleP').val(tituloP);
   $('#modal_citas').addClass('loading');
    var paciente = $('#paciente').val();
     $.getJSON('{{ route('paciente_dependiente') }}?paciente='+paciente, function(objPE){
@@ -64,6 +66,20 @@ $('#paciente').on('select2:select', function (e) {
     });
   $('#modal_citas').removeClass('loading');
 });
+
+function disponibilidad(agenda, start) {
+  $.getJSON('{{ route('disponibilidad') }}?agenda='+agenda+'&start='+start, function(objDis){
+      var total = parseInt(objDis['Max_paciente']) - parseInt(objDis['count']);
+      $('#disponibilidad').val(total); 
+      
+      if (total == '0') {
+        $('#texto').attr('hidden', false);
+        $('#btnGuardar').attr('hidden', true);
+      }else{
+        $('#texto').attr('hidden', true);
+      }
+  });
+}
 
 function horario() {
   var formulario = document.getElementById("Myform");
@@ -185,6 +201,7 @@ var id_Agenda= objch['id_Agenda'];
               events: url,
               @can('citas.add')
               dateClick:function(info) {
+                let fechaHora = info.dateStr.split("T");
                 loading_show();
                 formulario.reset();
                 $('#btnGuardar').attr('hidden', false);
@@ -197,7 +214,6 @@ var id_Agenda= objch['id_Agenda'];
                   $('#start').val(info.dateStr);
                   $('#end').val(info.dateStr);
                 }else{
-                  let fechaHora = info.dateStr.split("T");
                   var fechaInicio= fechaHora[0]+' '+fechaHora[1].substring(0, 8);
                   var fecha_minima = fechaHora[0]+' '+hora_minima;
                   var fecha_maxima = fechaHora[0]+' '+hora_maxima;
@@ -220,6 +236,7 @@ var id_Agenda= objch['id_Agenda'];
                 });
                 $('#modal_citas').modal('show');
                 loading_hide();
+                disponibilidad(id_Agenda,fechaHora[0]);
               },
               @endcan
               @can('citas.edit')
@@ -233,14 +250,16 @@ var id_Agenda= objch['id_Agenda'];
                 axios.post(url_edit).
                 then(
                   (respuesta) =>{
+                  let fechaHora = respuesta.data[0].start.split(" ");
+                    disponibilidad(cita.extendedProps.Agenda_id,fechaHora[0]);
                    $('#id').val(cita.extendedProps.id_Cita_Consulta);
                    $('#Agenda_id').val(cita.extendedProps.Agenda_id);
                    $('#paciente').val(cita.extendedProps.Paciente_id).change();
                    $('#pacienteE').val(cita.extendedProps.Paciente_Especial_id).change();
                    $('#mpaciente').val(cita.extendedProps.Max_paciente);
                    $('#costo').val(cita.extendedProps.Costo);
-                   if (respuesta.data[0].confirmado == '1'){
-                      $('#confirmado').attr('checked', true);
+                   if(respuesta.data[0].confirmado == '1'){
+                      $('#confirmado').prop("checked",true);
                    }
                    $('#nota').val(cita.extendedProps.Nota);
                    $('#title').val(cita.title);

@@ -16,6 +16,7 @@
                     <div class="row">
                         {{ Form::hidden('id', 0, ['id'=>'id'] ) }}
                         {{ Form::hidden('Agenda_id', 0, ['id'=>'Agenda_id'] ) }}
+                        {{ Form::hidden('titleP', null, ['id'=>'titleP'] ) }}
                         <div class="col-md-4 mb-3">
                             {!! Form::label('paciente', 'Paciente:') !!}
                             {!! Form::select('Paciente_id',$pacientes, null, [
@@ -39,12 +40,17 @@
                             <input type="number" name="Max_paciente" class="form-control" id="mpaciente" placeholder="Maximo de Pacientes" required>
                         </div>
                         <div class="col-md-4 mb-3" style="pointer-events: none">
+                            <label for="validationCustom01">{{'Disponibilidad'}}</label>
+                            <input type="number" name="disponibilidad" class="form-control" id="disponibilidad">
+                            <small id="texto" style="color: red;" hidden>{{'No hay cupos disponibles'}}</small>
+                        </div>
+                        <div class="col-md-4 mb-3" style="pointer-events: none">
                             <label for="validationCustom01">{{'Costo'}}</label>
                             <input type="number" name="Costo" class="form-control" id="costo" placeholder="Costo" required>
                         </div>
-                        <div class="col-md-4 mt-4">
+                        <div class="col-md-4 mt-4" hidden>
                             <label>{{'Confirmar Cita'}}</label>
-                            <input type="checkbox" name="confirmado" id="confirmado" data-toggle="toggle"  data-on="Si" data-off="No">
+                            <input type="checkbox" name="confirmado" id="confirmado" checked>
                         </div>
                         <div class="col-md-12 mb-3">
                             <label>{{'Nota'}}</label>

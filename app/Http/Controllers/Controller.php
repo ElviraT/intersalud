@@ -15,6 +15,7 @@ use App\Model\UsuarioPE;
 use App\Model\Consultorio;
 use App\Model\Horario;
 use App\Model\Agenda;
+use App\Model\Citas;
 use DB;
 
 class Controller extends BaseController
@@ -128,5 +129,24 @@ class Controller extends BaseController
       }
 
       return response()->json($Dhorario);
+    }
+
+    public function disponibilidad(Request $request){
+      $agenda = empty($request->input('agenda')) ? 0 : $request->input('agenda');
+      $start = empty($request->input('start')) ? null : $request->input('start');
+
+      $citas = [];
+
+      if ($agenda > 0) {
+        $citas = DB::table('citas_consultas')
+                   ->select(DB::raw("count('Agenda_id') as count, Max_paciente"))
+                   ->where('Agenda_id',$agenda)
+                   ->where('confirmado',1)
+                   ->whereDate('start',$start)
+                   ->groupBy('Agenda_id','Max_paciente')
+                   ->first();
+      }
+
+      return response()->json($citas);
     }
 }

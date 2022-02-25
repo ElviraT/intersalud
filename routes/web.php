@@ -258,7 +258,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('citas/agregar', ['as' => 'citas.add', 'uses' => 'Admin\configuracion\CitasController@store']);
 	Route::post('citas/editar/{id}', ['as' => 'citas.editar', 'uses' => 'Admin\configuracion\CitasController@edit']);
 	Route::post('citas/borrar/{id}', ['as' => 'citas.borrar', 'uses' => 'Admin\configuracion\CitasController@destroy']);
-	Route::post('citas/actualizar/{cita}', ['as' => 'citas.actualizar', 'uses' => 'Admin\configuracion\CitasController@update']);
+	Route::match(['get','post'],'citas/actualizar/{cita}', ['as' => 'citas.actualizar', 'uses' => 'Admin\configuracion\CitasController@update']);
 	
 
 	/*HISTORIAS CLINICAS - UROLOGIA*/

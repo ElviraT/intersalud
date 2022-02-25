@@ -73,15 +73,13 @@ class CitasController extends Controller
     }
     public function store(Request $request)
     {
-      if($request['confirmado'] == 'on'){
-          $confirmado=1;
-          $color= '#378006';
-      }else{
-          $confirmado=0;
-          $color= '#f4b60b';
-      }
+      $confirmado=1;
+      $color= '#378006';
+    
+
+      $title = $request['titleP'].' - '.$request['title'];
                 
-      $request->merge(['color' => $color,'confirmado' => $confirmado]);
+      $request->merge(['color' => $color,'confirmado' => $confirmado, 'title'=> $title]);
       $data = $request->all();
       $cita= Citas::create($data);
       
@@ -99,17 +97,13 @@ class CitasController extends Controller
     }
     public function update(Request $request)
     {
-      if($request['confirmado'] == 'on'){
-          $confirmado=1;
-          $color= '#378006';
-      }else{
-          $confirmado=0;
-          $color= '#f4b60b';
-      }
+        $confirmado=1;
+        $color= '#378006'; 
+       $title = $request['titleP'].' - '.$request['title'];
                 
-      $request->merge(['color' => $color,'confirmado' => $confirmado]);
+      $request->merge(['color' => $color,'confirmado' => $confirmado, 'title'=> $title]);
       $data = $request->all();
-      $data = $request->except('_token','id');
+      $data = $request->except('_token','id','titleP');
 
       $cita = Citas::where('id_Cita_Consulta', $request['id'])->update($data);
       return response()->json($cita);

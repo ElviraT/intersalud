@@ -49,20 +49,17 @@ $('#medico').on('change', function (e) {
         }        
     });
 });
-var minDate ='00:00';
-var maxDate = '11:59';
-$('#turno').on('select2:select', function (e) {
+$('#turno_id').on('change', function (e) {
   var turno = $('select[name="turno_id"] option:selected').text();
-  if (turno === 'Mañana') {
-    minDate ='00:00';
-    maxDate = '12:00';
-  }else{
-    minDate ='12:00';
-    maxDate = '11:59';
+  if(turno === 'Mañana') {
+    var minDate ='00:00';
+    var maxDate = '11:59';
   }
-});
+  if(turno === 'Tarde'){
+    var minDate ='12:00';
+    var maxDate = '23:59';
+  }
 
-$(function () {
        $('#fecha_lunes1').datetimepicker({
        	format: 'HH:mm',
        });

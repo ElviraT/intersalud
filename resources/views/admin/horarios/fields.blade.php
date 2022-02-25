@@ -28,7 +28,7 @@
                 {!! Form::select('turno_id',$turnos, isset($horarios) ? $horarios->turno_id : null, [
                     'placeholder' => 'Seleccione', 
                     'class' => 'select2 form-control',
-                    'id' => 'turno',
+                    'id' => 'turno_id',
                     'required'=>'required'
                     ]) !!}
             </div>

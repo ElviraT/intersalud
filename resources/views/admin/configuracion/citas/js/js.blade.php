@@ -87,8 +87,11 @@ function horario() {
   var array_businessHours = [];
   var hora_minima='00:00:00';
   var hora_maxima='11:59:59';
+  var array_dias= [];
+  var calendarEl = document.getElementById('calendar');
+  var calendar = new FullCalendar.Calendar(calendarEl);
 
-   $.getJSON('{{ route('consultar_horario') }}?agenda='+agenda, function(objch){     
+  $.getJSON('{{ route('consultar_horario') }}?agenda='+agenda, function(objch){     
   loading_show();
         if (objch['Lunes'] == 0) {
             array_dias.push(1);
@@ -172,9 +175,7 @@ var id_Agenda= objch['id_Agenda'];
             var url = "{{ route('citas.mostrar', ':id') }}";
             url = url.replace(':id', id_Agenda);
 
-            var calendarEl = document.getElementById('calendar');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
+            calendar = new FullCalendar.Calendar(calendarEl, {
               locale:'es',
               timeZoneName:'short',
               initialView: 'timeGridWeek',
@@ -281,8 +282,8 @@ var id_Agenda= objch['id_Agenda'];
                   }
                 },
             });
-            calendar.render();
             loading_hide();
+            calendar.render();
             document.getElementById('btnGuardar').addEventListener('click',function() {
 
               enviar_datos('{{ route('citas.add') }}');

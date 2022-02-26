@@ -17,7 +17,28 @@ $(document).ready(function() {
         dropdownParent: $('#modal_servicio'),
          });
     });
+$('#medico_id').on('change', function (e) {
+   var medico = $('#medico_id').val();
+    $.getJSON('{{ route('especialidad_dependiente') }}?medico='+medico, function(objC){
+        var opcion = $('#especialidad').val();
+        $('#especialidad').empty();
+        $('#especialidad').attr('readonly', true);
+        $('#especialidad').change();
 
+        if(objC.length > 0){
+            $.each(objC, function (i, especialidad) {
+            $('#especialidad').append(
+                    $('<option>', {
+                        value: especialidad.id,
+                        text : especialidad.name
+                    })
+                );
+            });
+            $('#especialidad').attr('readonly', false);
+            $("#especialidad option:first").attr("selected", "selected");
+        }        
+    });
+});
 $('#modal_servicio').on('show.bs.modal', function (e) {
     var modal = $(e.delegateTarget),
         data = $(e.relatedTarget).data();

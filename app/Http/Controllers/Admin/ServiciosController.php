@@ -9,6 +9,7 @@ use App\Model\Servicio;
 use App\Model\Status;
 use App\Model\Especialidad;
 use App\Model\UsuarioM;
+use App\Model\UsuarioA;
 use Flash;
 use DB;
 
@@ -23,13 +24,23 @@ class ServiciosController extends Controller
     }
     public function index(Servicio $model)
   	{   
+      if(auth()->user()->name == 'Admin'){
+        $servicios = Servicio::all();
+        $medico=Collection::make(UsuarioM::select(['id_Medico',DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->where('Status_Medico_id',1)->orderBy('Nombres_Medico')->pluck("Nombre", "id_Medico"));
+       }elseif(auth()->user()->id_usuario > 0 ){
+        $servicios = Servicio::where('Medico_id',auth()->user()->id_usuario)->get();
+        $medico=Collection::make(UsuarioM::select(['id_Medico',DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->where('Status_Medico_id',1)->where('id_Medico',auth()->user()->id_usuario)->orderBy('Nombres_Medico')->pluck("Nombre", "id_Medico"));
+
+       }elseif(auth()->user()->id_usuarioA > 0 ){
+        $asistente = UsuarioA::where('id_asistente',auth()->user()->id_usuarioA)->first();
+        $servicios = Servicio::where('Medico_id',$asistente->id_Medico)->get();
+        $medico=Collection::make(UsuarioM::select(['id_Medico',DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->where('Status_Medico_id',1)->where('id_Medico',$asistente->id_Medico)->orderBy('Nombres_Medico')->pluck("Nombre", "id_Medico"));
+       }
   		$status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status");
 
   		$especialidad=Collection::make(Especialidad::select(['id_Especialidad_Medica','Espacialiadad_Medica'])->orderBy('Espacialiadad_Medica')->get())->pluck("Espacialiadad_Medica", "id_Especialidad_Medica"); 
 
-  		$medico=Collection::make(UsuarioM::select(['id_Medico',DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->where('Status_Medico_id',1)->orderBy('Nombres_Medico')->pluck("Nombre", "id_Medico"));
-
-  		return view('admin.servicios.index', ['servicios' => $model->all(),'status'=>$status,'medico'=>$medico,'especialidad'=>$especialidad]);
+  		return view('admin.servicios.index', ['servicios' => $servicios,'status'=>$status,'medico'=>$medico,'especialidad'=>$especialidad]);
   	}
   	public function add (Request $request)
     {   

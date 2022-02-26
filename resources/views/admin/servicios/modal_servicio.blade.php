@@ -22,20 +22,21 @@
                             <input type="text" name="costo" class="form-control" id="costo" placeholder="Costo" required onkeypress = 'return SoloNumeros(event)'>
                         </div>
                         <div class="col-md-6 mb-3">
-                            {!! Form::label('especialidad', 'Especialidad Medica:') !!}
-                            {!! Form::select('especialidad',$especialidad, null, [
-                                'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
-                                'id' => 'especialidad',
-                                'required'=>'required'
-                                ]) !!}
-                        </div>
-                        <div class="col-md-6 mb-3">
                             {!! Form::label('medico_id', 'Medico:') !!}
                             {!! Form::select('medico_id',$medico, null, [
                                 'placeholder' => 'Seleccione', 
                                 'class' => 'select2 form-control',
                                 'id' => 'medico_id',
+                                'required'=>'required'
+                                ]) !!}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {!! Form::label('especialidad', 'Especialidad Medica:') !!}
+                            {!! Form::select('especialidad',$especialidad, null, [
+                                'placeholder' => 'Seleccione', 
+                                'class' => 'select2 form-control',
+                                'id' => 'especialidad',
+                                'readonly' => 'readonly',
                                 'required'=>'required'
                                 ]) !!}
                         </div>

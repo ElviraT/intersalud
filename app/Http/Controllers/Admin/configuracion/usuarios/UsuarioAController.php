@@ -42,7 +42,12 @@ class UsuarioAController extends Controller
 
   	public function create()
   	{
-    	$medicos= Collection::make(UsuarioM::select(['usuarios_medicos.id_Medico',DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])->leftjoin('usuarios_asistentes', 'usuarios_asistentes.id_Medico', '=' ,'usuarios_medicos.id_Medico')->whereNull('usuarios_asistentes.id_Medico')->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
+      if(auth()->user()->name == 'Admin'){
+        $medicos= Collection::make(UsuarioM::select(['usuarios_medicos.id_Medico',DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])->leftjoin('usuarios_asistentes', 'usuarios_asistentes.id_Medico', '=' ,'usuarios_medicos.id_Medico')->whereNull('usuarios_asistentes.id_Medico')->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
+      }else{
+        $medicos= Collection::make(UsuarioM::select(['usuarios_medicos.id_Medico',DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])->leftjoin('usuarios_asistentes', 'usuarios_asistentes.id_Medico', '=' ,'usuarios_medicos.id_Medico')->where('usuarios_medicos.id_Medico',auth()->user()->id_usuario)->whereNull('usuarios_asistentes.id_Medico')->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
+      } 
+    	
 
     	$sexo=Collection::make(Sexo::select(['id_Sexo','Sexo'])->orderBy('Sexo')->get())->pluck("Sexo", "id_Sexo");
     	$prefijo=Collection::make(PrefijoDNI::select(['id_Prefijo_CIDNI','Prefijo_CIDNI'])->orderBy('Prefijo_CIDNI')->get())->pluck("Prefijo_CIDNI", "id_Prefijo_CIDNI");
@@ -121,8 +126,12 @@ class UsuarioAController extends Controller
       $login = LoginT::where('Asistente_id', $id)->first();
       $rol = DB::select("SELECT m.role_id FROM model_has_roles as m, users as u WHERE m.model_id = u.id and u.id_usuarioA ='$id'");
      // dd($id);
+      if(auth()->user()->name == 'Admin'){
+        $medicos= Collection::make(UsuarioM::select(['usuarios_medicos.id_Medico',DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])->leftjoin('usuarios_asistentes', 'usuarios_asistentes.id_Medico', '=' ,'usuarios_medicos.id_Medico')->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
+      }else{
+        $medicos= Collection::make(UsuarioM::select(['usuarios_medicos.id_Medico',DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])->leftjoin('usuarios_asistentes', 'usuarios_asistentes.id_Medico', '=' ,'usuarios_medicos.id_Medico')->where('usuarios_medicos.id_Medico',auth()->user()->id_usuario)->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
+      } 
       $asistente = UsuarioA::where('id_asistente',$id)->first();
-      $medicos=Collection::make(UsuarioM::select(['id_Medico', DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
       $sexo=Collection::make(Sexo::select(['id_Sexo','Sexo'])->orderBy('Sexo')->get())->pluck("Sexo", "id_Sexo");
       $prefijo=Collection::make(PrefijoDNI::select(['id_Prefijo_CIDNI','Prefijo_CIDNI'])->orderBy('Prefijo_CIDNI')->get())->pluck("Prefijo_CIDNI", "id_Prefijo_CIDNI");
       $estadoC=Collection::make(Civil::select(['id_Civil','Civil'])->orderBy('Civil')->get())->pluck("Civil", "id_Civil");

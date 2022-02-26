@@ -75,7 +75,7 @@
                                 </a>
                               @endcan
                               @can('horario.destroy')
-                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete32" data-record-id="{{$resultado->id_Horario_Cita}}" data-record-title="{{$resultado->description}}" class="btn-transition btn btn-outline-danger" onclick="loading_show();">
+                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete32" data-record-id="{{$resultado->id_Horario_Cita}}" data-record-title="{{$resultado->UsuarioM->Nombres_Medico.' '.$resultado->UsuarioM->Apellidos_Medicos}}" class="btn-transition btn btn-outline-danger" onclick="loading_show();">
                                   <span class="btn-icon-wrapper pr-1 opacity-7">
                                       <i class="ti-eraser"></i>
                                   </span>{{'Eliminar'}}

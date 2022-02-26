@@ -7,6 +7,7 @@ use Illuminate\Support\Collection as Collection;
 use Illuminate\Http\Request;
 use App\Model\Horario;
 use App\Model\UsuarioM;
+use App\Model\UsuarioA;
 use App\Model\Especialidad;
 use App\Model\Turno;
 use Flash;
@@ -23,7 +24,15 @@ class HorariosController extends Controller
     }
     public function index(Horario $model)
     {
-    	return view('admin.horarios.index', ['horarios' => $model->all()]);
+       if(auth()->user()->name == 'Admin'){
+        $horarios = Horario::all();
+       }elseif(auth()->user()->id_usuario > 0 ){
+        $horarios = Horario::where('Medico_id',auth()->user()->id_usuario)->get();
+       }elseif(auth()->user()->id_usuarioA > 0 ){
+        $asistente = UsuarioA::where('id_asistente',auth()->user()->id_usuarioA)->first();
+        $horarios = Horario::where('Medico_id',$asistente->id_Medico)->get();
+       }
+    	return view('admin.horarios.index', ['horarios' => $horarios]);
     }
 
     public function create()
@@ -33,16 +42,25 @@ class HorariosController extends Controller
 
           $especialidad = Collection::make(Especialidad::select(['id_Especialidad_Medica','Espacialiadad_Medica'])->orderBy('Espacialiadad_Medica')->pluck("Espacialiadad_Medica", "id_Especialidad_Medica")); 
 
-      }else{
+      }elseif(auth()->user()->id_usuario > 0 ){
           $medico=Collection::make(UsuarioM::select(['id_Medico',DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->where('Status_Medico_id',1)->where('id_Medico',auth()->user()->id_usuario)->orderBy('Nombres_Medico')->pluck("Nombre", "id_Medico"));
 
            $especialidad = Collection::make(Especialidad::
              select('especialidades_medicas.id_Especialidad_Medica AS id', 'especialidades_medicas.Espacialiadad_Medica AS name')
-             ->join('control_especialidades', 'especialidades_medicas.id','control_especialidades.Especialidades_Medicas_id')
+             ->join('control_especialidades', 'especialidades_medicas.id_Especialidad_Medica','control_especialidades.Especialidades_Medicas_id')
              ->where('control_especialidades.Medico_id',auth()->user()->id_usuario)
              ->get())->pluck('name','id'); 
-      }
 
+      }elseif(auth()->user()->id_usuarioA > 0 ){
+        $asistente = UsuarioA::where('id_asistente',auth()->user()->id_usuarioA)->first();
+        $medico=Collection::make(UsuarioM::select(['id_Medico',DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->where('Status_Medico_id',1)->where('id_Medico',$asistente->id_Medico)->orderBy('Nombres_Medico')->pluck("Nombre", "id_Medico"));
+
+        $especialidad = Collection::make(Especialidad::
+             select('especialidades_medicas.id_Especialidad_Medica AS id', 'especialidades_medicas.Espacialiadad_Medica AS name')
+             ->join('control_especialidades', 'especialidades_medicas.id_Especialidad_Medica','control_especialidades.Especialidades_Medicas_id')
+             ->where('control_especialidades.Medico_id',$asistente->id_Medico)
+             ->get())->pluck('name','id'); 
+         }
       $turnos = Collection::make(Turno::select(['id_turno','nombre'])->orderBy('nombre')->pluck("nombre", "id_turno"));
 
     	return view('admin.horarios.create')->with(compact('medico','especialidad','turnos'));

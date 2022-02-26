@@ -9,7 +9,7 @@
                 {!! Form::open(['action' => ['Admin\HorariosController@destroy'], 'id'=>'form_horario_eliminar']) !!}
                 {{ Form::hidden('id', null, ['id'=>'modal_registo_horario_id'] ) }}
 
-                    <p>Vas a eliminar el horario <b><i class="title"></i></b>, este proceso es irreversible.</p>
+                    <p>Vas a eliminar el horario de <b><i class="title"></i></b>, este proceso es irreversible.</p>
                     <p>¿Deseas continuar?</p>
                       
             </div>

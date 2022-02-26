@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection as Collection;
 use App\Model\Agenda;
 use App\Model\UsuarioM;
+use App\Model\UsuarioA;
 use App\Model\UsuarioP;
 use App\Model\UsuarioPE;
 use App\Model\Especialidad;
@@ -35,8 +36,11 @@ class CitasController extends Controller
              ->join('especialidades_medicas', 'agendas.Especialidad_Medica','especialidades_medicas.id_Especialidad_Medica')
              ->where('agendas.Status_id', 1)
              ->get())->pluck('name','id');
+          
+          $pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
 
-      }else{
+      }elseif(auth()->user()->id_usuario > 0 ){
+       
           $medico=Collection::make(UsuarioM::select(['id_Medico',DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->where('Status_Medico_id',1)->where('id_Medico',auth()->user()->id_usuario)->orderBy('Nombres_Medico')->pluck("Nombre", "id_Medico"));
 
            $especialidad = Collection::make(Especialidad::
@@ -52,13 +56,46 @@ class CitasController extends Controller
              ->where('usuarios_medicos.id_Medico', auth()->user()->id_usuario)
              ->where('agendas.Status_id', 1)
              ->get())->pluck('name','id');
+
+          $pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
+
+      }elseif(auth()->user()->id_usuarioA > 0){
+          $asistente = UsuarioA::where('id_asistente',auth()->user()->id_usuarioA)->first();
+       
+          $medico=Collection::make(UsuarioM::select(['id_Medico',DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->where('Status_Medico_id',1)->where('id_Medico',$asistente->id_Medico)->orderBy('Nombres_Medico')->pluck("Nombre", "id_Medico"));
+
+           $especialidad = Collection::make(Especialidad::
+             select('especialidades_medicas.id_Especialidad_Medica AS id', 'especialidades_medicas.Espacialiadad_Medica AS name')
+             ->join('control_especialidades', 'especialidades_medicas.id_Especialidad_Medica','control_especialidades.Especialidades_Medicas_id')
+             ->where('control_especialidades.Medico_id',$asistente->id_Medico)
+             ->get())->pluck('name','id'); 
+
+           $agenda= Collection::make(Agenda::
+             select(['agendas.id_Agenda AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica ) AS name')])
+             ->join('usuarios_medicos', 'agendas.Medico_id','usuarios_medicos.id_Medico')
+             ->join('especialidades_medicas', 'agendas.Especialidad_Medica','especialidades_medicas.id_Especialidad_Medica')
+             ->where('usuarios_medicos.id_Medico', $asistente->id_Medico)
+             ->where('agendas.Status_id', 1)
+             ->get())->pluck('name','id');
+
+          $pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
+
+      }elseif(auth()->user()->id_usuarioP > 0){
+
+         $medico=Collection::make(UsuarioM::select(['id_Medico',DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->where('Status_Medico_id',1)->orderBy('Nombres_Medico')->pluck("Nombre", "id_Medico"));
+
+          $especialidad = Collection::make(Especialidad::select(['id_Especialidad_Medica','Espacialiadad_Medica'])->orderBy('Espacialiadad_Medica')->pluck("Espacialiadad_Medica", "id_Especialidad_Medica")); 
+
+          $agenda= Collection::make(Agenda::
+             select(['agendas.id_Agenda AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica ) AS name')])
+             ->join('usuarios_medicos', 'agendas.Medico_id','usuarios_medicos.id_Medico')
+             ->join('especialidades_medicas', 'agendas.Especialidad_Medica','especialidades_medicas.id_Especialidad_Medica')
+             ->where('agendas.Status_id', 1)
+             ->get())->pluck('name','id');
+
+          $pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->where('id_Paciente',auth()->user()->id_usuarioP)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
       }
-
-
-
-      		$pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
-
-           	$pacientesE = Collection::make(UsuarioPE::
+          $pacientesE = Collection::make(UsuarioPE::
              select(['pacientes_especiales.id_Pacientes_Especiales AS id', DB::raw('CONCAT(pacientes_especiales.Nombre_Paciente_Especial, " ",pacientes_especiales. Apellido_Paciente_Especial) AS name')])
              ->join('usuarios_pacientes', 'pacientes_especiales.Paciente_id','usuarios_pacientes.id_Paciente')
              ->get())->pluck('name','id'); 

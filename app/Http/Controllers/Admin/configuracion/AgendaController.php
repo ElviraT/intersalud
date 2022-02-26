@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection as Collection;
 use App\Model\Agenda;
 use App\Model\UsuarioM;
+use App\Model\UsuarioA;
 use App\Model\UsuarioP;
 use App\Model\UsuarioPE;
 use App\Model\Consultorio;
@@ -36,7 +37,7 @@ class AgendaController extends Controller
              ->join('especialidades_medicas', 'horarios_citas.Especialidad_id','especialidades_medicas.id_Especialidad_Medica')
              ->get())->pluck('name','id'); 
 
-      }else{
+      }elseif(auth()->user()->id_usuario > 0 ){
 
         $agendas = Agenda::where('Medico_id',auth()->user()->id_usuario)->get();
         $horarios= Collection::make(Horario::
@@ -45,6 +46,17 @@ class AgendaController extends Controller
              ->join('turnos', 'horarios_citas.turno_id','turnos.id_turno')
              ->join('especialidades_medicas', 'horarios_citas.Especialidad_id','especialidades_medicas.id_Especialidad_Medica')
              ->where('Medico_id',auth()->user()->id_usuario)
+             ->get())->pluck('name','id'); 
+
+      }elseif(auth()->user()->id_usuarioA > 0){
+          $asistente = UsuarioA::where('id_asistente',auth()->user()->id_usuarioA)->first();
+          $agendas = Agenda::where('Medico_id',$asistente->id_Medico)->get();
+          $horarios= Collection::make(Horario::
+             select(['horarios_citas.id_Horario_Cita AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica," - ",turnos.nombre ) AS name')])
+             ->join('usuarios_medicos', 'horarios_citas.Medico_id','usuarios_medicos.id_Medico')
+             ->join('turnos', 'horarios_citas.turno_id','turnos.id_turno')
+             ->join('especialidades_medicas', 'horarios_citas.Especialidad_id','especialidades_medicas.id_Especialidad_Medica')
+             ->where('Medico_id',$asistente->id_Medico)
              ->get())->pluck('name','id'); 
       }
         $especialidad=Collection::make(Especialidad::select(['id_Especialidad_Medica','Espacialiadad_Medica'])->orderBy('Espacialiadad_Medica')->get())->pluck("Espacialiadad_Medica", "id_Especialidad_Medica");

@@ -203,7 +203,7 @@ class HorariosController extends Controller
 
            $especialidad = Collection::make(Especialidad::
              select('especialidades_medicas.id_Especialidad_Medica AS id', 'especialidades_medicas.Espacialiadad_Medica AS name')
-             ->join('control_especialidades', 'especialidades_medicas.id','control_especialidades.Especialidades_Medicas_id')
+             ->join('control_especialidades', 'especialidades_medicas.id_Especialidad_Medica','control_especialidades.Especialidades_Medicas_id')
              ->where('control_especialidades.Medico_id',auth()->user()->id_usuario)
              ->get())->pluck('name','id'); 
       }

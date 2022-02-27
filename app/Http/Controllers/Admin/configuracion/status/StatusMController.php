@@ -17,7 +17,7 @@ class StatusMController extends Controller
     }
     public function index(StatusM $model)
   	{   	
-  		return view('admin.configuracion.status.StatusM.index', ['statusms' => $model->all()]);
+  		return view('admin.configuracion.status.statusM.index', ['statusms' => $model->all()]);
   	}
   	public function add (Request $request)
     {   

@@ -196,6 +196,12 @@ class UsuarioAController extends Controller
                     'status' => $request['status']
                     ]);
 
+
+                   /* $rol= $login->roles()->first();   
+                    dd($rol);             
+                    $login->removeRole($rol);                  
+                    $login->assignRole($request['rol']);*/
+
                   $loginT = LoginT::where('Asistente_id', $id)->first();
                   $loginh= new HistoricoT();
                   $loginh->Login_Tranajador_id = $loginT->id_Login_Trabajador;

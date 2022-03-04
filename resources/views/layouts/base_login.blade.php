@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -28,6 +28,7 @@
       <!-- Style.css -->
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}">
      @yield('css')
+     
 </head>
 <body themebg-pattern="theme1">
     <!-- Pre-loader start -->

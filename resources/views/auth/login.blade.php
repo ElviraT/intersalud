@@ -6,7 +6,7 @@
         <div class="text-center">
             <img src="{{ asset('img/intersalud.png')}}" alt="logo.png" width="15%">
         </div>
-        <div class="auth-box card" style="margin-top: -20px">
+        <div class="auth-box card" style="margin-top: -30px">
             <div class="card-block">
                 <div class="row m-b-20">
                     <div class="col-md-12">

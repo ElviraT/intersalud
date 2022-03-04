@@ -220,12 +220,11 @@ var id_Agenda= objch['id_Agenda'];
                   var fecha_maxima = fechaHora[0]+' '+hora_maxima;
                   if(fechaHora[1].substring(0, 8) >= hora_minima){
                       $('#start').val(fechaInicio);
+                      $('#end').val(fechaInicio);
                   }else{
                       $('#start').val(fecha_minima);
+                      $('#end').val(fecha_minima);
                   }
-                  $('#end').val(fechaInicio);
-                  $('#end').attr('min',fechaInicio);
-                  $('#end').attr('max',fecha_maxima);
                 }
                 $('#modal_citas').on('show.bs.modal', function (e) {
                   var agenda2 = $('#agenda').val();
@@ -322,6 +321,7 @@ var id_Agenda= objch['id_Agenda'];
    });
 }
 $(function () {
+  console.log();
    $('#date-start').datetimepicker({
     format: 'Y-MM-DD HH:mm',
     locale: 'es',

@@ -259,7 +259,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('citas/editar/{id}', ['as' => 'citas.editar', 'uses' => 'Admin\configuracion\CitasController@edit']);
 	Route::post('citas/borrar/{id}', ['as' => 'citas.borrar', 'uses' => 'Admin\configuracion\CitasController@destroy']);
 	Route::match(['get','post'],'citas/actualizar/{cita}', ['as' => 'citas.actualizar', 'uses' => 'Admin\configuracion\CitasController@update']);
-	
+
+	//CONSULTAS ONLINE
+	Route::get('consultao', ['as' => 'consultao', 'uses' => 'Admin\ConsultaOController@index']);
+	Route::post('consultao/add', ['as' => 'consultao.add', 'uses' => 'Admin\ConsultaOController@add']);
+	Route::get('consultao/edit', ['as' => 'consultao.edit', 'uses' => 'Admin\ConsultaOController@edit']);
+	Route::post('consultao/destroy', ['as' => 'consultao.destroy', 'uses' => 'Admin\ConsultaOController@destroy']);
 
 	/*HISTORIAS CLINICAS - UROLOGIA*/
 	Route::get('historias/urologia', ['as' => 'urologia', 'uses' => 'Admin\historias\UrologiaController@index']);

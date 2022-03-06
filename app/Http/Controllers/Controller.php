@@ -12,6 +12,7 @@ use App\Model\Municipio;
 use App\Model\Especialidad;
 use App\Model\Parroquia;
 use App\Model\UsuarioPE;
+use App\Model\UsuarioP;
 use App\Model\Consultorio;
 use App\Model\Horario;
 use App\Model\Agenda;
@@ -148,5 +149,27 @@ class Controller extends BaseController
       }
 
       return response()->json($citas);
+    }
+
+    public function buscar_paciente(Request $request){
+     $paciente = empty($request->input('paciente')) ? null : $request->input('paciente');
+     $pacienteE = empty($request->input('pacienteE')) ? null : $request->input('pacienteE');
+
+      $datos = [];
+      if ($pacienteE != null) {
+         $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo')
+             ->join('sexos', 'sexos.id_Sexo','pacientes_especiales.id_Pacientes_Especiales')
+             ->where('pacientes_especiales.id_Pacientes_Especiales',$pacienteE)
+             ->first();       
+      }else{
+         $datos = UsuarioP::select('usuarios_pacientes.Nombres_Paciente', 'usuarios_pacientes.Apellidos_Paciente', 'usuarios_pacientes.Fecha_Nacimiento_Paciente', 'sexos.Sexo')
+             ->join('sexos', 'sexos.id_Sexo','usuarios_pacientes.id_Paciente')
+             ->where('usuarios_pacientes.id_Paciente',$paciente)
+             ->first();
+
+        //$datos = UsuarioP::where('id_Paciente',$paciente)->first();
+      }
+
+      return response()->json($datos);
     }
 }

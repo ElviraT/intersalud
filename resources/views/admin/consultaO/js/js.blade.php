@@ -43,4 +43,52 @@ $('#paciente').on('select2:select', function (e) {
         }        
     });
 });
+function buscar() {
+    var paciente = $('#paciente').val();
+    var pacienteE =$('#pacienteE').val();
+    console.log(paciente, pacienteE);
+    if (pacienteE.length == 0) {
+       $.getJSON('{{ route('buscar_paciente') }}?paciente='+paciente, function(objBP){
+            $('#nombre').html(objBP['Nombres_Paciente']+' '+objBP['Apellidos_Paciente']);
+            $('#sexo').html(objBP['Sexo']);
+            $('#edad').html(calcularEdad(objBP['Fecha_Nacimiento_Paciente']));
+        }); 
+
+    }else{
+        $.getJSON('{{ route('buscar_paciente') }}?pacienteE='+pacienteE, function(objBP){
+            $('#nombre').html(objBP['Nombre_Paciente_Especial']+' '+objBP['Apellido_Paciente_Especial']);
+            $('#sexo').html(objBP['Sexo']);
+            $('#edad').html(calcularEdad(objBP['Fecha_Nacimiento_Paciente_Especial']));
+        });
+    }
+    
+}
+
+function calcularEdad(fecha) {
+    var hoy = new Date();
+    var cumpleanos = new Date(fecha);
+    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    var m = hoy.getMonth() - cumpleanos.getMonth();
+
+    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
+    }
+
+    return edad;
+}
+// tab
+$('#nav-tab a:first').tab('show');
+
+//for bootstrap 3 use 'shown.bs.tab' instead of 'shown' in the next line
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+//save the latest tab; use cookies if you like 'em better:
+localStorage.setItem('selectedTab', $(e.target).attr('id'));
+});
+
+//go to the latest tab, if it exists:
+var selectedTab = localStorage.getItem('selectedTab');
+if (selectedTab) {
+  $('#'+selectedTab).tab('show');
+}
+
 </script>

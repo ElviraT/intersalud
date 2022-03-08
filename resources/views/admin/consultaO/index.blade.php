@@ -23,7 +23,7 @@
 @section('content')
         <div class="col-md-12">
           @include('flash::message')
-          @if(auth()->user()->esAdmin != '1')
+          @if(auth()->user()->id_usuario > 0)
            <div class="card" style="background: #cdcdcd; padding: 10px;">
               <div class="col-md-12 mb-2">
                 <div class="row">
@@ -83,7 +83,7 @@
                   <div class="col-md-12 col-lg-7">
                     <div class="row">
                       <div class="col-md-12 p-2">
-                        <iframe src="#" height="100%" width="100%"></iframe>
+                        <iframe src="#" width="100%"></iframe>
                       </div>
                     </div>
                   </div>
@@ -96,10 +96,6 @@
               </div>
             </div>
         </div>
-@endsection
-@section('modal')
-    {{--@include('admin.consultaO.modal_consultao')
-            @include('admin.modales.elimina_consultao')--}}
 @endsection
 @section('js')
   @include('admin.consultaO.js.js')

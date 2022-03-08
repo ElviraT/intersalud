@@ -154,7 +154,6 @@ class Controller extends BaseController
     public function buscar_paciente(Request $request){
      $paciente = empty($request->input('paciente')) ? null : $request->input('paciente');
      $pacienteE = empty($request->input('pacienteE')) ? null : $request->input('pacienteE');
-
       $datos = [];
       if ($pacienteE != null) {
          $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo')
@@ -162,12 +161,11 @@ class Controller extends BaseController
              ->where('pacientes_especiales.id_Pacientes_Especiales',$pacienteE)
              ->first();       
       }else{
+//dd($paciente);
          $datos = UsuarioP::select('usuarios_pacientes.Nombres_Paciente', 'usuarios_pacientes.Apellidos_Paciente', 'usuarios_pacientes.Fecha_Nacimiento_Paciente', 'sexos.Sexo')
              ->join('sexos', 'sexos.id_Sexo','usuarios_pacientes.id_Paciente')
              ->where('usuarios_pacientes.id_Paciente',$paciente)
              ->first();
-
-        //$datos = UsuarioP::where('id_Paciente',$paciente)->first();
       }
 
       return response()->json($datos);

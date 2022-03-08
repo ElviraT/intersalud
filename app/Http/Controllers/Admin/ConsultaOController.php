@@ -9,6 +9,7 @@ use App\Model\UsuarioP;
 use App\Model\UsuarioPE;
 use App\Model\UsuarioM;
 use App\Model\Especialidad;
+use App\Model\Antecedente;
 use DB;
 
 class ConsultaOController extends Controller
@@ -35,5 +36,30 @@ class ConsultaOController extends Controller
              ->join('usuarios_pacientes', 'pacientes_especiales.Paciente_id','usuarios_pacientes.id_Paciente')
              ->get())->pluck('name','id'); 
     	return view('admin.consultaO.index')->with(compact('pacientes','pacientesE','medico','especialidad'));
+   }
+
+   public function add()
+   {
+     try {
+            $consultao= new Antecedente();
+            $consultao->Paciente_Id = $_POST['id_paciente'];
+            $consultao->Paciente_Especial_id = $_POST['id_pacienteE'];
+            $consultao->Medico_id = $_POST['id_medico'];
+            $consultao->Fecha = $_POST['fecha'];
+            $consultao->Control_Historia_Medico_id =0;
+            $consultao->id_Status = 1;
+            $consultao->Personal = $_POST['personales'];;
+            $consultao->Familiar = $_POST['familiares'];
+            $consultao->Farmacologico = $_POST['farmacologicos'];
+            $consultao->Examen_Fisico = $_POST['fisico'];
+            $consultao->Imprecion_Diagnostica = $_POST['impresion'];
+            $consultao->save(); 
+
+            $info= 'Registro Agregado Correctamente';     
+         
+        } catch (\Illuminate\Database\QueryException $e) {
+            $info= $e.'Ocurrio un error intente de nuevo'; 
+        }
+        return $info;
    }
 }

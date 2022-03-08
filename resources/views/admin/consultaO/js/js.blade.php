@@ -24,7 +24,7 @@ $('#paciente').on('select2:select', function (e) {
         $('#pacienteE').prop('disabled', true);
         $('#pacienteE').change();
 
-        if(objPE.length > 0){
+        if(objPE.length >= 0){
             $('#pacienteE').append(
                 $('<option>', {
                     value: '',
@@ -46,9 +46,12 @@ $('#paciente').on('select2:select', function (e) {
 function buscar() {
     var paciente = $('#paciente').val();
     var pacienteE =$('#pacienteE').val();
-    console.log(paciente, pacienteE);
+
+//console.log(pacienteE);
     if (pacienteE.length == 0) {
        $.getJSON('{{ route('buscar_paciente') }}?paciente='+paciente, function(objBP){
+            $('#id_paciente').val(paciente);
+            $('#id_pacienteE').val();
             $('#nombre').html(objBP['Nombres_Paciente']+' '+objBP['Apellidos_Paciente']);
             $('#sexo').html(objBP['Sexo']);
             $('#edad').html(calcularEdad(objBP['Fecha_Nacimiento_Paciente']));
@@ -56,6 +59,8 @@ function buscar() {
 
     }else{
         $.getJSON('{{ route('buscar_paciente') }}?pacienteE='+pacienteE, function(objBP){
+            $('#id_paciente').val(paciente);
+            $('#id_pacienteE').val(pacienteE);
             $('#nombre').html(objBP['Nombre_Paciente_Especial']+' '+objBP['Apellido_Paciente_Especial']);
             $('#sexo').html(objBP['Sexo']);
             $('#edad').html(calcularEdad(objBP['Fecha_Nacimiento_Paciente_Especial']));
@@ -90,5 +95,18 @@ var selectedTab = localStorage.getItem('selectedTab');
 if (selectedTab) {
   $('#'+selectedTab).tab('show');
 }
+$("#formulario1").submit(function(event) {
+    event.preventDefault();
 
+    var datos = jQuery(this).serialize();
+    jQuery.ajax({
+        type: "POST",
+        url: "{{ route('consultao.add') }}",
+        data: datos,
+        success: function(info)
+        {
+            Swal.fire(info);
+        }
+    });
+});
 </script>

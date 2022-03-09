@@ -3,7 +3,7 @@
     	
     	<input type="hidden" name="id_antecedente" id="id_antecedente" value="0">
         <input type="hidden" name="id_paciente" id="id_paciente" required>
-        <input type="hidden" name="id_pacienteE" id="id_pacienteE" value="null">
+        <input type="hidden" name="id_pacienteE" id="id_pacienteE" value="0">
         <input type="hidden" name="id_medico" id="id_medico" value="{{ auth()->user()->id_usuario }}">
         <div class="row">
 	        <div class="col-md-6 mb-3"> 

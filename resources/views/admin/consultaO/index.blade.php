@@ -83,7 +83,7 @@
                   <div class="col-md-12 col-lg-7">
                     <div class="row">
                       <div class="col-md-12 p-2">
-                        <iframe src="#" width="100%"></iframe>
+                        <iframe src="https://intersalud.iaelaonline.com/intersalud-master/public/" width="100%" id="iFrame1" allowfullscreen></iframe>
                       </div>
                     </div>
                   </div>

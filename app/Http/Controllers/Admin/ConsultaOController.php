@@ -10,6 +10,7 @@ use App\Model\UsuarioPE;
 use App\Model\UsuarioM;
 use App\Model\Especialidad;
 use App\Model\Antecedente;
+use App\Model\Anamenesi;
 use DB;
 
 class ConsultaOController extends Controller
@@ -38,7 +39,7 @@ class ConsultaOController extends Controller
     	return view('admin.consultaO.index')->with(compact('pacientes','pacientesE','medico','especialidad'));
    }
 
-   public function add()
+   public function antecedentes()
    {
      try {
             $consultao= new Antecedente();
@@ -46,7 +47,7 @@ class ConsultaOController extends Controller
             $consultao->Paciente_Especial_id = $_POST['id_pacienteE'];
             $consultao->Medico_id = $_POST['id_medico'];
             $consultao->Fecha = $_POST['fecha'];
-            $consultao->Control_Historia_Medico_id =0;
+            //$consultao->Control_Historia_Medico_id ='';
             $consultao->id_Status = 1;
             $consultao->Personal = $_POST['personales'];;
             $consultao->Familiar = $_POST['familiares'];
@@ -54,6 +55,33 @@ class ConsultaOController extends Controller
             $consultao->Examen_Fisico = $_POST['fisico'];
             $consultao->Imprecion_Diagnostica = $_POST['impresion'];
             $consultao->save(); 
+
+            $info= 'Registro Agregado Correctamente';     
+         
+        } catch (\Illuminate\Database\QueryException $e) {
+            $info= 'Ocurrio un error intente de nuevo'; 
+        }
+        return $info;
+   }
+   public function anamenesis()
+   {
+     try {
+            $consultao2= new Anamenesi();
+            $consultao2->Paciente_Id = $_POST['id_paciente'];
+            $consultao2->Paciente_Especial_id = $_POST['id_pacienteE'];
+            $consultao2->Medico_id = $_POST['id_medico'];
+            $consultao2->Fecha = $_POST['fecha'];
+            //$consultao2->Control_Historia_Medico_id ='';
+            $consultao2->Enfermedad_Actual = $_POST['Eactual'];
+            $consultao2->Origen = $_POST['origen'];;
+            $consultao2->Hallazgo = $_POST['hallazgo'];
+            $consultao2->Plan_Tratamiento = $_POST['tratamiento'];
+            $consultao2->Diagnostico_Definitivo = $_POST['diagnostico'];
+            $consultao2->Pronostico = $_POST['pronostico'];
+            $consultao2->id_Status = 1;
+            $consultao2->Peso = $_POST['peso'];
+            $consultao2->Talla = $_POST['estatura'];
+            $consultao2->save(); 
 
             $info= 'Registro Agregado Correctamente';     
          

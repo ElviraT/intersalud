@@ -157,13 +157,12 @@ class Controller extends BaseController
       $datos = [];
       if ($pacienteE != null) {
          $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo')
-             ->join('sexos', 'sexos.id_Sexo','pacientes_especiales.id_Pacientes_Especiales')
+             ->join('sexos', 'sexos.id_Sexo','pacientes_especiales.Sexo_id')
              ->where('pacientes_especiales.id_Pacientes_Especiales',$pacienteE)
              ->first();       
       }else{
-//dd($paciente);
          $datos = UsuarioP::select('usuarios_pacientes.Nombres_Paciente', 'usuarios_pacientes.Apellidos_Paciente', 'usuarios_pacientes.Fecha_Nacimiento_Paciente', 'sexos.Sexo')
-             ->join('sexos', 'sexos.id_Sexo','usuarios_pacientes.id_Paciente')
+             ->join('sexos', 'sexos.id_Sexo','usuarios_pacientes.Sexo_id')
              ->where('usuarios_pacientes.id_Paciente',$paciente)
              ->first();
       }

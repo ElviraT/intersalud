@@ -52,6 +52,8 @@ function buscar() {
        $.getJSON('{{ route('buscar_paciente') }}?paciente='+paciente, function(objBP){
             $('#id_paciente').val(paciente);
             $('#id_pacienteE').val();
+            $('#id_pacienteA').val(paciente);
+            $('#id_pacienteEA').val();
             $('#nombre').html(objBP['Nombres_Paciente']+' '+objBP['Apellidos_Paciente']);
             $('#sexo').html(objBP['Sexo']);
             $('#edad').html(calcularEdad(objBP['Fecha_Nacimiento_Paciente']));
@@ -61,6 +63,8 @@ function buscar() {
         $.getJSON('{{ route('buscar_paciente') }}?pacienteE='+pacienteE, function(objBP){
             $('#id_paciente').val(paciente);
             $('#id_pacienteE').val(pacienteE);
+            $('#id_pacienteA').val(paciente);
+            $('#id_pacienteEA').val(pacienteE);
             $('#nombre').html(objBP['Nombre_Paciente_Especial']+' '+objBP['Apellido_Paciente_Especial']);
             $('#sexo').html(objBP['Sexo']);
             $('#edad').html(calcularEdad(objBP['Fecha_Nacimiento_Paciente_Especial']));
@@ -102,6 +106,20 @@ $("#formulario1").submit(function(event) {
     jQuery.ajax({
         type: "POST",
         url: "{{ route('consultao.add') }}",
+        data: datos,
+        success: function(info)
+        {
+            Swal.fire(info);
+        }
+    });
+});
+$("#formulario2").submit(function(event) {
+    event.preventDefault();
+
+    var datos = jQuery(this).serialize();
+    jQuery.ajax({
+        type: "POST",
+        url: "{{ route('consultao.add2') }}",
         data: datos,
         success: function(info)
         {

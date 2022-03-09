@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="text-center">
-            <img src="{{ asset('img/intersalud.png')}}" alt="logo.png" width="15%">
+            <img src="{{ asset('img/Logo.png')}}" alt="logo.png" width="25%">
         </div>
     <div class="row justify-content-center" style="margin-top: -30px">
         <div class="col-md-6">

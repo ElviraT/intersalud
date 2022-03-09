@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Favicon icon -->
-     <link rel="icon" href="{{ asset('img/intersalud.ico')}}" type="image/x-icon">
+     <link rel="icon" href="{{ asset('img/Logo.png')}}" type="image/x-icon">
       <!-- Google font-->
       <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
       <!-- waves.css -->

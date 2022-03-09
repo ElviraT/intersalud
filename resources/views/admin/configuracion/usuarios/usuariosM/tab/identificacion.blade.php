@@ -74,23 +74,23 @@
                     !!}
         </div>
         <div class="col-md-6 mb-3">
-            {!! Form::label('ciudad', 'Ciudad:') !!}
-            {!! Form::select('ciudad',$ciudad, isset($medico) ? $medico->id_Ciudad : null, [
-                'placeholder' => 'Seleccione', 
-                'disabled' => 'disabled',
-                'class' => 'select2 form-control',
-                'id' => 'ciudad',
-                 'required' =>'required'
-                ])
-            !!}
-        </div>
-        <div class="col-md-6 mb-3">
             {!! Form::label('municipio', 'Municipio:') !!}
             {!! Form::select('municipio',$municipio, isset($medico) ? $medico->id_Municipio : null, [
                 'placeholder' => 'Seleccione',
                 'disabled' => 'disabled', 
                 'class' => 'select2 form-control ',
                 'id' => 'municipio',
+                 'required' =>'required'
+                ])
+            !!}
+        </div>
+        <div class="col-md-6 mb-3">
+            {!! Form::label('ciudad', 'Ciudad:') !!}
+            {!! Form::select('ciudad',$ciudad, isset($medico) ? $medico->id_Ciudad : null, [
+                'placeholder' => 'Seleccione', 
+                'disabled' => 'disabled',
+                'class' => 'select2 form-control',
+                'id' => 'ciudad',
                  'required' =>'required'
                 ])
             !!}

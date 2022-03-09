@@ -262,7 +262,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 	//CONSULTAS ONLINE
 	Route::get('consultao', ['as' => 'consultao', 'uses' => 'Admin\ConsultaOController@index']);
-	Route::post('consultao/add', ['as' => 'consultao.add', 'uses' => 'Admin\ConsultaOController@add']);
+	Route::post('consultao/add', ['as' => 'consultao.add', 'uses' => 'Admin\ConsultaOController@antecedentes']);
+	Route::post('consultao/add2', ['as' => 'consultao.add2', 'uses' => 'Admin\ConsultaOController@anamenesis']);
 	Route::get('consultao/edit', ['as' => 'consultao.edit', 'uses' => 'Admin\ConsultaOController@edit']);
 	Route::post('consultao/destroy', ['as' => 'consultao.destroy', 'uses' => 'Admin\ConsultaOController@destroy']);
 

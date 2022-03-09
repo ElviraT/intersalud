@@ -8,7 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
-        <link rel="icon" href="{{ asset('img/intersalud.ico')}}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('img/intersalud.jpeg')}}" type="image/x-icon">
          <!-- Font Awesome -->
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/icon/font-awesome/css/font-awesome.min.css')}}">
         <!-- Styles -->
@@ -49,9 +49,9 @@
     <body>
         <div class="flex-center position-ref full-height">
     <div class="container-fluid" align="center">
-        <img src="{{ asset('img/intersalud.png')}}" alt="logo.png" width="40%">
+        <img src="{{ asset('img/Logo.png')}}" alt="logo.png" width="50%">
         <br>
-       <h1 style="margin-top: -100px">Parece Que Estas Presentando Problemas</h1>
+       <h1 style="margin-top: -50px">Parece Que Estas Presentando Problemas</h1>
       
         <div class="property-preview-content" style="margin-left: 100px; margin-right: 100px; border:1px solid #5DADE2;" align="center">
             <hr>

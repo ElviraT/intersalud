@@ -8,7 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
-        <link rel="icon" href="{{ asset('img/intersalud.ico')}}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('img/intersalud.jpeg')}}" type="image/x-icon">
         <!-- Styles -->
         <style>
             html, body {
@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <img src="{{ asset('img/intersalud.png')}}" width="50%">
+                    <img src="{{ asset('img/intersalud.jpeg')}}">
                 </div>
             </div>
         </div>

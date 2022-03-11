@@ -53,6 +53,7 @@ class ServiciosController extends Controller
                 $servicio->Especialidad_Medica_id = $request['especialidad'];
                 $servicio->Medico_id = $request['medico_id'];
                 $servicio->Status_id = $request['status'];
+                $servicio->duracion = $request['duracion'];
                 $servicio->save();
 
                 Flash::success("Registro Agregado Correctamente");            
@@ -68,6 +69,7 @@ class ServiciosController extends Controller
                     'Especialidad_Medica_id'=>$request->especialidad,
                     'Medico_id'=>$request->medico_id,
                     'Status_id'=>$request->status,
+                    'duracion'=>$request->duracion,
                 ]);
 
                 Flash::success("Registro Modificado Correctamente");

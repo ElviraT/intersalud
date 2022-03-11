@@ -1,5 +1,9 @@
 <!-- Select2 -->
 <script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<!--datepicker-->
+<script src="{{ asset('js/moment.js')}}"></script>
+<script src="{{ asset('js/moment-with-locales.js')}}"></script>
+<script src="{{ asset('js/bootstrap-datetimepicker.min.js')}}"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -17,6 +21,10 @@ $(document).ready(function() {
         dropdownParent: $('#modal_servicio'),
          });
     });
+$('#duracion').datetimepicker({        
+    useCurrent: false, //Important! See issue #1075
+    format: 'HH:mm',
+});
 $('#medico_id').on('change', function (e) {
    var medico = $('#medico_id').val();
     $.getJSON('{{ route('especialidad_dependiente') }}?medico='+medico, function(objC){
@@ -53,6 +61,7 @@ $('#modal_servicio').on('show.bs.modal', function (e) {
             $('#especialidad', modal).val(obj.Especialidad_Medica_id).change();
             $('#medico_id', modal).val(obj.Medico_id).change();
             $('#status', modal).val(obj.Status_id).change();
+            $('#duracion_input').val(obj.duracion);
             modal.removeClass('loading');
             loading_hide();
         });
@@ -64,6 +73,7 @@ $('#modal_servicio').on('hidden.bs.modal', function (e) {
     $('#especialidad').val(0).change();
     $('#medico_id').val(0).change();
     $('#status').val(0).change();
+    $('#duracion').val('');
 });
 $('#confirm-delete31').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);

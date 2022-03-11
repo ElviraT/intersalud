@@ -35,6 +35,14 @@
                                 'disabled'=>'disabled'
                             ]) !!}
                         </div>
+                        <div class="col-md-4 mb-3">
+                            {!! Form::label('servicio', 'Servicio:') !!}
+                            {!! Form::select('id_servicio',$servicios, null, [
+                                'placeholder' => 'Seleccione', 
+                                'class' => 'select2 form-control',
+                                'id' => 'id_servicio'
+                            ]) !!}
+                        </div>
                         <div class="col-md-4 mb-3" style="pointer-events: none">
                             <label for="validationCustom01">{{'Maximo de Pacientes'}}</label>
                             <input type="number" name="Max_paciente" class="form-control" id="mpaciente" placeholder="Maximo de Pacientes" required>

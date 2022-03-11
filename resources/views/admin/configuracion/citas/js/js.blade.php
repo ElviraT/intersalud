@@ -33,6 +33,11 @@ $(document).ready(function() {
     theme : "classic",
     dropdownParent: $('#modal_citas'),
      });
+
+    $('#id_servicio').select2({ 
+    theme : "classic",
+    dropdownParent: $('#modal_citas'),
+     });
     });
 
 $('#paciente').on('select2:select', function (e) {
@@ -265,6 +270,7 @@ var id_Agenda= objch['id_Agenda'];
                    $('#title').val(cita.title);
                    $('#start').val(respuesta.data[0].start);
                    $('#end').val(respuesta.data[0].end);
+                   $('#id_servicio').val(respuesta.data[0].id_servicio).change();
                    $('#modal_citas').modal('show');
                   }
                   ).catch(

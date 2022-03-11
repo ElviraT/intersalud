@@ -40,6 +40,17 @@
                                 'required'=>'required'
                                 ]) !!}
                         </div>
+                        <div class='col-md-6 mb-3'>
+                            <label>{{'Duración'}}</label>
+                            <div class="form-group">
+                                 <div class='input-group date' id='duracion'>
+                                    <input type='text' class="form-control" name="duracion" placeholder="Duración" id="duracion_input" />
+                                    <span class="input-group-addon">
+                                    <span class="ti-timer"></span>
+                                    </span>
+                                 </div>
+                            </div>
+                        </div>
                         <div class="col-md-6 mb-3">
                             {!! Form::label('status', 'Status:') !!}
                             {!! Form::select('status',$status, null, [

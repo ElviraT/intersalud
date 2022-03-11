@@ -17,6 +17,7 @@ use App\Model\Consultorio;
 use App\Model\Horario;
 use App\Model\Agenda;
 use App\Model\Citas;
+use App\Model\Servicio;
 use DB;
 
 class Controller extends BaseController
@@ -168,5 +169,22 @@ class Controller extends BaseController
       }
 
       return response()->json($datos);
+    }
+
+    public function duracion_servicio(Request $request){
+      $servicio = empty($request->input('servicio')) ? 0 : $request->input('servicio');
+      $start = empty($request->input('start')) ? null : $request->input('start');
+
+      $duracion = [];
+
+      if ($servicio > 0) {
+        $tiempo= Servicio::where('id_Servicio',$servicio)->first();
+        $minu1= explode(":", $tiempo['duracion']);
+        $minu= $minu1['1'];
+        $duracion =DB::select("Select DATE_ADD('".$start."', INTERVAL '$minu 0'  minute_second) AS 'end'");
+
+      }
+
+      return response()->json($duracion);
     }
 }

@@ -71,7 +71,18 @@ $('#paciente').on('select2:select', function (e) {
     });
   $('#modal_citas').removeClass('loading');
 });
+$('#id_servicio').on('select2:select', function (e) {
+    var servicio = $('#id_servicio').val();
+    var start = $('#start').val();
+    $('#modal_citas').addClass('loading');
 
+    $.getJSON('{{ route('duracion_servicio') }}?servicio='+servicio+'&start='+start, function(objS){
+      
+      $('#end').val(objS[0]['end']);
+    });
+
+    $('#modal_citas').removeClass('loading');
+  });
 function disponibilidad(agenda, start) {
   $.getJSON('{{ route('disponibilidad') }}?agenda='+agenda+'&start='+start, function(objDis){
       var total = parseInt(objDis['Max_paciente']) - parseInt(objDis['count']);

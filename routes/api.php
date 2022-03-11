@@ -28,3 +28,4 @@ Route::match(['get','post'],'/datos_agenda.json', 'Controller@datos_agenda')->na
 Route::match(['get','post'],'/horario_datos.json', 'Controller@horario_datos')->name('horario_datos');
 Route::match(['get','post'],'/disponibilidad.json', 'Controller@disponibilidad')->name('disponibilidad');
 Route::match(['get','post'],'/buscar_paciente.json', 'Controller@buscar_paciente')->name('buscar_paciente');
+Route::match(['get','post'],'/duracion_servicio.json', 'Controller@duracion_servicio')->name('duracion_servicio');

@@ -40,7 +40,8 @@
                             {!! Form::select('id_servicio',$servicios, null, [
                                 'placeholder' => 'Seleccione', 
                                 'class' => 'select2 form-control',
-                                'id' => 'id_servicio'
+                                'id' => 'id_servicio',
+                                'required'=>'required'
                             ]) !!}
                         </div>
                         <div class="col-md-4 mb-3" style="pointer-events: none">

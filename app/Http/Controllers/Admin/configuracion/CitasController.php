@@ -117,8 +117,6 @@ class CitasController extends Controller
     }
     public function store(Request $request)
     {
-      $confirmado=1;
-      $color= '#378006';
       $title = $request['titleP'].' - '.$request['title'];
 
       $agenda= Agenda::where('id_Agenda',$request->Agenda_id)->first();
@@ -126,13 +124,30 @@ class CitasController extends Controller
       $Horario_Cita_Paciente=$agenda['Horario_Cita_id'];
       $Especialidad_Medica=$agenda['Especialidad_Medica'];
 
-      $request->merge(['color' => $color,'confirmado' => $confirmado, 'title'=> $title, 'Medico_id'=> $Medico_id, 'Horario_Cita_Paciente'=> $Horario_Cita_Paciente]);
-      $data = $request->all();
       DB::beginTransaction();
       try {
-        $cita= Citas::create($data);
-        
-        $control_data = ['Especialidad_Medica_id' => $Especialidad_Medica, 'Medico_id'=> $Medico_id, 'Paciente_id'=> $request['Paciente_id'], 'Paciente_Especial_id'=> $request['Paciente_Especial_id'], 'Cita_Consulta_id'=> $cita['id_Cita_Consulta'], 'Fecha'=> date('Y-m-d'), 'id_servicio'=> $request['id_servicio'];
+       
+        $cita= new Citas();
+        $cita->Agenda_id = $request['Agenda_id'];
+        $cita->Paciente_id = $request['Paciente_id'];
+        $cita->Paciente_Especial_id = $request['Paciente_Especial_id'];
+        $cita->Medico_id = $Medico_id;
+        $cita->Horario_Cita_Paciente = $Horario_Cita_Paciente;
+        $cita->Max_paciente = $request['Max_paciente'];
+        $cita->Costo = $request['Costo'];
+        $cita->Nota = $request['Nota'];
+        $cita->Status_Consulta_id = 1;
+        $cita->title = $title;
+        $cita->start = $request['start'];
+        $cita->end = $request['end'];
+        $cita->color = '#378006';
+        $cita->confirmado = 1;
+        $cita->id_servicio = $request['id_servicio'];
+        $cita->save();
+
+        //dd($cita['id']);
+
+        $control_data = ['Especialidad_Medica_id' => $Especialidad_Medica, 'Medico_id'=> $Medico_id, 'Paciente_id'=> $request['Paciente_id'], 'Paciente_Especial_id'=> $request['Paciente_Especial_id'], 'Cita_Consulta_id'=> $cita['id'], 'Fecha'=> date('Y-m-d'), 'id_servicio'=> $request['id_servicio']];
 
         $control= ControlHM::create($control_data);
          DB::commit();
@@ -154,8 +169,8 @@ class CitasController extends Controller
     }
     public function update(Request $request)
     {
-        $confirmado=1;
-        $color= '#378006'; 
+       $confirmado=1;
+       $color= '#378006'; 
        $title = $request['titleP'].' - '.$request['title'];
                 
       $request->merge(['color' => $color,'confirmado' => $confirmado, 'title'=> $title]);

@@ -12,6 +12,7 @@ use App\Model\UsuarioP;
 use App\Model\UsuarioPE;
 use App\Model\Especialidad;
 use App\Model\Citas;
+use App\Model\ControlHM;
 use DB;
 
 class CitasController extends Controller
@@ -112,13 +113,26 @@ class CitasController extends Controller
     {
       $confirmado=1;
       $color= '#378006';
-    
-
       $title = $request['titleP'].' - '.$request['title'];
-                
-      $request->merge(['color' => $color,'confirmado' => $confirmado, 'title'=> $title]);
+
+      $agenda= Agenda::where('id_Agenda',$request->Agenda_id)->first();
+      $Medico_id=$agenda['Medico_id'];
+      $Horario_Cita_Paciente=$agenda['Horario_Cita_id'];
+      $Especialidad_Medica=$agenda['Especialidad_Medica'];
+
+      $request->merge(['color' => $color,'confirmado' => $confirmado, 'title'=> $title, 'Medico_id'=> $Medico_id, 'Horario_Cita_Paciente'=> $Horario_Cita_Paciente]);
       $data = $request->all();
-      $cita= Citas::create($data);
+      DB::beginTransaction();
+      try {
+        $cita= Citas::create($data);
+        
+        $control_data = ['Especialidad_Medica_id' => $Especialidad_Medica, 'Medico_id'=> $Medico_id, 'Paciente_id'=> $request['Paciente_id'], 'Paciente_Especial_id'=> $request['Paciente_Especial_id'], 'Cita_Consulta_id'=> $cita['id_Cita_Consulta'], 'Fecha'=> date('Y-m-d')];
+
+        $control= ControlHM::create($control_data);
+         DB::commit();
+      } catch (Exception $e) {
+        DB::rollback();
+      }
       
     	return redirect()->route('citas');
     }

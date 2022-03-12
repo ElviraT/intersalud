@@ -81,7 +81,7 @@
                                  </div>
                               </div>
                            </div>
-                           <div class='col-md-6 mb-3'>
+                           <div class='col-md-6 mb-3' style="pointer-events: none;">
                               <div class="form-group date">
                                 <label>{{ 'Fin' }}</label>
                                  <div class='input-group' id="date-end">

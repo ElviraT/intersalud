@@ -257,7 +257,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('citas/mostrar/{id}', ['as' => 'citas.mostrar', 'uses' => 'Admin\configuracion\CitasController@show']);
 	Route::post('citas/agregar', ['as' => 'citas.add', 'uses' => 'Admin\configuracion\CitasController@store']);
 	Route::post('citas/editar/{id}', ['as' => 'citas.editar', 'uses' => 'Admin\configuracion\CitasController@edit']);
-	Route::post('citas/borrar/{id}', ['as' => 'citas.borrar', 'uses' => 'Admin\configuracion\CitasController@destroy']);
+	Route::match(['get','post'],'citas/borrar/{id}', ['as' => 'citas.borrar', 'uses' => 'Admin\configuracion\CitasController@destroy']);
 	Route::match(['get','post'],'citas/actualizar/{cita}', ['as' => 'citas.actualizar', 'uses' => 'Admin\configuracion\CitasController@update']);
 
 	//CONSULTAS ONLINE

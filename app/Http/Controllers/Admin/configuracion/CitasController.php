@@ -145,12 +145,10 @@ class CitasController extends Controller
         $cita->id_servicio = $request['id_servicio'];
         $cita->save();
 
-        //dd($cita['id']);
-
         $control_data = ['Especialidad_Medica_id' => $Especialidad_Medica, 'Medico_id'=> $Medico_id, 'Paciente_id'=> $request['Paciente_id'], 'Paciente_Especial_id'=> $request['Paciente_Especial_id'], 'Cita_Consulta_id'=> $cita['id'], 'Fecha'=> date('Y-m-d'), 'id_servicio'=> $request['id_servicio']];
 
         $control= ControlHM::create($control_data);
-         DB::commit();
+        DB::commit();
       } catch (Exception $e) {
         DB::rollback();
       }
@@ -164,7 +162,14 @@ class CitasController extends Controller
     }
     public function destroy($id)
     {
+      DB::beginTransaction();
+      try {
+      $control = ControlHM::where('Cita_Consulta_id', $id)->delete();
       $cita = Citas::where('id_Cita_Consulta', $id)->delete();
+        DB::commit();
+      } catch (Exception $e) {
+        DB::rollback();
+      }
       return response()->json($cita);
     }
     public function update(Request $request)
@@ -177,7 +182,20 @@ class CitasController extends Controller
       $data = $request->all();
       $data = $request->except('_token','id','titleP');
 
-      $cita = Citas::where('id_Cita_Consulta', $request['id'])->update($data);
+      $agenda= Agenda::where('id_Agenda',$request->Agenda_id)->first();
+      $Medico_id=$agenda['Medico_id'];
+      $Horario_Cita_Paciente=$agenda['Horario_Cita_id'];
+      $Especialidad_Medica=$agenda['Especialidad_Medica'];
+      
+      $control_data = ['Especialidad_Medica_id' => $Especialidad_Medica, 'Medico_id'=> $Medico_id, 'Paciente_id'=> $request['Paciente_id'], 'Paciente_Especial_id'=> $request['Paciente_Especial_id'], 'Cita_Consulta_id'=> $request['id'], 'Fecha'=> date('Y-m-d'), 'id_servicio'=> $request['id_servicio']];
+      DB::beginTransaction();
+      try {
+        $cita = Citas::where('id_Cita_Consulta', $request['id'])->update($data);
+        $control= ControlHM::where('Cita_Consulta_id', $request['id'])->update($control_data);
+        DB::commit();
+      } catch (Exception $e) {
+        DB::rollback();
+      }
       return response()->json($cita);
     }
 }

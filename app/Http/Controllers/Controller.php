@@ -185,6 +185,6 @@ class Controller extends BaseController
 
       }
 
-      return response()->json($duracion);
+      return response()->json([$duracion, $tiempo]);
     }
 }

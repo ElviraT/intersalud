@@ -80,7 +80,6 @@ $('#modal_agenda').on('show.bs.modal', function (e) {
             $('#horario').change();
             $('#consultorio', modal).val(obj.Consultorio_id);
             $('#consultorio').change();
-            $('#costo', modal).val(obj.Costo_consulta);
             $('#mpaciente', modal).val(obj.Max_pacientes);
             $('#status', modal).val(obj.Status_id);
             $('#status').change();
@@ -95,7 +94,6 @@ $('#modal_agenda').on('hidden.bs.modal', function (e) {
     $('#medico').val('');
     $('#especialidad').val('');
     $('#consultorio').val('').change();
-    $('#costo').val('');
     $('#mpaciente').val('');
     $('#status').val('').change();
     $('#nota').val('');

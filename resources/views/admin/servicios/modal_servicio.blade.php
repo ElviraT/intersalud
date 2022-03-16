@@ -49,6 +49,7 @@
                                     <span class="ti-timer"></span>
                                     </span>
                                  </div>
+                                 <small style="color: green;">{{'seleccione HH:MM'}}</small>
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">

@@ -55,11 +55,15 @@
                         </div>
                         <div class="col-md-4 mb-3" style="pointer-events: none">
                             <label for="validationCustom01">{{'Costo'}}</label>
-                            <input type="number" name="Costo" class="form-control" id="costo" placeholder="Costo" required>
+                            <input type="number" name="Costo" class="form-control" id="costo" step="0.01" required>
                         </div>
                         <div class="col-md-4 mt-4" hidden>
                             <label>{{'Confirmar Cita'}}</label>
                             <input type="checkbox" name="confirmado" id="confirmado" checked>
+                        </div>
+                        <div class="col-md-12 mb-3" style="pointer-events: none;">
+                            <label>{{'Notas del Medico'}}</label>
+                            <textarea name="NotaM" id="notaM" class="form-control"></textarea>
                         </div>
                         <div class="col-md-12 mb-3">
                             <label>{{'Nota'}}</label>

@@ -78,7 +78,6 @@ class AgendaController extends Controller
                 $Agenda->Consultorio_id = $request['consultorio'];
                 $Agenda->Especialidad_Medica = $request['especialidad'];
                 $Agenda->Horario_Cita_id = $request['horario'];
-                $Agenda->Costo_consulta = $request['costo'];
                 $Agenda->Max_pacientes = $request['mpaciente'];
                 $Agenda->Status_id = $request['status'];
                 $Agenda->Nota = $request['nota'];
@@ -96,7 +95,6 @@ class AgendaController extends Controller
                     'Consultorio_id'=>$request->consultorio,
                     'Especialidad_Medica'=>$request->especialidad,
                     'Horario_Cita_id' => $request->horario,
-                    'Costo_consulta'=>$request->costo,
                     'Max_pacientes'=>$request->mpaciente,
                     'Status_id'=>$request->status,
                     'Nota'=>$request->nota

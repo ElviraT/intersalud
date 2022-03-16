@@ -77,8 +77,9 @@ $('#id_servicio').on('select2:select', function (e) {
     $('#modal_citas').addClass('loading');
 
     $.getJSON('{{ route('duracion_servicio') }}?servicio='+servicio+'&start='+start, function(objS){
-      
-      $('#end').val(objS[0]['end']);
+      console.log(objS);
+      $('#costo').val(objS[1]['Costos']);
+      $('#end').val(objS[0][0]['end']);
     });
 
     $('#modal_citas').removeClass('loading');
@@ -229,17 +230,13 @@ var id_Agenda= objch['id_Agenda'];
                 $('#pacienteE').val('').change();
                 if(info.allDay){
                   $('#start').val(info.dateStr);
-                  $('#end').val(info.dateStr);
                 }else{
                   var fechaInicio= fechaHora[0]+' '+fechaHora[1].substring(0, 8);
                   var fecha_minima = fechaHora[0]+' '+hora_minima;
-                  var fecha_maxima = fechaHora[0]+' '+hora_maxima;
                   if(fechaHora[1].substring(0, 8) >= hora_minima){
                       $('#start').val(fechaInicio);
-                      $('#end').val(fechaInicio);
                   }else{
                       $('#start').val(fecha_minima);
-                      $('#end').val(fecha_minima);
                   }
                 }
                 $('#modal_citas').on('show.bs.modal', function (e) {
@@ -247,7 +244,8 @@ var id_Agenda= objch['id_Agenda'];
                    $.getJSON('{{ route('datos_agenda') }}?agenda2='+agenda2, function(objA){
                      $('#Agenda_id').val(objA['id_Agenda']);
                      $('#mpaciente').val(objA['Max_pacientes']);
-                     $('#costo').val(objA['Costo_consulta']);
+                     $('#notaM').val(objA['Nota']);
+                     
                   });
                 });
                 $('#modal_citas').modal('show');
@@ -273,7 +271,7 @@ var id_Agenda= objch['id_Agenda'];
                    $('#paciente').val(cita.extendedProps.Paciente_id).change();
                    $('#pacienteE').val(cita.extendedProps.Paciente_Especial_id).change();
                    $('#mpaciente').val(cita.extendedProps.Max_paciente);
-                   $('#costo').val(cita.extendedProps.Costo);
+                   $('#costo').val(cita.extendedProps.Costo.toFixed(2));
                    if(respuesta.data[0].confirmado == '1'){
                       $('#confirmado').prop("checked",true);
                    }
@@ -338,7 +336,6 @@ var id_Agenda= objch['id_Agenda'];
    });
 }
 $(function () {
-  console.log();
    $('#date-start').datetimepicker({
     format: 'Y-MM-DD HH:mm',
     locale: 'es',
@@ -346,13 +343,6 @@ $(function () {
    $('#date-end').datetimepicker({
    format: 'Y-MM-DD HH:mm',
    locale: 'es',
-   daysOfWeekDisabled: array_dias,
-   });
-   $("#date-start").on("dp.change", function (e) {
-       $('#date-end').data("DateTimePicker").minDate(e.date);
-   });
-   $("#date-end").on("dp.change", function (e) {
-       $('#date-start').data("DateTimePicker").maxDate(e.date);
    });
 });
 </script>

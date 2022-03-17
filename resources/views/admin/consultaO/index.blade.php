@@ -27,6 +27,7 @@
            <div class="card" style="background: #cdcdcd; padding: 10px;">
               <div class="col-md-12 mb-2">
                 <div class="row">
+                  <input type="hidden" name="id_medico" id="id_medico" value="{{ isset($medico) ? $medico->id_Medico : null }}">
                   <div class="col-md-3">
                     <label>{{'Nombre'}}</label><br>
                     <label><strong>{{$medico->Nombres_Medico.' '.$medico->Apellidos_Medicos}}</strong></label>

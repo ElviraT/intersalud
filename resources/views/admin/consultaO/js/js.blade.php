@@ -46,28 +46,63 @@ $('#paciente').on('select2:select', function (e) {
 function buscar() {
     var paciente = $('#paciente').val();
     var pacienteE =$('#pacienteE').val();
+    var medico =$('#id_medico').val();
 
-//console.log(pacienteE);
     if (pacienteE.length == 0) {
-       $.getJSON('{{ route('buscar_paciente') }}?paciente='+paciente, function(objBP){
-            $('#id_paciente').val(paciente);
-            $('#id_pacienteE').val();
-            $('#id_pacienteA').val(paciente);
-            $('#id_pacienteEA').val();
-            $('#nombre').html(objBP['Nombres_Paciente']+' '+objBP['Apellidos_Paciente']);
-            $('#sexo').html(objBP['Sexo']);
-            $('#edad').html(calcularEdad(objBP['Fecha_Nacimiento_Paciente']));
+       $.getJSON('{{ route('buscar_paciente') }}?paciente='+paciente+'&medico='+medico, function(objBP){
+        console.log(objBP);
+            switch(objBP[0]['Nombres_Paciente']){
+                case undefined:
+                    $("form textarea").each(function() { this.value = '' });
+                    $('#nombre').html('');
+                    $('#sexo').html('');
+                    $('#edad').html('');
+                    Swal.fire(objBP[0]);
+                break;
+                default:
+                    $('#id_paciente').val(paciente);
+                    $('#id_pacienteE').val();
+                    $('#id_pacienteA').val(paciente);
+                    $('#id_pacienteEA').val();
+                    $('#nombre').html(objBP[0]['Nombres_Paciente']+' '+objBP[0]['Apellidos_Paciente']);
+                    $('#sexo').html(objBP[0]['Sexo']);
+                    $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente']));
+                    
+                    $('#id_antecedente').val(objBP[1]['id_antecedente']);
+                    $('#personales').val(objBP[1]['Personal']);
+                    $('#familiares').val(objBP[1]['Familiar']);
+                    $('#farmacologicos').val(objBP[1]['Farmacologico']);
+                    $('#fisico').val(objBP[1]['Examen_Fisico']);
+                    $('#impresion').val(objBP[1]['Imprecion_Diagnostica']);
+            }
         }); 
 
     }else{
-        $.getJSON('{{ route('buscar_paciente') }}?pacienteE='+pacienteE, function(objBP){
-            $('#id_paciente').val(paciente);
-            $('#id_pacienteE').val(pacienteE);
-            $('#id_pacienteA').val(paciente);
-            $('#id_pacienteEA').val(pacienteE);
-            $('#nombre').html(objBP['Nombre_Paciente_Especial']+' '+objBP['Apellido_Paciente_Especial']);
-            $('#sexo').html(objBP['Sexo']);
-            $('#edad').html(calcularEdad(objBP['Fecha_Nacimiento_Paciente_Especial']));
+        $.getJSON('{{ route('buscar_paciente') }}?pacienteE='+pacienteE+'&medico='+medico, function(objBP){
+            switch(objBP['Nombre_Paciente_Especial']){
+                case undefined:
+                    $("form textarea").each(function() { this.value = '' });
+                    $('#nombre').html('');
+                    $('#sexo').html('');
+                    $('#edad').html('');
+                    Swal.fire(objBP);
+                break;
+                default:
+                $('#id_paciente').val(paciente);
+                $('#id_pacienteE').val(pacienteE);
+                $('#id_pacienteA').val(paciente);
+                $('#id_pacienteEA').val(pacienteE);
+                $('#nombre').html(objBP['Nombre_Paciente_Especial']+' '+objBP['Apellido_Paciente_Especial']);
+                $('#sexo').html(objBP['Sexo']);
+                $('#edad').html(calcularEdad(objBP['Fecha_Nacimiento_Paciente_Especial']));
+
+                $('#id_antecedente').val(objBP[1]['id_antecedente']);
+                $('#personales').val(objBP[1]['Personal']);
+                $('#familiares').val(objBP[1]['Familiar']);
+                $('#farmacologicos').val(objBP[1]['Farmacologico']);
+                $('#fisico').val(objBP[1]['Examen_Fisico']);
+                $('#impresion').val(objBP[1]['Imprecion_Diagnostica']);
+            }
         });
     }
     

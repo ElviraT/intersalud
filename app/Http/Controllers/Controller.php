@@ -152,25 +152,6 @@ class Controller extends BaseController
       return response()->json($citas);
     }
 
-    public function buscar_paciente(Request $request){
-     $paciente = empty($request->input('paciente')) ? null : $request->input('paciente');
-     $pacienteE = empty($request->input('pacienteE')) ? null : $request->input('pacienteE');
-      $datos = [];
-      if ($pacienteE != null) {
-         $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo')
-             ->join('sexos', 'sexos.id_Sexo','pacientes_especiales.Sexo_id')
-             ->where('pacientes_especiales.id_Pacientes_Especiales',$pacienteE)
-             ->first();       
-      }else{
-         $datos = UsuarioP::select('usuarios_pacientes.Nombres_Paciente', 'usuarios_pacientes.Apellidos_Paciente', 'usuarios_pacientes.Fecha_Nacimiento_Paciente', 'sexos.Sexo')
-             ->join('sexos', 'sexos.id_Sexo','usuarios_pacientes.Sexo_id')
-             ->where('usuarios_pacientes.id_Paciente',$paciente)
-             ->first();
-      }
-
-      return response()->json($datos);
-    }
-
     public function duracion_servicio(Request $request){
       $servicio = empty($request->input('servicio')) ? 0 : $request->input('servicio');
       $start = empty($request->input('start')) ? null : $request->input('start');

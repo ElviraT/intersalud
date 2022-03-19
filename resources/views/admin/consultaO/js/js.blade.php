@@ -67,6 +67,10 @@ function buscar() {
                     $('#nombre').html(objBP[0]['Nombres_Paciente']+' '+objBP[0]['Apellidos_Paciente']);
                     $('#sexo').html(objBP[0]['Sexo']);
                     $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente']));
+                        var ini1= objBP[2]['start'].split(" ");
+                        var fin0= objBP[2]['end'].split(" ");
+                        
+                        restarHoras(ini1[1], fin0[1]);
                     
                     $('#id_antecedente').val(objBP[1]['id_antecedente']);
                     $('#personales').val(objBP[1]['Personal']);
@@ -95,6 +99,8 @@ function buscar() {
                 $('#nombre').html(objBP['Nombre_Paciente_Especial']+' '+objBP['Apellido_Paciente_Especial']);
                 $('#sexo').html(objBP['Sexo']);
                 $('#edad').html(calcularEdad(objBP['Fecha_Nacimiento_Paciente_Especial']));
+
+                $('#tiempo').html(objBP[2]['end']);
 
                 $('#id_antecedente').val(objBP[1]['id_antecedente']);
                 $('#personales').val(objBP[1]['Personal']);
@@ -162,4 +168,77 @@ $("#formulario2").submit(function(event) {
         }
     });
 });
+
+//CONTEO ATRAS
+function countDown() {
+
+        var toHour = document.getElementById("hour").value;
+        var toMinute = document.getElementById("minute").value;
+        var toSecond = document.getElementById("second").value;
+
+        toSecond = toSecond - 1;
+
+        if (toSecond < 0) {
+            toSecond = 59;
+            toMinute = toMinute - 1;
+        }
+
+        form.second.value = toSecond;
+        if (toMinute < 0) {
+
+            toMinute = 59;
+            toHour = toHour - 1;
+        }
+
+        form.minute.value = toMinute;
+        form.hour.value = toHour;
+
+        if (toHour < 0) {
+            //final
+            form.second.value = 0;
+            form.minute.value = 0;
+            form.hour.value = 0;
+            $("#inicio").attr('hidden', true);
+        } else {
+            setTimeout(countDown, 1000);
+        }
+    }
+
+
+function restarHoras(inicio1, fin1) {
+
+  inicio = inicio1;
+  fin = fin1;
+  inicioMinutos = parseInt(inicio.substr(3,2));
+  inicioHoras = parseInt(inicio.substr(0,2));
+  
+  finMinutos = parseInt(fin.substr(3,2));
+  finHoras = parseInt(fin.substr(0,2));
+
+  transcurridoMinutos = finMinutos - inicioMinutos;
+  transcurridoHoras = finHoras - inicioHoras;
+  
+  if (transcurridoMinutos < 0) {
+    transcurridoHoras--;
+    transcurridoMinutos = 60 + transcurridoMinutos;
+  }
+  
+  horas = transcurridoHoras.toString();
+  minutos = transcurridoMinutos.toString();
+  
+  if (horas.length < 2) {
+    horas = "0"+horas;
+  }
+  
+  if (horas.length < 2) {
+    horas = "0"+horas;
+  }
+  //console.log(horas, minutos);
+  $("#hour").val(horas);
+  $("#minute").val(minutos);
+  $("#second").val(0);
+  $("#inicio").attr('hidden', false);
+
+
+}
 </script>

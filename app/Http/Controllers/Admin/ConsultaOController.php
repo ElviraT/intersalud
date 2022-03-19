@@ -105,7 +105,7 @@ class ConsultaOController extends Controller
             $info= 'Registro Agregado Correctamente';     
          
         } catch (\Illuminate\Database\QueryException $e) {
-            $info= $e.'Ocurrio un error intente de nuevo'; 
+            $info='Ocurrio un error intente de nuevo'; 
         }
         return $info;
    }
@@ -141,6 +141,6 @@ class ConsultaOController extends Controller
         $datos= 'No tiene cita hoy a esta hora';
       }
 
-      return response()->json([$datos, $antecedentes]);
+      return response()->json([$datos, $antecedentes, $cita]);
     }
 }

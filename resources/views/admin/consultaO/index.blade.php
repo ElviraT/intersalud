@@ -86,6 +86,31 @@
                       <div class="col-md-12 p-2">
                         <iframe src="https://intersalud.iaelaonline.com/intersalud-master/public/" width="100%" id="iFrame1" allowfullscreen></iframe>
                       </div>
+                      <div class="col-md-10" align="center">
+                        <form name="form" class="clok">
+                          <div class="row">
+                             <div class="col-md-4">
+                                <span>
+                                  <input type="number" class="text" name="hour" id="hour" value="0">
+                                </span>
+                            </div>
+                            <div class="col-md-4">
+                                <span>
+                                  <input type="number" class="text" name="minute" id="minute" value="0">
+                                </span>
+                            </div>
+                            <div class="col-md-4">
+                                <span>
+                                  <input type="number" class="text" id="second" name="second" value="0">
+                                </span>
+                            </div>
+                          </div>
+                        </form>
+                        <button onclick="countDown()" class="btn mt-3 btn-outline-primary" hidden="true" id="inicio"> 
+                          <i class="fa fa-play" aria-hidden="true"></i>
+                          {{'Iniciar'}}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

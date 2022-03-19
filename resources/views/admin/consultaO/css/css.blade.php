@@ -10,4 +10,11 @@
     border-left: none;
     border-top: none;
 }
+
+input.text {
+   border: none; 
+   font-size: 20px;
+   font-weight: bold;
+   padding: 5px;
+}
 </style>

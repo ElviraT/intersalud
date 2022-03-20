@@ -121,9 +121,9 @@ class ConsultaOController extends Controller
                   ->where('Paciente_Especial_id', $pacienteE)
                   ->where('Medico_id', $medico)
                   ->whereDate('start', date('Y-m-d'))//date('Y-m-d'))
-                  ->whereTime('start', date('h:00'))//date('h:00'))
-                  ->first();
-                  
+                  ->whereTime('start', date('H:00'))//date('h:00'))
+                  ->first();   
+                 // dd($paciente, $pacienteE, $medico, date('Y-m-d'), date('H:00'));      
       if($cita){
         if ($pacienteE != null) {
            $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo')

@@ -32,7 +32,7 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    {{'Hora Actual '}}-{{ date('g:ia') }}
                 </div>
             </div>
         </div>

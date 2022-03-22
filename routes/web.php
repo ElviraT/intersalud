@@ -267,6 +267,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('consultao/edit', ['as' => 'consultao.edit', 'uses' => 'Admin\ConsultaOController@edit']);
 	Route::post('consultao/destroy', ['as' => 'consultao.destroy', 'uses' => 'Admin\ConsultaOController@destroy']);
 
+	//CONSULTAS
+	Route::get('consulta', ['as' => 'consulta', 'uses' => 'Admin\ConsultaController@index']);
+	Route::post('consulta/add', ['as' => 'consulta.add', 'uses' => 'Admin\ConsultaController@antecedentes']);
+	Route::post('consulta/add2', ['as' => 'consulta.add2', 'uses' => 'Admin\ConsultaController@anamenesis']);
+	Route::get('consulta/edit', ['as' => 'consulta.edit', 'uses' => 'Admin\ConsultaController@edit']);
+	Route::post('consulta/destroy', ['as' => 'consulta.destroy', 'uses' => 'Admin\ConsultaController@destroy']);
+
 	/*HISTORIAS CLINICAS - UROLOGIA*/
 	Route::get('historias/urologia', ['as' => 'urologia', 'uses' => 'Admin\historias\UrologiaController@index']);
 	Route::get('historias/urologia/create', ['as' => 'urologia.create', 'uses' => 'Admin\historias\UrologiaController@create']);

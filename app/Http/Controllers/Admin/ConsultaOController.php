@@ -37,6 +37,7 @@ class ConsultaOController extends Controller
              select(['pacientes_especiales.id_Pacientes_Especiales AS id', DB::raw('CONCAT(pacientes_especiales.Nombre_Paciente_Especial, " ",pacientes_especiales. Apellido_Paciente_Especial) AS name')])
              ->join('usuarios_pacientes', 'pacientes_especiales.Paciente_id','usuarios_pacientes.id_Paciente')
              ->get())->pluck('name','id'); 
+      
     	return view('admin.consultaO.index')->with(compact('pacientes','pacientesE','medico','especialidad'));
    }
 
@@ -49,7 +50,7 @@ class ConsultaOController extends Controller
                 $consultao->Paciente_Especial_id = $_POST['id_pacienteE'];
                 $consultao->Medico_id = $_POST['id_medico'];
                 $consultao->Fecha = $_POST['fecha'];
-                //$consultao->Control_Historia_Medico_id ='';
+                $consultao->Control_Historia_Medico_id =$_POST['control'];
                 $consultao->id_Status = 1;
                 $consultao->Personal = $_POST['personales'];;
                 $consultao->Familiar = $_POST['familiares'];
@@ -84,27 +85,33 @@ class ConsultaOController extends Controller
    }
    public function anamenesis()
    {
+      DB::beginTransaction();
      try {
-            $consultao2= new Anamenesi();
-            $consultao2->Paciente_Id = $_POST['id_paciente'];
-            $consultao2->Paciente_Especial_id = $_POST['id_pacienteE'];
-            $consultao2->Medico_id = $_POST['id_medico'];
-            $consultao2->Fecha = $_POST['fecha'];
-            //$consultao2->Control_Historia_Medico_id ='';
-            $consultao2->Enfermedad_Actual = $_POST['Eactual'];
-            $consultao2->Origen = $_POST['origen'];;
-            $consultao2->Hallazgo = $_POST['hallazgo'];
-            $consultao2->Plan_Tratamiento = $_POST['tratamiento'];
-            $consultao2->Diagnostico_Definitivo = $_POST['diagnostico'];
-            $consultao2->Pronostico = $_POST['pronostico'];
-            $consultao2->id_Status = 1;
-            $consultao2->Peso = $_POST['peso'];
-            $consultao2->Talla = $_POST['estatura'];
-            $consultao2->save(); 
+            $consulta2= new Anamenesi();
+            $consulta2->Paciente_Id = $_POST['id_paciente'];
+            $consulta2->Paciente_Especial_id = $_POST['id_pacienteE'];
+            $consulta2->Medico_id = $_POST['id_medico'];
+            $consulta2->Fecha = $_POST['fecha'];
+            $consulta2->Control_Historia_Medico_id =$_POST['control'];
+            $consulta2->Enfermedad_Actual = $_POST['Eactual'];
+            $consulta2->Origen = $_POST['origen'];;
+            $consulta2->Hallazgo = $_POST['hallazgo'];
+            $consulta2->Plan_Tratamiento = $_POST['tratamiento'];
+            $consulta2->Diagnostico_Definitivo = $_POST['diagnostico'];
+            $consulta2->Pronostico = $_POST['pronostico'];
+            $consulta2->id_Status = 1;
+            $consulta2->Peso = $_POST['peso'];
+            $consulta2->Talla = $_POST['estatura'];
+            $consulta2->save(); 
 
             $info= 'Registro Agregado Correctamente';     
          
-        } catch (\Illuminate\Database\QueryException $e) {
+         $control= ControlHM::where('id_Control_Historia_Medica',$_POST['control'])->update([
+                'control'=> 1,
+            ]);
+       DB::commit();
+        } catch (Exception $e) {
+          DB::rollback();
             $info='Ocurrio un error intente de nuevo'; 
         }
         return $info;
@@ -126,16 +133,20 @@ class ConsultaOController extends Controller
                  // dd($paciente, $pacienteE, $medico, date('Y-m-d'), date('H:00'));      
       if($cita){
         if ($pacienteE != null) {
-           $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo')
+           $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica')
                ->join('sexos', 'sexos.id_Sexo','pacientes_especiales.Sexo_id')
+               ->join('control_historia_medicas', 'control_historia_medicas.Paciente_Especial_id','pacientes_especiales.id_Pacientes_Especiales')
                ->where('pacientes_especiales.id_Pacientes_Especiales',$pacienteE)
+               ->where('control_historia_medicas.cerrado',0)
                ->first();       
         }else{
-           $datos = UsuarioP::select('usuarios_pacientes.Nombres_Paciente', 'usuarios_pacientes.Apellidos_Paciente', 'usuarios_pacientes.Fecha_Nacimiento_Paciente', 'sexos.Sexo')
+           $datos = UsuarioP::select('usuarios_pacientes.Nombres_Paciente', 'usuarios_pacientes.Apellidos_Paciente', 'usuarios_pacientes.Fecha_Nacimiento_Paciente', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica')
                ->join('sexos', 'sexos.id_Sexo','usuarios_pacientes.Sexo_id')
+               ->join('control_historia_medicas', 'control_historia_medicas.Paciente_id','usuarios_pacientes.id_Paciente')
                ->where('usuarios_pacientes.id_Paciente',$paciente)
+               ->where('control_historia_medicas.cerrado',0)
                ->first();
-        }  
+        }   
         $antecedentes= Antecedente::where('Paciente_Id', $paciente)->first();     
       }else{
         $datos= 'No tiene cita hoy a esta hora';

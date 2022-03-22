@@ -12,19 +12,19 @@
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="pop1" role="tabpanel" aria-labelledby="pop1-tab">
               <div class="pt-3"></div>
-              @include('admin.consultaO.tabs.antecedentes')
+              @include('admin.consulta.tabs.antecedentes')
         </div>
         <div class="tab-pane fade" id="pop2" role="tabpanel" aria-labelledby="pop2-tab">
               <div class="pt-3"></div>
-              @include('admin.consultaO.tabs.anamenesis')
+              @include('admin.consulta.tabs.anamenesis')
         </div>
         <div class="tab-pane fade" id="pop3" role="tabpanel" aria-labelledby="pop3-tab">
               <div class="pt-3"></div>
-              @include('admin.consultaO.tabs.especialidad')
+              @include('admin.consulta.tabs.especialidad')
         </div> 
         <div class="tab-pane fade" id="pop4" role="tabpanel" aria-labelledby="pop4-tab">
               <div class="pt-3"></div>
-              @include('admin.consultaO.tabs.historial')
+              @include('admin.consulta.tabs.historial')
         </div>      
       </div>
   </div>

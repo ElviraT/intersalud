@@ -12,6 +12,7 @@ use App\Model\Especialidad;
 use App\Model\Antecedente;
 use App\Model\Anamenesi;
 use App\Model\Citas;
+use App\Model\ControlHM;
 use DB;
 
 class ConsultaController extends Controller
@@ -33,10 +34,11 @@ class ConsultaController extends Controller
 	       ->where('control_especialidades.Medico_id', auth()->user()->id_usuario)
 	       ->first();
    		$pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
-		$pacientesE = Collection::make(UsuarioPE::
+		  $pacientesE = Collection::make(UsuarioPE::
              select(['pacientes_especiales.id_Pacientes_Especiales AS id', DB::raw('CONCAT(pacientes_especiales.Nombre_Paciente_Especial, " ",pacientes_especiales. Apellido_Paciente_Especial) AS name')])
              ->join('usuarios_pacientes', 'pacientes_especiales.Paciente_id','usuarios_pacientes.id_Paciente')
              ->get())->pluck('name','id'); 
+
     	return view('admin.consulta.index')->with(compact('pacientes','pacientesE','medico','especialidad'));
    }
 
@@ -49,7 +51,7 @@ class ConsultaController extends Controller
                 $consulta->Paciente_Especial_id = $_POST['id_pacienteE'];
                 $consulta->Medico_id = $_POST['id_medico'];
                 $consulta->Fecha = $_POST['fecha'];
-                $consulta->Control_Historia_Medico_id =$_POST['control'];
+                $consulta->Control_Historia_Medico_id =$_POST['control1'];
                 $consulta->id_Status = 1;
                 $consulta->Personal = $_POST['personales'];;
                 $consulta->Familiar = $_POST['familiares'];
@@ -106,7 +108,7 @@ class ConsultaController extends Controller
             $info= 'Registro Agregado Correctamente';     
          
          $control= ControlHM::where('id_Control_Historia_Medica',$_POST['control'])->update([
-                'control'=> 1,
+                'cerrado'=> 1,
             ]);
        DB::commit();
       	} catch (Exception $e) {
@@ -122,25 +124,35 @@ class ConsultaController extends Controller
      $medico = empty($request->input('medico')) ? null : $request->input('medico');
      $datos = [];
      $antecedentes= [];
-        
+     $anamenesis= [];   
      
         if ($pacienteE != null) {
            $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica')
                ->join('sexos', 'sexos.id_Sexo','pacientes_especiales.Sexo_id')
                ->join('control_historia_medicas', 'control_historia_medicas.Paciente_Especial_id','pacientes_especiales.id_Pacientes_Especiales')
                ->where('pacientes_especiales.id_Pacientes_Especiales',$pacienteE)
-               ->where('control_historia_medicas.cerrado',0)
-               ->first();       
+               //->where('control_historia_medicas.cerrado',0)
+               ->first(); 
+          $anamenesis = Anamenesi::select('anamnesis.Fecha','anamnesis.Enfermedad_Actual','anamnesis.Origen','anamnesis.Diagnostico_Definitivo','anamnesis.Pronostico')
+                            ->join('control_historia_medicas','control_historia_medicas.id_Control_Historia_Medica','anamnesis.Control_Historia_Medico_id')
+                            ->where('anamnesis.Paciente_Especial_id', $pacienteE)      
+                            ->where('control_historia_medicas.cerrado', 1)
+                            ->get();      
         }else{
            $datos = UsuarioP::select('usuarios_pacientes.Nombres_Paciente', 'usuarios_pacientes.Apellidos_Paciente', 'usuarios_pacientes.Fecha_Nacimiento_Paciente', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica')
                ->join('sexos', 'sexos.id_Sexo','usuarios_pacientes.Sexo_id')
                ->join('control_historia_medicas', 'control_historia_medicas.Paciente_id','usuarios_pacientes.id_Paciente')
                ->where('usuarios_pacientes.id_Paciente',$paciente)
-               ->where('control_historia_medicas.cerrado',0)
+              // ->where('control_historia_medicas.cerrado',0)
                ->first();
+          $anamenesis = Anamenesi::select('anamnesis.Fecha','anamnesis.Enfermedad_Actual','anamnesis.Origen','anamnesis.Diagnostico_Definitivo','anamnesis.Pronostico')
+                            ->join('control_historia_medicas','control_historia_medicas.id_Control_Historia_Medica','anamnesis.Control_Historia_Medico_id')
+                            ->where('anamnesis.Paciente_Id', $paciente)      
+                            ->where('control_historia_medicas.cerrado', 1)
+                            ->get();   
         }  
         $antecedentes= Antecedente::where('Paciente_Id', $paciente)->first();     
 
-      return response()->json([$datos, $antecedentes]);
+      return response()->json([$datos, $antecedentes,$anamenesis]);
     }
 }

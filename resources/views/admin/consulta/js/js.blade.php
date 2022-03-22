@@ -50,12 +50,16 @@ function buscar() {
 
     if (pacienteE.length == 0) {
        $.getJSON('{{ route('buscarP') }}?paciente='+paciente+'&medico='+medico, function(objBP){
+        console.log(objBP);
             switch(objBP[0]){
                 case null:
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
                     $('#sexo').html('');
                     $('#edad').html('');
+                        $('#pop2-tab').attr('hidden', true);
+                        $('#pop3-tab').attr('hidden', true);
+                        $('#pop4-tab').attr('hidden', true);
                     Swal.fire('Este paciente no tiene Cita');
                 break;
                 default:
@@ -65,7 +69,8 @@ function buscar() {
                     $('#id_pacienteEA').val();
                     $('#nombre').html(objBP[0]['Nombres_Paciente']+' '+objBP[0]['Apellidos_Paciente']);
                     $('#sexo').html(objBP[0]['Sexo']);
-                    $('#control').html(objBP[0]['id_Control_Historia_Medica']);
+                    $('#control1').val(objBP[0]['id_Control_Historia_Medica']);
+                    $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                     $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente']));
 
                     if (objBP[1] != null) {
@@ -91,6 +96,18 @@ function buscar() {
                         $('#pop3-tab').attr('hidden', true);
                         $('#pop4-tab').attr('hidden', true);
                     }
+
+                    $('#myTable').DataTable({
+                      info: false,
+                      data: objBP[2],
+                      columns: [
+                        { title: "Fecha", data: "Fecha" },
+                        { title: "Enfermedad Actual", data: "Enfermedad_Actual" },
+                        { title: "Origen", data: "Origen" },
+                        { title: "Diagnostico Definitivo", data: "Diagnostico_Definitivo" },
+                        { title: "Pronostico", data: "Pronostico" }
+                      ]
+                    });
             }
         }); 
 
@@ -111,7 +128,8 @@ function buscar() {
                 $('#id_pacienteEA').val(pacienteE);
                 $('#nombre').html(objBP['Nombre_Paciente_Especial']+' '+objBP['Apellido_Paciente_Especial']);
                 $('#sexo').html(objBP['Sexo']);
-                $('#control').html(objBP[0]['id_Control_Historia_Medica']);
+                $('#control1').val(objBP[0]['id_Control_Historia_Medica']);
+                $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                 $('#edad').html(calcularEdad(objBP['Fecha_Nacimiento_Paciente_Especial']));
 
                 if (objBP[1] != null) {
@@ -137,6 +155,18 @@ function buscar() {
                         $('#pop3-tab').attr('hidden', true);
                         $('#pop4-tab').attr('hidden', true);
                     }
+
+                    $('#myTable').DataTable({
+                      info: false,
+                      data: objBP[2],
+                      columns: [
+                        { title: "Fecha", data: "Fecha" },
+                        { title: "Enfermedad Actual", data: "Enfermedad_Actual" },
+                        { title: "Origen", data: "Origen" },
+                        { title: "Diagnostico Definitivo", data: "Diagnostico_Definitivo" },
+                        { title: "Pronostico", data: "Pronostico" }
+                      ]
+                    });
             }
         });
     }
@@ -179,6 +209,9 @@ $("#formulario1").submit(function(event) {
         data: datos,
         success: function(info)
         {
+            $('#pop2-tab').attr('hidden', false);
+            $('#pop3-tab').attr('hidden', false);
+            $('#pop4-tab').attr('hidden', false);
             Swal.fire(info);
         }
     });

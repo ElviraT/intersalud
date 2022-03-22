@@ -50,8 +50,7 @@ function buscar() {
 
     if (pacienteE.length == 0) {
        $.getJSON('{{ route('buscar_paciente') }}?paciente='+paciente+'&medico='+medico, function(objBP){
-        console.log(objBP);
-            switch(objBP[0]['Nombres_Paciente']){
+        switch(objBP[0]['Nombres_Paciente']){
                 case undefined:
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
@@ -71,19 +70,35 @@ function buscar() {
                         var fin0= objBP[2]['end'].split(" ");
                         
                         restarHoras(ini1[1], fin0[1]);
-                    
+                    if (objBP[1] != null) {
                     $('#id_antecedente').val(objBP[1]['id_antecedente']);
                     $('#personales').val(objBP[1]['Personal']);
                     $('#familiares').val(objBP[1]['Familiar']);
                     $('#farmacologicos').val(objBP[1]['Farmacologico']);
                     $('#fisico').val(objBP[1]['Examen_Fisico']);
                     $('#impresion').val(objBP[1]['Imprecion_Diagnostica']);
+
+                        $('#pop2-tab').attr('hidden', false);
+                        $('#pop3-tab').attr('hidden', false);
+                        $('#pop4-tab').attr('hidden', false);
+                    }else{
+                        $('#id_antecedente').val('');
+                        $('#personales').val('');
+                        $('#familiares').val('');
+                        $('#farmacologicos').val('');
+                        $('#fisico').val('');
+                        $('#impresion').val('');
+
+                        $('#pop2-tab').attr('hidden', true);
+                        $('#pop3-tab').attr('hidden', true);
+                        $('#pop4-tab').attr('hidden', true);
+                    }
             }
         }); 
 
     }else{
         $.getJSON('{{ route('buscar_paciente') }}?pacienteE='+pacienteE+'&medico='+medico, function(objBP){
-            switch(objBP['Nombre_Paciente_Especial']){
+            switch(objBP[0]['Nombre_Paciente_Especial']){
                 case undefined:
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
@@ -96,18 +111,35 @@ function buscar() {
                 $('#id_pacienteE').val(pacienteE);
                 $('#id_pacienteA').val(paciente);
                 $('#id_pacienteEA').val(pacienteE);
-                $('#nombre').html(objBP['Nombre_Paciente_Especial']+' '+objBP['Apellido_Paciente_Especial']);
-                $('#sexo').html(objBP['Sexo']);
-                $('#edad').html(calcularEdad(objBP['Fecha_Nacimiento_Paciente_Especial']));
+                $('#nombre').html(objBP[0]['Nombre_Paciente_Especial']+' '+objBP[0]['Apellido_Paciente_Especial']);
+                $('#sexo').html(objBP[0]['Sexo']);
+                $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente_Especial']));
 
                 $('#tiempo').html(objBP[2]['end']);
 
+                if (objBP[1] != null) {
                 $('#id_antecedente').val(objBP[1]['id_antecedente']);
                 $('#personales').val(objBP[1]['Personal']);
                 $('#familiares').val(objBP[1]['Familiar']);
                 $('#farmacologicos').val(objBP[1]['Farmacologico']);
                 $('#fisico').val(objBP[1]['Examen_Fisico']);
                 $('#impresion').val(objBP[1]['Imprecion_Diagnostica']);
+
+                        $('#pop2-tab').attr('hidden', false);
+                        $('#pop3-tab').attr('hidden', false);
+                        $('#pop4-tab').attr('hidden', false);
+                    }else{
+                        $('#id_antecedente').val('');
+                        $('#personales').val('');
+                        $('#familiares').val('');
+                        $('#farmacologicos').val('');
+                        $('#fisico').val('');
+                        $('#impresion').val('');
+
+                        $('#pop2-tab').attr('hidden', true);
+                        $('#pop3-tab').attr('hidden', true);
+                        $('#pop4-tab').attr('hidden', true);
+                    }
             }
         });
     }

@@ -34,7 +34,11 @@
           </div>
           <div class="col-md-3">
             <label>{{'Especialidad'}}</label><br>
+            @if($especialidad->name)
             <label><strong>{{$especialidad->name}}</strong></label>
+            @else
+            <label><strong>{{'No tiene'}}</strong></label>
+            @endif
           </div>
           <div class="col-md-4">
             <label>{{'Número Colegio de Medicos'}}</label><br>

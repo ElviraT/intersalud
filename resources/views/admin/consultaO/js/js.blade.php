@@ -43,6 +43,7 @@ $('#paciente').on('select2:select', function (e) {
         }        
     });
 });
+
 function buscar() {
     var paciente = $('#paciente').val();
     var pacienteE =$('#pacienteE').val();
@@ -65,7 +66,10 @@ function buscar() {
                     $('#id_pacienteEA').val();
                     $('#nombre').html(objBP[0]['Nombres_Paciente']+' '+objBP[0]['Apellidos_Paciente']);
                     $('#sexo').html(objBP[0]['Sexo']);
+                    $('#control1').val(objBP[0]['id_Control_Historia_Medica']);
+                    $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                     $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente']));
+                    $('#Servicio').html(objBP[0]['Servicio']);
                         var ini1= objBP[2]['start'].split(" ");
                         var fin0= objBP[2]['end'].split(" ");
                         
@@ -93,6 +97,19 @@ function buscar() {
                         $('#pop3-tab').attr('hidden', true);
                         $('#pop4-tab').attr('hidden', true);
                     }
+
+                    $('#myTable').DataTable({
+                      destroy: true,
+                      info: false,
+                      data: objBP[3],
+                      columns: [
+                        { title: "Fecha", data: "Fecha" },
+                        { title: "Enfermedad Actual", data: "Enfermedad_Actual" },
+                        { title: "Origen", data: "Origen" },
+                        { title: "Diagnostico Definitivo", data: "Diagnostico_Definitivo" },
+                        { title: "Pronostico", data: "Pronostico" }
+                      ]
+                    });
             }
         }); 
 
@@ -113,6 +130,8 @@ function buscar() {
                 $('#id_pacienteEA').val(pacienteE);
                 $('#nombre').html(objBP[0]['Nombre_Paciente_Especial']+' '+objBP[0]['Apellido_Paciente_Especial']);
                 $('#sexo').html(objBP[0]['Sexo']);
+                $('#control1').val(objBP[0]['id_Control_Historia_Medica']);
+                $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                 $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente_Especial']));
 
                 $('#tiempo').html(objBP[2]['end']);
@@ -140,6 +159,18 @@ function buscar() {
                         $('#pop3-tab').attr('hidden', true);
                         $('#pop4-tab').attr('hidden', true);
                     }
+                    $('#myTable').DataTable({
+                      destroy: true,
+                      info: false,
+                      data: objBP[3],
+                      columns: [
+                        { title: "Fecha", data: "Fecha" },
+                        { title: "Enfermedad Actual", data: "Enfermedad_Actual" },
+                        { title: "Origen", data: "Origen" },
+                        { title: "Diagnostico Definitivo", data: "Diagnostico_Definitivo" },
+                        { title: "Pronostico", data: "Pronostico" }
+                      ]
+                    });
             }
         });
     }
@@ -197,6 +228,7 @@ $("#formulario2").submit(function(event) {
         success: function(info)
         {
             Swal.fire(info);
+            location.reload();
         }
     });
 });

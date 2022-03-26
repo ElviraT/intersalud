@@ -73,13 +73,14 @@
                 ]) !!}
             </div>
             <div class="col-md-4 mb-3 mt-4">
-             <button type="button" class="mt-3 btn-transition btn btn-outline-primary btn-block" onclick="buscar()"><i class="ti-search"></i>{{'Buscar'}}</button> 
+             <button type="button" class="mt-3 btn-transition btn btn-outline-primary btn-block" onclick="buscar()" id="btn_buscar"><i class="ti-search"></i>{{'Buscar'}}</button> 
             </div>
 
             <div class="col-md-12" style="background: #cdcdcd;">
-              <label><strong>{{'Nombre: '}}</strong></label><span id="nombre"></span><br>
-              <label><strong>{{'Sexo: '}}</strong></label><span id="sexo"></span><br>
-              <label><strong>{{'Edad: '}}</strong></label><span id="edad"></span><br>
+              <label><strong>{{'Nombre:'}}</strong></label>&nbsp;<span id="nombre"></span><br>
+              <label><strong>{{'Sexo:'}}</strong></label>&nbsp;<span id="sexo"></span><br>
+              <label><strong>{{'Edad:'}}</strong></label>&nbsp;<span id="edad"></span><br>
+              <label><strong>{{'Servicio:'}}</strong></label>&nbsp;<span id="Servicio"></span><br>
             </div>
         </div>
         <div class="row">

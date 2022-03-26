@@ -161,12 +161,12 @@ class UsuarioPController extends Controller
             $login2->id_usuarioP = $request['id'];
             $login2->save();
 
-            $login2->assignRole($request['rol']);
+            $login2->assignRole(13);
             DB::commit();
         Flash::success("Registro Agregado Correctamente");            
         } catch (\Illuminate\Database\QueryException $e) {
           DB::rollback();
-            Flash::error($e.'Ocurrió un error, por favor intente de nuevo');  
+            Flash::error('Ocurrió un error, por favor intente de nuevo');  
         }
 
         return redirect()->route('usuario_p.edit', $request['id']);
@@ -197,10 +197,6 @@ class UsuarioPController extends Controller
                     'password' => Hash::make($request['contrasena']),
                     'status' => $request['status']
                     ]);
-
-                    $rol= $login->roles()->first()->name;                
-                    $login->removeRole($rol);                  
-                    $login->assignRole($request['rol']);
 
                   $loginh= new HistoricoP();
                   $loginh->Login_Pacientes_id = $login->Paciente_id;

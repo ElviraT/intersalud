@@ -75,9 +75,10 @@
                         </div>
 
                         <div class="col-md-11 m-3 mr-3" style="background: #cdcdcd; padding: 5px;">
-                          <label><strong>{{'Nombre: '}}</strong></label><span id="nombre"></span><br>
-                          <label><strong>{{'Sexo: '}}</strong></label><span id="sexo"></span><br>
-                          <label><strong>{{'Edad: '}}</strong></label><span id="edad"></span><br>
+                          <label><strong>{{'Nombre:'}}</strong></label>&nbsp;<span id="nombre"></span><br>
+                          <label><strong>{{'Sexo:'}}</strong></label>&nbsp;<span id="sexo"></span><br>
+                          <label><strong>{{'Edad:'}}</strong></label>&nbsp;<span id="edad"></span><br>
+                          <label><strong>{{'Servicio:'}}</strong></label>&nbsp;<span id="Servicio"></span><br>
                         </div>
                     </div>
                   </div>

@@ -191,6 +191,7 @@ var id_Agenda= objch['id_Agenda'];
    $(function() {
             var url = "{{ route('citas.mostrar', ':id') }}";
             url = url.replace(':id', id_Agenda);
+            $('#btnGuardar').attr('disabled', false);
 
             calendar = new FullCalendar.Calendar(calendarEl, {
               locale:'es',
@@ -299,7 +300,7 @@ var id_Agenda= objch['id_Agenda'];
             loading_hide();
             calendar.render();
             document.getElementById('btnGuardar').addEventListener('click',function() {
-
+              $('#btnGuardar').attr('disabled', true);
               enviar_datos('{{ route('citas.add') }}');
               
             });

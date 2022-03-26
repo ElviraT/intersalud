@@ -281,5 +281,5 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('historias/urologia/edit', ['as' => 'urologia.edit', 'uses' => 'Admin\historias\UrologiaController@edit']);
 	Route::post('historias/urologia/destroy', ['as' => 'urologia.destroy', 'uses' => 'Admin\historias\UrologiaController@destroy']);
 
-
+	Route::get('reportes/consulta', ['as' => 'reporte_consulta', 'uses' => 'Admin\reportes\ReporteConsultaController@index']);
 });

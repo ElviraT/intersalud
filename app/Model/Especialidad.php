@@ -32,4 +32,9 @@ class Especialidad extends Model
     {
         return $this->hasOne('App\Model\Horario', 'id_Horario_Cita', 'id_Especialidad_Medica');
     }
+
+    public function ControlHM()
+    {
+        return $this->hasOne('App\Model\ControlHM', 'id_Control_Historia_Medica');
+    }
 }

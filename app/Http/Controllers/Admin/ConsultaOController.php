@@ -12,6 +12,7 @@ use App\Model\Especialidad;
 use App\Model\Antecedente;
 use App\Model\Anamenesi;
 use App\Model\Citas;
+use App\Model\ControlHM;
 use DB;
 
 class ConsultaOController extends Controller
@@ -107,7 +108,7 @@ class ConsultaOController extends Controller
             $info= 'Registro Agregado Correctamente';     
          
          $control= ControlHM::where('id_Control_Historia_Medica',$_POST['control'])->update([
-                'control'=> 1,
+                'cerrado'=> 1,
             ]);
        DB::commit();
         } catch (Exception $e) {
@@ -123,35 +124,56 @@ class ConsultaOController extends Controller
      $medico = empty($request->input('medico')) ? null : $request->input('medico');
      $datos = [];
      $antecedentes= [];
+     $anamenesis= [];
         
-      $cita= Citas::where('Paciente_id',$paciente)
-                  ->where('Paciente_Especial_id', $pacienteE)
-                  ->where('Medico_id', $medico)
-                  ->whereDate('start', date('Y-m-d'))//date('Y-m-d'))
-                  ->whereTime('start', date('H:00'))//date('h:00'))
-                  ->first();   
-                 // dd($paciente, $pacienteE, $medico, date('Y-m-d'), date('H:00'));      
-      if($cita){
         if ($pacienteE != null) {
-           $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica')
-               ->join('sexos', 'sexos.id_Sexo','pacientes_especiales.Sexo_id')
-               ->join('control_historia_medicas', 'control_historia_medicas.Paciente_Especial_id','pacientes_especiales.id_Pacientes_Especiales')
-               ->where('pacientes_especiales.id_Pacientes_Especiales',$pacienteE)
-               ->where('control_historia_medicas.cerrado',0)
-               ->first();       
+            $cita= Citas::where('Paciente_Especial_id', $pacienteE)
+                        ->where('Medico_id', $medico)
+                        ->whereDate('start', date('Y-m-d'))//date('Y-m-d'))
+                        ->whereTime('start', '>=',date('H:00'))//date('h:00'))
+                        ->first(); 
+            $anamenesis = Anamenesi::select('anamnesis.Fecha','anamnesis.Enfermedad_Actual','anamnesis.Origen','anamnesis.Diagnostico_Definitivo','anamnesis.Pronostico')
+                            ->join('control_historia_medicas','control_historia_medicas.id_Control_Historia_Medica','anamnesis.Control_Historia_Medico_id')
+                            ->where('anamnesis.Paciente_Especial_id', $pacienteE)      
+                            ->where('control_historia_medicas.cerrado', 1)
+                            ->get();
+            if($cita){   
+               $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica','servicios.Servicio')
+                   ->join('sexos', 'sexos.id_Sexo','pacientes_especiales.Sexo_id')
+                   ->join('control_historia_medicas', 'control_historia_medicas.Paciente_Especial_id','pacientes_especiales.id_Pacientes_Especiales')
+                   ->join('servicios', 'servicios.id_Servicio','control_historia_medicas.id_servicio')
+                   ->where('pacientes_especiales.id_Pacientes_Especiales',$pacienteE)
+                   ->where('control_historia_medicas.cerrado',0)
+                   ->first();       
+              }else{
+                $datos= 'No tiene cita hoy a esta hora';
+              }
         }else{
-           $datos = UsuarioP::select('usuarios_pacientes.Nombres_Paciente', 'usuarios_pacientes.Apellidos_Paciente', 'usuarios_pacientes.Fecha_Nacimiento_Paciente', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica')
+          $cita= Citas::where('Paciente_id',$paciente)
+                    ->where('Medico_id', $medico)
+                    ->whereDate('start', date('Y-m-d'))//date('Y-m-d'))
+                    ->whereTime('start', '>=',date('H:00'))//date('h:00'))
+                    ->first();
+
+          $anamenesis = Anamenesi::select('anamnesis.Fecha','anamnesis.Enfermedad_Actual','anamnesis.Origen','anamnesis.Diagnostico_Definitivo','anamnesis.Pronostico')
+                            ->join('control_historia_medicas','control_historia_medicas.id_Control_Historia_Medica','anamnesis.Control_Historia_Medico_id')
+                            ->where('anamnesis.Paciente_Id', $paciente)      
+                            ->where('control_historia_medicas.cerrado', 1)
+                            ->get(); 
+          if($cita){   
+           $datos = UsuarioP::select('usuarios_pacientes.Nombres_Paciente', 'usuarios_pacientes.Apellidos_Paciente', 'usuarios_pacientes.Fecha_Nacimiento_Paciente', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica','servicios.Servicio')
                ->join('sexos', 'sexos.id_Sexo','usuarios_pacientes.Sexo_id')
                ->join('control_historia_medicas', 'control_historia_medicas.Paciente_id','usuarios_pacientes.id_Paciente')
+               ->join('servicios', 'servicios.id_Servicio','control_historia_medicas.id_servicio')
                ->where('usuarios_pacientes.id_Paciente',$paciente)
                ->where('control_historia_medicas.cerrado',0)
                ->first();
+          }else{
+                $datos= 'No tiene cita hoy a esta hora';
+              }
         }   
         $antecedentes= Antecedente::where('Paciente_Id', $paciente)->first();     
-      }else{
-        $datos= 'No tiene cita hoy a esta hora';
-      }
 
-      return response()->json([$datos, $antecedentes, $cita]);
+      return response()->json([$datos, $antecedentes, $cita, $anamenesis]);
     }
 }

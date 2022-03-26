@@ -59,9 +59,8 @@ class UsuarioMController extends Controller
         $estado=Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado"); 
         $municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
         $parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia"); 
-    	$roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
 
-    	return view('admin.configuracion.usuarios.usuariosM.create')->with(compact('sexo','prefijo','estadoC','statusM','nacionalidad','ciudad','estado','municipio','parroquia','roles')); 
+    	return view('admin.configuracion.usuarios.usuariosM.create')->with(compact('sexo','prefijo','estadoC','statusM','nacionalidad','ciudad','estado','municipio','parroquia')); 
   	}
 	public function add(Request $request)
 	{
@@ -92,7 +91,7 @@ class UsuarioMController extends Controller
 		        Flash::success("Registro Agregado Correctamente");            
 	    	return redirect()->route('usuario_m.edit', $medico->id);
 		    } catch (\Illuminate\Database\QueryException $e) {
-		        Flash::error( $e->getMessage().'Ocurrió un error, por favor intente de nuevo');
+		        Flash::error('Ocurrió un error, por favor intente de nuevo');
 		        return redirect()->route('usuario_m.create');
 		    }
 		}else{
@@ -131,7 +130,7 @@ class UsuarioMController extends Controller
 	            Flash::success("Registro Actualizado Correctamente");
 
 	        }catch(\Illuminate\Database\QueryException $e) {
-		        Flash::error($e->getMessage().'Ocurrió un error, por favor intente de nuevo'); 
+		        Flash::error('Ocurrió un error, por favor intente de nuevo'); 
 	        }
 	        return redirect()->route('usuario_m.edit', $id);
 		}
@@ -142,8 +141,6 @@ class UsuarioMController extends Controller
 		$login = LoginT::where('Medico_id', $medico->id_Medico)->first();
 		//dd($login);
 		$seniat = Seniat::where('Medico_id', $medico->id_Medico)->first();
-		$rol = DB::select("SELECT m.role_id FROM model_has_roles as m, users as u WHERE m.model_id = u.id and u.id_usuario ='$id'");
-
 		Session::put('medico', $medico);
 
 		//COMBOS
@@ -156,8 +153,7 @@ class UsuarioMController extends Controller
         $estado=Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado"); 
         $municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
         $parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia");
-    	$roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
-		return view('admin.configuracion.usuarios.usuariosM.edit')->with(compact('medico','login','seniat','sexo','prefijo','estadoC','statusM','nacionalidad','roles','ciudad','estado','municipio','parroquia','rol'));
+		return view('admin.configuracion.usuarios.usuariosM.edit')->with(compact('medico','login','seniat','sexo','prefijo','estadoC','statusM','nacionalidad','ciudad','estado','municipio','parroquia'));
 	}
 
 	public function login(Request $request)
@@ -180,7 +176,7 @@ class UsuarioMController extends Controller
 		        $login2->id_usuario = $request['id'];
 		        $login2->save();
 
-		        $login2->assignRole($request['rol']);
+		        $login2->assignRole(10);
 
 				Flash::success("Registro Agregado Correctamente");            
 		    } catch (\Illuminate\Database\QueryException $e) {
@@ -213,11 +209,6 @@ class UsuarioMController extends Controller
 				        'password' => Hash::make($request['contrasena']),
 				        'status' => $request['statusm']
 		            ]);
-
-					$rol= $login->roles()->first()->name;                
-	                $login->removeRole($rol);	                 
-                    $login->assignRole($request['rol']);
-
 							
 		        	$loginT = LoginT::where('Medico_id', $id)->first();
 		            $loginh= new HistoricoT();

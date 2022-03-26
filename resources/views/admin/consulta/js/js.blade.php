@@ -50,9 +50,8 @@ function buscar() {
 
     if (pacienteE.length == 0) {
        $.getJSON('{{ route('buscarP') }}?paciente='+paciente+'&medico='+medico, function(objBP){
-        console.log(objBP);
-            switch(objBP[0]){
-                case null:
+            switch(objBP[0]['Nombres_Paciente']){
+                case undefined:
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
                     $('#sexo').html('');
@@ -72,6 +71,7 @@ function buscar() {
                     $('#control1').val(objBP[0]['id_Control_Historia_Medica']);
                     $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                     $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente']));
+                    $('#Servicio').html(objBP[0]['Servicio']);
 
                     if (objBP[1] != null) {
                         $('#id_antecedente').val(objBP[1]['id_antecedente']);
@@ -98,8 +98,9 @@ function buscar() {
                     }
 
                     $('#myTable').DataTable({
+                      destroy: true,
                       info: false,
-                      data: objBP[2],
+                      data: objBP[3],
                       columns: [
                         { title: "Fecha", data: "Fecha" },
                         { title: "Enfermedad Actual", data: "Enfermedad_Actual" },
@@ -113,8 +114,8 @@ function buscar() {
 
     }else{
         $.getJSON('{{ route('buscarP') }}?pacienteE='+pacienteE+'&medico='+medico, function(objBP){
-            switch(objBP[0]){
-                case null:
+            switch(objBP[0]['Nombre_Paciente_Especial']){
+                case undefined:
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
                     $('#sexo').html('');
@@ -157,8 +158,9 @@ function buscar() {
                     }
 
                     $('#myTable').DataTable({
+                      destroy: true,
                       info: false,
-                      data: objBP[2],
+                      data: objBP[3],
                       columns: [
                         { title: "Fecha", data: "Fecha" },
                         { title: "Enfermedad Actual", data: "Enfermedad_Actual" },

@@ -49,18 +49,20 @@ $('#medico').on('change', function (e) {
         }        
     });
 });
+
 $('#turno_id').on('change', function (e) {
   var turno = $('select[name="turno_id"] option:selected').text();
   if(turno === 'Mañana') {
     var minDate ='00:00';
-    var maxDate = '11:59';
+    var maxDate = '12:00';
   }
   if(turno === 'Tarde'){
-    var minDate ='12:00';
+    var minDate ='12:01';
     var maxDate = '23:59';
   }
 
        $('#fecha_lunes1').datetimepicker({
+        useCurrent: false, //Important! See issue #1075
        	format: 'HH:mm',
        });
        $('#fecha_lunes2').datetimepicker({        
@@ -81,6 +83,7 @@ $('#turno_id').on('change', function (e) {
        });
 
        $('#fecha_martes1').datetimepicker({
+        useCurrent: false, //Important! See issue #1075
         format: 'HH:mm',
        });
        $('#fecha_martes2').datetimepicker({
@@ -101,6 +104,7 @@ $('#turno_id').on('change', function (e) {
        });
 
        $('#fecha_miercoles1').datetimepicker({
+        useCurrent: false, //Important! See issue #1075
         format: 'HH:mm',
        });
        $('#fecha_miercoles2').datetimepicker({
@@ -121,6 +125,7 @@ $('#turno_id').on('change', function (e) {
        });
 
        $('#fecha_jueves1').datetimepicker({
+        useCurrent: false, //Important! See issue #1075
         format: 'HH:mm',
        });
        $('#fecha_jueves2').datetimepicker({
@@ -141,6 +146,7 @@ $('#turno_id').on('change', function (e) {
        });
 
        $('#fecha_viernes1').datetimepicker({
+        useCurrent: false, //Important! See issue #1075
         format: 'HH:mm',
        });
        $('#fecha_viernes2').datetimepicker({
@@ -161,6 +167,7 @@ $('#turno_id').on('change', function (e) {
        });
 
        $('#fecha_sabado1').datetimepicker({
+        useCurrent: false, //Important! See issue #1075
         format: 'HH:mm',
        });
        $('#fecha_sabado2').datetimepicker({
@@ -181,6 +188,7 @@ $('#turno_id').on('change', function (e) {
        });
 
        $('#fecha_domingo1').datetimepicker({
+        useCurrent: false, //Important! See issue #1075
         format: 'HH:mm',
        });
        $('#fecha_domingo2').datetimepicker({
@@ -217,6 +225,7 @@ $('#confirm-delete32').on('show.bs.modal', function(e) {
 });
 
 $(function() {
+  $('#turno_id').change();
     $('#lunes').change(function() {      
         var lu = $(this).prop('checked');
     if(lu == true) {

@@ -180,7 +180,7 @@ class CitasController extends Controller
                 
       $request->merge(['color' => $color,'confirmado' => $confirmado, 'title'=> $title]);
       $data = $request->all();
-      $data = $request->except('_token','id','titleP');
+      $data = $request->except('_token','id','titleP','NotaM');
 
       $agenda= Agenda::where('id_Agenda',$request->Agenda_id)->first();
       $Medico_id=$agenda['Medico_id'];

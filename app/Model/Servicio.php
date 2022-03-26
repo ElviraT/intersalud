@@ -24,4 +24,9 @@ class Servicio extends Model
     {
         return $this->hasOne('App\Model\UsuarioM', 'id_Medico', 'Medico_id');
     }
+
+    public function ControlHM()
+    {
+        return $this->hasOne('App\Model\ControlHM', 'id_Servicio', 'id_servicio');
+    }
 }

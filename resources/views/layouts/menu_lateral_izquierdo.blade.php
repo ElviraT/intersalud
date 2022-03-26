@@ -455,5 +455,27 @@
             </ul>
         </li>        
       </ul>
+      @canany(['reporte_consulta'])
+      <ul class="pcoded-item pcoded-left-item">
+        <li class="{{ @request()->routeIs('reporte_consulta') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
+            <a href="javascript:void(0)" class="waves-effect waves-dark">
+                <span class="pcoded-micon"><i class="ti-write"></i></span>
+                <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">{{'Reportes'}}</span>
+                <span class="pcoded-mcaret"></span>
+            </a>
+            <ul class="pcoded-submenu">
+              @can('reporte_consulta')
+              <li class="{{ @request()->routeIs('reporte_consulta') ? 'active' : ''}}">
+                <a href="{{ route('reporte_consulta')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                  <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                  <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">{{'Consultas'}}</span>
+                  <span class="pcoded-mcaret"></span>
+                </a>
+              </li>
+              @endcan
+            </ul>
+        </li>        
+      </ul>
+      @endcan
     </div>
 </nav>

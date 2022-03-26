@@ -54,9 +54,7 @@ class UsuarioAController extends Controller
     	$estadoC=Collection::make(Civil::select(['id_Civil','Civil'])->orderBy('Civil')->get())->pluck("Civil", "id_Civil");
     	$status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status");
     	$nacionalidad = Collection::make(Pais::select(['id_Pais','Pais'])->orderBy('Pais')->get())->pluck("Pais", "id_Pais");
-    	$roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
-
-    	return view('admin.configuracion.usuarios.usuariosA.create')->with(compact('sexo','prefijo','estadoC','status','nacionalidad','roles','medicos')); 
+    	return view('admin.configuracion.usuarios.usuariosA.create')->with(compact('sexo','prefijo','estadoC','status','nacionalidad','medicos')); 
   	}
 
     public function add(Request $request)
@@ -124,8 +122,6 @@ class UsuarioAController extends Controller
     public function edit($id)
     {
       $login = LoginT::where('Asistente_id', $id)->first();
-      $rol = DB::select("SELECT m.role_id FROM model_has_roles as m, users as u WHERE m.model_id = u.id and u.id_usuarioA ='$id'");
-     // dd($id);
       if(auth()->user()->name == 'Admin'){
         $medicos= Collection::make(UsuarioM::select(['usuarios_medicos.id_Medico',DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])->leftjoin('usuarios_asistentes', 'usuarios_asistentes.id_Medico', '=' ,'usuarios_medicos.id_Medico')->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
       }else{
@@ -137,9 +133,8 @@ class UsuarioAController extends Controller
       $estadoC=Collection::make(Civil::select(['id_Civil','Civil'])->orderBy('Civil')->get())->pluck("Civil", "id_Civil");
       $status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status");
       $nacionalidad = Collection::make(Pais::select(['id_Pais','Pais'])->orderBy('Pais')->get())->pluck("Pais", "id_Pais");
-      $roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
 
-      return view('admin.configuracion.usuarios.usuariosA.edit')->with(compact('asistente','sexo','prefijo','estadoC','status','nacionalidad','roles','medicos','login','rol')); 
+      return view('admin.configuracion.usuarios.usuariosA.edit')->with(compact('asistente','sexo','prefijo','estadoC','status','nacionalidad','medicos','login')); 
     }
 
   public function login(Request $request)
@@ -162,7 +157,7 @@ class UsuarioAController extends Controller
             $login2->id_usuarioA = $request['id'];
             $login2->save();
 
-            $login2->assignRole($request['rol']);
+            $login2->assignRole(12);
 
         Flash::success("Registro Agregado Correctamente");            
         } catch (\Illuminate\Database\QueryException $e) {
@@ -196,11 +191,6 @@ class UsuarioAController extends Controller
                     'status' => $request['status']
                     ]);
 
-
-                   /* $rol= $login->roles()->first();   
-                    dd($rol);             
-                    $login->removeRole($rol);                  
-                    $login->assignRole($request['rol']);*/
 
                   $loginT = LoginT::where('Asistente_id', $id)->first();
                   $loginh= new HistoricoT();

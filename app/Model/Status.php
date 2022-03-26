@@ -57,4 +57,5 @@ class Status extends Model
     {
         return $this->hasOne('App\Model\Servicio', 'id_Status');
     }
+
 }

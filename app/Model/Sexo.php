@@ -15,4 +15,8 @@ class Sexo extends Model
     {
         return $this->hasOne('App\Model\UsuarioP', 'Sexo_id');
     }
+    public function UsuarioG()
+    {
+        return $this->hasOne('App\Model\UsuarioG', 'id_sexo');
+    }
 }

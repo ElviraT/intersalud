@@ -140,6 +140,15 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('usuario_a/login', ['as' => 'usuario_a.login', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@login']);
 	Route::post('usuario_a/destroy', ['as' => 'usuario_a.destroy', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@destroy']);
 
+	//CONFIGURACIÓN-USUARIOS-GENERAL
+	Route::get('usuario_g', ['as' => 'usuario_g', 'uses' => 'Admin\configuracion\usuarios\UsuarioGController@index']);
+	Route::get('usuario_g/create', ['as' => 'usuario_g.create', 'uses' => 'Admin\configuracion\usuarios\UsuarioGController@create']);
+	Route::post('usuario_g/add', ['as' => 'usuario_g.add', 'uses' => 'Admin\configuracion\usuarios\UsuarioGController@add']);
+	Route::get('usuario_g/edit/{id}', ['as' => 'usuario_g.edit', 'uses' => 'Admin\configuracion\usuarios\UsuarioGController@edit']);
+	Route::post('usuario_g/update', ['as' => 'usuario_g.update', 'uses' => 'Admin\configuracion\usuarios\UsuarioGController@update']);
+	Route::post('usuario_g/login', ['as' => 'usuario_g.login', 'uses' => 'Admin\configuracion\usuarios\UsuarioGController@login']);
+	Route::post('usuario_g/destroy', ['as' => 'usuario_g.destroy', 'uses' => 'Admin\configuracion\usuarios\UsuarioGController@destroy']);
+
 	//CONFIGURACIÓN-USUARIOS-PACIENTES
 	Route::get('usuario_p', ['as' => 'usuario_p', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@index']);
 	Route::get('usuario_p/create', ['as' => 'usuario_p.create', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@create']);

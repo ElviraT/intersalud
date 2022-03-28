@@ -110,6 +110,18 @@
     <script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js')}} "></script>
     <script type="text/javascript" src="{{ asset('assets/js/common-pages.js')}}"></script>
     @yield('js')
+    <script type="text/javascript">
+      function mostrarPassword(){
+        var cambio = document.getElementById("password");
+        if(cambio.type == "password"){
+          cambio.type = "text";
+          $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+        }else{
+          cambio.type = "password";
+          $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+        }
+      } 
+    </script>
 </body>
 
 </html>

@@ -24,15 +24,20 @@
                     <span class="form-bar"></span>
                     <label class="float-label">{{ __('E-Mail Address') }}</label>
                 </div>
-                <div class="form-group form-primary">
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                    <span class="form-bar"></span>
-                    <label class="float-label">{{ __('Password') }}</label>
+                <div class="input-group form-primary">
+                    <div class="col-md-11">
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">           
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        <span class="form-bar"></span>
+                        <label class="float-label">{{ __('Password') }}</label>                    
+                    </div>
+                    <div class="input-group-append">
+                        <button id="show_password" class="btn btn-primary btn-sm" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
+                    </div>
                 </div>
                 <div class="row m-t-25 text-left">
                     <div class="col-12">

@@ -1,0 +1,98 @@
+@extends('layouts.Base')
+@section('css')
+@include('admin.configuracion.usuarios.usuarioG.css.css')
+@endsection
+@section('banner')
+<div class="col-md-8">
+  <div class="page-header-title">
+      <h5 class="m-b-10">{{'Usuarios'}}</h5>
+      <p class="m-b-0">{{'Generales'}}</p>
+  </div>
+</div>
+<div class="col-md-4">
+  <ul class="breadcrumb-title">
+      <li class="breadcrumb-item">
+          <a href="{{ route('usuario_g')}}" onclick="loading_show();"> <i class="fa fa-home"></i> </a>
+      </li>
+      <li class="breadcrumb-item"><a href="#!">{{'Usuarios Generales'}}</a>
+      </li>
+  </ul>
+</div>
+@endsection
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+          @include('flash::message')
+           <div class="card">
+              <div class="col-md-4 mt-2 mb-2">
+                @can('usuario_g.add')
+                <a href="{{ route('usuario_g.create')}}" type="button" class="btn-transition btn btn-outline-primary btn-sm" onclick="loading_show();">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                        <i class="fa fa-plus-circle"></i>
+                    </span>
+                    {{'AGREGAR'}}
+                </a>
+                @endcan
+              </div>
+            </div>
+            <div class="card">
+              @if(count($usuarioG) == 0)
+                  <br>
+                    <p class="text-center">No se encontraron registros coincidentes</p>
+              @else
+
+            <div class="col-md-12 mt-3">
+                <table id="table_usuarioG" class="table table-striped table-bordered" width="100%">
+                    <thead>
+                        <tr>
+                            <th>{{'Nombre'}}</th>
+                            <th>{{'DNI'}}</th>
+                            <th>{{'Sexo'}}</th>
+                            <th>{{'Status'}}</th>
+                            <th>{{'Acción'}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($usuarioG as $resultado)
+                        <tr>
+                            <td>{{ $resultado->nombre}}</td>
+                            <td>{{ $resultado->Prefijo_CIDNI_id.' '.$resultado->cedula }}</td>
+                            <td>{{ $resultado->Sexo->Sexo }}</td>
+                            <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
+                            <td width="20">
+                              @can('usuario_g.edit')
+                                <a href="{{ route('usuario_g.edit', $resultado['id'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success btn-sm">
+                                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                                      <i class="ti-pencil"></i>
+                                    </span>
+                                    {{'EDITAR'}}
+                                </a>
+                              @endcan
+                              @can('usuario_g.destroy')
+                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete34" data-record-id="{{$resultado->id}}" data-record-title="{{$resultado->name}}" class="btn-transition btn btn-outline-danger btn-sm" onclick="loading_show();">
+                                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                                        <i class="ti-eraser"></i>
+                                    </span>{{'ELIMINAR'}}
+                                </a>
+                              @endcan
+                            </td>
+                        </tr>
+                      @endforeach
+                    </tbody>                   
+                </table>
+              </div>
+               @endif
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('modal')
+    @include('admin.modales.elimina_general')
+@endsection
+
+@section('js')
+  @include('admin.configuracion.usuarios.usuarioG.js.js')
+@endsection

@@ -336,6 +336,9 @@ var id_Agenda= objch['id_Agenda'];
         });
    });
 }
+$('#modal_citas').on('hidden.bs.modal', function (event) {
+  $('#btnGuardar').attr('disabled', false);
+})
 $(function () {
    $('#date-start').datetimepicker({
     format: 'Y-MM-DD HH:mm',

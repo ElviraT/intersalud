@@ -51,8 +51,8 @@ function buscar() {
 
     if (pacienteE.length == 0) {
        $.getJSON('{{ route('buscar_paciente') }}?paciente='+paciente+'&medico='+medico, function(objBP){
-        switch(objBP[0]['Nombres_Paciente']){
-                case undefined:
+        switch(objBP[0]){
+                case 'No tiene cita hoy a esta hora':
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
                     $('#sexo').html('');
@@ -115,13 +115,13 @@ function buscar() {
 
     }else{
         $.getJSON('{{ route('buscar_paciente') }}?pacienteE='+pacienteE+'&medico='+medico, function(objBP){
-            switch(objBP[0]['Nombre_Paciente_Especial']){
-                case undefined:
+            switch(objBP[0]){
+                case 'No tiene cita hoy a esta hora':
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
                     $('#sexo').html('');
                     $('#edad').html('');
-                    Swal.fire(objBP);
+                    Swal.fire(objBP[0]);
                 break;
                 default:
                 $('#id_paciente').val(paciente);

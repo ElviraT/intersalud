@@ -26,16 +26,17 @@ class UsuarioGController extends Controller
       $this->middleware('can:usuario_g')->only('index');
       $this->middleware('can:usuario_g.add')->only('add');
       $this->middleware('can:usuario_g.edit')->only('edit','update');
-      $this->middleware('can:usuario_g.destroy')->only('destroy');
+      $this->middleware('can:usuario_g.delete')->only('delete');
     }
 
      public function index(UsuarioG $model)
   	{  
-    if(auth()->user()->name == 'Admin'){
-        $usuarioG = UsuarioG::all();
-    }else{
-        $usuarioG = UsuarioG::where('id', auth()->user()->id_usuariog)->get();
-    }  	
+		    if(auth()->user()->name == 'Admin'){
+		        $usuarioG = UsuarioG::all();
+		    }else{
+		        $usuarioG = UsuarioG::where('id', auth()->user()->id_usuarioG)->get();
+		    }  
+		    //dd($usuarioG);	
   		return view('admin.configuracion.usuarios.usuarioG.index', ['usuarioG' => $usuarioG]);
   	}
 
@@ -195,7 +196,7 @@ class UsuarioGController extends Controller
        UsuarioG::where('id', $id)->update(['id_status' => 2]);
        User::where('id_usuarioG', $id)->update(['status' => 0]);
 
-       Flash::success('Registro eliminado correctamente');
+       Flash::success('Registro desactivado correctamente');
          
       return redirect()->route('usuario_g');
     }

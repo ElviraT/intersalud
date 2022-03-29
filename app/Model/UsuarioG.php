@@ -14,12 +14,12 @@ class UsuarioG extends Model
 
    public function Status()
     {
-        return $this->hasOne('App\Model\Status', 'id_Status','Status_id');
+        return $this->hasOne('App\Model\Status', 'id_Status','id_status');
     }
 
     public function Sexo()
     {
-        return $this->hasOne('App\Model\Sexo', 'id_sexo','Sexo_id');
+        return $this->hasOne('App\Model\Sexo', 'id_sexo');
     }
 
     public function PrefijoDNI()

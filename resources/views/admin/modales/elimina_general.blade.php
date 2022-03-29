@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 {!! Form::open(['action' => ['Admin\configuracion\usuarios\UsuarioGController@destroy'], 'id'=>'form_usuariosG_eliminar']) !!}
-                {{ Form::hidden('id', null, ['id'=>'modal_registo_usuariosG_id'] ) }}
+                {{ Form::hidden('id', null, ['id'=>'modal_registo_usuarioG_id'] ) }}
 
                     <p>Vas a desactivar al usuario <b><i class="title"></i></b>.</p>
                     <p>¿Deseas continuar?</p>

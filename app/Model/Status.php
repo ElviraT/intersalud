@@ -22,6 +22,10 @@ class Status extends Model
     {
         return $this->hasOne('App\Model\UsuarioP', 'id_Status');
     }
+     public function UsuarioG()
+    {
+        return $this->hasOne('App\Model\UsuarioG', 'id_Status');
+    }
 
     public function Banco()
     {

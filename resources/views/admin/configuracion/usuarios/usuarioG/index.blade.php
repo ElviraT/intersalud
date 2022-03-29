@@ -70,8 +70,8 @@
                                     {{'EDITAR'}}
                                 </a>
                               @endcan
-                              @can('usuario_g.destroy')
-                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete34" data-record-id="{{$resultado->id}}" data-record-title="{{$resultado->name}}" class="btn-transition btn btn-outline-danger btn-sm" onclick="loading_show();">
+                              @can('usuario_g.delete')
+                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete34" data-record-id="{{$resultado->id}}" data-record-title="{{$resultado->nombre}}" class="btn-transition btn btn-outline-danger btn-sm" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                         <i class="ti-eraser"></i>
                                     </span>{{'ELIMINAR'}}

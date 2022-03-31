@@ -57,8 +57,9 @@ class UsuarioPController extends Controller
       $estado=Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado"); 
       $municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
       $parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia"); 
+       $roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
 
-    	return view('admin.configuracion.usuarios.usuariosP.create')->with(compact('sexo','prefijo','estadoC','status','nacionalidad','ciudad','estado','municipio','parroquia')); 
+    	return view('admin.configuracion.usuarios.usuariosP.create')->with(compact('sexo','prefijo','estadoC','status','nacionalidad','ciudad','estado','municipio','parroquia','roles')); 
   	}
 
   	 public function add(Request $request)
@@ -124,7 +125,7 @@ class UsuarioPController extends Controller
     public function edit($id)
     {
       $login = LoginP::where('Paciente_id', $id)->first();
-
+      $rol = DB::select("SELECT m.role_id FROM model_has_roles as m, users as u WHERE m.model_id = u.id and u.id_usuarioP ='$id'");
       $direccion= DireccionPaciente::where('Paciente_id', $id)->first();
       $paciente = UsuarioP::where('id_Paciente',$id)->first();
       $sexo=Collection::make(Sexo::select(['id_Sexo','Sexo'])->orderBy('Sexo')->get())->pluck("Sexo", "id_Sexo");
@@ -137,7 +138,9 @@ class UsuarioPController extends Controller
       $estado=Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado"); 
       $municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
       $parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia"); 
-      return view('admin.configuracion.usuarios.usuariosP.edit')->with(compact('paciente','sexo','prefijo','estadoC','status','nacionalidad','login','ciudad','estado','municipio','parroquia','direccion')); 
+      $roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
+
+      return view('admin.configuracion.usuarios.usuariosP.edit')->with(compact('paciente','sexo','prefijo','estadoC','status','nacionalidad','login','ciudad','estado','municipio','parroquia','direccion','rol','roles')); 
     }
 
     public function login(Request $request)
@@ -161,7 +164,7 @@ class UsuarioPController extends Controller
             $login2->id_usuarioP = $request['id'];
             $login2->save();
 
-            $login2->assignRole(13);
+            $login2->assignRole($request['rol']);
             DB::commit();
         Flash::success("Registro Agregado Correctamente");            
         } catch (\Illuminate\Database\QueryException $e) {
@@ -197,6 +200,10 @@ class UsuarioPController extends Controller
                     'password' => Hash::make($request['contrasena']),
                     'status' => $request['status']
                     ]);
+
+                    $rol= $login->roles()->first();                
+                    $login->removeRole($rol);                  
+                    $login->assignRole($request['rol']);
 
                   $loginh= new HistoricoP();
                   $loginh->Login_Pacientes_id = $login->Paciente_id;

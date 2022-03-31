@@ -55,7 +55,7 @@
             @if(isset(auth()->user()->name) && auth()->user()->name == 'Admin')
             <div class="col-md-6 mb-3">
                 {!! Form::label('id_status', 'Status:') !!}
-                {!! Form::select('id_status',$status, isset($general) ? $general->Status_id : null, [
+                {!! Form::select('id_status',$status, isset($general) ? $general->id_status : null, [
                     'placeholder' => 'Seleccione', 
                     'class' => 'select2 form-control',
                     'id' => 'id_status',

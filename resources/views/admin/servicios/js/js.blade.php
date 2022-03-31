@@ -58,6 +58,7 @@ $('#modal_servicio').on('show.bs.modal', function (e) {
             var obj = data[0];
             $('#servicio', modal).val(obj.Servicio);
             $('#costo', modal).val(obj.Costos);
+            $('#simbolo', modal).val(obj.simbolo).change();
             $('#especialidad', modal).val(obj.Especialidad_Medica_id).change();
             $('#medico_id', modal).val(obj.Medico_id).change();
             $('#status', modal).val(obj.Status_id).change();
@@ -70,10 +71,11 @@ $('#modal_servicio').on('show.bs.modal', function (e) {
 $('#modal_servicio').on('hidden.bs.modal', function (e) {
     $('#servicio').val('');
     $('#costo').val('');
-    $('#especialidad').val(0).change();
-    $('#medico_id').val(0).change();
-    $('#status').val(0).change();
-    $('#duracion').val('');
+    $('#especialidad').val('').change();
+    $('#medico_id').val('').change();
+    $('#status').val('').change();
+    $('#simbolo').val('').change();
+    $('#duracion').val('').change();
 });
 $('#confirm-delete31').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);

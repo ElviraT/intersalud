@@ -19,7 +19,7 @@ class UsuarioG extends Model
 
     public function Sexo()
     {
-        return $this->hasOne('App\Model\Sexo', 'id_sexo');
+        return $this->hasOne('App\Model\Sexo', 'id_Sexo', 'id_sexo');
     }
 
     public function PrefijoDNI()

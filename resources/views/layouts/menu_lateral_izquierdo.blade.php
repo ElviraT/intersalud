@@ -206,7 +206,7 @@
                           <li class="{{ @request()->routeIs('usuario_g*') ? 'active' : ''}}">
                               <a href="{{route('usuario_g')}}" onclick="loading_show();" class="waves-effect waves-dark">
                                   <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                  <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'General'}}</span>
+                                  <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-22.menu-level-31">{{'Administrativo'}}</span>
                                   <span class="pcoded-mcaret"></span>
                               </a>
                           </li>

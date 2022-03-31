@@ -59,7 +59,7 @@
                       @foreach($servicios as $resultado)
                         <tr>
                             <td>{{ $resultado->Servicio }}</td>
-                            <td>{{ $resultado->Costos }}</td>
+                            <td>{{ $resultado->Costos.' '.$resultado->simbolo}}</td>
                             <td>{{ $resultado->Especialidad->Espacialiadad_Medica }}</td>
                             <td>{{ $resultado->UsuarioM->Nombres_Medico.' '.$resultado->UsuarioM->Apellidos_Medicos }}</td>
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>

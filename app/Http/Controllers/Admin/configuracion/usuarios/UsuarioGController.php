@@ -73,23 +73,23 @@ class UsuarioGController extends Controller
         try{
          $usuarioG= UsuarioG::where('id', $request['id'])->update($data);
 
-         $login = LoginT::where('general_id', $id)->first();
-         if (isset($login)) {
-          LoginT::where('general_id', $request['id'])->update([
-          'Status_Medico_id' => $request['status'],
-          ]);
+         $login = LoginT::where('general_id', $request['id'])->first();
+             if (isset($login)) {
+              LoginT::where('general_id', $request['id'])->update([
+              'Status_Medico_id' => $request['status'],
+              ]);
 
-          User::where('id_usuarioG', $id)->update([
-          'status' => $request['status']
-          ]);
-         }
+              User::where('id_usuarioG', $request['id'])->update([
+              'status' => $request['status']
+              ]);
+             }
 
-                Flash::success("Registro Actualizado Correctamente");
+            Flash::success("Registro Actualizado Correctamente");
 
             }catch(\Illuminate\Database\QueryException $e) {
               Flash::error('Ocurrió un error, por favor intente de nuevo'); 
             }
-            return redirect()->route('usuario_g.edit', $id);
+            return redirect()->route('usuario_g.edit', $request['id']);
       }
     }
    public function edit($id)
@@ -133,7 +133,7 @@ class UsuarioGController extends Controller
         Flash::success("Registro Agregado Correctamente");            
         } catch (\Illuminate\Database\QueryException $e) {
         	 DB::rollback();
-            Flash::error($e.'Ocurrió un error, por favor intente de nuevo');  
+            Flash::error('Ocurrió un error, por favor intente de nuevo');  
         }
 
         return redirect()->route('usuario_g.edit', $request['id']);
@@ -163,8 +163,7 @@ class UsuarioGController extends Controller
                     'status' => $request['status']
                     ]);
 
-                 $rol= $login->roles()->first();   
-                    //dd($rol);             
+                    $rol= $login->roles()->first();                
                     $login->removeRole($rol);                  
                     $login->assignRole($request['rol']);
 

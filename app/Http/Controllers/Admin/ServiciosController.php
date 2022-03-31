@@ -39,8 +39,9 @@ class ServiciosController extends Controller
   		$status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status");
 
   		$especialidad=Collection::make(Especialidad::select(['id_Especialidad_Medica','Espacialiadad_Medica'])->orderBy('Espacialiadad_Medica')->get())->pluck("Espacialiadad_Medica", "id_Especialidad_Medica"); 
-
-  		return view('admin.servicios.index', ['servicios' => $servicios,'status'=>$status,'medico'=>$medico,'especialidad'=>$especialidad]);
+      $simbol = ['Bs'=>'Bs','USD'=>'USD','Btc'=>'Btc','Eth'=>'Eth'];
+      
+  		return view('admin.servicios.index', ['servicios' => $servicios,'status'=>$status,'medico'=>$medico,'especialidad'=>$especialidad,'simbol'=>$simbol]);
   	}
   	public function add (Request $request)
     {   
@@ -50,6 +51,7 @@ class ServiciosController extends Controller
                 $servicio= new Servicio();
                 $servicio->Servicio = $request['servicio'];
                 $servicio->Costos = $request['costo'];
+                $servicio->simbolo = $request['simbolo'];
                 $servicio->Especialidad_Medica_id = $request['especialidad'];
                 $servicio->Medico_id = $request['medico_id'];
                 $servicio->Status_id = $request['status'];
@@ -66,6 +68,7 @@ class ServiciosController extends Controller
                  Servicio::where('id_Servicio', $id)->update([
                     'Servicio'=>$request->servicio,
                     'Costos'=>$request->costo,
+                    'simbolo'=>$request->simbolo,
                     'Especialidad_Medica_id'=>$request->especialidad,
                     'Medico_id'=>$request->medico_id,
                     'Status_id'=>$request->status,

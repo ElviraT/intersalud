@@ -59,8 +59,9 @@ class UsuarioMController extends Controller
         $estado=Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado"); 
         $municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
         $parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia"); 
+        $roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
 
-    	return view('admin.configuracion.usuarios.usuariosM.create')->with(compact('sexo','prefijo','estadoC','statusM','nacionalidad','ciudad','estado','municipio','parroquia')); 
+    	return view('admin.configuracion.usuarios.usuariosM.create')->with(compact('sexo','prefijo','estadoC','statusM','nacionalidad','ciudad','estado','municipio','parroquia','roles')); 
   	}
 	public function add(Request $request)
 	{
@@ -142,7 +143,7 @@ class UsuarioMController extends Controller
 		//dd($login);
 		$seniat = Seniat::where('Medico_id', $medico->id_Medico)->first();
 		Session::put('medico', $medico);
-
+		$rol = DB::select("SELECT m.role_id FROM model_has_roles as m, users as u WHERE m.model_id = u.id and u.id_usuario ='$id'");
 		//COMBOS
 		$sexo=Collection::make(Sexo::select(['id_Sexo','Sexo'])->orderBy('Sexo')->get())->pluck("Sexo", "id_Sexo");
     	$prefijo=Collection::make(PrefijoDNI::select(['id_Prefijo_CIDNI','Prefijo_CIDNI'])->orderBy('Prefijo_CIDNI')->get())->pluck("Prefijo_CIDNI", "id_Prefijo_CIDNI");
@@ -153,12 +154,14 @@ class UsuarioMController extends Controller
         $estado=Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado"); 
         $municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
         $parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia");
-		return view('admin.configuracion.usuarios.usuariosM.edit')->with(compact('medico','login','seniat','sexo','prefijo','estadoC','statusM','nacionalidad','ciudad','estado','municipio','parroquia'));
+         $roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
+		return view('admin.configuracion.usuarios.usuariosM.edit')->with(compact('medico','login','seniat','sexo','prefijo','estadoC','statusM','nacionalidad','ciudad','estado','municipio','parroquia','rol','roles'));
 	}
 
 	public function login(Request $request)
 	{
 		if($request->idL == null){
+			DB::beginTransaction();
 			try {
 		        $login= new LoginT();
 		        $login->Usuario = ucfirst($request['nombre_usuario']);
@@ -176,10 +179,11 @@ class UsuarioMController extends Controller
 		        $login2->id_usuario = $request['id'];
 		        $login2->save();
 
-		        $login2->assignRole(10);
-
+		        $login2->assignRole($request['rol']);
+		        DB::commit();
 				Flash::success("Registro Agregado Correctamente");            
 		    } catch (\Illuminate\Database\QueryException $e) {
+		    	DB::rollback();
 		        Flash::error($e->getMessage().'Ocurrió un error, por favor intente de nuevo');  
 		    }
 
@@ -209,6 +213,10 @@ class UsuarioMController extends Controller
 				        'password' => Hash::make($request['contrasena']),
 				        'status' => $request['statusm']
 		            ]);
+
+		            $rol= $login->roles()->first();            
+                    $login->removeRole($rol);                  
+                    $login->assignRole($request['rol']);
 							
 		        	$loginT = LoginT::where('Medico_id', $id)->first();
 		            $loginh= new HistoricoT();

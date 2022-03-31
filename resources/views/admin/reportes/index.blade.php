@@ -115,7 +115,7 @@
                             <td>{{ $resultado->UsuarioM->Nombres_Medico.' '.$resultado->UsuarioM->Apellidos_Medicos }}</td>
                             <td>{{ $resultado->Especialidad->Espacialiadad_Medica }}</td>
                             <td>{{ $resultado->Servicio->Servicio }}</td>
-                            <td>{{ $resultado->Servicio->Costos }}</td>
+                            <td>{{ $resultado->Servicio->Costos.' '.$resultado->Servicio->simbolo }}</td>
                             <td>{{ date('Y-m-d', strtotime($resultado->Fecha)) }}</td>
                             @if($resultado->cerrado == 1)
                             <td>{{'Si'}}</td>

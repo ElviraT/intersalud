@@ -2,6 +2,7 @@
 <script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
+localStorage.removeItem('selectedTab');
     $(document).ready(function() {
        var table_servicios = $('#table_servicios').DataTable({
             lengthChange: false,
@@ -52,12 +53,32 @@ function buscar() {
     if (pacienteE.length == 0) {
        $.getJSON('{{ route('buscar_paciente') }}?paciente='+paciente+'&medico='+medico, function(objBP){
         switch(objBP[0]){
-                case 'No tiene cita hoy a esta hora':
+                case null:
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
                     $('#sexo').html('');
                     $('#edad').html('');
-                    Swal.fire(objBP[0]);
+                        $('#pop2-tab').attr('hidden', true);
+                        $('#pop3-tab').attr('hidden', true);
+                        $('#pop4-tab').attr('hidden', false);
+
+                        $('#myTable').DataTable({
+                          destroy: true,
+                          info: false,
+                          data: objBP[3],
+                          responsive: true,
+                                language: {
+                                    url: "{{ asset('js/Spanish.json') }}",
+                                },
+                          columns: [
+                            { title: "Fecha", data: "Fecha" },
+                            { title: "Enfermedad Actual", data: "Enfermedad_Actual" },
+                            { title: "Origen", data: "Origen" },
+                            { title: "Diagnostico Definitivo", data: "Diagnostico_Definitivo" },
+                            { title: "Pronostico", data: "Pronostico" }
+                          ]
+                        });
+                    Swal.fire('No tiene cita');
                 break;
                 default:
                     $('#id_paciente').val(paciente);
@@ -102,6 +123,10 @@ function buscar() {
                       destroy: true,
                       info: false,
                       data: objBP[3],
+                      responsive: true,
+                        language: {
+                            url: "{{ asset('js/Spanish.json') }}",
+                        },
                       columns: [
                         { title: "Fecha", data: "Fecha" },
                         { title: "Enfermedad Actual", data: "Enfermedad_Actual" },
@@ -115,13 +140,34 @@ function buscar() {
 
     }else{
         $.getJSON('{{ route('buscar_paciente') }}?pacienteE='+pacienteE+'&medico='+medico, function(objBP){
+           console.log(objBP[0]);
             switch(objBP[0]){
-                case 'No tiene cita hoy a esta hora':
+                case null:
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
                     $('#sexo').html('');
                     $('#edad').html('');
-                    Swal.fire(objBP[0]);
+                        $('#pop2-tab').attr('hidden', true);
+                        $('#pop3-tab').attr('hidden', true);
+                        $('#pop4-tab').attr('hidden', false);
+
+                        $('#myTable').DataTable({
+                          destroy: true,
+                          info: false,
+                          data: objBP[3],
+                          responsive: true,
+                            language: {
+                                url: "{{ asset('js/Spanish.json') }}",
+                            },
+                          columns: [
+                            { title: "Fecha", data: "Fecha" },
+                            { title: "Enfermedad Actual", data: "Enfermedad_Actual" },
+                            { title: "Origen", data: "Origen" },
+                            { title: "Diagnostico Definitivo", data: "Diagnostico_Definitivo" },
+                            { title: "Pronostico", data: "Pronostico" }
+                          ]
+                        });
+                    Swal.fire('No tiene cita');
                 break;
                 default:
                 $('#id_paciente').val(paciente);
@@ -213,6 +259,9 @@ $("#formulario1").submit(function(event) {
         data: datos,
         success: function(info)
         {
+            $('#pop2-tab').attr('hidden', false);
+            $('#pop3-tab').attr('hidden', false);
+            $('#pop4-tab').attr('hidden', false);
             Swal.fire(info);
         }
     });

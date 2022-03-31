@@ -41,7 +41,7 @@
                     <label><strong>{{$medico->Numero_Colegio_de_Medico}}</strong></label>
                   </div>
                   <div class="col-md-2">
-                    <img src="{{ ("avatars/".str_replace('\\','/',$medico->Foto_Medico))}}" alt="foto perfil" width="35%">
+                    <img @if(isset($medico->Foto_Medico) &&$medico->Foto_Medico  == '')src="{{ ("avatars/".str_replace('\\','/', $medico->Foto_Medico)) }}"  @else src="{{ Avatar::create(auth()->user()->name)->toBase64() }}" @endif alt="foto perfil" width="35%">
                   </div>
                 </div>
               </div>

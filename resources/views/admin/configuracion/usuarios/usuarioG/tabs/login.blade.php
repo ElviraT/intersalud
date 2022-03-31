@@ -13,7 +13,7 @@
         </div> 
         <div class="col-md-6 mb-3">
             {!! Form::label('roles', 'Rol:') !!}
-            {!! Form::select('rol',$roles, isset($rol) ? $rol[0]->role_id : null, [
+            {!! Form::select('rol',$roles, isset($rol[0]) ? $rol[0]->role_id : null, [
                 'placeholder' => 'Seleccione', 
                 'class' => 'select2 form-control',
                 'id' => 'rol',

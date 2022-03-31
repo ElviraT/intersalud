@@ -145,8 +145,6 @@ class ConsultaController extends Controller
                    ->where('pacientes_especiales.id_Pacientes_Especiales',$pacienteE)
                    ->where('control_historia_medicas.cerrado',0)
                    ->first();       
-              }else{
-                $datos= 'No tiene cita hoy';
               }
         }else{
           $cita= Citas::where('Paciente_id',$paciente)
@@ -167,9 +165,7 @@ class ConsultaController extends Controller
                ->where('usuarios_pacientes.id_Paciente',$paciente)
                ->where('control_historia_medicas.cerrado',0)
                ->first();
-          }else{
-                $datos= 'No tiene cita hoy';
-              }
+          }
         }   
         $antecedentes= Antecedente::where('Paciente_Id', $paciente)->first();     
 

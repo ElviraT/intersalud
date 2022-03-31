@@ -32,6 +32,9 @@
     </div>
 </div>
 @endsection
+@section('modal')
+    @include('admin.modales.elimina_asignacion')
+@endsection
 @section('js')
   @include('admin.configuracion.usuarios.usuariosA.js.js')
 @endsection

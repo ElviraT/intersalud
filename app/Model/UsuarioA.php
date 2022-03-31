@@ -15,8 +15,8 @@ class UsuarioA extends Model
         return $this->hasOne('App\Model\Status', 'id_Status','Status_id');
     }
 
-     public function UsuarioM()
+    public function MxA()
     {
-        return $this->hasOne('App\Model\UsuarioM', 'id_Medico', 'id_Medico');
+        return $this->hasOne('App\Model\MxA','id');
     }
 }

@@ -3,16 +3,6 @@
         <div class="row">
             {{ Form::hidden('id', isset($asistente) ? $asistente->id_asistente : null, ['class'=>'modal_registro_usuarioa_id'] ) }}
             <div class="col-md-4 mb-3">
-                <label for="validationCustom01">{{'Médico'}}</label>
-                {!! Form::select('id_medico',$medicos, isset($asistente) ? $asistente->id_Medico : null, [
-                    'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
-                    'id' => 'id_medico',
-                    'required'=>'required'
-                    ])
-                !!}
-            </div>
-            <div class="col-md-4 mb-3">
                 <label for="validationCustom01">{{'Nombre'}}</label>
                 <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true" value="{{ isset($asistente) ? $asistente->Nombre_Asistente : null }}" maxlength="150">
             </div>
@@ -23,7 +13,7 @@
              <div class="col-md-4 form-group mb-3">
                 <label>{{ 'Cedula' }}</label>
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         {!! Form::select('prefijo',$prefijo, isset($asistente) ? $asistente->Prefijo_CIDNI_id : null, [
                             'placeholder' => '...', 
                             'class' => 'select2 form-control',
@@ -31,7 +21,7 @@
                             'required'=>'required'
                             ]) !!}
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-9">
                         <input type="text" class="form-control" name="cedula" id="cedula" placeholder="Cedula" onkeypress = 'return SoloNumeros(event)' value="{{ isset($asistente) ? $asistente->CIDNI : null }}" required maxlength="20">
                     </div>
                 </div>

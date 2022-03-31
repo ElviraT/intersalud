@@ -16,6 +16,16 @@
         });
     });
 
+    $(document).ready(function() {
+       var table_asignacion = $('#table_asignacion').DataTable({
+            lengthChange: false,
+            responsive: true,
+            language: {
+                url: "{{ asset('js/Spanish.json') }}",
+            },
+        });
+    });
+
 $(document).ready(function() {
 $('.select2').select2({ 
     theme : "classic",
@@ -100,6 +110,23 @@ $('#confirm-delete16').on('show.bs.modal', function(e) {
     console.log(data);
     $("#form_usuariosA_eliminar",  this).attr('action', data.action);
     $('#modal_registo_usuariosA_id', this).val(data.recordId);
+    $('.title', this).text(data.recordTitle);
+    $('.btn-ok', this).data('recordId', data.recordId);
+    loading_hide();
+});
+
+$('#confirm-delete35').on('click', '.btn-ok', function(e) {
+        var $modalDiv = $(e.delegateTarget);
+        $modalDiv.addClass('loading');
+        setTimeout(function(){
+            $('#form_asignacion_eliminar').submit();
+        }, 2000);
+    });
+$('#confirm-delete35').on('show.bs.modal', function(e) {
+    var data = $(e.relatedTarget).data();
+    console.log(data);
+    $("#form_asignacion_eliminar",  this).attr('action', data.action);
+    $('#modal_registo_asignacion_id', this).val(data.recordId);
     $('.title', this).text(data.recordTitle);
     $('.btn-ok', this).data('recordId', data.recordId);
     loading_hide();

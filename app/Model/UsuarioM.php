@@ -20,9 +20,9 @@ class UsuarioM extends Model
         return $this->hasOne('App\Model\StatusM', 'id_Status_Medico','Status_Medico_id');
     }
 
-    public function UsuarioA()
+    public function MxA()
     {
-        return $this->hasOne('App\Model\UsuarioA', 'id_asistente','id_Medico');
+        return $this->hasOne('App\Model\MxA','id');
     }
 
     public function Billetera()

@@ -48,7 +48,6 @@
                     <thead>
                         <tr>
                             <th>{{'Nombre'}}</th>
-                            <th>{{'Medico'}}</th>
                             <th>{{'Status'}}</th>
                             <th>{{'Acción'}}</th>
                         </tr>
@@ -57,7 +56,6 @@
                       @foreach($usuariosA as $resultado)
                         <tr>
                             <td>{{ $resultado->Nombre_Asistente.' '.$resultado->Apellidos_Asistente}}</td>
-                            <td>{{ $resultado->UsuarioM->Nombres_Medico.' '.$resultado->UsuarioM->Apellidos_Medicos}}</td>
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
                             <td width="20">
                               @can('usuario_a.edit')

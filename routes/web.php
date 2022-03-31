@@ -140,6 +140,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('usuario_a/login', ['as' => 'usuario_a.login', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@login']);
 	Route::post('usuario_a/destroy', ['as' => 'usuario_a.destroy', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@destroy']);
 
+		Route::post('usuario_a/asignar/add', ['as' => 'asignar.add', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@add_asignar']);
+		Route::post('usuario_a/asignar/destroy', ['as' => 'asignar.destroy', 'uses' => 'Admin\configuracion\usuarios\UsuarioAController@destroy_asignar']);
+
 	//CONFIGURACIÓN-USUARIOS-GENERAL
 	Route::get('usuario_g', ['as' => 'usuario_g', 'uses' => 'Admin\configuracion\usuarios\UsuarioGController@index']);
 	Route::get('usuario_g/create', ['as' => 'usuario_g.create', 'uses' => 'Admin\configuracion\usuarios\UsuarioGController@create']);

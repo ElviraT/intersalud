@@ -15,6 +15,7 @@ use App\Model\Sexo;
 use App\Model\PrefijoDNI;
 use App\Model\Civil;
 use App\Model\Status;
+use App\Model\MxA;
 use App\Model\HistoricoT;
 use Spatie\Permission\Models\Role;
 use Flash;
@@ -42,19 +43,21 @@ class UsuarioAController extends Controller
 
   	public function create()
   	{
-       if(auth()->user()->name == 'Admin'){
-        $medicos= Collection::make(UsuarioM::select(['usuarios_medicos.id_Medico',DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");//->leftjoin('usuarios_asistentes', 'usuarios_asistentes.id_Medico', '=' ,'usuarios_medicos.id_Medico')->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
-      }else{
-        $medicos= Collection::make(UsuarioM::select(['usuarios_medicos.id_Medico',DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])->where('usuarios_medicos.id_Medico',auth()->user()->id_usuario)->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");//leftjoin('usuarios_asistentes', 'usuarios_asistentes.id_Medico', '=' ,'usuarios_medicos.id_Medico')->where('usuarios_medicos.id_Medico',auth()->user()->id_usuario)->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
-      } 
-
     	$sexo=Collection::make(Sexo::select(['id_Sexo','Sexo'])->orderBy('Sexo')->get())->pluck("Sexo", "id_Sexo");
     	$prefijo=Collection::make(PrefijoDNI::select(['id_Prefijo_CIDNI','Prefijo_CIDNI'])->orderBy('Prefijo_CIDNI')->get())->pluck("Prefijo_CIDNI", "id_Prefijo_CIDNI");
     	$estadoC=Collection::make(Civil::select(['id_Civil','Civil'])->orderBy('Civil')->get())->pluck("Civil", "id_Civil");
     	$status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status");
     	$nacionalidad = Collection::make(Pais::select(['id_Pais','Pais'])->orderBy('Pais')->get())->pluck("Pais", "id_Pais");
       $roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
-    	return view('admin.configuracion.usuarios.usuariosA.create')->with(compact('sexo','prefijo','estadoC','status','nacionalidad','medicos','roles')); 
+
+      if(auth()->user()->name == 'Admin'){
+        $medicos= Collection::make(UsuarioM::select(['usuarios_medicos.id_Medico',DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])->leftjoin('medicoxasistente', 'medicoxasistente.id_Medico', '=' ,'usuarios_medicos.id_Medico')->whereNull('medicoxasistente.id_Medico')->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
+      }else{
+        $medicos= Collection::make(UsuarioM::select(['usuarios_medicos.id_Medico',DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])->leftjoin('medicoxasistente', 'medicoxasistente.id_Medico', '=' ,'usuarios_medicos.id_Medico')->where('usuarios_medicos.id_Medico',auth()->user()->id_usuario)->whereNull('medicoxasistente.id_Medico')->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
+      } 
+      $asignacion = MxA::all();
+
+    	return view('admin.configuracion.usuarios.usuariosA.create')->with(compact('sexo','prefijo','estadoC','status','nacionalidad','roles','medicos','asignacion')); 
   	}
 
     public function add(Request $request)
@@ -71,7 +74,6 @@ class UsuarioAController extends Controller
             $asistente->Status_id = $request['status'];
             $asistente->Civil_id = $request['civil'];
             $asistente->Pais_id = $request['nacionalidad'];
-            $asistente->id_Medico = $request['id_medico'];
             $asistente->save();
 
         //dd($asistente->id);
@@ -96,7 +98,6 @@ class UsuarioAController extends Controller
                 'Status_id' => $request['status'],
                 'Civil_id' => $request['civil'],
                 'Pais_id' => $request['nacionalidad'],
-                'id_Medico' => $request['id_medico'],
                 ]);
 
                  $login = LoginT::where('Asistente_id', $id)->first();
@@ -122,11 +123,6 @@ class UsuarioAController extends Controller
     public function edit($id)
     {
       $login = LoginT::where('Asistente_id', $id)->first();
-      if(auth()->user()->name == 'Admin'){
-        $medicos= Collection::make(UsuarioM::select(['usuarios_medicos.id_Medico',DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");//->leftjoin('usuarios_asistentes', 'usuarios_asistentes.id_Medico', '=' ,'usuarios_medicos.id_Medico')->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
-      }else{
-        $medicos= Collection::make(UsuarioM::select(['usuarios_medicos.id_Medico',DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])->where('usuarios_medicos.id_Medico',auth()->user()->id_usuario)->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");//leftjoin('usuarios_asistentes', 'usuarios_asistentes.id_Medico', '=' ,'usuarios_medicos.id_Medico')->where('usuarios_medicos.id_Medico',auth()->user()->id_usuario)->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
-      } 
       $asistente = UsuarioA::where('id_asistente',$id)->first();
       $rol = DB::select("SELECT m.role_id FROM model_has_roles as m, users as u WHERE m.model_id = u.id and u.id_usuarioA ='$id'");
 
@@ -137,7 +133,14 @@ class UsuarioAController extends Controller
       $nacionalidad = Collection::make(Pais::select(['id_Pais','Pais'])->orderBy('Pais')->get())->pluck("Pais", "id_Pais");
       $roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
 
-      return view('admin.configuracion.usuarios.usuariosA.edit')->with(compact('asistente','sexo','prefijo','estadoC','status','nacionalidad','medicos','login','roles','rol')); 
+      if(auth()->user()->name == 'Admin'){
+        $medicos= Collection::make(UsuarioM::select(['usuarios_medicos.id_Medico',DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])->leftjoin('medicoxasistente', 'medicoxasistente.id_Medico', '=' ,'usuarios_medicos.id_Medico')->whereNull('medicoxasistente.id_Medico')->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
+      }else{
+        $medicos= Collection::make(UsuarioM::select(['usuarios_medicos.id_Medico',DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])->leftjoin('medicoxasistente', 'medicoxasistente.id_Medico', '=' ,'usuarios_medicos.id_Medico')->where('usuarios_medicos.id_Medico',auth()->user()->id_usuario)->whereNull('medicoxasistente.id_Medico')->orderBy('Nombres_Medico')->get())->pluck("Nombre", "id_Medico");
+      } 
+      $asignacion = MxA::where('id_Asistente', $id)->get();
+      //dd($asignacion);
+      return view('admin.configuracion.usuarios.usuariosA.edit')->with(compact('asistente','sexo','prefijo','estadoC','status','nacionalidad','login','roles','rol','medicos','asignacion')); 
     }
 
   public function login(Request $request)
@@ -227,6 +230,30 @@ class UsuarioAController extends Controller
        $id = (int)$request->input('id');
        UsuarioA::where('id_asistente', $id)->update(['Status_id' => 2]);
        User::where('id_usuarioA', $id)->update(['status' => 0]);
+
+       Flash::success('Registro eliminado correctamente');
+         
+      return redirect()->route('usuario_a');
+    }
+
+   public function add_asignar(Request $request)
+    {
+            try{
+                $asistente= new MxA();
+                $asistente->id_Medico  = $request['id_Medico'];
+                $asistente->id_Asistente = $request['id_Asistente'];
+                $asistente->save();
+              Flash::error('Registro agregado correctamente'); 
+            }catch(\Illuminate\Database\QueryException $e) {
+              Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+            }
+        return redirect()->route('usuario_a.edit', $request['id_Asistente']);
+    }
+
+    public function destroy_asignar(Request $request)
+    {
+       $id = (int)$request->input('id');
+       MxA::where('id', $id)->delete();
 
        Flash::success('Registro eliminado correctamente');
          

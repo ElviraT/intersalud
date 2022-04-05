@@ -166,7 +166,8 @@
     @yield('js')
     <script type="text/javascript">
       loading_hide();
-      $(".alert").alert(); window.setTimeout(function() { $(".alert").alert('close'); }, 5000);
+      $(".alert").alert(); 
+      window.setTimeout(function() { $(".alert").alert('close'); }, 5000);
     </script>
 </body>
 

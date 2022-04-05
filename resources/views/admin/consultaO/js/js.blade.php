@@ -1,8 +1,24 @@
 <!-- Select2 -->
 <script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
 
+<script src='https://meet.jit.si/external_api.js'></script>
+
 <script type="text/javascript">
 localStorage.removeItem('selectedTab');
+
+const domain = 'meet.jit.si';
+const options = {
+    roomName: 'ConsultaOnline',
+    width: 500,
+    height: 600,
+    parentNode: document.querySelector('#meet'),
+    lang: 'es',
+    userInfo: {
+        email: 'usuariom@test.com',
+        displayName: 'Usuario Medico'
+    }
+};
+const api = new JitsiMeetExternalAPI(domain, options);
     $(document).ready(function() {
        var table_servicios = $('#table_servicios').DataTable({
             lengthChange: false,

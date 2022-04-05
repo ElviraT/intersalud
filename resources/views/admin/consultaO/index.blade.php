@@ -84,8 +84,7 @@
                   </div>
                   <div class="col-md-12 col-lg-7">
                     <div class="row">
-                      <div class="col-md-12 p-2">
-                        <iframe src="https://intersalud.iaelaonline.com/intersalud-master/public/" width="100%" id="iFrame1" allowfullscreen></iframe>
+                      <div class="col-md-12" id="meet">
                       </div>
                       <div class="col-md-10" align="center">
                         <form name="form" class="clok">

@@ -5,20 +5,22 @@
 
 <script type="text/javascript">
 localStorage.removeItem('selectedTab');
-
-const domain = 'meet.jit.si';
-const options = {
-    roomName: 'ConsultaOnline',
-    width: 500,
-    height: 600,
-    parentNode: document.querySelector('#meet'),
-    lang: 'es',
-    userInfo: {
-        email: 'usuariom@test.com',
-        displayName: 'Usuario Medico'
-    }
-};
-const api = new JitsiMeetExternalAPI(domain, options);
+function iniciar_reunion() {
+    $('#meet').attr('hidden',false);
+    const domain = 'meet.jit.si';
+    const options = {
+        roomName: 'ConsultaOnline',
+        width: 500,
+        height: 600,
+        parentNode: document.querySelector('#meet'),
+        lang: 'es',
+        userInfo: {
+            email: '{{auth()->user()->email}}',
+            displayName: '{{auth()->user()->name}}'
+        }
+    };
+    const api = new JitsiMeetExternalAPI(domain, options);
+}
     $(document).ready(function() {
        var table_servicios = $('#table_servicios').DataTable({
             lengthChange: false,
@@ -68,8 +70,8 @@ function buscar() {
 
     if (pacienteE.length == 0) {
        $.getJSON('{{ route('buscar_paciente') }}?paciente='+paciente+'&medico='+medico, function(objBP){
-        switch(objBP[0]){
-                case null:
+        //switch(objBP[0]){
+                if(objBP[0].length == 0){
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
                     $('#sexo').html('');
@@ -95,8 +97,7 @@ function buscar() {
                           ]
                         });
                     Swal.fire('No tiene cita');
-                break;
-                default:
+               }else{
                     $('#id_paciente').val(paciente);
                     $('#id_pacienteE').val();
                     $('#id_pacienteA').val(paciente);
@@ -111,6 +112,8 @@ function buscar() {
                         var fin0= objBP[2]['end'].split(" ");
                         
                         restarHoras(ini1[1], fin0[1]);
+                         var elemento = document.getElementById("enlace");
+                           elemento.href = "http://wa.me/"+objBP[0]['Celular'];
                     if (objBP[1] != null) {
                     $('#id_antecedente').val(objBP[1]['id_antecedente']);
                     $('#personales').val(objBP[1]['Personal']);

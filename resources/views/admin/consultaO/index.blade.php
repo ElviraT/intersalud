@@ -80,12 +80,19 @@
                           <label><strong>{{'Edad:'}}</strong></label>&nbsp;<span id="edad"></span><br>
                           <label><strong>{{'Servicio:'}}</strong></label>&nbsp;<span id="Servicio"></span><br>
                         </div>
+                        <div class="col-md-12">
+                          <a href="#" class="btn btn-outline-success" target="_blank" id="enlace"> {{'›› Mensaje de WhatsApp'}} </a>                          
+                        </div>
                     </div>
                   </div>
                   <div class="col-md-12 col-lg-7">
                     <div class="row">
-                      <div class="col-md-12" id="meet">
+                      <div class="col-md-12 mt-3 mb-2">
+                        <button class="btn btn-outline-info" onclick="iniciar_reunion()">{{'Iniciar Reunion'}}</button>
                       </div>
+                      
+                      <div class="col-md-12" id="meet" hidden></div>
+
                       <div class="col-md-10" align="center">
                         <form name="form" class="clok">
                           <div class="row">

@@ -159,8 +159,9 @@ class ConsultaOController extends Controller
                             ->where('control_historia_medicas.cerrado', 1)
                             ->get(); 
               if($cita){   
-               $datos = UsuarioP::select('usuarios_pacientes.Nombres_Paciente', 'usuarios_pacientes.Apellidos_Paciente', 'usuarios_pacientes.Fecha_Nacimiento_Paciente', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica','servicios.Servicio')
+               $datos = UsuarioP::select('usuarios_pacientes.Nombres_Paciente', 'usuarios_pacientes.Apellidos_Paciente', 'usuarios_pacientes.Fecha_Nacimiento_Paciente', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica','servicios.Servicio','direcciones_pacientes.Celular')
                    ->join('sexos', 'sexos.id_Sexo','usuarios_pacientes.Sexo_id')
+                   ->join('direcciones_pacientes', 'direcciones_pacientes.Paciente_id','usuarios_pacientes.id_Paciente')
                    ->join('control_historia_medicas', 'control_historia_medicas.Paciente_id','usuarios_pacientes.id_Paciente')
                    ->join('servicios', 'servicios.id_Servicio','control_historia_medicas.id_servicio')
                    ->where('usuarios_pacientes.id_Paciente',$paciente)

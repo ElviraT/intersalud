@@ -88,7 +88,7 @@
                   <div class="col-md-12 col-lg-7">
                     <div class="row">
                       <div class="col-md-12 mt-3 mb-2">
-                        <button class="btn btn-outline-info" onclick="iniciar_reunion()">{{'Iniciar Reunion'}}</button>
+                        <button class="btn btn-outline-info" onclick="iniciar_reunion()">{{'Iniciar Consulta'}}</button>
                       </div>
                       
                       <div class="col-md-12" id="meet" hidden></div>

@@ -12,7 +12,7 @@ class MxA extends Model
 
     public function UsuarioM()
     {
-        return $this->hasOne('App\Model\UsuarioM', 'id');
+        return $this->hasOne('App\Model\UsuarioM', 'id_Medico','id_Medico');
     }
 
     public function UsuarioA()

@@ -22,6 +22,11 @@ class ControlHM extends Model
         return $this->hasOne('App\Model\UsuarioM', 'id_Medico', 'Medico_id');
     }
 
+    public function UsuarioP()
+    {
+        return $this->hasOne('App\Model\UsuarioP', 'id_Paciente', 'Paciente_id');
+    }
+
     public function Servicio()
     {
         return $this->hasOne('App\Model\Servicio', 'id_Servicio', 'id_servicio');

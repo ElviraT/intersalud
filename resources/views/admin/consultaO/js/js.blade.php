@@ -62,7 +62,11 @@ $('#paciente').on('select2:select', function (e) {
         }        
     });
 });
+var url_factura = "{{ route('ver_pdf', ':id') }}";
+   url_factura = url_factura.replace(':id', '4'); //objBP[0]['id_Control_Historia_Medica']);
 
+var factura = document.getElementById("factura");
+   factura.href = url_factura;
 function buscar() {
     var paciente = $('#paciente').val();
     var pacienteE =$('#pacienteE').val();
@@ -114,6 +118,13 @@ function buscar() {
                         restarHoras(ini1[1], fin0[1]);
                          var elemento = document.getElementById("enlace");
                            elemento.href = "http://wa.me/"+objBP[0]['Celular'];
+
+                      /* var url_factura = "{{ route('ver_pdf', ':id') }}";
+                           url_factura = url_factura.replace(':id', '17'); //objBP[0]['id_Control_Historia_Medica']);
+
+                        var factura = document.getElementById("factura");
+                           factura.href = url_factura;*/
+
                     if (objBP[1] != null) {
                     $('#id_antecedente').val(objBP[1]['id_antecedente']);
                     $('#personales').val(objBP[1]['Personal']);
@@ -159,7 +170,6 @@ function buscar() {
 
     }else{
         $.getJSON('{{ route('buscar_paciente') }}?pacienteE='+pacienteE+'&medico='+medico, function(objBP){
-           console.log(objBP[0]);
             switch(objBP[0]){
                 case null:
                     $("form textarea").each(function() { this.value = '' });

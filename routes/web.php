@@ -294,4 +294,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('historias/urologia/destroy', ['as' => 'urologia.destroy', 'uses' => 'Admin\historias\UrologiaController@destroy']);
 
 	Route::match(['get','post'],'reportes/consulta', ['as' => 'reporte_consulta', 'uses' => 'Admin\reportes\ReporteConsultaController@index']);
+
+	Route::match(['get','post'],'pdf_form/{id}', ['as' => 'ver_pdf', 'uses' =>  'Admin\GeneratePdfController@pdfForm']);
+ 	Route::match(['get','post'],'pdf_download', 'Admin\GeneratePdfController@pdfDownload');
 });

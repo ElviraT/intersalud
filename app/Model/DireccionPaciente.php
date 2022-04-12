@@ -10,4 +10,9 @@ class DireccionPaciente extends Model
    protected $primary_key = 'id_Direccion_Paciente';
    public $timestamps = false;
 
+    public function UsuarioP()
+    {
+        return $this->hasOne('App\Model\UsuarioP', 'id_Paciente', 'Paciente_id');
+    }
+
 }

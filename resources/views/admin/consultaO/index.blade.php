@@ -124,6 +124,9 @@
                 <div class="row">
                   <div class="col-md-12 p-2">
                     @include('admin.consultaO.fields')
+                    <div class="col-md-12" align="center">
+                      <a href="#" class="btn btn-outline-info" target="_blank" id="factura"> {{'Pre-visualizar Factura'}} </a>                          
+                    </div>
                   </div>
                 </div>
               </div>

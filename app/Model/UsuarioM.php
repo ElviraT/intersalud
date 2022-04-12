@@ -22,7 +22,7 @@ class UsuarioM extends Model
 
     public function MxA()
     {
-        return $this->hasOne('App\Model\MxA','id');
+        return $this->hasOne('App\Model\MxA','id_Medico','id_Medico');
     }
 
     public function Billetera()
@@ -57,5 +57,10 @@ class UsuarioM extends Model
     public function ControlHM()
     {
         return $this->hasOne('App\Model\ControlHM', 'id_Control_Historia_Medica');
+    }
+
+    public function Seniat()
+    {
+        return $this->hasOne('App\Model\Seniat', 'Medico_id', 'id_Medico');
     }
 }

@@ -14,6 +14,10 @@ class PrefijoDNI extends Model
     {
         return $this->hasOne('App\Model\UsuarioPE', 'Prefijo_CIDNI_id');
     }
+    public function UsuarioP()
+    {
+        return $this->hasOne('App\Model\UsuarioP', 'Prefijo_CIDNI_id');
+    }
     public function UsuarioG()
     {
         return $this->hasOne('App\Model\UsuarioG', 'id_prefijo_dni');

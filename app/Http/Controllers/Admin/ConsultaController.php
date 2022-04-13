@@ -95,7 +95,7 @@ class ConsultaController extends Controller
             $consulta2->Fecha = $_POST['fecha'];
             $consulta2->Control_Historia_Medico_id =$_POST['control'];
             $consulta2->Enfermedad_Actual = $_POST['Eactual'];
-            $consulta2->Origen = $_POST['origen'];;
+            $consulta2->Origen = $_POST['origen'];
             $consulta2->Hallazgo = $_POST['hallazgo'];
             $consulta2->Plan_Tratamiento = $_POST['tratamiento'];
             $consulta2->Diagnostico_Definitivo = $_POST['diagnostico'];

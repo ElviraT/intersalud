@@ -11,4 +11,9 @@ class Citas extends Model
    public $timestamps = false;
 
    protected $fillable = ['Agenda_id','Paciente_id','Paciente_Especial_id','Medico_id','Asistente_id','Horario_Cita_Paciente','Max_paciente','Costo','Nota','Status_Consulta_id','title','start','end','color','confirmado','id_servicio'];
+
+   public function ControlHM()
+    {
+        return $this->hasOne('App\Model\ControlHM', 'id_Control_Historia_Medica');
+    }
 }

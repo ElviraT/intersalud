@@ -296,5 +296,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::match(['get','post'],'reportes/consulta', ['as' => 'reporte_consulta', 'uses' => 'Admin\reportes\ReporteConsultaController@index']);
 
 	Route::match(['get','post'],'pdf_form/{id}', ['as' => 'ver_pdf', 'uses' =>  'Admin\GeneratePdfController@pdfForm']);
+	Route::post('add-factura', ['as' => 'factura.add', 'uses' =>  'Admin\GeneratePdfController@add']);
+	Route::get('pago-factura/{id}', ['as' => 'factura.pago', 'uses' =>  'Admin\GeneratePdfController@pago']);
  	Route::match(['get','post'],'pdf_download', 'Admin\GeneratePdfController@pdfDownload');
 });

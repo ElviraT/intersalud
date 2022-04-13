@@ -17,6 +17,11 @@ class ControlHM extends Model
         return $this->hasOne('App\Model\Especialidad', 'id_Especialidad_Medica','Especialidad_Medica_id');
     }
 
+    public function Citas()
+    {
+        return $this->hasOne('App\Model\Citas', 'id_Cita_Consulta','Cita_Consulta_id');
+    }
+    
     public function UsuarioM()
     {
         return $this->hasOne('App\Model\UsuarioM', 'id_Medico', 'Medico_id');

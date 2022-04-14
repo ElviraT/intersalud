@@ -1,5 +1,7 @@
 @extends('layouts.base_login')
 @section('css')
+<!-- Select2 -->
+<link href="{{ asset('css/select2.min.css')}}" rel="stylesheet" type="text/css" />
 <style type="text/css">
   #tabla{
     margin-top: 20px; 
@@ -26,6 +28,31 @@
 </style>
 @endsection
 @section('content')
+<div class="card">
+  <div class="col-md-12 p-3">
+    <div class="row">
+      <div class="col-md-3">
+        {!! Form::label('tipoP', 'Tipo de pago:') !!}
+        {!! Form::select('tipoP',$tipoP,  null, [
+            'placeholder' => 'Seleccione', 
+            'class' => 'select2 form-control',
+            'id' => 'tipoP',
+            'required'=>'required'
+            ])
+        !!}
+      </div>
+      <div class="col-md-3">
+          {!! Form::label('simbolo', 'Moneda:') !!}
+          {!! Form::select('simbolo',$simbol, null, [
+              'placeholder' => 'Seleccione', 
+              'class' => 'select2 form-control',
+              'id' => 'simbolo',
+              'required'=>'required'
+              ]) !!}
+      </div>
+    </div>
+  </div>
+</div>
   <div class="card">
     {!! Form::open(['route' => ['factura.add'],  'method' => 'post', 'autocomplete' =>'off' ]) !!}
     <div class="col-md-12">
@@ -145,8 +172,15 @@
   </div>
 @endsection
 @section('js')
+<!-- Select2 -->
+<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
   $(document).ready(function() {
+    $('.select2').select2({ 
+        theme : "classic",
+        closeOnSelect: true,
+         });
+    
     var hoy = new Date();
     var cumpleanos = new Date('{{$dataf->UsuarioP->Fecha_Nacimiento_Paciente}}');
     var edad = hoy.getFullYear() - cumpleanos.getFullYear();

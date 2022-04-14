@@ -17,8 +17,10 @@ class GeneratePdfController extends Controller
     public function pdfForm($id)
     {
     	$dataf = ControlHM::where('id_Control_Historia_Medica', $id)->first();
+    	$tipoP=Collection::make(TipoPago::select(['id_Tipos_Pago','Tipo_Pago'])->orderBy('Tipo_Pago')->pluck("Tipo_Pago", "id_Tipos_Pago"));
+    	$simbol = ['Bs'=>'Bs','USD'=>'USD','Btc'=>'Btc','Eth'=>'Eth'];
     	//dd($dataf);
-        return view('admin.factura.pdf_form')->with(compact('dataf'));
+        return view('admin.factura.pdf_form')->with(compact('dataf','tipoP','simbol'));
     }
 
     public function add(Request $request)

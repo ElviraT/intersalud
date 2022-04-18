@@ -1,5 +1,13 @@
 @extends('layouts.Base')
 @section('css')
+<style type="text/css">
+  .bg-green{
+    background-color: green !important;
+  }
+  .bg-red{
+    background-color: red !important;
+  }
+</style>
 @include('admin.consultaO.css.css')
 @endsection
 @section('banner')
@@ -132,6 +140,39 @@
               </div>
             </div>
         </div>
+@endsection
+@section('modal')
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ 'Agregar Servicio' }}</h5>
+        <label class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </label>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12">
+            <div class="mb-3">
+                {!! Form::label('servicio', 'Servicio:') !!}
+                {!! Form::select('id_servicio',$servicios, null, [
+                    'placeholder' => 'Seleccione', 
+                    'class' => 'select2 form-control',
+                    'id' => 'id_servicio',
+                    'required'=>'required'
+                ]) !!}
+                <input type="hidden" class="form-control" name="id_control" id="id_control" value="3">
+            </div>
+        </div>
+        <p id="status_servicio"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" onclick="return add_servicio();">{{ 'Agregar' }}</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">{{ 'Cerrar' }}</button>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 @section('js')
   @include('admin.consultaO.js.js')

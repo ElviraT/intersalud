@@ -13,6 +13,8 @@ use App\Model\Antecedente;
 use App\Model\Anamenesi;
 use App\Model\Citas;
 use App\Model\ControlHM;
+use App\Model\Servicio;
+use App\Model\ServicioA;
 use DB;
 
 class ConsultaOController extends Controller
@@ -38,8 +40,9 @@ class ConsultaOController extends Controller
              select(['pacientes_especiales.id_Pacientes_Especiales AS id', DB::raw('CONCAT(pacientes_especiales.Nombre_Paciente_Especial, " ",pacientes_especiales. Apellido_Paciente_Especial) AS name')])
              ->join('usuarios_pacientes', 'pacientes_especiales.Paciente_id','usuarios_pacientes.id_Paciente')
              ->get())->pluck('name','id'); 
+      $servicios = Collection::make(Servicio::select(['id_Servicio','Servicio'])->where('Status_id',1)->orderBy('Servicio')->pluck("Servicio", "id_Servicio"));
       
-    	return view('admin.consultaO.index')->with(compact('pacientes','pacientesE','medico','especialidad'));
+    	return view('admin.consultaO.index')->with(compact('pacientes','pacientesE','medico','especialidad','servicios'));
    }
 
    public function antecedentes()
@@ -172,5 +175,20 @@ class ConsultaOController extends Controller
         $antecedentes= Antecedente::where('Paciente_Id', $paciente)->first();     
 
       return response()->json([$datos, $antecedentes, $cita, $anamenesis]);
+    }
+
+    public function add_servicio(Request $request)
+    {
+      $link = $request->except('_token');
+        $servicioa = ServicioA::create($link);
+        $resp = [];
+        $resp['status'] = 'failed';
+
+        if ($servicioa) {
+            $resp['status'] = 'success';
+        } else {
+            $resp['status'] = 'failed';
+        }
+        return response()->json($resp);
     }
 }

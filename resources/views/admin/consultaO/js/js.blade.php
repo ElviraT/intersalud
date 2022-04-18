@@ -33,8 +33,35 @@ function iniciar_reunion() {
 $(document).ready(function() {
     $('.select2').select2({ 
         theme : "classic",
-         });
     });
+
+    $('#id_servicio').select2({ 
+    theme : "classic",
+    dropdownParent: $('#exampleModal'),
+     });
+});
+
+function add_servicio(){
+    "use strict";
+    var id_servicio = $('#id_servicio').val();
+    var id_control = $('#id_control').val();
+
+    $.ajax({
+    url: "{{ route('add_servicio') }}",
+    method: 'POST',
+    data:{_token: "{{ csrf_token() }}", id_servicio: id_servicio, id_control: id_control},
+    }).done(function(res) {
+        console.log(res);
+        if(res.status == 'success') {
+            $('#id_servicio').val('').change();
+            $('#status_servicio').html("<span class='badge mt-2 bg-green'>{{ 'Registro Agregado' }}</span>");
+        }else{
+            $('#status_servicio').html("<span class='badge mt-2 bg-red'>{{ 'Error al Agregar' }}</span>");
+        }
+            window.setTimeout(function() { $("#status_servicio").html(''); }, 3000);
+    });
+}
+
 $('#paciente').on('select2:select', function (e) {
    var paciente = $('#paciente').val();
     $.getJSON('{{ route('paciente_dependiente') }}?paciente='+paciente, function(objPE){
@@ -112,6 +139,7 @@ function buscar() {
                     $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                     $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente']));
                     $('#Servicio').html(objBP[0]['Servicio']);
+                    $('#id_control').val(objBP[0]['id_Control_Historia_Medica']);
                         var ini1= objBP[2]['start'].split(" ");
                         var fin0= objBP[2]['end'].split(" ");
                         
@@ -208,6 +236,8 @@ function buscar() {
                 $('#control1').val(objBP[0]['id_Control_Historia_Medica']);
                 $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                 $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente_Especial']));
+                $('#Servicio').html(objBP[0]['Servicio']);
+                $('#id_control').val(objBP[0]['id_Control_Historia_Medica']);
 
                 $('#tiempo').html(objBP[2]['end']);
 

@@ -278,6 +278,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('consultao/add2', ['as' => 'consultao.add2', 'uses' => 'Admin\ConsultaOController@anamenesis']);
 	Route::get('consultao/edit', ['as' => 'consultao.edit', 'uses' => 'Admin\ConsultaOController@edit']);
 	Route::post('consultao/destroy', ['as' => 'consultao.destroy', 'uses' => 'Admin\ConsultaOController@destroy']);
+	Route::post('agregar-servicio', ['as' => 'add_servicio', 'uses' => 'Admin\ConsultaOController@add_servicio']);
 
 	//CONSULTAS
 	Route::get('consulta', ['as' => 'consulta', 'uses' => 'Admin\ConsultaController@index']);

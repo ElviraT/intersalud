@@ -6,7 +6,7 @@
             </a>
             <!-- logo -->
             <a href="#">
-                <img class="img-fluid" src="{{ asset('img/Logo_blanco.png')}}" alt="Theme-Logo" width="90%" />
+                <img class="img-fluid" src="{{ asset('img/Logo_blanco.png')}}" alt="Theme-Logo" width="90%"/>
             </a>
               <!-- opcion movil-->
             <a class="mobile-options waves-effect waves-light">

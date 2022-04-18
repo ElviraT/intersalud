@@ -42,6 +42,11 @@
 	           <label>{{'Fecha'}}</label>
 	           <input type="date" name="fecha" id="fecha" value="{{date('Y-m-d')}}" class="form-control" readonly="true">
 	        </div>
+	        <div class="col-md-6 mt-4"> 
+	            <button type="button" class="mt-1 btn btn-outline-warning" data-toggle="modal" data-target="#exampleModal">
+                    {{ 'Servicio Adicional' }}
+                </button>
+	        </div>
         </div>
     </div>
 <div class="modal-footer">

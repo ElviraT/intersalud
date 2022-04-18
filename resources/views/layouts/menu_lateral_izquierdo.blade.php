@@ -444,6 +444,7 @@
           </li>
       </ul> 
       @endcan
+      @canany(['urologia'])
       <ul class="pcoded-item pcoded-left-item">
         <li class="{{ @request()->routeIs('urologia*') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
             <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -464,6 +465,7 @@
             </ul>
         </li>        
       </ul>
+      @endcanany
       @canany(['reporte_consulta'])
       <ul class="pcoded-item pcoded-left-item">
         <li class="{{ @request()->routeIs('reporte_consulta') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
@@ -472,8 +474,8 @@
                 <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">{{'Reportes'}}</span>
                 <span class="pcoded-mcaret"></span>
             </a>
+            @can('reporte_consulta')
             <ul class="pcoded-submenu">
-              @can('reporte_consulta')
               <li class="{{ @request()->routeIs('reporte_consulta') ? 'active' : ''}}">
                 <a href="{{ route('reporte_consulta')}}" onclick="loading_show();" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -481,10 +483,10 @@
                   <span class="pcoded-mcaret"></span>
                 </a>
               </li>
-              @endcan
             </ul>
+            @endcan
         </li>        
       </ul>
-      @endcan
-    </div>
+      @endcanany
+  </div>
 </nav>

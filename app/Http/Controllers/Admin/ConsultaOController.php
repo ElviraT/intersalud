@@ -168,6 +168,7 @@ class ConsultaOController extends Controller
                    ->join('control_historia_medicas', 'control_historia_medicas.Paciente_id','usuarios_pacientes.id_Paciente')
                    ->join('servicios', 'servicios.id_Servicio','control_historia_medicas.id_servicio')
                    ->where('usuarios_pacientes.id_Paciente',$paciente)
+                   ->whereDate('control_historia_medicas.Fecha', date('Y-m-d'))
                    ->where('control_historia_medicas.cerrado',0)
                    ->first();
               }

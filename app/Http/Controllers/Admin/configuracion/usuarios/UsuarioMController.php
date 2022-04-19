@@ -194,23 +194,18 @@ class UsuarioMController extends Controller
 			$login= User::where('id_usuario', $id)->first();
 	        $fecha= date('Y-m-d');
 
-	         if(isset($login->password) && password_verify($request['contrasena'], $login->password)){
-	         	Flash::error('Debe ingresar una contraseña distinta a las anterior');
-	         	return redirect()->route('usuario_m.edit', $id);
-	         }else{
-	         	 DB::beginTransaction();
+	    	switch ($request['contrasena']) {
+	        	case '':
+	        		// code...
+	        		 DB::beginTransaction();
 				try{
 		            LoginT::where('Medico_id', $id)->update([
-		             	'Usuario' => ucfirst($request['nombre_usuario']),
 				        'Correo' => $request['correo'],
-				        'Status_Medico_id' => $request['statusm'],
-				        'Contrasena' => Hash::make($request['contrasena'])
+				        'Status_Medico_id' => $request['statusm']
 		            ]);
 
 		            User::where('id_usuario', $id)->update([
-		             	'name' => ucfirst($request['nombre_usuario']),
                     	'email' => $request['correo'],
-				        'password' => Hash::make($request['contrasena']),
 				        'status' => $request['statusm']
 		            ]);
 
@@ -231,12 +226,60 @@ class UsuarioMController extends Controller
 			         DB::commit();
 		            Flash::success("Registro Actualizado Correctamente");
 
-		        }catch(\Illuminate\Database\QueryException $e) {
-		        	DB::rollback();
-			        Flash::error('Ocurrió un error, por favor intente de nuevo'); 
-		        }
-		        return redirect()->route('usuario_m.edit', $id);
+			        }catch(\Illuminate\Database\QueryException $e) {
+			        	DB::rollback();
+				        Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+			        }
+	        		break;
+	        	
+	        	default:
+	        		// code...
+	        		
+			        if(isset($login->password) && password_verify($request['contrasena'], $login->password)){
+			         	Flash::error('Debe ingresar una contraseña distinta a las anterior');
+			         	return redirect()->route('usuario_m.edit', $id);
+			        }else{
+			         	 DB::beginTransaction();
+						try{
+				            LoginT::where('Medico_id', $id)->update([
+				             	'Usuario' => ucfirst($request['nombre_usuario']),
+						        'Correo' => $request['correo'],
+						        'Status_Medico_id' => $request['statusm'],
+						        'Contrasena' => Hash::make($request['contrasena'])
+				            ]);
+
+				            User::where('id_usuario', $id)->update([
+				             	'name' => ucfirst($request['nombre_usuario']),
+		                    	'email' => $request['correo'],
+						        'password' => Hash::make($request['contrasena']),
+						        'status' => $request['statusm']
+				            ]);
+
+				            $rol= $login->roles()->first();            
+		                    $login->removeRole($rol);                  
+		                    $login->assignRole($request['rol']);
+									
+				        	$loginT = LoginT::where('Medico_id', $id)->first();
+				            $loginh= new HistoricoT();
+					        $loginh->Login_Tranajador_id = $loginT->id_Login_Trabajador;
+					        $loginh->Old_Constrasena = Hash::make($login->password);
+					        $loginh->Fecha = $fecha;
+					        $loginh->Medico_id = $id;
+					        $loginh->Correo = $login->email;
+					        $loginh->Nota = '';
+					        $loginh->save();
+
+					         DB::commit();
+				            Flash::success("Registro Actualizado Correctamente");
+
+				        }catch(\Illuminate\Database\QueryException $e) {
+				        	DB::rollback();
+					        Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+				        }
+	        		}
+		        break;
 			}
+		        return redirect()->route('usuario_m.edit', $id);
 		}
 	}
 

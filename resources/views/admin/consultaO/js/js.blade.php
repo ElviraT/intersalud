@@ -89,11 +89,7 @@ $('#paciente').on('select2:select', function (e) {
         }        
     });
 });
-var url_factura = "{{ route('ver_pdf', ':id') }}";
-   url_factura = url_factura.replace(':id', '4'); //objBP[0]['id_Control_Historia_Medica']);
 
-var factura = document.getElementById("factura");
-   factura.href = url_factura;
 function buscar() {
     var paciente = $('#paciente').val();
     var pacienteE =$('#pacienteE').val();
@@ -139,7 +135,7 @@ function buscar() {
                     $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                     $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente']));
                     $('#Servicio').html(objBP[0]['Servicio']);
-                    $('#id_control').val(objBP[0]['id_Control_Historia_Medica']);
+                    //$('#id_control').val(objBP[0]['id_Control_Historia_Medica']);
                         var ini1= objBP[2]['start'].split(" ");
                         var fin0= objBP[2]['end'].split(" ");
                         
@@ -147,8 +143,8 @@ function buscar() {
                          var elemento = document.getElementById("enlace");
                            elemento.href = "http://wa.me/"+objBP[0]['Celular'];
 
-                      /* var url_factura = "{{ route('ver_pdf', ':id') }}";
-                           url_factura = url_factura.replace(':id', '17'); //objBP[0]['id_Control_Historia_Medica']);
+                       /* var url_factura = "{{ route('ver_pdf', ':id') }}";
+                           url_factura = url_factura.replace(':id', paciente);
 
                         var factura = document.getElementById("factura");
                            factura.href = url_factura;*/
@@ -237,7 +233,7 @@ function buscar() {
                 $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                 $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente_Especial']));
                 $('#Servicio').html(objBP[0]['Servicio']);
-                $('#id_control').val(objBP[0]['id_Control_Historia_Medica']);
+                //$('#id_control').val(objBP[0]['id_Control_Historia_Medica']);
 
                 $('#tiempo').html(objBP[2]['end']);
 

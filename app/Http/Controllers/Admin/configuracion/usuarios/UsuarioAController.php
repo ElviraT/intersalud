@@ -145,46 +145,84 @@ class UsuarioAController extends Controller
 
   public function login(Request $request)
   {
-    if($request->idL == null){
-       DB::beginTransaction();
-      try {
-            $login= new LoginT();
-            $login->Usuario = ucfirst($request['nombre_usuario']);
-            $login->Correo = $request['correo'];
-            $login->Status_Medico_id = $request['status'];
-            $login->Contrasena = Hash::make($request['contrasena']);
-            $login->Asistente_id = $request['id'];
-            $login->save();
+      if($request->idL == null){
+           DB::beginTransaction();
+          try {
+                $login= new LoginT();
+                $login->Usuario = ucfirst($request['nombre_usuario']);
+                $login->Correo = $request['correo'];
+                $login->Status_Medico_id = $request['status'];
+                $login->Contrasena = Hash::make($request['contrasena']);
+                $login->Asistente_id = $request['id'];
+                $login->save();
 
-            $login2= new User();
-            $login2->name = ucfirst($request['nombre_usuario']);
-            $login2->email = $request['correo'];
-            $login2->password = Hash::make($request['contrasena']);
-            $login2->status = $request['status'];
-            $login2->id_usuarioA = $request['id'];
-            $login2->save();
+                $login2= new User();
+                $login2->name = ucfirst($request['nombre_usuario']);
+                $login2->email = $request['correo'];
+                $login2->password = Hash::make($request['contrasena']);
+                $login2->status = $request['status'];
+                $login2->id_usuarioA = $request['id'];
+                $login2->save();
 
-            $login2->assignRole($request['rol']);
-          DB::commit();
-        Flash::success("Registro Agregado Correctamente");            
-        } catch (\Illuminate\Database\QueryException $e) {
-           DB::rollback();
-            Flash::error('Ocurrió un error, por favor intente de nuevo');  
-        }
-
-        return redirect()->route('usuario_a.edit', $request['id']);
-    }else{
+                $login2->assignRole($request['rol']);
+               DB::commit();
+               Flash::success("Registro Agregado Correctamente");            
+          } catch (\Illuminate\Database\QueryException $e) {
+             DB::rollback();
+              Flash::error('Ocurrió un error, por favor intente de nuevo');  
+          }
+          return redirect()->route('usuario_a.edit', $request['id']);
+      }else{
       
           $id = (int)$request->id;
           $login= User::where('id_usuarioA', $id)->first();
           $fecha= date('Y-m-d');
+          switch ($request['contrasena']) {
+            case '':
+              // code...
+              DB::beginTransaction();
+                try{
+                    LoginT::where('Asistente_id', $id)->update([
+                    'Correo' => $request['correo'],
+                    'Status_Medico_id' => $request['status']
+                    ]);
 
-           if(password_verify($request['contrasena'], $login->password)){
-            Flash::error('Debe ingresar una contraseña distinta a las anterior');
-            return redirect()->route('usuario_a.edit', $id);
-           }else{
-             DB::beginTransaction();
-            try{
+                    User::where('id_usuarioA', $id)->update([
+                    'email' => $request['correo'],
+                    'status' => $request['status']
+                    ]);
+
+                    $rol= $login->roles()->first();                
+                    $login->removeRole($rol);                  
+                    $login->assignRole($request['rol']);
+
+                    $loginT = LoginT::where('Asistente_id', $id)->first();
+                    $loginh= new HistoricoT();
+                    $loginh->Login_Tranajador_id = $loginT->id_Login_Trabajador;
+                    $loginh->Old_Constrasena = Hash::make($login->password);
+                    $loginh->Fecha = $fecha;
+                    $loginh->Asistente_id = $id;
+                    $loginh->Correo = $login->email;
+                    $loginh->Nota = '';
+                    $loginh->save();
+
+                     DB::commit();
+                    Flash::success("Registro Actualizado Correctamente");
+
+                }catch(\Illuminate\Database\QueryException $e) {
+                  DB::rollback();
+                  Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+                }
+              break;
+            
+            default:
+              // code...              
+               if(password_verify($request['contrasena'], $login->password)){
+                Flash::error('Debe ingresar una contraseña distinta a las anterior');
+                return redirect()->route('usuario_a.edit', $id);
+               }else{
+                  DB::beginTransaction();
+                  try{
                     LoginT::where('Asistente_id', $id)->update([
                     'Usuario' => ucfirst($request['nombre_usuario']),
                     'Correo' => $request['correo'],
@@ -203,26 +241,28 @@ class UsuarioAController extends Controller
                     $login->removeRole($rol);                  
                     $login->assignRole($request['rol']);
 
-                  $loginT = LoginT::where('Asistente_id', $id)->first();
-                  $loginh= new HistoricoT();
-                  $loginh->Login_Tranajador_id = $loginT->id_Login_Trabajador;
-                  $loginh->Old_Constrasena = Hash::make($login->password);
-                  $loginh->Fecha = $fecha;
-                  $loginh->Asistente_id = $id;
-                  $loginh->Correo = $login->email;
-                  $loginh->Nota = '';
-                  $loginh->save();
+                    $loginT = LoginT::where('Asistente_id', $id)->first();
+                    $loginh= new HistoricoT();
+                    $loginh->Login_Tranajador_id = $loginT->id_Login_Trabajador;
+                    $loginh->Old_Constrasena = Hash::make($login->password);
+                    $loginh->Fecha = $fecha;
+                    $loginh->Asistente_id = $id;
+                    $loginh->Correo = $login->email;
+                    $loginh->Nota = '';
+                    $loginh->save();
 
-                     DB::commit();
-                Flash::success("Registro Actualizado Correctamente");
+                    DB::commit();
+                    Flash::success("Registro Actualizado Correctamente");
 
-            }catch(\Illuminate\Database\QueryException $e) {
-              DB::rollback();
-              Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+                  }catch(\Illuminate\Database\QueryException $e) {
+                    DB::rollback();
+                    Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+                  }
+              break;
             }
-                return redirect()->route('usuario_a.edit', $id);
           }
-    }
+                return redirect()->route('usuario_a.edit', $id);
+      }
   }
 
   public function destroy(Request $request)

@@ -145,7 +145,8 @@ class UsuarioPController extends Controller
 
     public function login(Request $request)
   {
-    if($request->idL == null){
+    if($request->idL == null)
+    {
        DB::beginTransaction();
       try {
             $login= new LoginP();
@@ -179,31 +180,24 @@ class UsuarioPController extends Controller
           $login= LoginP::where('Paciente_id', $id)->first();
           $login_rol= User::where('id_usuarioP', $id)->first();
           $fecha= date('Y-m-d');
-//dd($login);
 
-           if(password_verify($request['contrasena'], $login->password)){
-            Flash::error('Debe ingresar una contraseña distinta a las anterior');
-            return redirect()->route('usuario_p.edit', $id);
-           }else{
-             DB::beginTransaction();
-            try{
+          switch ($request['contrasena']) {
+            case '':
+              // code...
+              try{
                     LoginP::where('Paciente_id', $id)->update([
-                    'Usuario' => ucfirst($request['nombre_usuario']),
                     'Correo' => $request['correo'],
                     'Status_id' => $request['status'],
-                    'Contrasena' => Hash::make($request['contrasena']),
                     ]);
 
                     User::where('id_usuarioP', $id)->update([
-                    'name' => ucfirst($request['nombre_usuario']),
                     'email' => $request['correo'],
-                    'password' => Hash::make($request['contrasena']),
                     'status' => $request['status']
                     ]);
 
-                    $rol= $login->roles()->first();                
-                    $login->removeRole($rol);                  
-                    $login->assignRole($request['rol']);
+                    $rol= $login_rol->roles()->first();                
+                    $login_rol->removeRole($rol);                  
+                    $login_rol->assignRole($request['rol']);
 
                   $loginh= new HistoricoP();
                   $loginh->Login_Pacientes_id = $login->Paciente_id;
@@ -220,9 +214,55 @@ class UsuarioPController extends Controller
                   DB::rollback();
                   Flash::error('Ocurrió un error, por favor intente de nuevo'); 
                 }
+              break;
+            
+          default:
+              // code...
+              if(password_verify($request['contrasena'], $login->password)){
+                Flash::error('Debe ingresar una contraseña distinta a las anterior');
                 return redirect()->route('usuario_p.edit', $id);
+              }else{
+                 DB::beginTransaction();
+                try{
+                    LoginP::where('Paciente_id', $id)->update([
+                    'Usuario' => ucfirst($request['nombre_usuario']),
+                    'Correo' => $request['correo'],
+                    'Status_id' => $request['status'],
+                    'Contrasena' => Hash::make($request['contrasena']),
+                    ]);
+
+                    User::where('id_usuarioP', $id)->update([
+                    'name' => ucfirst($request['nombre_usuario']),
+                    'email' => $request['correo'],
+                    'password' => Hash::make($request['contrasena']),
+                    'status' => $request['status']
+                    ]);
+
+                    $rol= $login_rol->roles()->first();                
+                    $login_rol->removeRole($rol);                  
+                    $login_rol->assignRole($request['rol']);
+
+                    $loginh= new HistoricoP();
+                    $loginh->Login_Pacientes_id = $login->Paciente_id;
+                    $loginh->Old_contrasena = Hash::make($login->password);
+                    $loginh->Fecha = $fecha;
+                    $loginh->Paciente_id = $id;
+                    $loginh->Correo = $login->email;
+                    $loginh->Nota = '';
+                    $loginh->save();
+                    
+                    DB::commit();
+                    Flash::success("Registro Actualizado Correctamente");
+
+                }catch(\Illuminate\Database\QueryException $e) {
+                  DB::rollback();
+                  Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+                }
+                break;
+            }
           }
     }
+                return redirect()->route('usuario_p.edit', $id);
   }
 
   public function destroy(Request $request)

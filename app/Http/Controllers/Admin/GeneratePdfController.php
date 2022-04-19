@@ -9,17 +9,41 @@ use App\Model\ControlHM;
 use App\Model\Factura;
 use App\Model\FacturaDetalle;
 use App\Model\TipoPago;
+use App\Model\UsuarioP;
 use PDF;
 use DB;
 
 class GeneratePdfController extends Controller
 {
+    public function index(Request $request)
+    {
+        $method = $request->method();
+        $response = $request->all();
+        if (!$_GET) {
+            $fecha = date('Y-m-d');
+            $paciente = NULL;
+            $dataf= null;
+          } 
+        if ($request->isMethod('post')) {
+            $dataf = (new ControlHM)->newQuery();
+            $fecha = $request->input('fecha');
+            $paciente = $request->input('paciente');
+        }
+        
+        if ($paciente != NULL && $fecha != NULL) {
+           $dataf = $dataf->where('Paciente_id', $paciente)->whereDate('Fecha', $fecha)->where('cerrado', 1)->first();
+        }
+       
+        $pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
+       
+        return view('admin.factura.pago')->with(compact('pacientes','fecha','paciente', 'dataf'));
+    }
     public function pdfForm($id)
     {
-    	$dataf = ControlHM::where('id_Control_Historia_Medica', $id)->first();
+    	$dataf = ControlHM::where('Paciente_id', $id)->whereDate('Fecha', date('Y-m-d'))->where('cerrado', 1)->first();
     	$tipoP=Collection::make(TipoPago::select(['id_Tipos_Pago','Tipo_Pago'])->orderBy('Tipo_Pago')->pluck("Tipo_Pago", "id_Tipos_Pago"));
+        $servicios = 
     	$simbol = ['Bs'=>'Bs','USD'=>'USD','Btc'=>'Btc','Eth'=>'Eth'];
-    	//dd($dataf);
         return view('admin.factura.pdf_form')->with(compact('dataf','tipoP','simbol'));
     }
 

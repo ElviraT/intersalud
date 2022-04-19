@@ -120,11 +120,9 @@
             </tr>
           </thead>
           @php($iva= ($dataf->Servicio->Costos * 12 / 100)) 
-          @if($dataf->Servicio->simbolo == 'USD')
-          @php($impuesto = ($dataf->Servicio->Costos * 3 / 100))
-          @else @php($impuesto = 0) @endif 
-          @php($total = ($dataf->Servicio->Costos+$iva+$impuesto))
+          @php($total = ($dataf->Servicio->Costos+$iva))
           <tbody>
+            {{dd($dataf->Servicio)}}
             <tr>
               <td>{{'01'}}</td>
               <td>{{$dataf->Servicio->Servicio}}</td>
@@ -138,10 +136,6 @@
             <tr>
               <td colspan="3">{{'IVA 12%'}}</td>
               <td>{{ $iva }}</td>
-            </tr>
-            <tr>
-              <td colspan="3">{{'Impuesto al dolar 3%'}}</td>
-              <td>{{$impuesto}}</td>
             </tr>
             <tr>
               <td colspan="3">{{'Total a Pagar'}}</td>

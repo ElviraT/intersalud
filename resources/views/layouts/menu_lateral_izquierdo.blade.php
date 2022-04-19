@@ -466,6 +466,17 @@
         </li>        
       </ul>
       @endcanany
+      @can('consulta') 
+      <ul class="pcoded-item pcoded-left-item">
+          <li class="{{ @request()->routeIs('factura') ? 'active' : ' ' }}">
+              <a href="{{route('factura')}}"  onclick="loading_show();" class="waves-effect waves-dark">
+                  <span class="pcoded-micon"><i class="ti-notepad"></i><b>F</b></span>
+                  <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Facturación'}}</span>
+                  <span class="pcoded-mcaret"></span>
+              </a>
+          </li>
+      </ul> 
+      @endcan
       @canany(['reporte_consulta'])
       <ul class="pcoded-item pcoded-left-item">
         <li class="{{ @request()->routeIs('reporte_consulta') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">

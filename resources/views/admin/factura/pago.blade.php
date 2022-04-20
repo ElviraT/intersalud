@@ -164,6 +164,7 @@
               </thead>
               @php($iva= ($dataf->Servicio->Costos * 12 / 100)) 
               @php($total = ($dataf->Servicio->Costos+$iva))
+              @php($tsa = 0)
               <tbody>
                 <tr>
                   <td>{{'01'}}</td>
@@ -171,9 +172,18 @@
                   <td>{{$dataf->Servicio->Costos}}&nbsp;{{$dataf->Servicio->simbolo}}</td>
                   <td>{{$dataf->Servicio->Costos}}&nbsp;{{$dataf->Servicio->simbolo}}</td>
                 </tr>
+                @if($servicios)
+                  @foreach($servicios as $servicio)
+                    <td>{{'01'}}</td>
+                    <td>{{$servicio->Servicio}}</td>
+                    <td>{{$servicio->Costos}}&nbsp;{{$servicio->simbolo}}</td>
+                    <td>{{$servicio->Costos}}&nbsp;{{$servicio->simbolo}}</td>
+                    @php($tsa += $servicio->Costos)
+                  @endforeach
+                @endif
                 <tr>
                   <td colspan="3">{{'Subtotal'}}</td>
-                  <td>{{$dataf->Servicio->Costos}}&nbsp;{{$dataf->Servicio->simbolo}}</td>
+                  <td>{{($dataf->Servicio->Costos + $tsa)}}&nbsp;{{$dataf->Servicio->simbolo}}</td>
                 </tr>
                 <tr>
                   <td colspan="3">{{'IVA 12%'}}</td>
@@ -181,19 +191,25 @@
                 </tr>
                 <tr>
                   <td colspan="3">{{'Total a Pagar'}}</td>
-                  <td>{{$total}}&nbsp;{{$dataf->Servicio->simbolo}}</td>
+                  <td>{{($total +$tsa)}}&nbsp;{{$dataf->Servicio->simbolo}}</td>
                 </tr>
               </tbody>
             </table>
           {{--FIN DE DETALLE--}}
           {{--DETALLE FACTURA ENVIAR--}}
-          <input type="hidden" name="Servicio_id" value="{{$dataf->Servicio->id_Servicio}}">
+          <input type="hidden" name="Servicio_id[0]" value="{{$dataf->Servicio->id_Servicio}}">
           <input type="hidden" name="Cantidad" value="1">
-          <input type="hidden" name="Costo_Servicio" value="{{$dataf->Servicio->Costos}}">
+          <input type="hidden" name="Costo_Servicio[0]" value="{{$dataf->Servicio->Costos}}">
           <input type="hidden" name="moneda" value="{{$dataf->Servicio->simbolo}}">
           <input type="hidden" name="iva" value="{{$iva}}">
           {{--<input type="hidden" name="impuesto" value="{{$impuesto}}">--}}
           <input type="hidden" name="Status_Factura_id" value="">
+          @if($servicios)
+            @foreach($servicios as $key => $servicio)
+              <input type="hidden" name="Servicio_id[$key+1]" value="{{$servicio->id_Servicio}}">
+              <input type="hidden" name="Costo_Servicio[$key+1]" value="{{$servicio->Costos}}">
+            @endforeach
+          @endif
           {{--FIN DETALLE FACTURA ENVIAR--}}
           </div>
         </div>

@@ -10,6 +10,7 @@ use App\Model\Factura;
 use App\Model\FacturaDetalle;
 use App\Model\TipoPago;
 use App\Model\UsuarioP;
+use App\Model\ServicioA;
 use PDF;
 use DB;
 
@@ -23,6 +24,7 @@ class GeneratePdfController extends Controller
             $fecha = date('Y-m-d');
             $paciente = NULL;
             $dataf= null;
+            $servicios= null;
           } 
         if ($request->isMethod('post')) {
             $dataf = (new ControlHM)->newQuery();
@@ -32,11 +34,19 @@ class GeneratePdfController extends Controller
         
         if ($paciente != NULL && $fecha != NULL) {
            $dataf = $dataf->where('Paciente_id', $paciente)->whereDate('Fecha', $fecha)->where('cerrado', 1)->first();
+           $servicios= ServicioA::select('servicios.id_servicio','servicios.Servicio','servicios.Costos','servicios.simbolo')
+                                ->join('servicios', 'servicios_adicionales.id_servicio', 'servicios.id_Servicio')
+                                ->join('control_historia_medicas', 'servicios_adicionales.id_control','control_historia_medicas.id_Control_Historia_Medica')
+                                ->where('control_historia_medicas.Paciente_id', $paciente)
+                                ->where('control_historia_medicas.cerrado', 1)
+                                ->whereDate('control_historia_medicas.Fecha', $fecha)
+                                ->get();
+          
         }
        
         $pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
        
-        return view('admin.factura.pago')->with(compact('pacientes','fecha','paciente', 'dataf'));
+        return view('admin.factura.pago')->with(compact('pacientes','fecha','paciente', 'dataf','servicios'));
     }
     public function pdfForm($id)
     {
@@ -49,6 +59,7 @@ class GeneratePdfController extends Controller
 
     public function add(Request $request)
     {
+        dd($request);
     	DB::beginTransaction();
     	try {
 

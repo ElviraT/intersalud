@@ -36,14 +36,16 @@ class GeneratePdfController extends Controller
            $dataf = $dataf->where('Paciente_id', $paciente)->whereDate('Fecha', $fecha)->where('cerrado', 1)->first();
            $servicios= ServicioA::select('servicios.id_servicio','servicios.Servicio','servicios.Costos','servicios.simbolo')
                                 ->join('servicios', 'servicios_adicionales.id_servicio', 'servicios.id_Servicio')
-                                ->join('control_historia_medicas', 'servicios_adicionales.id_control','control_historia_medicas.id_Control_Historia_Medica')
-                                ->where('control_historia_medicas.Paciente_id', $paciente)
+                                ->join('citas_consultas', 'servicios_adicionales.Cita_Consulta_id','citas_consultas.id_Cita_Consulta')                                
+                                ->join('control_historia_medicas', 'citas_consultas.id_Cita_Consulta','control_historia_medicas.Cita_Consulta_id')                                
                                 ->where('control_historia_medicas.cerrado', 1)
-                                ->whereDate('control_historia_medicas.Fecha', $fecha)
+                                ->where('citas_consultas.Paciente_id', $paciente)
+                                ->whereDate('citas_consultas.start', $fecha)
+                                ->groupBy('servicios.id_servicio','servicios.Servicio','servicios.Costos','servicios.simbolo')
                                 ->get();
           
         }
-       
+       //dd($servicios);
         $pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
        
         return view('admin.factura.pago')->with(compact('pacientes','fecha','paciente', 'dataf','servicios'));

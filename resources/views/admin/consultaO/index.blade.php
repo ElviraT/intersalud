@@ -158,7 +158,7 @@
                     'id' => 'id_servicio',
                     'required'=>'required'
                 ]) !!}
-                <input type="hidden" class="form-control" name="id_control" id="id_control">
+                <input type="hidden" class="form-control" name="Cita_Consulta_id" id="Cita_Consulta_id">
             </div>
         </div>
         <p id="status_servicio"></p>

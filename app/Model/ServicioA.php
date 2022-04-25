@@ -10,5 +10,5 @@ class ServicioA extends Model
     protected $primary_key = 'id';
     public $timestamps = false;
 
-    protected $fillable = ['id','id_control','id_servicio','nota'];
+    protected $fillable = ['id','Cita_Consulta_id','id_servicio','nota'];
 }

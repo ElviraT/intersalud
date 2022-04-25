@@ -44,12 +44,12 @@ $(document).ready(function() {
 function add_servicio(){
     "use strict";
     var id_servicio = $('#id_servicio').val();
-    var id_control = $('#id_control').val();
+    var Cita_Consulta_id = $('#Cita_Consulta_id').val();
 
     $.ajax({
     url: "{{ route('add_servicio') }}",
     method: 'POST',
-    data:{_token: "{{ csrf_token() }}", id_servicio: id_servicio, id_control: id_control},
+    data:{_token: "{{ csrf_token() }}", id_servicio: id_servicio, Cita_Consulta_id: Cita_Consulta_id},
     }).done(function(res) {
         console.log(res);
         if(res.status == 'success') {
@@ -135,7 +135,7 @@ function buscar() {
                     $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                     $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente']));
                     $('#Servicio').html(objBP[0]['Servicio']);
-                    //$('#id_control').val(objBP[0]['id_Control_Historia_Medica']);
+                    $('#Cita_Consulta_id').val(objBP[2]['id_Cita_Consulta']);
                         var ini1= objBP[2]['start'].split(" ");
                         var fin0= objBP[2]['end'].split(" ");
                         
@@ -233,7 +233,7 @@ function buscar() {
                 $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                 $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente_Especial']));
                 $('#Servicio').html(objBP[0]['Servicio']);
-                //$('#id_control').val(objBP[0]['id_Control_Historia_Medica']);
+                $('#Cita_Consulta_id').val(objBP[2]['id_Cita_Consulta']);
 
                 $('#tiempo').html(objBP[2]['end']);
 

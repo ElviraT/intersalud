@@ -4,7 +4,7 @@
         <input type="hidden" name="id_paciente" id="id_pacienteA" required>
         <input type="hidden" name="id_pacienteE" id="id_pacienteEA" value="0">
         <input type="hidden" name="id_medico" id="id_medico" value="{{ auth()->user()->id_usuario }}">
-        <input type="hidden" name="control" id="control" value="null">
+        <input type="text" name="control" id="control" value="null">
         <div class="row">
 	        <div class="col-md-6 mb-3"> 
 	           <label>{{'Enfermedad Actual'}}</label>

@@ -14,6 +14,7 @@ use App\Model\Especialidad;
 use App\Model\Citas;
 use App\Model\ControlHM;
 use App\Model\Servicio;
+use App\Model\ServicioA;
 use DB;
 
 class CitasController extends Controller
@@ -35,9 +36,11 @@ class CitasController extends Controller
           $especialidad = Collection::make(Especialidad::select(['id_Especialidad_Medica','Espacialiadad_Medica'])->orderBy('Espacialiadad_Medica')->pluck("Espacialiadad_Medica", "id_Especialidad_Medica")); 
 
           $agenda= Collection::make(Agenda::
-             select(['agendas.id_Agenda AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica ) AS name')])
+             select(['agendas.id_Agenda AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica, " - ",turnos.nombre ) AS name')])
              ->join('usuarios_medicos', 'agendas.Medico_id','usuarios_medicos.id_Medico')
              ->join('especialidades_medicas', 'agendas.Especialidad_Medica','especialidades_medicas.id_Especialidad_Medica')
+             ->join('horarios_citas', 'agendas.Horario_Cita_id','horarios_citas.id_Horario_Cita')
+             ->join('turnos', 'horarios_citas.turno_id','turnos.id_turno')
              ->where('agendas.Status_id', 1)
              ->get())->pluck('name','id');
           
@@ -55,9 +58,11 @@ class CitasController extends Controller
              ->get())->pluck('name','id'); 
 
            $agenda= Collection::make(Agenda::
-             select(['agendas.id_Agenda AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica ) AS name')])
+             select(['agendas.id_Agenda AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica, " - ",turnos.nombre ) AS name')])
              ->join('usuarios_medicos', 'agendas.Medico_id','usuarios_medicos.id_Medico')
              ->join('especialidades_medicas', 'agendas.Especialidad_Medica','especialidades_medicas.id_Especialidad_Medica')
+             ->join('horarios_citas', 'agendas.Horario_Cita_id','horarios_citas.id_Horario_Cita')
+             ->join('turnos', 'horarios_citas.turno_id','turnos.id_turno')
              ->where('usuarios_medicos.id_Medico', auth()->user()->id_usuario)
              ->where('agendas.Status_id', 1)
              ->get())->pluck('name','id');
@@ -77,9 +82,11 @@ class CitasController extends Controller
              ->get())->pluck('name','id'); 
 
            $agenda= Collection::make(Agenda::
-             select(['agendas.id_Agenda AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica ) AS name')])
+             select(['agendas.id_Agenda AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica, " - ",turnos.nombre ) AS name')])
              ->join('usuarios_medicos', 'agendas.Medico_id','usuarios_medicos.id_Medico')
              ->join('especialidades_medicas', 'agendas.Especialidad_Medica','especialidades_medicas.id_Especialidad_Medica')
+             ->join('horarios_citas', 'agendas.Horario_Cita_id','horarios_citas.id_Horario_Cita')
+             ->join('turnos', 'horarios_citas.turno_id','turnos.id_turno')
              ->where('usuarios_medicos.id_Medico', $asistente->id_Medico)
              ->where('agendas.Status_id', 1)
              ->get())->pluck('name','id');
@@ -94,9 +101,11 @@ class CitasController extends Controller
           $especialidad = Collection::make(Especialidad::select(['id_Especialidad_Medica','Espacialiadad_Medica'])->orderBy('Espacialiadad_Medica')->pluck("Espacialiadad_Medica", "id_Especialidad_Medica")); 
 
           $agenda= Collection::make(Agenda::
-             select(['agendas.id_Agenda AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica ) AS name')])
+             select(['agendas.id_Agenda AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica, " - ",turnos.nombre ) AS name')])
              ->join('usuarios_medicos', 'agendas.Medico_id','usuarios_medicos.id_Medico')
              ->join('especialidades_medicas', 'agendas.Especialidad_Medica','especialidades_medicas.id_Especialidad_Medica')
+             ->join('horarios_citas', 'agendas.Horario_Cita_id','horarios_citas.id_Horario_Cita')
+             ->join('turnos', 'horarios_citas.turno_id','turnos.id_turno')
              ->where('agendas.Status_id', 1)
              ->get())->pluck('name','id');
 
@@ -148,6 +157,12 @@ class CitasController extends Controller
         $control_data = ['Especialidad_Medica_id' => $Especialidad_Medica, 'Medico_id'=> $Medico_id, 'Paciente_id'=> $request['Paciente_id'], 'Paciente_Especial_id'=> $request['Paciente_Especial_id'], 'Cita_Consulta_id'=> $cita['id'], 'Fecha'=> date('Y-m-d'), 'id_servicio'=> $request['id_servicio']];
 
         $control= ControlHM::create($control_data);
+
+        $servicio = new ServicioA();
+        $servicio->Cita_Consulta_id= $cita['id'];
+        $servicio->id_servicio= $request['id_servicio'];
+        $servicio->save();
+
         DB::commit();
       } catch (Exception $e) {
         DB::rollback();
@@ -164,6 +179,7 @@ class CitasController extends Controller
     {
       DB::beginTransaction();
       try {
+      $servicioa = ServicioA::where('Cita_Consulta_id', $id)->delete();
       $control = ControlHM::where('Cita_Consulta_id', $id)->delete();
       $cita = Citas::where('id_Cita_Consulta', $id)->delete();
         DB::commit();

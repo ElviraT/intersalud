@@ -163,27 +163,22 @@
                 </tr>
               </thead>
               @php($iva= ($dataf->Servicio->Costos * 12 / 100)) 
-              @php($total = ($dataf->Servicio->Costos+$iva))
               @php($tsa = 0)
               <tbody>
-                <tr>
-                  <td>{{'01'}}</td>
-                  <td>{{$dataf->Servicio->Servicio}}</td>
-                  <td>{{$dataf->Servicio->Costos}}&nbsp;{{$dataf->Servicio->simbolo}}</td>
-                  <td>{{$dataf->Servicio->Costos}}&nbsp;{{$dataf->Servicio->simbolo}}</td>
-                </tr>
                 @if($servicios)
                   @foreach($servicios as $servicio)
+                <tr>
                     <td>{{'01'}}</td>
                     <td>{{$servicio->Servicio}}</td>
                     <td>{{$servicio->Costos}}&nbsp;{{$servicio->simbolo}}</td>
                     <td>{{$servicio->Costos}}&nbsp;{{$servicio->simbolo}}</td>
-                    @php($tsa += $servicio->Costos)
+                    @php($tsa += $servicio->Costos)                  
+                </tr>
+                <tr>
                   @endforeach
                 @endif
-                <tr>
                   <td colspan="3">{{'Subtotal'}}</td>
-                  <td>{{($dataf->Servicio->Costos + $tsa)}}&nbsp;{{$dataf->Servicio->simbolo}}</td>
+                  <td>{{($tsa)}}&nbsp;{{$servicio->simbolo}}</td>
                 </tr>
                 <tr>
                   <td colspan="3">{{'IVA 12%'}}</td>
@@ -191,7 +186,7 @@
                 </tr>
                 <tr>
                   <td colspan="3">{{'Total a Pagar'}}</td>
-                  <td>{{($total +$tsa)}}&nbsp;{{$dataf->Servicio->simbolo}}</td>
+                  <td>{{($tsa + $iva)}}&nbsp;{{$servicio->simbolo}}</td>
                 </tr>
               </tbody>
             </table>

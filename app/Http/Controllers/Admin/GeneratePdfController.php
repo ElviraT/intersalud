@@ -11,6 +11,11 @@ use App\Model\FacturaDetalle;
 use App\Model\TipoPago;
 use App\Model\UsuarioP;
 use App\Model\ServicioA;
+use App\Model\Status;
+use App\Model\CuentaBanco;
+use App\Model\CuentaUSD;
+use App\Model\Billetera;
+use App\Model\TipoCambio;
 use PDF;
 use DB;
 
@@ -47,16 +52,36 @@ class GeneratePdfController extends Controller
         }
        //dd($servicios);
         $pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
-       
-        return view('admin.factura.pago')->with(compact('pacientes','fecha','paciente', 'dataf','servicios'));
+        $status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status");
+        $tpago=Collection::make(TipoPago::select(['id_Tipos_Pago','Tipo_Pago'])->orderBy('Tipo_Pago')->pluck("Tipo_Pago", "id_Tipos_Pago"));
+        $monedas = ['Bs'=>'Bs','USD'=>'USD','Btc'=>'Btc','Eth'=>'Eth'];
+
+        /*CUENTAS*/
+        $cbs= Collection::make(CuentaBanco::
+             select(['cuenta_bancaria_bs.id_Cuenta_Bancaria_BS AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",bancos_bs.Bancos) AS name')])
+             ->join('usuarios_medicos', 'cuenta_bancaria_bs.Medico_id','usuarios_medicos.id_Medico')
+             ->join('bancos_bs', 'cuenta_bancaria_bs.Banco_id','bancos_bs.id_Bancos_Bs')
+             ->get())->pluck('name','id');
+
+        $cusd= Collection::make(CuentaUSD::
+             select(['cuenta_usd.id_Cuenta_USD AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",entidades_usd.Entidad_USD) AS name')])
+             ->join('usuarios_medicos', 'cuenta_usd.Medico_id','usuarios_medicos.id_Medico')
+             ->join('entidades_usd', 'cuenta_usd.Entidad_USD_id','entidades_usd.id_Entidad_USD')
+             ->get())->pluck('name','id');
+
+        $cbilletera= Collection::make(Billetera::
+             select(['billeteras_cripto.id_Billetera_Cripto AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",criptos.Criptop) AS name')])
+             ->join('usuarios_medicos', 'billeteras_cripto.Medicos_id','usuarios_medicos.id_Medico')
+             ->join('criptos', 'billeteras_cripto.Cripto_id','criptos.id_Cripto')
+             ->get())->pluck('name','id');
+
+        return view('admin.factura.pago')->with(compact('pacientes','fecha','paciente', 'dataf','servicios','monedas','status','tpago','cbs','cusd','cbilletera'));
     }
     public function pdfForm($id)
     {
     	$dataf = ControlHM::where('Paciente_id', $id)->whereDate('Fecha', date('Y-m-d'))->where('cerrado', 1)->first();
-    	$tipoP=Collection::make(TipoPago::select(['id_Tipos_Pago','Tipo_Pago'])->orderBy('Tipo_Pago')->pluck("Tipo_Pago", "id_Tipos_Pago"));
-        $servicios = 
-    	$simbol = ['Bs'=>'Bs','USD'=>'USD','Btc'=>'Btc','Eth'=>'Eth'];
-        return view('admin.factura.pdf_form')->with(compact('dataf','tipoP','simbol'));
+    	
+        return view('admin.factura.pdf_form')->with(compact('dataf'));
     }
 
     public function add(Request $request)
@@ -116,5 +141,11 @@ class GeneratePdfController extends Controller
        $pdf = PDF::loadView('admin.factura.pdf_download', $data);
    
        return $pdf->download('Factura.pdf');
+    }
+
+    public function calcular()
+    {
+        $tasa= TipoCambio::where('Status_Tasa_id', 1)->get();
+       return response()->json($tasa); 
     }
 }

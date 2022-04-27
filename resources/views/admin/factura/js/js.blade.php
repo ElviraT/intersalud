@@ -58,25 +58,30 @@
       var total_pagar = $('#total_pagar').val();
       var simbolo = $('#simbolo').val();
       var moneda= $('#moneda').val();
+      var total = 0;
 
       $.getJSON('{{ route('calcular-pago') }}', function(obj){
         console.log(obj);
             $('#div_total').attr('hidden', false);
 
-        switch (moneda){
-          case "Bs":
-            
-            break;
-          case "USD":
-            
-            break;
-          case "Btc":
-            
-            break;
-          case "Eth":
-            
-            break;
-        }
+        if(moneda == simbolo){
+          total = total_pagar
+        }else{
+          switch(moneda){
+            case "Bs":
+                
+              break;
+            case "USD":
+              
+              break;
+            case "Btc":
+              
+              break;
+            case "Eth":
+              
+              break;
+          }
+      }
       });
   }
 </script>

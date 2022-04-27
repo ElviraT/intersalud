@@ -127,8 +127,9 @@
             {!! Form::label('statusm', 'Status:') !!}
             {!! Form::select('statusm',$statusM, isset($medico) ? $medico->Status_Medico_id : null, [
                 'placeholder' => 'Seleccione', 
-                'class' => 'select2 form-control required',
-                'id' => 'statusm'
+                'class' => 'select2 form-control',
+                'id' => 'statusm',
+                'required'=>'required'
                 ]) !!}
         </div>
     </div>

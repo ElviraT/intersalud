@@ -22,6 +22,7 @@
     });
    
   });
+
   $('#moneda').on('select2:select', function (e) {
     var moneda = $('#moneda').val();
     switch (moneda) {
@@ -56,32 +57,47 @@
 });
   function calcular() {
       var total_pagar = $('#total_pagar').val();
-      var simbolo = $('#simbolo').val();
-      var moneda= $('#moneda').val();
+      var simbolo = $('#simbolo').val();//factura original
+      var moneda= $('#moneda').val();//cancelar
       var total = 0;
+      var impuesto = 0;
 
       $.getJSON('{{ route('calcular-pago') }}', function(obj){
-        console.log(obj);
-            $('#div_total').attr('hidden', false);
-
+        //console.log(moneda , simbolo, total, 'arriba');
         if(moneda == simbolo){
-          total = total_pagar
+          total = total_pagar;
         }else{
           switch(moneda){
             case "Bs":
-                
+                  total = (obj.BS * total_pagar);
               break;
             case "USD":
-              
+                total = (obj.BS / total_pagar);
               break;
-            case "Btc":
+           /* case "Btc":
               
               break;
             case "Eth":
               
-              break;
+              break;*/
           }
+
+
       }
+      if (moneda == 'USD') {
+        $('#imp').attr('hidden', false);
+        impuesto= (total * 3 / 100);
+        total= parseFloat(total)+parseFloat(impuesto);
+        $('#impuesto').html(impuesto.toFixed(2));
+      }else{
+        $('#imp').attr('hidden', true);
+        $('#impuesto').html(0);
+      }
+
+        //console.log(moneda , simbolo, total, 'abajo');
+            $('#div_total').attr('hidden', false);
+            $('#simb').html(moneda);
+            $('#total').html(total.toFixed(2));
       });
   }
 </script>

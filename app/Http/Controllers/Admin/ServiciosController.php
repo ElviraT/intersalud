@@ -39,7 +39,7 @@ class ServiciosController extends Controller
   		$status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status");
 
   		$especialidad=Collection::make(Especialidad::select(['id_Especialidad_Medica','Espacialiadad_Medica'])->orderBy('Espacialiadad_Medica')->get())->pluck("Espacialiadad_Medica", "id_Especialidad_Medica"); 
-      $simbol = ['Bs'=>'Bs','USD'=>'USD','Btc'=>'Btc','Eth'=>'Eth'];
+      $simbol = ['Bs'=>'Bs','USD'=>'USD'];//,'Btc'=>'Btc','Eth'=>'Eth'];
       
   		return view('admin.servicios.index', ['servicios' => $servicios,'status'=>$status,'medico'=>$medico,'especialidad'=>$especialidad,'simbol'=>$simbol]);
   	}

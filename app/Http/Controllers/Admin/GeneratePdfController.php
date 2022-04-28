@@ -54,7 +54,7 @@ class GeneratePdfController extends Controller
         $pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
         $status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status");
         $tpago=Collection::make(TipoPago::select(['id_Tipos_Pago','Tipo_Pago'])->orderBy('Tipo_Pago')->pluck("Tipo_Pago", "id_Tipos_Pago"));
-        $monedas = ['Bs'=>'Bs','USD'=>'USD','Btc'=>'Btc','Eth'=>'Eth'];
+        $monedas = ['Bs'=>'Bs','USD'=>'USD'];
 
         /*CUENTAS*/
         $cbs= Collection::make(CuentaBanco::
@@ -145,7 +145,7 @@ class GeneratePdfController extends Controller
 
     public function calcular()
     {
-        $tasa= TipoCambio::where('Status_Tasa_id', 1)->get();
+        $tasa= TipoCambio::where('Status_Tasa_id', 1)->first();
        return response()->json($tasa); 
     }
 }

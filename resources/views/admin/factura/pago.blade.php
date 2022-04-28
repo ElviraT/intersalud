@@ -106,8 +106,8 @@
               </tbody>
             </table>
           {{--FIN DE DETALLE--}} 
-          <input type="text" name="total_pagar" id="total_pagar" value="{{($tsa + $iva)}}">
-          <input type="text" name="simbolo" id="simbolo" value="{{$servicio->simbolo}}">        
+          <input type="hidden" name="total_pagar" id="total_pagar" value="{{($tsa + $iva)}}">
+          <input type="hidden" name="simbolo" id="simbolo" value="{{$servicio->simbolo}}">        
           </div>
       </div>
       @endif
@@ -180,6 +180,12 @@
                 <button type="button" class="btn btn-outline-info" onclick="calcular()">{{'Calcular'}}</button>
               </div>
             </div>
+        </div>
+      </div>
+      <div class="col-md-12" id="div_total" hidden>
+        <div class="card row p-3" style="border: 2px solid #dd0000;">
+          <div id="imp" hidden><h5>{{'Impuesto 3%: '}}<span id="impuesto"></span></h5></div>
+          <h4><strong>{{'Total a Pagar en '}}<span id="simb"></span>:</strong>&nbsp;<span id="total" style="font-weight: bold;"></span></h4>  
         </div>
       </div>
   </div>

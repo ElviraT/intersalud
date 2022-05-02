@@ -168,4 +168,19 @@ class Controller extends BaseController
 
       return response()->json([$duracion, $tiempo]);
     }
+
+    public function paciente_dependiente(Request $request){
+      $id = empty($request->input('id_medico')) ? 0 : $request->input('id_medico');
+      $pacientes = [];
+
+      if ($id > 0) {
+        $pacientes= UsuarioP::select(['usuarios_pacientes.id_Paciente AS id', DB::raw('CONCAT(usuarios_pacientes.Nombres_Paciente, " ", usuarios_pacientes.Apellidos_Paciente) AS nombre')])
+          ->join('control_historia_medicas', 'usuarios_pacientes.id_Paciente', 'control_historia_medicas.Paciente_id')
+          ->where('control_historia_medicas.Medico_id', $id)
+          ->distinct('usuarios_pacientes.id_Paciente')
+          ->orderBy('usuarios_pacientes.Nombres_Paciente')
+          ->get();
+      }
+        return response()->json($pacientes);
+    }
 }

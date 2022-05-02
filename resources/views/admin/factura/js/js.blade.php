@@ -22,6 +22,29 @@
     });
    
   });
+$('#id_medico').on('select2:select', function (e) {
+   var id_medico = $('#id_medico').val();
+    $.getJSON('{{ route('paciente_dependiente') }}?id_medico='+id_medico, function(objP){
+        var opcion = $('#paciente').val();
+        $('#paciente').empty();
+        $('#paciente').prop('disabled', true);
+        $('#paciente').change();
+
+        if(objP.length > 0){
+            $.each(objP, function (i, paciente) {
+            $('#paciente').append(
+                    $('<option>', {
+                        value: paciente.id,
+                        text : paciente.nombre
+                    })
+                );
+            });
+            $('#paciente').prop('disabled', false);
+            $('#paciente').change();
+
+        }        
+    });
+  });
 
   $('#moneda').on('select2:select', function (e) {
     var moneda = $('#moneda').val();

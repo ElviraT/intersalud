@@ -28,7 +28,17 @@
           <div class="col-md-12">
             {!! Form::open(['route' => ['factura'],  'method' => 'post', 'autocomplete' =>'off' ]) !!}
             <div class="row">
-                <div class="col-md-4 mt-3 mb-3">
+                <div class="col-md-3 mt-3 mb-3">
+                  {!! Form::label('id_medico', 'Medico:') !!}
+                  {!! Form::select('id_medico',$medico,  $id_medico, [
+                      'placeholder' => 'Seleccione', 
+                      'class' => 'select2 form-control',
+                      'id' => 'id_medico',
+                      'required'=>'required'
+                      ])
+                  !!}
+                </div>
+                <div class="col-md-3 mt-3 mb-3">
                   {!! Form::label('paciente', 'Usuario:') !!}
                   {!! Form::select('paciente',$pacientes,  $paciente, [
                       'placeholder' => 'Seleccione', 
@@ -56,7 +66,7 @@
                           !!}
                      </div>
                 </div>
-                <div class="col-md-4 mt-4">
+                <div class="col-md-3 mt-4">
                   <button type="submit" class="mt-3 btn btn-outline-primary">{{'Buscar'}}</button>
                 </div>
             </div>
@@ -64,7 +74,7 @@
           </div>
         </div>
       </div>
-      @if(isset($dataf))
+      @if(isset($dataf) && isset($servicios))
       <div class="col-md-12">          
           <div class="card p-3">          
           {{--DETALLE DE FACTURA MOSTRAR--}}
@@ -110,7 +120,7 @@
           <input type="hidden" name="simbolo" id="simbolo" value="{{$servicio->simbolo}}">        
           </div>
       </div>
-      @endif
+      
       <div class="col-md-12">
         <h3>{{'Datos del pago'}}</h3>
         <div class="card p-3">
@@ -182,6 +192,14 @@
             </div>
         </div>
       </div>
+      @include('admin.factura.factura')
+      @else
+      <div class="col-md-12" align="center">
+        <div class="card">
+          <h2 style="color: red; padding: 30px;">{{'No hay Facturas en esta Fecha'}}</h2>
+        </div>
+      </div>
+      @endif
       <div class="col-md-12" id="div_total" hidden>
         <div class="card row p-3" style="border: 2px solid #dd0000;">
           <div id="imp" hidden><h5>{{'Impuesto 3%: '}}<span id="impuesto"></span></h5></div>

@@ -298,9 +298,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 	/*FACTURACION*/
 	Route::match(['get','post'],'factura/', ['as' => 'factura', 'uses' =>  'Admin\GeneratePdfController@index']);
-	Route::match(['get','post'],'pdf_form/{id}', ['as' => 'ver_pdf', 'uses' =>  'Admin\GeneratePdfController@pdfForm']);
-	Route::post('add-factura', ['as' => 'factura.add', 'uses' =>  'Admin\GeneratePdfController@add']);
-	Route::get('pago-factura/{id}', ['as' => 'factura.pago', 'uses' =>  'Admin\GeneratePdfController@pago']);
- 	Route::match(['get','post'],'pdf_download', 'Admin\GeneratePdfController@pdfDownload');
-	Route::get('calcular-pago/', ['as' => 'calcular-pago', 'uses' =>  'Admin\GeneratePdfController@calcular']);
+	Route::match(['get','post'],'pdf_form/{id}', ['as' => 'ver_pdf', 'uses' => 'Admin\GeneratePdfController@pdfForm']);
+	Route::post('add-factura', ['as' => 'factura.add', 'uses' => 'Admin\GeneratePdfController@add']);
+	Route::get('pago-factura/{id}', ['as' => 'factura.pago', 'uses' => 'Admin\GeneratePdfController@pago']);
+ 	Route::get('pdf_download/{id}', ['as' => 'factura.pdf', 'uses' => 'Admin\GeneratePdfController@pdfDownload']);
+	Route::get('calcular-pago/', ['as' => 'calcular-pago', 'uses' => 'Admin\GeneratePdfController@calcular']);
 });

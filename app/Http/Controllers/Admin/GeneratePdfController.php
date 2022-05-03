@@ -17,6 +17,8 @@ use App\Model\CuentaBanco;
 use App\Model\CuentaUSD;
 use App\Model\Billetera;
 use App\Model\TipoCambio;
+use App\Model\FacturaBs;
+use App\Model\FacturaUSD;
 use PDF;
 use DB;
 
@@ -102,11 +104,10 @@ class GeneratePdfController extends Controller
 
     public function add(Request $request)
     {
-        dd($request);
     	DB::beginTransaction();
     	try {
 
-    		$factura = new Factura();
+    		    $factura = new Factura();
             $factura->Cita_Consulta_id = $request['Cita_Consulta_id'];
             $factura->Fecha = $request['Fecha'];
             $factura->Datos_SENIAT_id = $request['Datos_SENIAT_id'];
@@ -121,40 +122,63 @@ class GeneratePdfController extends Controller
             $factura->Status_no_paciente = $request['Status_no_paciente'];
             $factura->save(); 
 
-            $facturaD = new FacturaDetalle();
-            $facturaD->Factura_id = $factura['id'];
-            $facturaD->Servicio_id = $request['Servicio_id'];
-            $facturaD->Cantidad = $request['Cantidad'];
-            $facturaD->Costo_Servicio = $request['Costo_Servicio'];
-            $facturaD->moneda = $request['moneda'];
-            $facturaD->iva = $request['iva'];
-            $facturaD->impuesto = $request['impuesto'];
-            $facturaD->Status_Factura_id =$request['Status_Factura_id'];
-            $facturaD->save(); 
+            foreach ($request['Servicio'] as $key=>$value) {
+              $facturaD = new FacturaDetalle();
+              $facturaD->Factura_id = $factura['id'];
+              $facturaD->Servicio_id = $key;
+              $facturaD->Cantidad = $request['Cantidad'];
+              $facturaD->Costo_Servicio = $value;
+              $facturaD->moneda = $request['moneda'];
+              $facturaD->iva = $request['iva'];
+              $facturaD->Status_Factura_id =$request['Status_Factura_id'];
+              $facturaD->save(); 
+              
+            }
+//dd($request['monedaf']);
+            switch ($request['monedaf']) {
+              case 'Bs':
+                  $facturaBs = new FacturaBs();
+                  $facturaBs->Factura_id = $factura['id'];
+                  $facturaBs->Status_Tasa_id = 1;
+                  $facturaBs->Status_Pago = $request['statusf'];
+                  $facturaBs->Cuenta_Bancaria_BS_id = $request['cbsf'];
+                  $facturaBs->Total_Cancelado = $request['totalf'];
+                  $facturaBs->Referencia_Bancaria =$request['reff'];
+                  $facturaBs->Tipo_Pago_id =$request['tpagof'];
+                  $facturaBs->save(); 
+                break;
+             /* case 'USD':
+                // code...
+                break;*/
+              default:
+                  $facturaUSD = new FacturaUSD();
+                  $facturaUSD->Factura_id = $factura['id'];
+                  $facturaUSD->Status_Tasa_id = 1;
+                  $facturaUSD->Status_Pago = $request['statusPf'];
+                  $facturaUSD->Cuenta_USD_id = $request['cusdf'];
+                  $facturaUSD->Total_Cancelado = $request['totalf'];
+                  $facturaUSD->Referencia =$request['reff'];
+                  $facturaUSD->Tipo_Pago_id =$request['tpagof'];
+                  $facturaUSD->save();
+                break;
+            }
     			
 		 	DB::commit();
+      $info = 'Datos de factura agregados correctamente';
       	}catch (Exception $e) {
         	DB::rollback();
-			
+			$info= 'Ocurrio un error intente de nuevo';
 		}
-		return redirect()->route('factura.pago', $factura['id']);	
-    }
-
-    public function pago($Factura_id)
-    {
-    	$tipoP=Collection::make(TipoPago::select(['id_Tipos_Pago','Tipo_Pago'])->orderBy('Tipo_Pago')->pluck("Tipo_Pago", "id_Tipos_Pago"));
-		return view('admin.factura.pago')->with(compact('Factura_id', 'tipoP'));
+    $resp= [$info, $factura['id']];
+    return response()->json($resp);
+		
     }
  
-    public function pdfDownload(Request $request){
+    public function pdfDownload($id){
       
-         $data = 
-         [
-            'name' => $request->name,
-            'email' => $request->email,
-            'message' => $request->message
-         ];
-       $pdf = PDF::loadView('admin.factura.pdf_download', $data);
+      $factura= Factura::where('id_Factura', $id)->first();
+      //dd($factura);
+      $pdf = PDF::loadView('admin.factura.pdf_download', ['factura' => $factura]);
    
        return $pdf->download('Factura.pdf');
     }

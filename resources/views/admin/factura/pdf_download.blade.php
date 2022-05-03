@@ -1,8 +1,8 @@
 <body>
   <div id="content">
-    <h2>Hello <b> <span style="color:red">{{ ucfirst($name) }}</span> </b></h2> 
     <p>
-        {{ $message }}
+    {{ $factura['Cita_Consulta_id'] }} 
+    
     </p>
   </div>
 </body>

@@ -82,31 +82,39 @@ $('#id_medico').on('select2:select', function (e) {
       var total_pagar = $('#total_pagar').val();
       var simbolo = $('#simbolo').val();//factura original
       var moneda= $('#moneda').val();//cancelar
+      var tpago= $('#tpago').val();
+      var status= $('#statusP').val();
+      var cbs= $('#cbsf').val();
+      var cusd= $('#cusd').val();
+      var billerera= $('#billetera').val();
+      var ref= $('#ref').val();
       var total = 0;
       var impuesto = 0;
 
-      $.getJSON('{{ route('calcular-pago') }}', function(obj){
-        //console.log(moneda , simbolo, total, 'arriba');
-        if(moneda == simbolo){
-          total = total_pagar;
-        }else{
-          switch(moneda){
-            case "Bs":
-                  total = (obj.BS * total_pagar);
-              break;
-            case "USD":
-                total = (obj.BS / total_pagar);
-              break;
-           /* case "Btc":
-              
-              break;
-            case "Eth":
-              
-              break;*/
-          }
+      if(moneda.length != 0 && tpago.length != 0 && status != undefined)
+      {
+        $.getJSON('{{ route('calcular-pago') }}', function(obj){
+          if(moneda == simbolo){
+            total = total_pagar;
+          }else{
+            switch(moneda){
+              case "Bs":
+                    total = (obj.BS * total_pagar);
+                break;
+              case "USD":
+                  total = (obj.BS / total_pagar);
+                break;
+             /* case "Btc":
+                
+                break;
+              case "Eth":
+                
+                break;*/
+            }
 
 
-      }
+        }
+  
       if (moneda == 'USD') {
         $('#imp').attr('hidden', false);
         impuesto= (total * 3 / 100);
@@ -121,6 +129,41 @@ $('#id_medico').on('select2:select', function (e) {
             $('#div_total').attr('hidden', false);
             $('#simb').html(moneda);
             $('#total').html(total.toFixed(2));
+
+            /*enviar al formulario*/
+            $('#tpagof').val(tpago);
+            $('#monedaf').val(moneda);
+            $('#statusPf').val(status);
+            $('#cbsf').val(cbs);
+            $('#cusdf').val(cusd);
+            $('#billeteraf').val(billerera);
+            $('#reff').val(ref);
+            $('#totalf').val(total.toFixed(2));
+            $('#impuestof').val(impuesto.toFixed(2));
+            $('#guardar').css('pointer-events', 'auto');
+            /*fin formulario*/
       });
+    }else{
+      Swal.fire('Debe llenar los campos');
+    }
   }
+
+  $("#facturaAdd").submit(function(event) {
+    event.preventDefault();
+
+    var datos = jQuery(this).serialize();
+    jQuery.ajax({
+        type: "POST",
+        url: "{{ route('factura.add') }}",
+        data: datos,
+        success: function(resp)
+        {
+            Swal.fire(resp[0]);
+            var id_factura= resp[1];
+            var url_pdf = "{{ route('factura.pdf', ':id') }}";
+            url_pdf = url_pdf.replace(':id', id_factura);
+            window.location.href = url_pdf;
+        }
+    });
+});
 </script>

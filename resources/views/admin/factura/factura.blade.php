@@ -1,4 +1,4 @@
- {!! Form::open(['route' => ['factura.add'],  'method' => 'post', 'autocomplete' =>'off' ]) !!}
+ {!! Form::open(['method' => 'post', 'autocomplete' =>'off', 'id'=>"facturaAdd"]) !!}
         <div class="col-md-12">
           <div class="row p-2">
           {{--ENCABEZADO DE FACTURA ENVIAR--}}
@@ -15,24 +15,32 @@
             <input type="hidden" name="CIDNI" value="{{ $dataf->UsuarioP->PrefijoDNI->Prefijo_CIDNI }}&nbsp;{{$dataf->UsuarioP->CIDNI }}">
             <input type="hidden" name="Status_no_paciente" value="1">
           {{--FIN DE ENCABEZADO ENVIAR--}}
-           {{--DETALLE FACTURA ENVIAR--}}
-          <input type="hidden" name="Servicio_id[0]" value="{{$dataf->Servicio->id_Servicio}}">
+          {{--DETALLE FACTURA ENVIAR--}}
           <input type="hidden" name="Cantidad" value="1">
-          <input type="hidden" name="Costo_Servicio[0]" value="{{$dataf->Servicio->Costos}}">
           <input type="hidden" name="moneda" value="{{$dataf->Servicio->simbolo}}">
           <input type="hidden" name="iva" value="{{$iva}}">
-          {{--<input type="hidden" name="impuesto" value="{{$impuesto}}">--}}
           <input type="hidden" name="Status_Factura_id" value="">
           @if($servicios)
-            @foreach($servicios as $key => $servicio)
-              <input type="hidden" name="Servicio_id[$key+1]" value="{{$servicio->id_Servicio}}">
-              <input type="hidden" name="Costo_Servicio[$key+1]" value="{{$servicio->Costos}}">
+            @foreach($servicios as $servicio)
+              <input type="hidden" name="Servicio[{{$servicio->id_servicio}}]" value="{{$servicio->Costos}}">
             @endforeach
           @endif
           {{--FIN DETALLE FACTURA ENVIAR--}}
-          <div class="modal-footer">
+
+          {{--FACTURA MONEDA--}}
+            <input type="hidden" name="tpagof" id="tpagof">
+            <input type="hidden" name="monedaf" id="monedaf">
+            <input type="hidden" name="statusPf" id="statusPf">
+            <input type="hidden" name="cbsf" id="cbsf">
+            <input type="hidden" name="cusdf" id="cusdf">
+            <input type="hidden" name="billeteraf" id="billeteraf">
+            <input type="hidden" name="reff" id="reff">
+            <input type="hidden" name="totalf" id="totalf">
+            <input type="hidden" name="impuestof" id="impuestof">
+          {{--FIN FACTURA MONEDA--}}
+          <div class="modal-footer" align="center">
             <button type="submit" class="mt-1 btn-transition btn btn-outline-primary" id="guardar" style="pointer-events: none;">
-                <span class="btn-icon-wrapper pr-2 opacity-7">
+                <span class="btn-icon-wrapper opacity-7">
                  <i class="ti-save"></i>
                 </span>{{'Guardar y Generar factura'}}
             </button>

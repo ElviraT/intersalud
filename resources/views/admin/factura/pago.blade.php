@@ -192,6 +192,12 @@
             </div>
         </div>
       </div>
+      <div class="col-md-12" id="div_total" hidden>
+        <div class="card row p-3" style="border: 2px solid #dd0000;">
+          <div id="imp" hidden><h5>{{'Impuesto 3%: '}}<span id="impuesto"></span></h5></div>
+          <h4><strong>{{'Total a Pagar en '}}<span id="simb"></span>:</strong>&nbsp;<span id="total" style="font-weight: bold;"></span></h4>  
+        </div>
+      </div>
       @include('admin.factura.factura')
       @else
       <div class="col-md-12" align="center">
@@ -200,12 +206,6 @@
         </div>
       </div>
       @endif
-      <div class="col-md-12" id="div_total" hidden>
-        <div class="card row p-3" style="border: 2px solid #dd0000;">
-          <div id="imp" hidden><h5>{{'Impuesto 3%: '}}<span id="impuesto"></span></h5></div>
-          <h4><strong>{{'Total a Pagar en '}}<span id="simb"></span>:</strong>&nbsp;<span id="total" style="font-weight: bold;"></span></h4>  
-        </div>
-      </div>
   </div>
 </div>
 @endsection

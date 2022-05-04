@@ -20,6 +20,11 @@ class UsuarioM extends Model
         return $this->hasOne('App\Model\StatusM', 'id_Status_Medico','Status_Medico_id');
     }
 
+    public function Factura()
+    {
+        return $this->hasOne('App\Model\Factura', 'id_Medico', 'Medico_id');
+    }
+
     public function MxA()
     {
         return $this->hasOne('App\Model\MxA','id_Medico','id_Medico');

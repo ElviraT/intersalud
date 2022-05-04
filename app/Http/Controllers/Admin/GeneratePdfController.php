@@ -24,6 +24,20 @@ use DB;
 
 class GeneratePdfController extends Controller
 {
+  public function index2()
+  {
+    $factura= Factura::where('id_Factura', '19')->first();
+    switch ($factura['moneda_cancela']) {
+      case 'Bs':
+        $factura_moneda = FacturaBs::where('Factura_Id', '19')->first();
+        break;
+      
+      default:
+        $factura_moneda = FacturaUSD::where('Factura_Id', '19')->first();
+        break;
+    }
+    return view('admin.factura.factura_ver')->with(compact('factura','factura_moneda'));
+  }
     public function index(Request $request)
     {
         $method = $request->method();
@@ -120,6 +134,7 @@ class GeneratePdfController extends Controller
             $factura->Apellido = $request['Apellido'];
             $factura->CIDNI = $request['CIDNI'];
             $factura->Status_no_paciente = $request['Status_no_paciente'];
+            $factura->moneda_cancela = $request['monedaf'];
             $factura->save(); 
 
             foreach ($request['Servicio'] as $key=>$value) {
@@ -159,10 +174,11 @@ class GeneratePdfController extends Controller
                   $facturaUSD->Total_Cancelado = $request['totalf'];
                   $facturaUSD->Referencia =$request['reff'];
                   $facturaUSD->Tipo_Pago_id =$request['tpagof'];
+    			
+                  $facturaUSD->impuesto =$request['impuestof'];
                   $facturaUSD->save();
                 break;
             }
-    			
 		 	DB::commit();
       $info = 'Datos de factura agregados correctamente';
       	}catch (Exception $e) {
@@ -177,8 +193,17 @@ class GeneratePdfController extends Controller
     public function pdfDownload($id){
       
       $factura= Factura::where('id_Factura', $id)->first();
-      //dd($factura);
-      $pdf = PDF::loadView('admin.factura.pdf_download', ['factura' => $factura]);
+        switch ($factura['moneda_cancela']) {
+          case 'Bs':
+            $factura_moneda = FacturaBs::where('Factura_Id', $id)->first();
+            break;
+          
+          default:
+            $factura_moneda = FacturaUSD::where('Factura_Id', $id)->first();
+            break;
+        }
+      $data= ['factura' => $factura, 'factura_moneda' => $factura_moneda];
+      $pdf = PDF::loadView('admin.factura.pdf_download', ['data' => $data]);
    
        return $pdf->download('Factura.pdf');
     }

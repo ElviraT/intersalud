@@ -32,4 +32,8 @@ class UsuarioP extends Model
     {
         return $this->hasOne('App\Model\DireccionPaciente', 'Paciente_id', 'id_Paciente');
     }
+    public function Factura()
+    {
+        return $this->hasOne('App\Model\Factura', 'id_Paciente', 'Pacientes_id');
+    }
 }

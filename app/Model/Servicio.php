@@ -29,4 +29,10 @@ class Servicio extends Model
     {
         return $this->hasOne('App\Model\ControlHM', 'id_Servicio', 'id_servicio');
     }
+
+    public function FacturaDetalle()
+    { //belongsTo
+      return $this->hasOne('App\Model\FacturaDetalle', 'Servicio_id','id_Servicio');
+      //return $this->belongsTo('App\Model\FacturaDetalle', 'Servicio_id', 'id_Servicio');
+    }
 }

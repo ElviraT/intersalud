@@ -90,8 +90,7 @@
                 <table width="100%">
                 	<thead>
                 		<tr>
-                			<th>{{'Dirección:'}}</th>
-                			<th>{{'Edad:'}}</th>
+                			<th colspan="2">{{'Dirección:'}}</th>
                 			<th>{{'Teléfono:'}}</th>
                 			<th>{{'Correo:'}}</th>
                 		</tr>
@@ -99,7 +98,7 @@
                 	<tbody>
                 		<tr>
                 			<td>{{ $data['factura']->UsuarioP->DireccionPaciente->Direccion}}</td>
-                			<td><span id="edad"></span>&nbsp; {{'Años'}}</td>
+                			<td></td>
                 			<td>{{ $data['factura']->UsuarioP->DireccionPaciente->Telefono}}</td>
                 			<td>{{ $data['factura']->UsuarioP->DireccionPaciente->Correo}}</td>
                 		</tr>
@@ -145,33 +144,11 @@
 	    {{--MONEDA DE PAGO--}}
 	    <div class="col-md-12 mt-4">
 	        <div class="card row p-3" style="border: 2px solid #dd0000;">
-	          <div id="imp" hidden><h5>{{'Impuesto 3%: '}}@if(isset($data['factura_moneda']->impuesto))<span>{{$data['factura_moneda']->impuesto}}</span>@endif</h5></div>
+	         @if(isset($data['factura_moneda']->impuesto)) <div id="imp"><h5>{{'Impuesto 3%: '}}<span>{{$data['factura_moneda']->impuesto}}</span></h5></div>@endif
 	          <h4><strong>{{'Total a Pagar en '}}<span>{{$data['factura']->moneda_cancela}}</span>:</strong>&nbsp;<span id="total" style="font-weight: bold;">{{$data['factura_moneda']->Total_Cancelado}}</span></h4>  
 	        </div>
 	    </div>
 	    {{--FIN DE MONEDA DE PAGO--}}
 	</div>
 </body>
-<script type="text/javascript" src="{{ asset('assets/js/jquery/jquery.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('assets/js/bootstrap/js/bootstrap.min.js')}} "></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-	    var hoy = new Date();
-	    var cumpleanos = new Date('{{$data['factura']->UsuarioP->Fecha_Nacimiento_Paciente}}');
-	    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-	    var m = hoy.getMonth() - cumpleanos.getMonth();
-
-	    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-	        edad--;
-	    }
-
-	    $('#edad').html(edad);
-	    var moneda = '{{$data['factura']->moneda_cancela}}';
-	    if (moneda == 'USD') {
-	        $('#imp').attr('hidden', false);
-	      }else{
-	        $('#imp').attr('hidden', true);
-	      }
-	});
-</script>
 </html>

@@ -11,6 +11,7 @@ use App\Model\FacturaDetalle;
 use App\Model\TipoPago;
 use App\Model\UsuarioP;
 use App\Model\UsuarioM;
+use App\Model\UsuarioA;
 use App\Model\ServicioA;
 use App\Model\Status;
 use App\Model\CuentaBanco;
@@ -24,20 +25,13 @@ use DB;
 
 class GeneratePdfController extends Controller
 {
-  public function index2()
-  {
-    $factura= Factura::where('id_Factura', '19')->first();
-    switch ($factura['moneda_cancela']) {
-      case 'Bs':
-        $factura_moneda = FacturaBs::where('Factura_Id', '19')->first();
-        break;
-      
-      default:
-        $factura_moneda = FacturaUSD::where('Factura_Id', '19')->first();
-        break;
+  public function __construct()
+    {
+      $this->middleware('can:factura')->only('index');
+      $this->middleware('can:factura.add')->only('add');
+      $this->middleware('can:factura.edit')->only('edit');
+      $this->middleware('can:factura.destroy')->only('destroy');
     }
-    return view('admin.factura.factura_ver')->with(compact('factura','factura_moneda'));
-  }
     public function index(Request $request)
     {
         $method = $request->method();
@@ -72,7 +66,31 @@ class GeneratePdfController extends Controller
           
         }
        //dd($servicios);
+      if(auth()->user()->id_usuario > 0 ){
+        $medico=Collection::make(
+          UsuarioM::select(['usuarios_medicos.id_Medico', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])
+          ->join('control_historia_medicas', 'usuarios_medicos.id_Medico', 'control_historia_medicas.Medico_id')
+          ->where('usuarios_medicos.id_Medico',auth()->user()->id_usuario)
+          ->where('usuarios_medicos.Status_Medico_id',1)
+          ->where('control_historia_medicas.cerrado', 1)
+          ->where('control_historia_medicas.factura_generada', 0)
+          ->distinct('usuarios_medicos.id_Medico')
+          ->orderBy('usuarios_medicos.Nombres_Medico')
+          ->pluck("Nombre", "id_Medico"));
 
+      }elseif(auth()->user()->id_usuarioA > 0 ){
+        $asistente = UsuarioA::where('id_asistente',auth()->user()->id_usuarioA)->first();
+        $medico=Collection::make(
+          UsuarioM::select(['usuarios_medicos.id_Medico', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])
+          ->join('control_historia_medicas', 'usuarios_medicos.id_Medico', 'control_historia_medicas.Medico_id')
+          ->where('usuarios_medicos.id_Medico',$asistente->id_Medico)
+          ->where('usuarios_medicos.Status_Medico_id',1)
+          ->where('control_historia_medicas.cerrado', 1)
+          ->where('control_historia_medicas.factura_generada', 0)
+          ->distinct('usuarios_medicos.id_Medico')
+          ->orderBy('usuarios_medicos.Nombres_Medico')
+          ->pluck("Nombre", "id_Medico"));
+      }else{
         $medico=Collection::make(
           UsuarioM::select(['usuarios_medicos.id_Medico', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])
           ->join('control_historia_medicas', 'usuarios_medicos.id_Medico', 'control_historia_medicas.Medico_id')
@@ -83,7 +101,10 @@ class GeneratePdfController extends Controller
           ->orderBy('usuarios_medicos.Nombres_Medico')
           ->pluck("Nombre", "id_Medico"));
 
+
+      }
         $pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
+        
         $status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status");
         $tpago=Collection::make(TipoPago::select(['id_Tipos_Pago','Tipo_Pago'])->orderBy('Tipo_Pago')->pluck("Tipo_Pago", "id_Tipos_Pago"));
         $monedas = ['Bs'=>'Bs','USD'=>'USD'];
@@ -179,6 +200,10 @@ class GeneratePdfController extends Controller
                   $facturaUSD->save();
                 break;
             }
+            ControlHM::where('Cita_Consulta_id', $request['Cita_Consulta_id'])->update([
+                    'factura_generada' => 1,
+                ]);
+
 		 	DB::commit();
       $info = 'Datos de factura agregados correctamente';
       	}catch (Exception $e) {

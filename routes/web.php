@@ -303,5 +303,4 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('pago-factura/{id}', ['as' => 'factura.pago', 'uses' => 'Admin\GeneratePdfController@pago']);
  	Route::get('pdf_download/{id}', ['as' => 'factura.pdf', 'uses' => 'Admin\GeneratePdfController@pdfDownload']);
 	Route::get('calcular-pago/', ['as' => 'calcular-pago', 'uses' => 'Admin\GeneratePdfController@calcular']);
-	Route::match(['get','post'],'factura-ver/', ['as' => 'factura.ver', 'uses' =>  'Admin\GeneratePdfController@index2']);
 });

@@ -466,7 +466,7 @@
         </li>        
       </ul>
       @endcanany
-     {{-- @can('consulta') --}}
+     @can('factura')
       <ul class="pcoded-item pcoded-left-item">
           <li class="{{ @request()->routeIs('factura') ? 'active' : ' ' }}">
               <a href="{{route('factura')}}"  onclick="loading_show();" class="waves-effect waves-dark">
@@ -476,7 +476,7 @@
               </a>
           </li>
       </ul> 
-     {{-- @endcan--}}
+     @endcan
       @canany(['reporte_consulta'])
       <ul class="pcoded-item pcoded-left-item">
         <li class="{{ @request()->routeIs('reporte_consulta') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">

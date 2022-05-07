@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\UsuarioM;
+use App\Model\ControlHM;
+use DateTime;
 
 
 class HomeController extends Controller
@@ -27,7 +29,12 @@ class HomeController extends Controller
     public function index()
     {
         $foto = UsuarioM::where('id_Medico',auth()->user()->id_usuario)->first();
-        return view('home')->with(compact('foto'));
+        $cita = ControlHM::where('Paciente_id',1)->where('cerrado', 0)->first();
+        $fecha1= new DateTime(date('Y-m-d H:i'));
+        $fecha2= new DateTime($cita->Citas->start);
+        $diff = $fecha1->diff($fecha2);
+
+        return view('home')->with(compact('foto','diff'));
     }
 
     

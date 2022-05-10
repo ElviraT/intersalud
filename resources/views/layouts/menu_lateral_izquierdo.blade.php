@@ -477,9 +477,9 @@
           </li>
       </ul> 
      @endcan
-      @canany(['reporte_consulta'])
+      @canany(['reporte_consulta','facturaH'])
       <ul class="pcoded-item pcoded-left-item">
-        <li class="{{ @request()->routeIs('reporte_consulta') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
+        <li class="{{ @request()->routeIs('reporte_consulta') || @request()->routeIs('facturaH') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">
             <a href="javascript:void(0)" class="waves-effect waves-dark">
                 <span class="pcoded-micon"><i class="ti-write"></i></span>
                 <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">{{'Reportes'}}</span>
@@ -491,6 +491,17 @@
                 <a href="{{ route('reporte_consulta')}}" onclick="loading_show();" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                   <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">{{'Consultas'}}</span>
+                  <span class="pcoded-mcaret"></span>
+                </a>
+              </li>
+            </ul>
+            @endcan
+            @can('facturaH')
+            <ul class="pcoded-submenu">
+              <li class="{{ @request()->routeIs('facturaH') ? 'active' : ''}}">
+                <a href="{{ route('facturaH')}}" onclick="loading_show();" class="waves-effect waves-dark">
+                  <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                  <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">{{'Histórico de Factura'}}</span>
                   <span class="pcoded-mcaret"></span>
                 </a>
               </li>

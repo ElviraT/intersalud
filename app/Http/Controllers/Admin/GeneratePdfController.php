@@ -14,6 +14,7 @@ use App\Model\UsuarioM;
 use App\Model\UsuarioA;
 use App\Model\ServicioA;
 use App\Model\Status;
+use App\Model\StatusF;
 use App\Model\CuentaBanco;
 use App\Model\CuentaUSD;
 use App\Model\Billetera;
@@ -51,14 +52,13 @@ class GeneratePdfController extends Controller
         }
         
         if ($paciente != NULL && $fecha != NULL) {
-           $dataf = $dataf->where('Paciente_id', $paciente)->whereDate('Fecha', $fecha)->where('cerrado', 1)->where('factura_generada', 0)->first();
+           $dataf = $dataf->where('Paciente_id', $paciente)->whereDate('Fecha', $fecha)->where('cerrado', 1)->first();
            
            $servicios= ServicioA::select('servicios.id_servicio','servicios.Servicio','servicios.Costos','servicios.simbolo')
                                 ->join('servicios', 'servicios_adicionales.id_servicio', 'servicios.id_Servicio')
                                 ->join('citas_consultas', 'servicios_adicionales.Cita_Consulta_id','citas_consultas.id_Cita_Consulta')                                
                                 ->join('control_historia_medicas', 'citas_consultas.id_Cita_Consulta','control_historia_medicas.Cita_Consulta_id')                                
                                 ->where('control_historia_medicas.cerrado', 1)
-                                ->where('control_historia_medicas.factura_generada', 0)
                                 ->where('citas_consultas.Paciente_id', $paciente)
                                 ->whereDate('citas_consultas.start', $fecha)
                                 ->groupBy('servicios.id_servicio','servicios.Servicio','servicios.Costos','servicios.simbolo')
@@ -106,6 +106,7 @@ class GeneratePdfController extends Controller
         $pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
         
         $status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status");
+        $statusf=Collection::make(StatusF::select(['id_Status_Factura','Status_Factura'])->orderBy('Status_Factura')->get())->pluck("Status_Factura", "id_Status_Factura");
         $tpago=Collection::make(TipoPago::select(['id_Tipos_Pago','Tipo_Pago'])->orderBy('Tipo_Pago')->pluck("Tipo_Pago", "id_Tipos_Pago"));
         $monedas = ['Bs'=>'Bs','USD'=>'USD'];
 
@@ -128,7 +129,7 @@ class GeneratePdfController extends Controller
              ->join('criptos', 'billeteras_cripto.Cripto_id','criptos.id_Cripto')
              ->get())->pluck('name','id');
 
-        return view('admin.factura.pago')->with(compact('pacientes','fecha','paciente', 'dataf','servicios','monedas','status','tpago','cbs','cusd','cbilletera','medico','id_medico'));
+        return view('admin.factura.pago')->with(compact('pacientes','fecha','paciente', 'dataf','servicios','monedas','status','tpago','cbs','cusd','cbilletera','medico','id_medico','statusf'));
     }
     public function pdfForm($id)
     {
@@ -147,7 +148,7 @@ class GeneratePdfController extends Controller
             $factura->Fecha = $request['Fecha'];
             $factura->Datos_SENIAT_id = $request['Datos_SENIAT_id'];
             $factura->Pacientes_id =$request['Pacientes_id'];
-            $factura->Status_Factura_id = $request['Status_Factura_id'];
+            $factura->Status_Factura_id = $request['statusFf'];
             $factura->Relacion_Medico = $request['Relacion_Medico'];
             $factura->Medico_id = $request['Medico_id'];
             $factura->Asistente_id = $request['Asistente_id'];
@@ -166,7 +167,7 @@ class GeneratePdfController extends Controller
               $facturaD->Costo_Servicio = $value;
               $facturaD->moneda = $request['moneda'];
               $facturaD->iva = $request['iva'];
-              $facturaD->Status_Factura_id =$request['Status_Factura_id'];
+              $facturaD->Status_Factura_id =$request['statusFf'];
               $facturaD->save(); 
               
             }

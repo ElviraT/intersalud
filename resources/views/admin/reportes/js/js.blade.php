@@ -13,6 +13,14 @@
                 url: "{{ asset('js/Spanish.json') }}",
               },
         });
+
+       var table_factura = $('#table_factura').DataTable({
+            lengthChange: false,
+            responsive: true,
+            language: {
+                url: "{{ asset('js/Spanish.json') }}",
+              },
+        });
     });
 
 $(document).ready(function() {

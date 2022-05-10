@@ -17,7 +17,7 @@
       <input type="hidden" name="Cantidad" value="1">
       <input type="hidden" name="moneda" value="{{$dataf->Servicio->simbolo}}">
       <input type="hidden" name="iva" value="{{$iva}}">
-      <input type="hidden" name="Status_Factura_id" value="">
+      <input type="hidden" name="statusFf" id="statusFf">
       @if($servicios)
         @foreach($servicios as $servicio)
           <input type="hidden" name="Servicio[{{$servicio->id_servicio}}]" value="{{$servicio->Costos}}">
@@ -37,6 +37,7 @@
         <input type="hidden" name="impuestof" id="impuestof">
       {{--FIN FACTURA MONEDA--}}
       @can('factura.add')
+      @if($dataf['factura_generada'] == 0)
       <div class="modal-footer" align="center">
         <button type="submit" class="mt-1 btn-transition btn btn-outline-primary" id="guardar" style="pointer-events: none;">
             <span class="btn-icon-wrapper opacity-7">
@@ -44,5 +45,6 @@
             </span>{{'Guardar y Generar factura'}}
         </button>
       </div>
+      @endif
       @endcan
 {!! Form::close() !!}

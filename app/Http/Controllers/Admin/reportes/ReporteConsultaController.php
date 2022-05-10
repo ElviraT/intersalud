@@ -13,6 +13,11 @@ use DB;
 
 class ReporteConsultaController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('can:reporte_consulta')->only('index');
+    }
+
    public function index(Request $request)
     {
     	$method = $request->method();

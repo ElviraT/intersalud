@@ -126,6 +126,16 @@
         <div class="card p-3">
             <div class="row">
               <div class="col-md-2">
+                {!! Form::label('statusF', 'Estatus Factura:') !!}
+                {!! Form::select('statusF',$statusf, null, [
+                    'placeholder' => 'Seleccione', 
+                    'class' => 'select2 form-control',
+                    'id' => 'statusF',
+                    'required'=>'required'
+                    ])
+                !!}
+              </div>
+              <div class="col-md-2">
                 {!! Form::label('tpago', 'Tipo de Pago:') !!}
                 {!! Form::select('tpago',$tpago, null, [
                     'placeholder' => 'Seleccione', 

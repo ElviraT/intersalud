@@ -293,8 +293,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('historias/urologia/add', ['as' => 'urologia.add', 'uses' => 'Admin\historias\UrologiaController@add']);
 	Route::get('historias/urologia/edit', ['as' => 'urologia.edit', 'uses' => 'Admin\historias\UrologiaController@edit']);
 	Route::post('historias/urologia/destroy', ['as' => 'urologia.destroy', 'uses' => 'Admin\historias\UrologiaController@destroy']);
-
+	/*REPORTES*/
 	Route::match(['get','post'],'reportes/consulta', ['as' => 'reporte_consulta', 'uses' => 'Admin\reportes\ReporteConsultaController@index']);
+	Route::match(['get','post'],'reportes/factura/', ['as' => 'facturaH', 'uses' =>  'Admin\reportes\ReporteFacturaController@index']);
 
 	/*FACTURACION*/
 	Route::match(['get','post'],'factura/', ['as' => 'factura', 'uses' =>  'Admin\GeneratePdfController@index']);

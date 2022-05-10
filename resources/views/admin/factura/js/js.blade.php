@@ -84,6 +84,7 @@ $('#id_medico').on('select2:select', function (e) {
       var moneda= $('#moneda').val();//cancelar
       var tpago= $('#tpago').val();
       var status= $('#statusP').val();
+      var statusf= $('#statusF').val();
       var cbs= $('#cbsf').val();
       var cusd= $('#cusd').val();
       var billerera= $('#billetera').val();
@@ -91,7 +92,7 @@ $('#id_medico').on('select2:select', function (e) {
       var total = 0;
       var impuesto = 0;
 
-      if(moneda.length != 0 && tpago.length != 0 && status != undefined)
+      if(moneda.length != 0 && tpago.length != 0 && status != undefined && statusf != undefined)
       {
         $.getJSON('{{ route('calcular-pago') }}', function(obj){
           if(moneda == simbolo){
@@ -134,6 +135,7 @@ $('#id_medico').on('select2:select', function (e) {
             $('#tpagof').val(tpago);
             $('#monedaf').val(moneda);
             $('#statusPf').val(status);
+            $('#statusFf').val(statusf);
             $('#cbsf').val(cbs);
             $('#cusdf').val(cusd);
             $('#billeteraf').val(billerera);

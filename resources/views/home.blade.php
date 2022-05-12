@@ -34,13 +34,15 @@
 
                     {{'Hora Actual '}}-{{ date('g:ia') }}
                 </div>
-                <div class="card" align="center">
-                 @if($diff->invert == 1)
-                  <h2>{{'Ya pasaron'}}&nbsp;{{$diff->days}}&nbsp;{{'de su cita'}}</h2>
-                 @else
-                  <h2>{{'Faltan'}}&nbsp;{{$diff->days}}&nbsp;{{'para su cita'}}</h2>
-                 @endif
-                </div>
+                @if($diff)
+                  <div class="card" align="center">
+                   @if($diff->invert == 1)
+                    <h2>{{'Ya pasaron'}}&nbsp;{{$diff->days}}&nbsp;{{'de su cita'}}</h2>
+                   @else
+                    <h2>{{'Faltan'}}&nbsp;{{$diff->days}}&nbsp;{{'para su cita'}}</h2>
+                   @endif
+                  </div>
+                @endif
             </div>
         </div>
     </div>

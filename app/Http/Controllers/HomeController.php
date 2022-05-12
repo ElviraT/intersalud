@@ -29,10 +29,14 @@ class HomeController extends Controller
     public function index()
     {
         $foto = UsuarioM::where('id_Medico',auth()->user()->id_usuario)->first();
-        $cita = ControlHM::where('Paciente_id',1)->where('cerrado', 0)->first();
-        $fecha1= new DateTime(date('Y-m-d H:i'));
-        $fecha2= new DateTime($cita->Citas->start);
-        $diff = $fecha1->diff($fecha2);
+        $cita = ControlHM::where('Paciente_id',auth()->user()->id_usuarioP)->where('cerrado', 0)->first();
+        if($cita){
+            $fecha1= new DateTime(date('Y-m-d H:i'));
+            $fecha2= new DateTime($cita->Citas->start);
+            $diff = $fecha1->diff($fecha2);
+        }else{
+            $diff= [];
+        }
 
         return view('home')->with(compact('foto','diff'));
     }

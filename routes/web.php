@@ -307,8 +307,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 	/*PAGOS*/
 	Route::get('pago', ['as' => 'pago', 'uses' => 'Admin\PagosController@index']);
-	Route::get('pago/create', ['as' => 'pago.create', 'uses' => 'Admin\PagosController@create']);
 	Route::post('pago/add', ['as' => 'pago.add', 'uses' => 'Admin\PagosController@add']);
 	Route::get('pago/edit/{id}', ['as' => 'pago.edit', 'uses' => 'Admin\PagosController@edit']);
-	Route::post('pago/destroy', ['as' => 'pago.destroy', 'uses' => 'Admin\PagosController@destroy']);
 });

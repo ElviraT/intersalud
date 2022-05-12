@@ -477,6 +477,17 @@
           </li>
       </ul> 
      @endcan
+     @can('pago')
+      <ul class="pcoded-item pcoded-left-item">
+          <li class="{{ @request()->routeIs('pago') ? 'active' : ' ' }}">
+              <a href="{{route('pago')}}"  onclick="loading_show();" class="waves-effect waves-dark">
+                  <span class="pcoded-micon"><i class="ti-credit-card"></i><b>Pa</b></span>
+                  <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Pago'}}</span>
+                  <span class="pcoded-mcaret"></span>
+              </a>
+          </li>
+      </ul> 
+     @endcan
       @canany(['reporte_consulta','facturaH'])
       <ul class="pcoded-item pcoded-left-item">
         <li class="{{ @request()->routeIs('reporte_consulta') || @request()->routeIs('facturaH') ? 'active pcoded-hasmenu pcoded-trigger' : 'pcoded-hasmenu' }} ">

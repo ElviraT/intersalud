@@ -24,7 +24,7 @@
   });
 $('#id_medico').on('select2:select', function (e) {
    var id_medico = $('#id_medico').val();
-    $.getJSON('{{ route('paciente_dependiente') }}?id_medico='+id_medico, function(objP){
+    $.getJSON('{{ route('paciente_medico') }}?id_medico='+id_medico, function(objP){
         var opcion = $('#paciente').val();
         $('#paciente').empty();
         $('#paciente').prop('disabled', true);

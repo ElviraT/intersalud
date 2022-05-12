@@ -304,4 +304,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('pago-factura/{id}', ['as' => 'factura.pago', 'uses' => 'Admin\GeneratePdfController@pago']);
  	Route::get('pdf_download/{id}', ['as' => 'factura.pdf', 'uses' => 'Admin\GeneratePdfController@pdfDownload']);
 	Route::get('calcular-pago/', ['as' => 'calcular-pago', 'uses' => 'Admin\GeneratePdfController@calcular']);
+
+	/*PAGOS*/
+	Route::get('pago', ['as' => 'pago', 'uses' => 'Admin\PagosController@index']);
+	Route::get('pago/create', ['as' => 'pago.create', 'uses' => 'Admin\PagosController@create']);
+	Route::post('pago/add', ['as' => 'pago.add', 'uses' => 'Admin\PagosController@add']);
+	Route::get('pago/edit/{id}', ['as' => 'pago.edit', 'uses' => 'Admin\PagosController@edit']);
+	Route::post('pago/destroy', ['as' => 'pago.destroy', 'uses' => 'Admin\PagosController@destroy']);
 });

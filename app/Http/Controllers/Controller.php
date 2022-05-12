@@ -18,6 +18,7 @@ use App\Model\Horario;
 use App\Model\Agenda;
 use App\Model\Citas;
 use App\Model\Servicio;
+use App\Model\DireccionPaciente;
 use DB;
 
 class Controller extends BaseController
@@ -169,7 +170,7 @@ class Controller extends BaseController
       return response()->json([$duracion, $tiempo]);
     }
 
-    public function paciente_dependiente(Request $request){
+    public function paciente_medico(Request $request){
       $id = empty($request->input('id_medico')) ? 0 : $request->input('id_medico');
       $pacientes = [];
 
@@ -182,5 +183,17 @@ class Controller extends BaseController
           ->get();
       }
         return response()->json($pacientes);
+    }
+
+    public function paciente_datos(Request $request){
+      $id = empty($request->input('paciente')) ? 0 : $request->input('paciente');
+      $datos = [];
+
+      if ($id > 0) {
+        $datos= DireccionPaciente::select(['Telefono','Celular','Correo'])
+                                  ->where('Paciente_id', $id)
+                                  ->first();
+      }
+        return response()->json($datos);
     }
 }

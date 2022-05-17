@@ -10,6 +10,10 @@ class Status extends Model
    protected $primary_key = 'id_Status';
    public $timestamps = false;
 
+   public function Limite()
+    {
+        return $this->hasOne('App\Limite', 'id_Status');
+    }
    public function Agenda()
     {
         return $this->hasOne('App\Model\Agenda', 'id_Agenda');

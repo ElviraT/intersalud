@@ -11,7 +11,7 @@
                 @foreach($permisos as $permiso)
                     <div class="single-item col-md-3 mt-2">
                         <label>
-                            {!! form::checkbox('permissions[]', $permiso->id, null,['class' => 'form-control checkbox', 'data-toggle'=>"toggle" ,'data-on'=>"Si", 'data-off'=>"No" ,'data-size'=>"xs"]) !!}
+                            {!! form::checkbox('permissions[]', $permiso->id, null,['class' => 'form-control checkbox', 'data-toggle'=>"toggle" ,'data-on'=>"Si", 'data-off'=>"No" ,'data-size'=>"xs", 'id'=>"check"]) !!}
                             {{$permiso->description}}
                         </label>
                     </div>

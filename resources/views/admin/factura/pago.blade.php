@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('layouts.Base')
 @section('css')
 @include('admin.factura.css.css')
 @endsection

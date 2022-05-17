@@ -4,21 +4,23 @@
         <label for="validationCustom01">{{'Nombre'}}</label>
         {!! form::text('name', null ,['class' => 'form-control', 'required' => 'required', 'autofocus'=>'autofocus'])!!}
     </div>
-
-        <div class="col-md-12">
-            <h5>{{'Listado de Permisos'}}</h5>
-            <div class="row  mt-2">
-                @foreach($permisos as $permiso)
-                    <div class="col-md-4">
-                        <label>
-                            {!! form::checkbox('permissions[]', $permiso->id, null,['class' => 'form-control checkbox', 'data-toggle'=>"toggle" ,'data-on'=>"Si", 'data-off'=>"No" ,'data-size'=>"xs"]) !!}
-                            {{$permiso->description}}
-                        </label>
+    <div class="cont">
+        <div class="container">
+                <div class="col-md-12">
+                    <h5>{{'Listado de Permisos'}}</h5>
+                    <div class="row mt-2" id="pagination">
+                        @foreach($permisos as $permiso)
+                            <div class="single-item col-md-4">
+                                <label>
+                                    {!! form::checkbox('permissions[]', $permiso->id, null,['class' => 'form-control checkbox', 'data-toggle'=>"toggle" ,'data-on'=>"Si", 'data-off'=>"No" ,'data-size'=>"xs"]) !!}
+                                    {{$permiso->description}}
+                                </label>
+                            </div>
+                        @endforeach                        
                     </div>
-                @endforeach
-                
             </div>
         </div>
+    </div>
     </div>
 </div>
 <div class="modal-footer">

@@ -68,37 +68,39 @@ class GeneratePdfController extends Controller
        //dd($servicios);
       if(auth()->user()->id_usuario > 0 ){
         $medico=Collection::make(
-          UsuarioM::select(['usuarios_medicos.id_Medico', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])
-          ->join('control_historia_medicas', 'usuarios_medicos.id_Medico', 'control_historia_medicas.Medico_id')
-          ->where('usuarios_medicos.id_Medico',auth()->user()->id_usuario)
-          ->where('usuarios_medicos.Status_Medico_id',1)
-          ->where('control_historia_medicas.cerrado', 1)
-          ->where('control_historia_medicas.factura_generada', 0)
-          ->distinct('usuarios_medicos.id_Medico')
-          ->orderBy('usuarios_medicos.Nombres_Medico')
+           UsuarioM::select(['id_Medico', DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])
+          ->leftJoin('control_historia_medicas', 'id_Medico', 'Medico_id')
+          ->where('Status_Medico_id',1)
+          ->where('id_Medico',auth()->user()->id_usuario)
+          ->where('cerrado', 1)
+          ->where('factura_generada', 0)
+          ->distinct('Nombre')
+          ->orderBy('Nombre')
           ->pluck("Nombre", "id_Medico"));
+        
 
       }elseif(auth()->user()->id_usuarioA > 0 ){
         $asistente = UsuarioA::where('id_asistente',auth()->user()->id_usuarioA)->first();
         $medico=Collection::make(
-          UsuarioM::select(['usuarios_medicos.id_Medico', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])
-          ->join('control_historia_medicas', 'usuarios_medicos.id_Medico', 'control_historia_medicas.Medico_id')
-          ->where('usuarios_medicos.id_Medico',$asistente->id_Medico)
-          ->where('usuarios_medicos.Status_Medico_id',1)
-          ->where('control_historia_medicas.cerrado', 1)
-          ->where('control_historia_medicas.factura_generada', 0)
-          ->distinct('usuarios_medicos.id_Medico')
-          ->orderBy('usuarios_medicos.Nombres_Medico')
+           UsuarioM::select(['id_Medico', DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])
+          ->leftJoin('control_historia_medicas', 'id_Medico', 'Medico_id')
+          ->where('Status_Medico_id',1)
+          ->where('id_Medico',$asistente->id_Medico)
+          ->where('cerrado', 1)
+          ->where('factura_generada', 0)
+          ->distinct('Nombre')
+          ->orderBy('Nombre')
           ->pluck("Nombre", "id_Medico"));
       }else{
+
         $medico=Collection::make(
-          UsuarioM::select(['usuarios_medicos.id_Medico', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ", usuarios_medicos.Apellidos_Medicos) AS Nombre')])
-          ->join('control_historia_medicas', 'usuarios_medicos.id_Medico', 'control_historia_medicas.Medico_id')
+          UsuarioM::select(['id_Medico', DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])
+          ->leftJoin('control_historia_medicas', 'id_Medico', 'Medico_id')
           ->where('usuarios_medicos.Status_Medico_id',1)
-          ->where('control_historia_medicas.cerrado', 1)
-          ->where('control_historia_medicas.factura_generada', 0)
-          ->distinct('usuarios_medicos.id_Medico')
-          ->orderBy('usuarios_medicos.Nombres_Medico')
+          ->where('cerrado', 1)
+          ->where('factura_generada', 0)
+          ->distinct('Nombre')
+          ->orderBy('Nombre')
           ->pluck("Nombre", "id_Medico"));
 
 

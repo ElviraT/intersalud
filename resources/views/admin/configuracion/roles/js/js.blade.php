@@ -147,5 +147,5 @@ $('#confirm-delete15').on('show.bs.modal', function(e) {
     };
 })(jQuery);
 
-$(".container").pagify(2, ".single-item");
+$(".cont").pagify(16, ".single-item");
 </script>

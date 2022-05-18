@@ -19,6 +19,7 @@ use App\Model\Ciudad;
 use App\Model\Estado;
 use App\Model\Municipio;
 use App\Model\Parroquia;
+use App\Limite;
 use App\Model\DireccionPaciente;
 use Spatie\Permission\Models\Role;
 use Flash;
@@ -64,62 +65,83 @@ class UsuarioPController extends Controller
 
   	 public function add(Request $request)
     {
-    	if($request->id == null){
-        try {
-            $paciente= new UsuarioP();
-            $paciente->Nombres_Paciente = ucfirst($request['nombre']);
-            $paciente->Apellidos_Paciente = ucfirst($request['apellido']);
-            $paciente->Prefijo_CIDNI_id = $request['prefijo'];
-            $paciente->CIDNI = $request['cedula'];
-            $paciente->Fecha_Nacimiento_Paciente = $request['fechNacP'];
-            $paciente->Sexo_id = $request['sexo'];
-            $paciente->Status_id = $request['status'];
-            $paciente->Civil_id = $request['civil'];
-            $paciente->Pais_id = $request['nacionalidad'];
-            $paciente->save();
+      $total = UsuarioP::where('Status_id',1)->count();
+      $limite = Limite::select('paciente')->where('status',1)->first();
+      	if($request->id == null){
+          if($total < $limite->paciente){
+            try {
+              $paciente= new UsuarioP();
+              $paciente->Nombres_Paciente = ucfirst($request['nombre']);
+              $paciente->Apellidos_Paciente = ucfirst($request['apellido']);
+              $paciente->Prefijo_CIDNI_id = $request['prefijo'];
+              $paciente->CIDNI = $request['cedula'];
+              $paciente->Fecha_Nacimiento_Paciente = $request['fechNacP'];
+              $paciente->Sexo_id = $request['sexo'];
+              $paciente->Status_id = $request['status'];
+              $paciente->Civil_id = $request['civil'];
+              $paciente->Pais_id = $request['nacionalidad'];
+              $paciente->save();
 
-        //dd($Paciente->id);
-            
+          //dd($Paciente->id);
+              
 
-            Flash::success("Registro Agregado Correctamente");            
-        return redirect()->route('usuario_p.edit', $paciente->id);
-        } catch (\Illuminate\Database\QueryException $e) {
-            Flash::error('Ocurrió un error, por favor intente de nuevo');
-            return redirect()->route('usuario_p.create');
-        }
-      }else{
-        try{
-                $id = (int)$request->id;
-                 UsuarioP::where('id_Paciente', $id)->update([
-                'Nombres_Paciente' => ucfirst($request['nombre']),
-                'Apellidos_Paciente' => ucfirst($request['apellido']),
-                'Prefijo_CIDNI_id' => $request['prefijo'],
-                'CIDNI' => $request['cedula'],
-                'Fecha_Nacimiento_Paciente' => $request['fechNacP'],
-                'Sexo_id' => $request['sexo'],
-                'Status_id' => $request['status'],
-                'Civil_id' => $request['civil'],
-                'Pais_id' => $request['nacionalidad'],
-                ]);
-
-                 $login = LoginP::where('id_login_Pacientes', $id)->first();
-                 if (isset($login)) {
-                  LoginP::where('id_login_Pacientes', $id)->update([
-                  'Status_id' => $request['status'],
-                  ]);
-
-                  User::where('id_usuarioP', $id)->update([
-                  'status' => $request['status']
-                  ]);
-                 }
-
-                Flash::success("Registro Actualizado Correctamente");
-
-            }catch(\Illuminate\Database\QueryException $e) {
-              Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+              Flash::success("Registro Agregado Correctamente");            
+               return redirect()->route('usuario_p.edit', $paciente->id);
+            } catch (\Illuminate\Database\QueryException $e) {
+                Flash::error('Ocurrió un error, por favor intente de nuevo');
+                return redirect()->route('usuario_p.create');
             }
-            return redirect()->route('usuario_p.edit', $id);
-      }
+            }else{
+            Flash::error('No se pueden crear mas de '.$limite->paciente.' pacientes');
+              return redirect()->route('usuario_p');
+            }
+        }else{
+                  $id = (int)$request->id;
+          try{
+            if($total == $limite->paciente){
+                  UsuarioP::where('id_Paciente', $id)->update([
+                  'Nombres_Paciente' => ucfirst($request['nombre']),
+                  'Apellidos_Paciente' => ucfirst($request['apellido']),
+                  'Prefijo_CIDNI_id' => $request['prefijo'],
+                  'CIDNI' => $request['cedula'],
+                  'Fecha_Nacimiento_Paciente' => $request['fechNacP'],
+                  'Sexo_id' => $request['sexo'],
+                  'Civil_id' => $request['civil'],
+                  'Pais_id' => $request['nacionalidad'],
+                  ]);
+
+                }else{
+                   UsuarioP::where('id_Paciente', $id)->update([
+                  'Nombres_Paciente' => ucfirst($request['nombre']),
+                  'Apellidos_Paciente' => ucfirst($request['apellido']),
+                  'Prefijo_CIDNI_id' => $request['prefijo'],
+                  'CIDNI' => $request['cedula'],
+                  'Fecha_Nacimiento_Paciente' => $request['fechNacP'],
+                  'Sexo_id' => $request['sexo'],
+                  'Status_id' => $request['status'],
+                  'Civil_id' => $request['civil'],
+                  'Pais_id' => $request['nacionalidad'],
+                  ]);
+                }
+
+                   $login = LoginP::where('id_login_Pacientes', $id)->first();
+                   if (isset($login)) {
+                    LoginP::where('id_login_Pacientes', $id)->update([
+                    'Status_id' => $request['status'],
+                    ]);
+
+                    User::where('id_usuarioP', $id)->update([
+                    'status' => $request['status']
+                    ]);
+                   }
+
+                  Flash::success("Registro Actualizado Correctamente");
+
+              }catch(\Illuminate\Database\QueryException $e) {
+                Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+              }
+              return redirect()->route('usuario_p.edit', $id);
+        }
     }
 
     public function edit($id)

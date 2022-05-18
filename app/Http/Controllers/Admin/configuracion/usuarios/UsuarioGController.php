@@ -14,6 +14,7 @@ use App\Model\Sexo;
 use App\Model\PrefijoDNI;
 use App\Model\Civil;
 use App\Model\Status;
+use App\Limite;
 use App\Model\HistoricoT;
 use Spatie\Permission\Models\Role;
 use Flash;
@@ -55,42 +56,50 @@ class UsuarioGController extends Controller
     {
         $data = $request->all();
         $data = $request->except('_token');
-    	if($request->id == null){
-        try {
+      $total = UsuarioG::where('id_status',1)->count();
+      $limite = Limite::select('administrativo')->where('status',1)->first();
+      	if($request->id == null){
+          if($total < $limite->administrativo){
+              try {
 
-        $usuarioG= UsuarioG::create($data);
-        //dd($usuarioG->id);            
+              $usuarioG= UsuarioG::create($data);
+              //dd($usuarioG->id);            
 
-            Flash::success("Registro Agregado Correctamente");            
-        return redirect()->route('usuario_g.edit', $usuarioG->id);
+                  Flash::success("Registro Agregado Correctamente");            
+              return redirect()->route('usuario_g.edit', $usuarioG->id);
 
-        } catch (\Illuminate\Database\QueryException $e) {
-            Flash::error('Ocurrió un error, por favor intente de nuevo');
-            return redirect()->route('usuario_g.create');
+              } catch (\Illuminate\Database\QueryException $e) {
+                  Flash::error('Ocurrió un error, por favor intente de nuevo');
+                  return redirect()->route('usuario_g.create');
+              }
+          }else{
+          Flash::error('No se pueden crear mas de '.$limite->administrativo.' administrativos');
+            return redirect()->route('usuario_g');
+          }
+        }else{
+          try{
+             if($total == $limite->administrativo){
+                $data = $data->except('status');
+              }
+            $usuarioG= UsuarioG::where('id', $request['id'])->update($data);
+            $login = LoginT::where('general_id', $request['id'])->first();
+               if (isset($login)) {
+                LoginT::where('general_id', $request['id'])->update([
+                'Status_Medico_id' => $request['status'],
+                ]);
+
+                User::where('id_usuarioG', $request['id'])->update([
+                'status' => $request['status']
+                ]);
+               }
+
+              Flash::success("Registro Actualizado Correctamente");
+
+              }catch(\Illuminate\Database\QueryException $e) {
+                Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+              }
+              return redirect()->route('usuario_g.edit', $request['id']);
         }
-
-      }else{
-        try{
-         $usuarioG= UsuarioG::where('id', $request['id'])->update($data);
-
-         $login = LoginT::where('general_id', $request['id'])->first();
-             if (isset($login)) {
-              LoginT::where('general_id', $request['id'])->update([
-              'Status_Medico_id' => $request['status'],
-              ]);
-
-              User::where('id_usuarioG', $request['id'])->update([
-              'status' => $request['status']
-              ]);
-             }
-
-            Flash::success("Registro Actualizado Correctamente");
-
-            }catch(\Illuminate\Database\QueryException $e) {
-              Flash::error('Ocurrió un error, por favor intente de nuevo'); 
-            }
-            return redirect()->route('usuario_g.edit', $request['id']);
-      }
     }
    public function edit($id)
     {

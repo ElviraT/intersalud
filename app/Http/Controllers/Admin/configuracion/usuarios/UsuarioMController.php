@@ -21,6 +21,7 @@ use App\Model\Ciudad;
 use App\Model\Estado;
 use App\Model\Municipio;
 use App\Model\Parroquia;
+use App\Limite;
 use Spatie\Permission\Models\Role;
 use Session;
 use Image;
@@ -65,39 +66,64 @@ class UsuarioMController extends Controller
   	}
 	public function add(Request $request)
 	{
+	  $total = UsuarioM::where('Status_Medico_id',1)->count();
+      $limite = Limite::select('medico')->where('status',1)->first();
 		if($request->id == null){
-		  	try {
-		        $medico= new UsuarioM();
-		        $medico->Nombres_Medico = ucfirst($request['nombre']);
-		        $medico->Prefijo_CIDNI_id = $request['prefijo'];
-		        $medico->Apellidos_Medicos = ucfirst($request['apellido']);
-		        $medico->CIDNI = $request['cedula'];
-		        $medico->Fecha_Nacimiento_Medico = $request['fechNac'];
-		        $medico->Sexo_id = $request['sexo'];
-		        $medico->Registro_MPPS = $request['registro'];
-		        $medico->Numero_Colegio_de_Medico = $request['ncm'];
-		        $medico->Status_Medico_id = $request['statusm'];
-		        $medico->Civil_id = $request['civil'];
-		        $medico->Pais_id = $request['nacionalidad'];
-		        $medico->id_Estado = $request['estado'];
-		        $medico->id_Ciudad = $request['ciudad'];
-		        $medico->id_Municipio = $request['municipio'];
-		        $medico->id_Parroquia = $request['parroquia'];
-		        $medico->save();
-		        Session::put('medico', $medico);
+      		if($total < $limite->medico){
+			  	try {
+			        $medico= new UsuarioM();
+			        $medico->Nombres_Medico = ucfirst($request['nombre']);
+			        $medico->Prefijo_CIDNI_id = $request['prefijo'];
+			        $medico->Apellidos_Medicos = ucfirst($request['apellido']);
+			        $medico->CIDNI = $request['cedula'];
+			        $medico->Fecha_Nacimiento_Medico = $request['fechNac'];
+			        $medico->Sexo_id = $request['sexo'];
+			        $medico->Registro_MPPS = $request['registro'];
+			        $medico->Numero_Colegio_de_Medico = $request['ncm'];
+			        $medico->Status_Medico_id = $request['statusm'];
+			        $medico->Civil_id = $request['civil'];
+			        $medico->Pais_id = $request['nacionalidad'];
+			        $medico->id_Estado = $request['estado'];
+			        $medico->id_Ciudad = $request['ciudad'];
+			        $medico->id_Municipio = $request['municipio'];
+			        $medico->id_Parroquia = $request['parroquia'];
+			        $medico->save();
+			        Session::put('medico', $medico);
 
-		    //dd($medico->id);
-		        $this->_procesarArchivo($request, $medico->id, 'medico');
+			    //dd($medico->id);
+			        $this->_procesarArchivo($request, $medico->id, 'medico');
 
-		        Flash::success("Registro Agregado Correctamente");            
-	    	return redirect()->route('usuario_m.edit', $medico->id);
-		    } catch (\Illuminate\Database\QueryException $e) {
-		        Flash::error('Ocurrió un error, por favor intente de nuevo');
-		        return redirect()->route('usuario_m.create');
-		    }
+			        Flash::success("Registro Agregado Correctamente");            
+		    	return redirect()->route('usuario_m.edit', $medico->id);
+			    } catch (\Illuminate\Database\QueryException $e) {
+			        Flash::error('Ocurrió un error, por favor intente de nuevo');
+			        return redirect()->route('usuario_m.create');
+			    }
+		    }else{
+		          Flash::error('No se pueden crear mas de '.$limite->medico.' medicos');
+		                return redirect()->route('usuario_m');
+		      }
 		}else{
+	        $id = (int)$request->id;
 			try{
-	            $id = (int)$request->id;
+			if($total == $limite->medico){
+                UsuarioM::where('id_Medico', $id)->update([
+	             	'Nombres_Medico' => ucfirst($request['nombre']),
+			        'Prefijo_CIDNI_id' => $request['prefijo'],
+			        'Apellidos_Medicos' => ucfirst($request['apellido']),
+			        'CIDNI' => $request['cedula'],
+			        'Fecha_Nacimiento_Medico' => $request['fechNac'],
+			        'Sexo_id' => $request['sexo'],
+			        'Registro_MPPS' => $request['registro'],
+			        'Numero_Colegio_de_Medico' => $request['ncm'],
+			        'Civil_id' => $request['civil'],
+			        'Pais_id' => $request['nacionalidad'],
+			        'id_Estado' => $request['estado'],
+			        'id_Ciudad' => $request['ciudad'],
+		        	'id_Municipio' => $request['municipio'],
+		        	'id_Parroquia' => $request['parroquia'],
+	            ]);
+              }else{
 	             UsuarioM::where('id_Medico', $id)->update([
 	             	'Nombres_Medico' => ucfirst($request['nombre']),
 			        'Prefijo_CIDNI_id' => $request['prefijo'],
@@ -115,6 +141,7 @@ class UsuarioMController extends Controller
 		        	'id_Municipio' => $request['municipio'],
 		        	'id_Parroquia' => $request['parroquia'],
 	            ]);
+              }
 
 	             $login = LoginT::where('Medico_id', $id)->first();
 	             if (isset($login)) {

@@ -24,9 +24,9 @@ Route::post('paciente/login', ['as' => 'paciente.login', 'uses' => 'PacienteCont
 Route::post('paciente/add', ['as' => 'paciente.add', 'uses' => 'PacienteController@add']);
 Route::get('paciente/edit/{id}', ['as' => 'paciente.edit', 'uses' => 'PacienteController@edit']);
 
-Route::resource('limites', 'LimitesController');
 
 Route::group(['middleware' => 'auth'], function () {
+	Route::resource('limites', 'LimitesController');
 	/*DASHBOARD*/
 	Route::get('/home', 'HomeController@index')->middleware('can:home')->name('home');
 

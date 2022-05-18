@@ -17,6 +17,7 @@ use App\Model\Civil;
 use App\Model\Status;
 use App\Model\MxA;
 use App\Model\HistoricoT;
+use App\Limite;
 use Spatie\Permission\Models\Role;
 use Flash;
 use DB;
@@ -33,11 +34,11 @@ class UsuarioAController extends Controller
 
      public function index(UsuarioA $model)
   	{  
-    if(auth()->user()->name == 'Admin'){
-        $usuariosA = UsuarioA::all();
-    }else{
-        $usuariosA = UsuarioA::where('id_Medico', auth()->user()->id_usuario)->get();
-    }  	
+      if(auth()->user()->name == 'Admin'){
+          $usuariosA = UsuarioA::all();
+      }else{
+          $usuariosA = UsuarioA::where('id_Medico', auth()->user()->id_usuario)->get();
+      }  	
   		return view('admin.configuracion.usuarios.usuariosA.index', ['usuariosA' => $usuariosA]);
   	}
 
@@ -62,62 +63,82 @@ class UsuarioAController extends Controller
 
     public function add(Request $request)
     {
-    	if($request->id == null){
-        try {
-            $asistente= new UsuarioA();
-            $asistente->Nombre_Asistente = ucfirst($request['nombre']);
-            $asistente->Prefijo_CIDNI_id = $request['prefijo'];
-            $asistente->Apellidos_Asistente = ucfirst($request['apellido']);
-            $asistente->CIDNI = $request['cedula'];
-            $asistente->Sexo_id = $request['sexo'];
-            $asistente->Fecha_Nacimiento_Asistente = $request['fechNacA'];
-            $asistente->Status_id = $request['status'];
-            $asistente->Civil_id = $request['civil'];
-            $asistente->Pais_id = $request['nacionalidad'];
-            $asistente->save();
+      $total = UsuarioA::where('Status_id',1)->count();
+      $limite = Limite::select('asistente')->where('status',1)->first();
+        	if($request->id == null){
+            if($total < $limite->asistente){
+              try {
+                  $asistente= new UsuarioA();
+                  $asistente->Nombre_Asistente = ucfirst($request['nombre']);
+                  $asistente->Prefijo_CIDNI_id = $request['prefijo'];
+                  $asistente->Apellidos_Asistente = ucfirst($request['apellido']);
+                  $asistente->CIDNI = $request['cedula'];
+                  $asistente->Sexo_id = $request['sexo'];
+                  $asistente->Fecha_Nacimiento_Asistente = $request['fechNacA'];
+                  $asistente->Status_id = $request['status'];
+                  $asistente->Civil_id = $request['civil'];
+                  $asistente->Pais_id = $request['nacionalidad'];
+                  $asistente->save();
 
-        //dd($asistente->id);
-            
+              //dd($asistente->id);
+                  
 
-            Flash::success("Registro Agregado Correctamente");            
-        return redirect()->route('usuario_a.edit', $asistente->id);
-        } catch (\Illuminate\Database\QueryException $e) {
-            Flash::error('Ocurrió un error, por favor intente de nuevo');
-            return redirect()->route('usuario_a.create');
-        }
-      }else{
-        try{
-                $id = (int)$request->id;
-                 UsuarioA::where('id_asistente', $id)->update([
-                'Nombre_Asistente' => ucfirst($request['nombre']),
-                'Prefijo_CIDNI_id' => $request['prefijo'],
-                'Apellidos_Asistente' => ucfirst($request['apellido']),
-                'CIDNI' => $request['cedula'],
-                'Sexo_id' => $request['sexo'],
-                'Fecha_Nacimiento_Asistente' => $request['fechNacA'],
-                'Status_id' => $request['status'],
-                'Civil_id' => $request['civil'],
-                'Pais_id' => $request['nacionalidad'],
-                ]);
-
-                 $login = LoginT::where('Asistente_id', $id)->first();
-                 if (isset($login)) {
-                  LoginT::where('Asistente_id', $id)->update([
-                  'Status_Medico_id' => $request['status'],
-                  ]);
-
-                  User::where('id_usuarioA', $id)->update([
-                  'status' => $request['status']
-                  ]);
-                 }
-
-                Flash::success("Registro Actualizado Correctamente");
-
-            }catch(\Illuminate\Database\QueryException $e) {
-              Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+                  Flash::success("Registro Agregado Correctamente");            
+              return redirect()->route('usuario_a.edit', $asistente->id);
+              } catch (\Illuminate\Database\QueryException $e) {
+                  Flash::error('Ocurrió un error, por favor intente de nuevo');
+                  return redirect()->route('usuario_a.create');
+              }
+            }else{
+              Flash::error('No se pueden crear mas de '.$limite->asistente.' asistentes');
+                    return redirect()->route('usuario_a');
             }
-            return redirect()->route('usuario_a.edit', $id);
-      }
+          }else{
+            $id = (int)$request->id;
+            try{
+              if($total == $limite->asistente){
+                 UsuarioA::where('id_asistente', $id)->update([
+                    'Nombre_Asistente' => ucfirst($request['nombre']),
+                    'Prefijo_CIDNI_id' => $request['prefijo'],
+                    'Apellidos_Asistente' => ucfirst($request['apellido']),
+                    'CIDNI' => $request['cedula'],
+                    'Sexo_id' => $request['sexo'],
+                    'Fecha_Nacimiento_Asistente' => $request['fechNacA'],
+                    'Civil_id' => $request['civil'],
+                    'Pais_id' => $request['nacionalidad'],
+                    ]);
+                }else{
+                     UsuarioA::where('id_asistente', $id)->update([
+                    'Nombre_Asistente' => ucfirst($request['nombre']),
+                    'Prefijo_CIDNI_id' => $request['prefijo'],
+                    'Apellidos_Asistente' => ucfirst($request['apellido']),
+                    'CIDNI' => $request['cedula'],
+                    'Sexo_id' => $request['sexo'],
+                    'Fecha_Nacimiento_Asistente' => $request['fechNacA'],
+                    'Status_id' => $request['status'],
+                    'Civil_id' => $request['civil'],
+                    'Pais_id' => $request['nacionalidad'],
+                    ]);
+                }
+
+                     $login = LoginT::where('Asistente_id', $id)->first();
+                     if (isset($login)) {
+                      LoginT::where('Asistente_id', $id)->update([
+                      'Status_Medico_id' => $request['status'],
+                      ]);
+
+                      User::where('id_usuarioA', $id)->update([
+                      'status' => $request['status']
+                      ]);
+                     }
+
+                    Flash::success("Registro Actualizado Correctamente");
+
+                }catch(\Illuminate\Database\QueryException $e) {
+                  Flash::error('Ocurrió un error, por favor intente de nuevo'); 
+                }
+                return redirect()->route('usuario_a.edit', $id);
+          }
     }
 
     public function edit($id)

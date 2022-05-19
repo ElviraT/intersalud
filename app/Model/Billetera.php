@@ -22,4 +22,9 @@ class Billetera extends Model
     {
         return $this->hasOne('App\Model\Cripto', 'id_Cripto','Cripto_id');
     }
+
+    public function PagoConfirmar()
+    {
+        return $this->hasOne('App\Model\PagoConfirmar', 'id_Billetera_Cripto','billetera_emisora');
+    }
 }

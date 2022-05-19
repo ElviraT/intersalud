@@ -37,6 +37,12 @@ class TasaCambioController extends Controller
                 $tcambio->Status_Tasa_id = $request['status'];
                 $tcambio->save();
 
+                if($request->status == 1){
+                      TipoCambio::where('id_Tasa_Cambio','<>',$tcambio->id)->update([
+                            'Status_Tasa_id'=>2,
+                        ]);
+                }
+
                 Flash::success("Registro Agregado Correctamente");            
             } catch (\Illuminate\Database\QueryException $e) {
                 Flash::error('Ocurrió un error, por favor intente de nuevo');    
@@ -52,6 +58,12 @@ class TasaCambioController extends Controller
                     'Fecha'=>$request->fecha,
                     'Status_Tasa_id'=>$request->status,
                 ]);
+
+                 if($request->status == 1){
+                      TipoCambio::where('id_Tasa_Cambio','<>',$id)->update([
+                            'Status_Tasa_id'=>2,
+                        ]);
+                }
 
                 Flash::success("Registro Modificado Correctamente");
              }catch(\Illuminate\Database\QueryException $e){                    

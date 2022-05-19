@@ -19,4 +19,9 @@ class EntidadesUSD extends Model
     {
         return $this->hasOne('App\Model\CuentaUSD', 'id_Cuenta_USD','Entidad_USD_id');
     }
+
+    public function PagoConfirmar()
+    {
+        return $this->hasOne('App\Model\PagoConfirmar', 'id_Entidad_USD','entidad_emisora');
+    }
 }

@@ -310,4 +310,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('pago', ['as' => 'pago', 'uses' => 'Admin\PagosController@index']);
 	Route::post('pago/add', ['as' => 'pago.add', 'uses' => 'Admin\PagosController@add']);
 	Route::get('pago/edit/{id}', ['as' => 'pago.edit', 'uses' => 'Admin\PagosController@edit']);
+
+	/*CONFIRMAR PAGOS*/
+	Route::match(['get','post'],'confirmar-pago', ['as' => 'confirmar_pago', 'uses' => 'Admin\ConfirmarPagoController@index']);
+	Route::post('confirmar-pago/add', ['as' => 'confirmar_pago.add', 'uses' => 'Admin\ConfirmarPagoController@add']);
+	Route::get('confirmar-pago/edit/{id}', ['as' => 'confirmar_pago.edit', 'uses' => 'Admin\ConfirmarPagoController@edit']);
 });

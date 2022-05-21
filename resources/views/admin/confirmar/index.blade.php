@@ -111,7 +111,7 @@
 	      </div>
 	      @endif
        </div>
-      @if($pago)
+      @if(isset($pago))
       <div class="col-md-12">
       	<div class="card">
       		<div class="col-md-12">
@@ -129,10 +129,16 @@
       				<div class="col-md-3 mt-3">		
       					<h5>{{'Banco Emisor:'}}</h5>&nbsp;<label>{{$pago->Banco->Bancos}}</label>
       				</div>
+      				<div class="col-md-3 mt-3">		
+      					<h5>{{'Cuenta a la que transfirio:'}}</h5>&nbsp;<label>{{$pago->CuentaBanco->Numero_Cuenta}}</label>
+      				</div>
       				@endif
       				@if($pago->entidad_emisora != null)
       				<div class="col-md-3 mt-3">
       					<h5>{{'Entidad Emisora:'}}</h5>&nbsp;<label>{{$pago->EntidadesUSD->Entidad_USD}}</label>
+      				</div>
+      				<div class="col-md-3 mt-3">
+      					<h5>{{'Entidad a la que transfirio:'}}</h5>&nbsp;<label>{{$pago->CuentaUSD->Entidad_USD}}</label>
       				</div>
       				@endif
       				@if($pago->billetera_emisora != null)
@@ -144,7 +150,8 @@
       					<h5>{{'Comprobante:'}}</h5>
       					<img src="{{ asset("avatars/".str_replace('\\','/', $pago->comprobante)) }}" width="40%">
       				</div>      			
-      			</div>      			
+      			</div>  
+      			@include('admin.confirmar.confirmar')    			
       		</div>
       	</div>
       </div>

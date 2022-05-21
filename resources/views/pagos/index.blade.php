@@ -62,7 +62,7 @@
 			            </div>
 			            <div class="col-md-3 mt-3">
 			            	{!! Form::label('monto', 'Monto:') !!}
-			            	<input type="number" name="monto" id="monto" class="form-control" step="0.2">
+			            	<input type="number" name="monto" id="monto" class="form-control" step="0.01">
 			            </div>
 			            <div class="col-md-3 mt-3">
 			            	{!! Form::label('ref', 'Referencia:') !!}
@@ -114,13 +114,21 @@
 			                    ])
 			                !!}
 			            </div>
-			            <div class="col-md-3 mt-3">
+			            <div class="col-md-3 mt-3" id="banco" hidden>
 			              {!! Form::label('banco', 'De que banco transfirío:') !!}
 			              {!! Form::select('banco',$bancos,  null, [
 			                  'placeholder' => 'Seleccione', 
 			                  'class' => 'select2 form-control',
-			                  'id' => 'banco',
-			                  'required'=>'required'
+			                  'id' => 'id_banco'
+			                  ])
+			              !!}
+			            </div>
+			            <div class="col-md-3 mt-3" id="entidad" hidden>
+			              {!! Form::label('entidad', 'De que entidad transfirío:') !!}
+			              {!! Form::select('entidad',$entidades, null, [
+			                  'placeholder' => 'Seleccione', 
+			                  'class' => 'select2 form-control',
+			                  'id' => 'id_entidad'
 			                  ])
 			              !!}
 			            </div>

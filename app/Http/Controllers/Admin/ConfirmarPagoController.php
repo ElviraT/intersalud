@@ -33,6 +33,7 @@ class ConfirmarPagoController extends Controller
             $fecha = date('Y-m-d');
             $paciente = NULL;
             $dataf= null;
+            $pago= null;
             $servicios= null;
           } 
         if ($request->isMethod('post')) {
@@ -45,14 +46,14 @@ class ConfirmarPagoController extends Controller
            $dataf = $dataf->where('Paciente_id', $paciente)->whereDate('Fecha', $fecha)->where('cerrado', 1)->first();
            
            $servicios= ServicioA::select('servicios.id_servicio','servicios.Servicio','servicios.Costos','servicios.simbolo')
-                                ->join('servicios', 'servicios_adicionales.id_servicio', 'servicios.id_Servicio')
-                                ->join('citas_consultas', 'servicios_adicionales.Cita_Consulta_id','citas_consultas.id_Cita_Consulta')                                
-                                ->join('control_historia_medicas', 'citas_consultas.id_Cita_Consulta','control_historia_medicas.Cita_Consulta_id')                                
-                                ->where('control_historia_medicas.cerrado', 1)
-                                ->where('citas_consultas.Paciente_id', $paciente)
-                                ->whereDate('citas_consultas.start', $fecha)
-                                ->groupBy('servicios.id_servicio','servicios.Servicio','servicios.Costos','servicios.simbolo')
-                                ->get();
+		        ->join('servicios', 'servicios_adicionales.id_servicio', 'servicios.id_Servicio')
+		        ->join('citas_consultas', 'servicios_adicionales.Cita_Consulta_id','citas_consultas.id_Cita_Consulta')                                
+		        ->join('control_historia_medicas', 'citas_consultas.id_Cita_Consulta','control_historia_medicas.Cita_Consulta_id')                                
+		        ->where('control_historia_medicas.cerrado', 1)
+		        ->where('citas_consultas.Paciente_id', $paciente)
+		        ->whereDate('citas_consultas.start', $fecha)
+		        ->groupBy('servicios.id_servicio','servicios.Servicio','servicios.Costos','servicios.simbolo')
+		        ->get();
 
             $pago= PagoConfirmar::where('Paciente_id', $paciente)->where('confirmado', 0)->first();
           

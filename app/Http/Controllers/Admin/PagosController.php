@@ -11,6 +11,7 @@ use App\Model\TipoPago;
 use App\Model\CuentaBanco;
 use App\Model\CuentaUSD;
 use App\Model\Banco;
+use App\Model\EndtidadesUSD;
 use App\Model\PagoConfirmar;
 use Image;
 use DB;
@@ -64,7 +65,9 @@ class PagosController extends Controller
 
         $bancos=Collection::make(Banco::select(['id_Bancos_Bs', DB::raw('CONCAT(Codigo_Bancario, " - ",Bancos) AS name')])->orderBy('Bancos')->pluck("name", "id_Bancos_Bs"));
 
-    	return view('pagos.index')->with(compact('pacientes','paciente','telefono','celular','correo','monedas','tpago','cbs','cusd','bancos'));
+        $entidades=Collection::make(EndtidadesUSD::select(['id_Entidad_USD', 'Entidad_USD')])->where('Status_id',1)->orderBy('Entidad_USD')->pluck("Entidad_USD", "id_Entidad_USD"));
+
+    	return view('pagos.index')->with(compact('pacientes','paciente','telefono','celular','correo','monedas','tpago','cbs','cusd','bancos','entidades'));
     }
 
     public function add(Request $request)
@@ -72,16 +75,20 @@ class PagosController extends Controller
     	if($request->comprobante) {
           $comprobante = $this->_procesarComprobante($request);
       	}
+        if($request['cbs']){
 
-    	$pago = new PagoConfirmar();
+        }
+    	  $pago = new PagoConfirmar();
         $pago->Paciente_id = $request['paciente'];
         $pago->moneda_id = $request['moneda'];
         $pago->monto = $request['monto'];
         $pago->referencia =$request['referencia'];
         $pago->fecha_pago = $request['fecha'];
         $pago->tipo_pago = $request['tpago'];
-        $pago->banco_emisor = $request['cbs'];
-        $pago->entidad_emisora = $request['cusd'];
+        $pago->cuenta_bs = $request['cbs'];
+        $pago->cuenta_usd = $request['cusd'];
+        $pago->banco_emisor = $request['banco'];
+        $pago->entidad_emisora = $request['entidad'];
         $pago->comprobante = $comprobante;
         $pago->save(); 
 

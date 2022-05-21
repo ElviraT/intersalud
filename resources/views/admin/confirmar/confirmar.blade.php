@@ -29,20 +29,20 @@
         <input type="hidden" name="tpagof" id="tpagof" value="{{$pago->tipo_pago}}">
         <input type="hidden" name="monedaf" id="monedaf" value="{{$pago->moneda_id}}">
         <input type="hidden" name="statusPf" id="statusPf" value="{{'1'}}">
-        <input type="hidden" name="cbsf" id="cbsf" value="{{$pago->}}">
-        <input type="hidden" name="cusdf" id="cusdf" value="{{$pago->}}">
-        <input type="hidden" name="billeteraf" id="billeteraf" value="{{$pago->}}">
-        <input type="hidden" name="reff" id="reff" value="{{$pago->}}">
-        <input type="hidden" name="totalf" id="totalf" value="{{$pago->}}">
-        <input type="hidden" name="impuestof" id="impuestof" value="{{$pago->}}">
+        <input type="hidden" name="cbsf" id="cbsf" value="{{isset($pago->CuentaBanco) ? $pago->CuentaBanco->id_Cuenta_Bancaria_BS : null}}">
+        <input type="hidden" name="cusdf" id="cusdf" value="{{isset($pago->CuentaUSD) ? $pago->CuentaUSD->id_Entidad_USD : null }}">
+        <input type="hidden" name="billeteraf" id="billeteraf" value="{{''}}">
+        <input type="hidden" name="reff" id="reff" value="{{$pago->referencia}}">
+        <input type="hidden" name="totalf" id="totalf" value="{{$pago->monto}}">
+        <input type="hidden" name="impuestof" id="impuestof" value="{{''}}">
       {{--FIN FACTURA MONEDA--}}
       @can('factura.add')
-      @if($dataf['factura_generada'] == 0)
+      @if($pago)
       <div class="modal-footer" align="center">
         <button type="submit" class="mt-1 btn-transition btn btn-outline-primary" id="guardar" style="pointer-events: none;">
             <span class="btn-icon-wrapper opacity-7">
              <i class="ti-save"></i>
-            </span>{{'Guardar y Generar factura'}}
+            </span>{{'Confirmar y Generar factura'}}
         </button>
       </div>
       @endif

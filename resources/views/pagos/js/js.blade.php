@@ -43,12 +43,16 @@ $('#moneda').on('select2:select', function (e) {
     switch (moneda) {
       case "Bs":
         $('#bs').attr('hidden', false);
+        $('#banco').attr('hidden', false);
         $('#usd').attr('hidden', true);
+        $('#entidad').attr('hidden', true);
         $('#billetera').attr('hidden', true);
         break;
       case "USD":
         $('#usd').attr('hidden', false);
+        $('#entidad').attr('hidden', false);
         $('#bs').attr('hidden', true);
+        $('#banco').attr('hidden', true);
         $('#billetera').attr('hidden', true);
         break;
       default:

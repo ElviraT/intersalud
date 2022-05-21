@@ -23,4 +23,14 @@ class PagoConfirmar extends Model
     {
         return $this->hasOne('App\Model\Billetera', 'billetera_emisora');
     }
+
+    public function CuentaBanco()
+    {
+        return $this->hasOne('App\Model\CuentaBanco', 'id_Cuenta_Bancaria_BS','cuenta_bs');
+    }
+
+    public function CuentaUSD()
+    {
+        return $this->hasOne('App\Model\CuentaUSD', 'id_Cuenta_USD','cuenta_usd');
+    }
 }

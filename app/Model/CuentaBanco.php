@@ -27,4 +27,9 @@ class CuentaBanco extends Model
     {
         return $this->hasOne('App\Model\TipoCuenta', 'id_Cuenta','Tipo');
     }
+
+    public function PagoConfirmar()
+    {
+        return $this->hasOne('App\Model\PagoConfirmar', 'id_Cuenta_Bancaria_BS','cuenta_bs');
+    }
 }

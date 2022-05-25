@@ -109,6 +109,12 @@
 	          <input type="hidden" name="simbolo" id="simbolo" value="{{$servicio->simbolo}}">        
 	          </div>
 	      </div>
+        @else
+        <div class="col-md-12" align="center">
+          <div class="card">
+            <h2 style="color: red; padding: 30px;">{{'Este usuario no tiene cita en esta fecha'}}</h2>
+          </div>
+        </div>
 	      @endif
        </div>
       @if(isset($pago))

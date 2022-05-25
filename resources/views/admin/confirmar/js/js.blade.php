@@ -23,4 +23,22 @@
     });
    
   });
+  $("#confirmarAdd").submit(function(event) {
+    event.preventDefault();
+
+    var datos = jQuery(this).serialize();
+    jQuery.ajax({
+        type: "POST",
+        url: "{{ route('confirmar_pago.add') }}",
+        data: datos,
+        success: function(resp)
+        {
+            Swal.fire(resp[0]);
+            var id_factura= resp[1];
+            var url_pdf = "{{ route('factura.pdf', ':id') }}";
+            url_pdf = url_pdf.replace(':id', id_factura);
+            window.location.href = url_pdf;
+        }
+    });
+});
 </script>

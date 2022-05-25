@@ -11,7 +11,7 @@ use App\Model\TipoPago;
 use App\Model\CuentaBanco;
 use App\Model\CuentaUSD;
 use App\Model\Banco;
-use App\Model\EndtidadesUSD;
+use App\Model\EntidadesUSD;
 use App\Model\PagoConfirmar;
 use Image;
 use DB;
@@ -65,7 +65,7 @@ class PagosController extends Controller
 
         $bancos=Collection::make(Banco::select(['id_Bancos_Bs', DB::raw('CONCAT(Codigo_Bancario, " - ",Bancos) AS name')])->orderBy('Bancos')->pluck("name", "id_Bancos_Bs"));
 
-        $entidades=Collection::make(EndtidadesUSD::select(['id_Entidad_USD', 'Entidad_USD')])->where('Status_id',1)->orderBy('Entidad_USD')->pluck("Entidad_USD", "id_Entidad_USD"));
+        $entidades=Collection::make(EntidadesUSD::select(['id_Entidad_USD', 'Entidad_USD'])->where('Status_id',1)->orderBy('Entidad_USD')->pluck("Entidad_USD", "id_Entidad_USD"));
 
     	return view('pagos.index')->with(compact('pacientes','paciente','telefono','celular','correo','monedas','tpago','cbs','cusd','bancos','entidades'));
     }
@@ -74,7 +74,9 @@ class PagosController extends Controller
     {
     	if($request->comprobante) {
           $comprobante = $this->_procesarComprobante($request);
-      	}
+      	}else{
+          $comprobante = '';
+        }
         if($request['cbs']){
 
         }
@@ -89,6 +91,7 @@ class PagosController extends Controller
         $pago->cuenta_usd = $request['cusd'];
         $pago->banco_emisor = $request['banco'];
         $pago->entidad_emisora = $request['entidad'];
+        $pago->impuesto_dolar = $request['impuesto'];
         $pago->comprobante = $comprobante;
         $pago->save(); 
 

@@ -40,6 +40,13 @@ $('#paciente').on('select2:select', function (e) {
 });
 $('#moneda').on('select2:select', function (e) {
     var moneda = $('#moneda').val();
+    if($('#monto').val() == ''){
+        var total = 0;
+    }else{
+        var total = $('#monto').val();
+    }
+    var impuesto = 0;
+
     switch (moneda) {
       case "Bs":
         $('#bs').attr('hidden', false);
@@ -47,6 +54,7 @@ $('#moneda').on('select2:select', function (e) {
         $('#usd').attr('hidden', true);
         $('#entidad').attr('hidden', true);
         $('#billetera').attr('hidden', true);
+        $('#impuesto').val(0);
         break;
       case "USD":
         $('#usd').attr('hidden', false);
@@ -54,6 +62,10 @@ $('#moneda').on('select2:select', function (e) {
         $('#bs').attr('hidden', true);
         $('#banco').attr('hidden', true);
         $('#billetera').attr('hidden', true);
+        $('#imp').attr('hidden', false);
+        impuesto= (total * 3 / 100);
+        total= parseFloat(total)+parseFloat(impuesto);
+        $('#impuesto').val(impuesto.toFixed(2));
         break;
       default:
         $('#billetera').attr('hidden', false);

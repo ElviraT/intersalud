@@ -51,6 +51,14 @@
 			            	<input type="text" name="correo" id="correo" class="form-control" value="{{$correo}}" readonly>
 			            </div>
 			            <div class="col-md-3 mt-3">
+			            	{!! Form::label('monto', 'Monto:') !!}
+			            	<input type="number" name="monto" id="monto" class="form-control" step="0.01">
+			            </div>
+			            <div class="col-md-3 mt-3">
+			            	<label>{{'Impuesto al Dolar'}}</label>
+			            	<input type="text" name="impuesto" id="impuesto" class="form-control" readonly>
+			            </div>
+			            <div class="col-md-3 mt-3">
 			              {!! Form::label('moneda', 'Moneda:') !!}
 			              {!! Form::select('moneda',$monedas,  null, [
 			                  'placeholder' => 'Seleccione', 
@@ -59,10 +67,6 @@
 			                  'required'=>'required'
 			                  ])
 			              !!}
-			            </div>
-			            <div class="col-md-3 mt-3">
-			            	{!! Form::label('monto', 'Monto:') !!}
-			            	<input type="number" name="monto" id="monto" class="form-control" step="0.01">
 			            </div>
 			            <div class="col-md-3 mt-3">
 			            	{!! Form::label('ref', 'Referencia:') !!}

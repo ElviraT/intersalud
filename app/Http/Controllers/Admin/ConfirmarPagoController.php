@@ -82,4 +82,85 @@ class ConfirmarPagoController extends Controller
 
         return view('admin.confirmar.index')->with(compact('pacientes','fecha','paciente', 'dataf','servicios','status','statusf','pago'));
     }
+
+    public function add(Request $request)
+    {
+    	
+    	DB::beginTransaction();
+    	try {
+
+    		$factura = new Factura();
+            $factura->Cita_Consulta_id = $request['Cita_Consulta_id'];
+            $factura->Fecha = $request['Fecha'];
+            $factura->Datos_SENIAT_id = $request['Datos_SENIAT_id'];
+            $factura->Pacientes_id =$request['Pacientes_id'];
+            $factura->Status_Factura_id = $request['statusF'];
+            $factura->Relacion_Medico = $request['Relacion_Medico'];
+            $factura->Medico_id = $request['Medico_id'];
+            $factura->Asistente_id = $request['Asistente_id'];
+            $factura->Nombre = $request['Nombre'];
+            $factura->Apellido = $request['Apellido'];
+            $factura->CIDNI = $request['CIDNI'];
+            $factura->Status_no_paciente = $request['Status_no_paciente'];
+            $factura->moneda_cancela = $request['monedaf'];
+            $factura->save(); 
+
+            foreach ($request['Servicio'] as $key=>$value) {
+              $facturaD = new FacturaDetalle();
+              $facturaD->Factura_id = $factura['id'];
+              $facturaD->Servicio_id = $key;
+              $facturaD->Cantidad = $request['Cantidad'];
+              $facturaD->Costo_Servicio = $value;
+              $facturaD->moneda = $request['moneda'];
+              $facturaD->iva = $request['iva'];
+              $facturaD->Status_Factura_id =$request['statusF'];
+              $facturaD->save(); 
+              
+            }
+            switch ($request['monedaf']) {
+              case 'Bs':
+                  $facturaBs = new FacturaBs();
+                  $facturaBs->Factura_id = $factura['id'];
+                  $facturaBs->Status_Tasa_id = 1;
+                  $facturaBs->Status_Pago = $request['statusP'];
+                  $facturaBs->Cuenta_Bancaria_BS_id = $request['cbsf'];
+                  $facturaBs->Total_Cancelado = $request['totalf'];
+                  $facturaBs->Referencia_Bancaria =$request['reff'];
+                  $facturaBs->Tipo_Pago_id =$request['tpagof'];
+                  $facturaBs->save(); 
+                break;
+             /* case 'USD':
+                // code...
+                break;*/
+              default:
+                  $facturaUSD = new FacturaUSD();
+                  $facturaUSD->Factura_id = $factura['id'];
+                  $facturaUSD->Status_Tasa_id = 1;
+                  $facturaUSD->Status_Pago = $request['statusP'];
+                  $facturaUSD->Cuenta_USD_id = $request['cusdf'];
+                  $facturaUSD->Total_Cancelado = $request['totalf'];
+                  $facturaUSD->Referencia =$request['reff'];
+                  $facturaUSD->Tipo_Pago_id =$request['tpagof'];
+    			
+                  $facturaUSD->impuesto =$request['impuestof'];
+                  $facturaUSD->save();
+                break;
+            }
+            ControlHM::where('Cita_Consulta_id', $request['Cita_Consulta_id'])->update([
+                    'factura_generada' => 1,
+                ]);
+            PagoConfirmar::where('id_pago', $request['id_pago'])->update([
+                    'confirmado' => 1,
+                ]);
+
+		 	DB::commit();
+      $info = 'Pago confirmado correctamente';
+      	}catch (Exception $e) {
+        	DB::rollback();
+			$info= 'Ocurrio un error intente de nuevo';
+		}
+    $resp= [$info, $factura['id']];
+    return response()->json($resp);
+		
+    }
 }

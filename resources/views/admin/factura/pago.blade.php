@@ -87,7 +87,7 @@
                   <th>{{'Total'}}</th>
                 </tr>
               </thead>
-              @php($iva= ($dataf->Servicio->Costos * 12 / 100)) 
+              @php($iva = ($dataf->Servicio->Costos * 16 / 100)) 
               @php($tsa = 0)
               <tbody>
                 @if($servicios)

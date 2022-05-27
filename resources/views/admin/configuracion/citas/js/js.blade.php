@@ -187,6 +187,33 @@ function horario() {
           hora_minima = objch['Horario_inicio_Domingo'];
           hora_maxima = objch['Horario_Fin_Domingo'];
         };
+
+      $.getJSON('{{ route('servicios_lista') }}?medico='+objch['Medico_id'], function(objS){
+        var opcion = $('#id_servicio').val();
+        $('#id_servicio').empty();
+        $('#id_servicio').prop('disabled', true);
+        $('#id_servicio').change();
+
+          
+        if(objS.length > 0){
+            $('#id_servicio').append(
+                $('<option>', {
+                    value: '',
+                    text : 'Seleccione'
+                }),
+             );
+            $.each(objS, function (i, servicio) {
+            $('#id_servicio').append(
+                    $('<option>', {
+                        value: servicio.id_Servicio,
+                        text : servicio.Servicio
+                    })
+                );
+            });
+            $('#id_servicio').prop('disabled', false);
+        }
+      });
+
 var id_Agenda= objch['id_Agenda'];
    $(function() {
             var url = "{{ route('citas.mostrar', ':id') }}";

@@ -196,4 +196,15 @@ class Controller extends BaseController
       }
         return response()->json($datos);
     }
+
+    public function servicios_lista(Request $request)
+    {
+      $id = empty($request->input('medico')) ? 0 : $request->input('medico');
+      $servicios = [];
+
+      if ($id > 0) {
+      $servicios = Servicio::select(['id_Servicio','Servicio'])->where('Status_id',1)->where('Medico_id',$id)->get();
+      }
+        return response()->json($servicios);
+    }
 }

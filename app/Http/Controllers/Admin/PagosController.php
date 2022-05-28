@@ -13,8 +13,13 @@ use App\Model\CuentaUSD;
 use App\Model\Banco;
 use App\Model\EntidadesUSD;
 use App\Model\PagoConfirmar;
+use App\Model\UsuarioM;
+use App\User;
+use App\Mail\PagoMail;
 use Image;
 use DB;
+use Mail;
+use Flash;
 
 class PagosController extends Controller
 {
@@ -29,9 +34,10 @@ class PagosController extends Controller
     public function index()
     {
     	$paciente = NULL;
-		$telefono= NULL;
-		$celular = NULL;
-		$correo = NULL;
+  		$telefono= NULL;
+  		$celular = NULL;
+  		$correo = NULL;
+
     	if (auth()->user()->id_usuarioP > 0) {
     		$pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('id_Paciente',auth()->user()->id_usuarioP)->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
     		$data= DireccionPaciente::select(['Telefono','Celular','Correo'])
@@ -67,7 +73,10 @@ class PagosController extends Controller
 
         $entidades=Collection::make(EntidadesUSD::select(['id_Entidad_USD', 'Entidad_USD'])->where('Status_id',1)->orderBy('Entidad_USD')->pluck("Entidad_USD", "id_Entidad_USD"));
 
-    	return view('pagos.index')->with(compact('pacientes','paciente','telefono','celular','correo','monedas','tpago','cbs','cusd','bancos','entidades'));
+        $medico=Collection::make(UsuarioM::select(['id_Medico',DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->where('Status_Medico_id',1)->orderBy('Nombres_Medico')->pluck("Nombre", "id_Medico"));
+
+
+    	return view('pagos.index')->with(compact('pacientes','paciente','telefono','celular','correo','monedas','tpago','cbs','cusd','bancos','entidades','medico'));
     }
 
     public function add(Request $request)
@@ -95,6 +104,12 @@ class PagosController extends Controller
         $pago->comprobante = $comprobante;
         $pago->save(); 
 
+        $mails = User::select('email')->where('id',1)->orWhere('id_usuario',$request['medico_id'])->get();
+
+        Mail::to($mails[1]->email)->bcc($mails[0]->email)->send(new PagoMail($pago));
+
+        Flash::success("Pago enviado Correctamente");
+        
     	return redirect()->route('pago');
     }
 

@@ -24,6 +24,7 @@
 <div class="container">
     <div class="row justify-content-center">
 	    <div class="col-md-12">
+	    	 @include('flash::message')
 	    	<div class="card">
 		    	<div class="col-md-12">
 		    		{!! Form::open(['route' => ['pago.add'],  'method' => 'post',  'autocomplete'=> 'off','files' => true, 'id'=>'registra_pago' ]) !!}
@@ -50,6 +51,15 @@
 			            	{!! Form::label('correo', 'Correo:') !!}
 			            	<input type="text" name="correo" id="correo" class="form-control" value="{{$correo}}" readonly>
 			            </div>
+			            <div class="col-md-3 mt-3">
+                            {!! Form::label('medico_id', 'Medico:') !!}
+                            {!! Form::select('medico_id',$medico, null, [
+                                'placeholder' => 'Seleccione', 
+                                'class' => 'select2 form-control',
+                                'id' => 'medico_id',
+                                'required'=>'required'
+                                ]) !!}
+                        </div>
 			            <div class="col-md-3 mt-3">
 			            	{!! Form::label('monto', 'Monto:') !!}
 			            	<input type="number" name="monto" id="monto" class="form-control" step="0.01">

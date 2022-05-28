@@ -1,8 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.base_login')
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="text-center">
+            <img src="{{ asset('img/Logo.png')}}" alt="logo.png" width="25%">
+        </div>
+    <div class="row justify-content-center" style="margin-top: -30px">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Verify Your Email Address') }}</div>

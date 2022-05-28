@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 Route::get('/volver', ['as' => 'paciente.volver', 'uses' => 'PacienteController@volver']);
 Route::get('paciente/create', ['as' => 'paciente.create', 'uses' => 'PacienteController@create']);
 Route::post('paciente/login', ['as' => 'paciente.login', 'uses' => 'PacienteController@login']);
@@ -25,7 +25,7 @@ Route::post('paciente/add', ['as' => 'paciente.add', 'uses' => 'PacienteControll
 Route::get('paciente/edit/{id}', ['as' => 'paciente.edit', 'uses' => 'PacienteController@edit']);
 
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','verified']], function () {
 	Route::resource('limites', 'LimitesController');
 	/*DASHBOARD*/
 	Route::get('/home', 'HomeController@index')->middleware('can:home')->name('home');

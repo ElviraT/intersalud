@@ -137,7 +137,7 @@ class ConsultaController extends Controller
                             ->where('anamnesis.Paciente_Especial_id', $pacienteE)      
                             ->where('control_historia_medicas.cerrado', 1)
                             ->get();
-            if($cita){   
+            //if($cita){   
                $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica','servicios.Servicio')
                    ->join('sexos', 'sexos.id_Sexo','pacientes_especiales.Sexo_id')
                    ->join('control_historia_medicas', 'control_historia_medicas.Paciente_Especial_id','pacientes_especiales.id_Pacientes_Especiales')
@@ -145,7 +145,7 @@ class ConsultaController extends Controller
                    ->where('pacientes_especiales.id_Pacientes_Especiales',$pacienteE)
                    ->where('control_historia_medicas.cerrado',0)
                    ->first();       
-              }
+            //  }
         }else{
           $cita= Citas::where('Paciente_id',$paciente)
                     ->where('Medico_id', $medico)
@@ -157,7 +157,7 @@ class ConsultaController extends Controller
                             ->where('anamnesis.Paciente_Id', $paciente)      
                             ->where('control_historia_medicas.cerrado', 1)
                             ->get(); 
-          if($cita){   
+          //if($cita){   
            $datos = UsuarioP::select('usuarios_pacientes.Nombres_Paciente', 'usuarios_pacientes.Apellidos_Paciente', 'usuarios_pacientes.Fecha_Nacimiento_Paciente', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica','servicios.Servicio')
                ->join('sexos', 'sexos.id_Sexo','usuarios_pacientes.Sexo_id')
                ->join('control_historia_medicas', 'control_historia_medicas.Paciente_id','usuarios_pacientes.id_Paciente')
@@ -165,7 +165,7 @@ class ConsultaController extends Controller
                ->where('usuarios_pacientes.id_Paciente',$paciente)
                ->where('control_historia_medicas.cerrado',0)
                ->first();
-          }
+          //}
         }   
         $antecedentes= Antecedente::where('Paciente_Id', $paciente)->first();     
 

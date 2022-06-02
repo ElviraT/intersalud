@@ -51,8 +51,7 @@ function buscar() {
 
     if (pacienteE.length == 0) {
        $.getJSON('{{ route('buscarP') }}?paciente='+paciente+'&medico='+medico, function(objBP){
-            switch(objBP[0]){
-                case null:
+            if(objBP[0].length == 0){
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
                     $('#sexo').html('');
@@ -78,8 +77,7 @@ function buscar() {
                           ]
                         });
                     Swal.fire('No tiene cita');
-                break;                
-                default:
+                }else{
                     $('#id_paciente').val(paciente);
                     $('#id_pacienteE').val();
                     $('#id_pacienteA').val(paciente);
@@ -99,7 +97,11 @@ function buscar() {
                         $('#fisico').val(objBP[1]['Examen_Fisico']);
                         $('#impresion').val(objBP[1]['Imprecion_Diagnostica']);
 
-                        $('#pop2-tab').attr('hidden', false);
+                        if (objBP[2] != null) {
+                            $('#pop2-tab').attr('hidden', false);
+                        }else{
+                            $('#pop2-tab').attr('hidden', true);
+                        }
                         $('#pop3-tab').attr('hidden', false);
                         $('#pop4-tab').attr('hidden', false);
                     }else{
@@ -184,7 +186,11 @@ function buscar() {
                     $('#fisico').val(objBP[1]['Examen_Fisico']);
                     $('#impresion').val(objBP[1]['Imprecion_Diagnostica']);
                         
-                        $('#pop2-tab').attr('hidden', false);
+                        if (objBP[2] != null) {
+                            $('#pop2-tab').attr('hidden', false);
+                        }else{
+                            $('#pop2-tab').attr('hidden', true);
+                        }
                         $('#pop3-tab').attr('hidden', false);
                         $('#pop4-tab').attr('hidden', false);
                     }else{

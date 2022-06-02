@@ -141,7 +141,7 @@ class ConsultaOController extends Controller
                             ->where('anamnesis.Paciente_Especial_id', $pacienteE)      
                             ->where('control_historia_medicas.cerrado', 1)
                             ->get();
-              if($cita){   
+             // if($cita){   
                  $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica','servicios.Servicio')
                      ->join('sexos', 'sexos.id_Sexo','pacientes_especiales.Sexo_id')
                      ->join('control_historia_medicas', 'control_historia_medicas.Paciente_Especial_id','pacientes_especiales.id_Pacientes_Especiales')
@@ -149,7 +149,7 @@ class ConsultaOController extends Controller
                      ->where('pacientes_especiales.id_Pacientes_Especiales',$pacienteE)
                      ->where('control_historia_medicas.cerrado',0)
                      ->first();       
-              }
+             // }
         }else{
           $cita= Citas::where('Paciente_id',$paciente)
                     ->where('Medico_id', $medico)
@@ -162,17 +162,17 @@ class ConsultaOController extends Controller
                             ->where('anamnesis.Paciente_Id', $paciente)      
                             ->where('control_historia_medicas.cerrado', 1)
                             ->get(); 
-              if($cita){   
+              //if($cita){   
                $datos = UsuarioP::select('usuarios_pacientes.Nombres_Paciente', 'usuarios_pacientes.Apellidos_Paciente', 'usuarios_pacientes.Fecha_Nacimiento_Paciente', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica','servicios.Servicio','direcciones_pacientes.Celular')
                    ->join('sexos', 'sexos.id_Sexo','usuarios_pacientes.Sexo_id')
                    ->join('direcciones_pacientes', 'direcciones_pacientes.Paciente_id','usuarios_pacientes.id_Paciente')
                    ->join('control_historia_medicas', 'control_historia_medicas.Paciente_id','usuarios_pacientes.id_Paciente')
                    ->join('servicios', 'servicios.id_Servicio','control_historia_medicas.id_servicio')
                    ->where('usuarios_pacientes.id_Paciente',$paciente)
-                   ->whereDate('control_historia_medicas.Fecha', date('Y-m-d'))
+                  // ->whereDate('control_historia_medicas.Fecha', date('Y-m-d'))
                    ->where('control_historia_medicas.cerrado',0)
                    ->first();
-              }
+             // }
         }  
         $antecedentes= Antecedente::where('Paciente_Id', $paciente)->first();     
 

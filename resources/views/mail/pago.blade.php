@@ -6,7 +6,7 @@
     <title>{{'Pago enviado'}}</title>
 </head>
 <body>
-    <div style="padding: 7px; text-align: center; background-color: #88D939; color: #0852B5;">
+    <div style="padding: 7px; text-align: center; background-color: #414CF4; color: #ffffff;">
         <h3>{{'Hola! Se ha reportado un nuevo pago de'}} <strong>{{ $pago->monto }} {{$pago->moneda_id}}.</strong></h3>
         <h4>{{'Estos son los datos del pago:'}}</h4>        
     </div>
@@ -14,7 +14,9 @@
         <ul>
             <li><strong> {{'Referencia: '}} </strong>{{ $pago->referencia }}</li>
             <li><strong>{{'Fecha: '}}</strong> {{ $pago->fecha_pago }}</li>
-            <li><strong>{{'Comprobante: '}}</strong> <img src="{{ Request::root().'/avatars/'.str_replace('\\','/', $pago->comprobante) }}" width="40%"></li>
+            <li><strong>{{'Comprobante: '}}</strong><br> 
+                <img src="{{ Request::root().'/avatars/'.str_replace('\\','/', $pago->comprobante) }}" width="40%">
+            </li>
             
         </ul>        
     </div>

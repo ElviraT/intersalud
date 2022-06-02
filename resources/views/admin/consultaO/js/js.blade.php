@@ -97,7 +97,6 @@ function buscar() {
 
     if (pacienteE.length == 0) {
        $.getJSON('{{ route('buscar_paciente') }}?paciente='+paciente+'&medico='+medico, function(objBP){
-        //switch(objBP[0]){
                 if(objBP[0].length == 0){
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
@@ -135,31 +134,29 @@ function buscar() {
                     $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                     $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente']));
                     $('#Servicio').html(objBP[0]['Servicio']);
-                    $('#Cita_Consulta_id').val(objBP[2]['id_Cita_Consulta']);
-                        var ini1= objBP[2]['start'].split(" ");
-                        var fin0= objBP[2]['end'].split(" ");
-                        
-                        restarHoras(ini1[1], fin0[1]);
-                         var elemento = document.getElementById("enlace");
-                           elemento.href = "http://wa.me/"+objBP[0]['Celular'];
-
-                       /* var url_factura = "{{ route('ver_pdf', ':id') }}";
-                           url_factura = url_factura.replace(':id', paciente);
-
-                        var factura = document.getElementById("factura");
-                           factura.href = url_factura;*/
+                            if (objBP[2] != null) {
+                                $('#Cita_Consulta_id').val(objBP[2]['id_Cita_Consulta']);
+                                    var ini1= objBP[2]['start'].split(" ");
+                                    var fin0= objBP[2]['end'].split(" ");
+                                    
+                                    restarHoras(ini1[1], fin0[1]);
+                                $('#pop2-tab').attr('hidden', false);
+                            }else{
+                                $('#pop2-tab').attr('hidden', true);
+                            }
+                     var elemento = document.getElementById("enlace");
+                       elemento.href = "http://wa.me/"+objBP[0]['Celular'];
 
                     if (objBP[1] != null) {
-                    $('#id_antecedente').val(objBP[1]['id_antecedente']);
-                    $('#personales').val(objBP[1]['Personal']);
-                    $('#familiares').val(objBP[1]['Familiar']);
-                    $('#farmacologicos').val(objBP[1]['Farmacologico']);
-                    $('#fisico').val(objBP[1]['Examen_Fisico']);
-                    $('#impresion').val(objBP[1]['Imprecion_Diagnostica']);
+                        $('#id_antecedente').val(objBP[1]['id_antecedente']);
+                        $('#personales').val(objBP[1]['Personal']);
+                        $('#familiares').val(objBP[1]['Familiar']);
+                        $('#farmacologicos').val(objBP[1]['Farmacologico']);
+                        $('#fisico').val(objBP[1]['Examen_Fisico']);
+                        $('#impresion').val(objBP[1]['Imprecion_Diagnostica']);
 
-                        $('#pop2-tab').attr('hidden', false);
-                        $('#pop3-tab').attr('hidden', false);
-                        $('#pop4-tab').attr('hidden', false);
+                            $('#pop3-tab').attr('hidden', false);
+                            $('#pop4-tab').attr('hidden', false);
                     }else{
                         $('#id_antecedente').val('');
                         $('#personales').val('');
@@ -233,9 +230,20 @@ function buscar() {
                 $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                 $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente_Especial']));
                 $('#Servicio').html(objBP[0]['Servicio']);
-                $('#Cita_Consulta_id').val(objBP[2]['id_Cita_Consulta']);
-
-                $('#tiempo').html(objBP[2]['end']);
+                 if (objBP[2] != null) {
+                                $('#Cita_Consulta_id').val(objBP[2]['id_Cita_Consulta']);
+                                    var ini1= objBP[2]['start'].split(" ");
+                                    var fin0= objBP[2]['end'].split(" ");
+                                    
+                                    restarHoras(ini1[1], fin0[1]);
+                                $('#pop2-tab').attr('hidden', false);
+                                $('#consulta').attr('hidden', false);
+                            }else{
+                                $('#pop2-tab').attr('hidden', true);
+                                $('#consulta').attr('hidden', true);
+                            }
+                     var elemento = document.getElementById("enlace");
+                       elemento.href = "http://wa.me/"+objBP[0]['Celular'];
 
                 if (objBP[1] != null) {
                 $('#id_antecedente').val(objBP[1]['id_antecedente']);
@@ -244,8 +252,6 @@ function buscar() {
                 $('#farmacologicos').val(objBP[1]['Farmacologico']);
                 $('#fisico').val(objBP[1]['Examen_Fisico']);
                 $('#impresion').val(objBP[1]['Imprecion_Diagnostica']);
-
-                        $('#pop2-tab').attr('hidden', false);
                         $('#pop3-tab').attr('hidden', false);
                         $('#pop4-tab').attr('hidden', false);
                     }else{

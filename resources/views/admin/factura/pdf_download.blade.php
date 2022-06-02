@@ -131,7 +131,7 @@
 	              <td>{{$sub}}&nbsp;{{ $fact->moneda }}</td>
 	            </tr>
 	            <tr>
-	              <td colspan="3">{{'IVA 12%'}}</td>
+	              <td colspan="3">{{'IVA 16%'}}</td>
 	              <td>{{$fact->iva}}</td>
 	            </tr>
 	            <tr>

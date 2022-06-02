@@ -89,19 +89,26 @@
                           <label><strong>{{'Servicio:'}}</strong></label>&nbsp;<span id="Servicio"></span><br>
                         </div>
                         <div class="col-md-12">
-                          <a href="#" class="btn btn-outline-success" target="_blank" id="enlace"> {{'›› Mensaje de WhatsApp'}} </a>                          
+                          <div class="row">
+                            <div class="col-md-6">
+                              <a href="#" class="btn btn-outline-success" target="_blank" id="enlace"> {{'Mensaje de WhatsApp'}} </a>
+                            </div>
+                            <div class="col-md-6">
+                              <a href="#" class="btn btn-outline-success" style="width: 100%;"> {{'Proxima Cita'}} </a>
+                            </div>
+                          </div>                          
                         </div>
                     </div>
                   </div>
                   <div class="col-md-12 col-lg-7">
                     <div class="row">
-                      <div class="col-md-12 mt-3 mb-2">
+                      <div class="col-md-12 mt-3 mb-2" id="consulta" hidden>
                         <button class="btn btn-outline-info" onclick="iniciar_reunion()">{{'Iniciar Consulta'}}</button>
                       </div>
                       
                       <div class="col-md-12" id="meet" hidden></div>
 
-                      <div class="col-md-10" align="center">
+                      <div class="col-md-10 mt-2" align="center">
                         <form name="form" class="clok">
                           <div class="row">
                              <div class="col-md-4">

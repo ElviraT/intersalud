@@ -79,7 +79,7 @@
                             ]) !!}
                         </div>
                         <div class="col-md-12 mt-3">
-                         <button type="button" class="mt-1 btn-transition btn btn-outline-primary btn-block" onclick="buscar()"><i class="ti-search"></i>{{'Buscar'}}</button> 
+                         <button type="button" class="mt-1 btn-transition btn btn-outline-primary btn-block" onclick="buscar(); horario();"><i class="ti-search"></i>{{'Buscar'}}</button> 
                         </div>
 
                         <div class="col-md-11 m-3 mr-3" style="background: #cdcdcd; padding: 5px;">
@@ -92,9 +92,6 @@
                           <div class="row">
                             <div class="col-md-6">
                               <a href="#" class="btn btn-outline-success" target="_blank" id="enlace"> {{'Mensaje de WhatsApp'}} </a>
-                            </div>
-                            <div class="col-md-6">
-                              <a href="#" class="btn btn-outline-success" style="width: 100%;"> {{'Proxima Cita'}} </a>
                             </div>
                           </div>                          
                         </div>
@@ -146,6 +143,107 @@
         </div>
 @endsection
 @section('modal')
+{{--modal citas--}}
+<div id="modal_citas" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">{{ 'Agregar Cita' }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="col-md-12">
+            <form action="" id="Myform">
+                 @csrf
+                 
+                    <div class="row">
+                        {{ Form::hidden('id', 0, ['id'=>'id'] ) }}
+                        
+                        {{ Form::hidden('titleP', null, ['id'=>'titleP'] ) }}
+                        <div class="col-md-4 mb-3">
+                            {!! Form::label('servicio', 'Servicio:') !!}
+                            {!! Form::select('serviciom',$servicios, null, [
+                                'placeholder' => 'Seleccione', 
+                                'class' => 'select2 form-control',
+                                'id' => 'serviciom',
+                                'required'=>'required'
+                            ]) !!}
+                        </div>
+                        <div class="col-md-4 mb-3" style="pointer-events: none">
+                            <label for="validationCustom01">{{'Maximo de Pacientes'}}</label>
+                            <input type="number" name="Max_paciente" class="form-control" id="mpaciente" placeholder="Maximo de Pacientes" required>
+                        </div>
+                        <div class="col-md-4 mb-3" style="pointer-events: none">
+                            <label for="validationCustom01">{{'Disponibilidad'}}</label>
+                            <input type="number" name="disponibilidad" class="form-control" id="disponibilidad">
+                            <small id="texto" style="color: red;" hidden>{{'No hay cupos disponibles'}}</small>
+                        </div>
+                        <div class="col-md-4 mb-3" style="pointer-events: none">
+                            <label for="validationCustom01">{{'Costo'}}</label>
+                            <input type="number" name="Costo" class="form-control" id="costo" step="0.01" required>
+                        </div>
+                        <div class="col-md-4 mt-4" hidden>
+                            <label>{{'Confirmar Cita'}}</label>
+                            <input type="checkbox" name="confirmado" id="confirmado" checked>
+                        </div>
+                        <div class="col-md-12 mb-3" style="pointer-events: none;">
+                            <label>{{'Notas del Medico'}}</label>
+                            <textarea name="NotaM" id="notaM" class="form-control"></textarea>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label>{{'Nota'}}</label>
+                            <textarea name="Nota" id="nota" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom01">{{'Titulo'}}</label>
+                            <input type="text" name="title" class="form-control" id="title" placeholder="Titulo del evento" required>
+                        </div>
+                        <div class="row">
+                            <div class='col-md-6 mb-3'>
+                              <div class="form-group">
+                                <label>{{ 'Inicio' }}</label>
+                                 <div class='input-group date' id="date-start">
+                                    <input type='text' class="form-control" name="start" id="start" readonly/>
+                                    <span class="input-group-addon">
+                                    <span class="ti-timer"></span>
+                                    </span> 
+                                 </div>
+                              </div>
+                           </div>
+                           <div class='col-md-6 mb-3' style="pointer-events: none;">
+                              <div class="form-group date">
+                                <label>{{ 'Fin' }}</label>
+                                 <div class='input-group' id="date-end">
+                                    <input type='text' class="form-control" name="end" id="end" />
+                                    <span class="input-group-addon">
+                                    <span class="ti-timer"></span>
+                                    </span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="mt-1 btn-transition btn btn-outline-secondary" data-dismiss="modal">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                    </span>{{'Volver'}}
+                </button>
+                <button type="button" class="mt-1 btn-transition btn btn-outline-success" id="btnGuardar">
+                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                    </span>{{'Guardar'}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{{--fin modal citas--}}
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

@@ -1,9 +1,20 @@
+<!-- Fullcalendar -->
+<script src="{{ asset('js/main.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/es.js') }}" type="text/javascript"></script>
+
+<!--datepicker-->
+<script src="{{ asset('js/moment.js')}}"></script>
+<script src="{{ asset('js/moment-with-locales.js')}}"></script>
+<script src="{{ asset('js/bootstrap-datetimepicker.min.js')}}"></script>
+
 <!-- Select2 -->
 <script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
 
+<script src="{{ asset('js/axios.min.js') }}" type="text/javascript"></script>
 <script src='https://meet.jit.si/external_api.js'></script>
 
 <script type="text/javascript">
+    var array_dias = [];
 localStorage.removeItem('selectedTab');
 function iniciar_reunion() {
     $('#meet').attr('hidden',false);
@@ -38,6 +49,11 @@ $(document).ready(function() {
     $('#id_servicio').select2({ 
     theme : "classic",
     dropdownParent: $('#exampleModal'),
+     });
+
+    $('#serviciom').select2({ 
+    theme : "classic",
+    dropdownParent: $('#modal_citas'),
      });
 });
 
@@ -105,6 +121,7 @@ function buscar() {
                         $('#pop2-tab').attr('hidden', true);
                         $('#pop3-tab').attr('hidden', true);
                         $('#pop4-tab').attr('hidden', false);
+                        $('#pop5-tab').attr('hidden', false);
 
                         $('#myTable').DataTable({
                           destroy: true,
@@ -157,6 +174,7 @@ function buscar() {
 
                             $('#pop3-tab').attr('hidden', false);
                             $('#pop4-tab').attr('hidden', false);
+                            $('#pop5-tab').attr('hidden', false);
                     }else{
                         $('#id_antecedente').val('');
                         $('#personales').val('');
@@ -168,6 +186,7 @@ function buscar() {
                         $('#pop2-tab').attr('hidden', true);
                         $('#pop3-tab').attr('hidden', true);
                         $('#pop4-tab').attr('hidden', true);
+                        $('#pop5-tab').attr('hidden', true);
                     }
 
                     $('#myTable').DataTable({
@@ -200,6 +219,7 @@ function buscar() {
                         $('#pop2-tab').attr('hidden', true);
                         $('#pop3-tab').attr('hidden', true);
                         $('#pop4-tab').attr('hidden', false);
+                        $('#pop5-tab').attr('hidden', false);
 
                         $('#myTable').DataTable({
                           destroy: true,
@@ -254,6 +274,7 @@ function buscar() {
                 $('#impresion').val(objBP[1]['Imprecion_Diagnostica']);
                         $('#pop3-tab').attr('hidden', false);
                         $('#pop4-tab').attr('hidden', false);
+                        $('#pop5-tab').attr('hidden', false);
                     }else{
                         $('#id_antecedente').val('');
                         $('#personales').val('');
@@ -265,6 +286,7 @@ function buscar() {
                         $('#pop2-tab').attr('hidden', true);
                         $('#pop3-tab').attr('hidden', true);
                         $('#pop4-tab').attr('hidden', true);
+                        $('#pop5-tab').attr('hidden', true);
                     }
                     $('#myTable').DataTable({
                       destroy: true,
@@ -323,6 +345,7 @@ $("#formulario1").submit(function(event) {
             $('#pop2-tab').attr('hidden', false);
             $('#pop3-tab').attr('hidden', false);
             $('#pop4-tab').attr('hidden', false);
+            $('#pop5-tab').attr('hidden', false);
             Swal.fire(info);
         }
     });
@@ -415,4 +438,231 @@ function restarHoras(inicio1, fin1) {
 
 
 }
+
+/*CITAS EN CONSULTA*/
+function horario2() {
+  var formulario = document.getElementById("Myform");
+  var agenda = $('#agenda').val();
+  var array_businessHours = [];
+  var hora_minima='00:00:00';
+  var hora_maxima='11:59:59';
+  var array_dias= [];
+  var calendarEl = document.getElementById('calendar_cita');
+  var calendar = new FullCalendar.Calendar(calendarEl);
+
+  $.getJSON('{{ route('consultar_horario') }}?agenda='+agenda, function(objch){     
+    loading_show();
+        if (objch['Lunes'] == 0) {
+            array_dias.push(1);
+        }else{
+          array_businessHours.push({
+            daysOfWeek: [1],
+            startTime: objch['Hora_Inicio_Lunes'],
+            endTime: objch['Hora_Fin_Lunes']
+          });
+          hora_minima = objch['Hora_Inicio_Lunes'];
+          hora_maxima = objch['Hora_Fin_Lunes'];
+        }
+        if (objch['Martes'] == 0) {
+            array_dias.push(2); 
+        }else{
+          array_businessHours.push({
+            daysOfWeek: [2],
+            startTime: objch['Hora_Inicio_Martes'],
+            endTime: objch['Hora_Fin_Martes']
+          });
+          hora_minima = objch['Hora_Inicio_Martes'];
+          hora_maxima = objch['Hora_Fin_Martes'];
+        }
+        if (objch['Miercoles'] == 0) {
+            array_dias.push(3);  
+        }else{
+          array_businessHours.push({
+            daysOfWeek: [3],
+            startTime: objch['Horario_Inicio_Miercoles'],
+            endTime: objch['Horario_Fin_Miercoles']
+          });
+          hora_minima = objch['Horario_Inicio_Miercoles'];
+          hora_maxima = objch['Horario_Fin_Miercoles'];
+        }
+        if (objch['Jueves'] == 0) {
+            array_dias.push(4);  
+        }else{
+          array_businessHours.push({
+            daysOfWeek: [4],
+            startTime: objch['Horario_Inicio_Jueves'],
+            endTime: objch['Horario_Fin_Jueves']
+          });
+          hora_minima = objch['Horario_Inicio_Jueves'];
+          hora_maxima = objch['Horario_Fin_Jueves'];
+        }
+        if (objch['Viernes'] == 0) {
+            array_dias.push(5); 
+        }else{
+          array_businessHours.push({
+            daysOfWeek: [5],
+            startTime: objch['Horario_Inicio_Viernes'],
+            endTime: objch['Horario_Fin_Viernes']
+          });
+          hora_minima = objch['Horario_Inicio_Viernes'];
+          hora_maxima = objch['Horario_Fin_Viernes'];
+        }
+        if (objch['Sabado'] == 0) {
+            array_dias.push(6);  
+        }else{
+          array_businessHours.push({
+            daysOfWeek: [6],
+            startTime: objch['Horario_Inicio_Sabado'],
+            endTime: objch['Horario_Fin_Sabado']
+          });
+          hora_minima = objch['Horario_Inicio_Sabado'];
+          hora_maxima = objch['Horario_Fin_Sabado'];
+        }
+        if(objch['Domingo'] == 0){
+           array_dias.push(0);
+        }else{
+          array_businessHours.push({
+            daysOfWeek: [0],
+            startTime: objch['Horario_inicio_Domingo'],
+            endTime: objch['Horario_Fin_Domingo']
+          });
+          hora_minima = objch['Horario_inicio_Domingo'];
+          hora_maxima = objch['Horario_Fin_Domingo'];
+        };
+
+        $.getJSON('{{ route('servicios_lista') }}?medico='+objch['Medico_id'], function(objS){
+            var opcion = $('#serviciom').val();
+            $('#serviciom').empty();
+            $('#serviciom').prop('disabled', true);
+            $('#serviciom').change();
+
+              
+            if(objS.length > 0){
+                $('#serviciom').append(
+                    $('<option>', {
+                        value: '',
+                        text : 'Seleccione'
+                    }),
+                 );
+                $.each(objS, function (i, servicio) {
+                $('#serviciom').append(
+                        $('<option>', {
+                            value: servicio.id_Servicio,
+                            text : servicio.Servicio
+                        })
+                    );
+                });
+                $('#serviciom').prop('disabled', false);
+            }
+        });
+
+        var id_Agenda= objch['id_Agenda'];
+        $(function() {
+            var url = "{{ route('citas.mostrar', ':id') }}";
+            url = url.replace(':id', id_Agenda);
+            $('#btnGuardar').attr('disabled', false);
+
+            calendar = new FullCalendar.Calendar(calendarEl, {
+              locale:'es',
+              timeZoneName:'short',
+              initialView: 'timeGridWeek',
+              slotLabelFormat:{
+               hour: '2-digit',
+               minute: '2-digit',
+               hour12: true
+               },//se visualizara de esta manera 01:00 AM en la columna de horas
+              eventTimeFormat: {
+               hour: '2-digit',
+               minute: '2-digit',
+               hour12: true
+              },
+              headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+              },
+              businessHours: array_businessHours,
+              forceEventDuration: true,
+              navLinks: true,     
+              hiddenDays: array_dias,
+              dayMaxEvents: true, // allow "more" link when too many eventse
+              events: url,
+              @can('citas.add')
+              dateClick:function(info) {
+                    let fechaHora = info.dateStr.split("T");
+                    loading_show();
+                    formulario.reset();
+                    $('#btnGuardar').attr('hidden', false);
+                    if(info.allDay){
+                      $('#start').val(info.dateStr);
+                    }else{
+                      var fechaInicio= fechaHora[0]+' '+fechaHora[1].substring(0, 8);
+                      var fecha_minima = fechaHora[0]+' '+hora_minima;
+                      if(fechaHora[1].substring(0, 8) >= hora_minima){
+                          $('#start').val(fechaInicio);
+                      }else{
+                          $('#start').val(fecha_minima);
+                      }
+                    }
+                    $('#modal_citas').on('show.bs.modal', function (e) {
+                      var agenda2 = $('#agenda').val();
+                       $.getJSON('{{ route('datos_agenda') }}?agenda2='+agenda2, function(objA){
+                         $('#Agenda_id').val(objA['id_Agenda']);
+                         $('#mpaciente').val(objA['Max_pacientes']);
+                         $('#notaM').val(objA['Nota']);
+                         
+                      });
+                    });
+                    $('#modal_citas').modal('show');
+                    loading_hide();
+                    disponibilidad(id_Agenda,fechaHora[0]);
+              },
+              @endcan
+              views: {
+                  timeGrid: {
+                    eventLimit: 3 // adjust to 3 only for timeGridWeek/timeGridDay
+                  }
+                },
+            });
+            loading_hide();
+            calendar.render();
+            document.getElementById('btnGuardar').addEventListener('click',function() {
+              $('#btnGuardar').attr('disabled', true);
+              enviar_datos('{{ route('citas.add') }}');              
+            });
+                        
+            function enviar_datos(url) 
+            {
+               const datos= new FormData(formulario);
+                axios.post(url,datos).
+                  then(
+                    (respuesta) =>{
+                      calendar.refetchEvents();
+                      $('#modal_citas').modal('hide');
+                    }
+                  ).catch(
+                    error => {
+                       if (error.response) {
+                        console.log(error.response.data);
+                        }
+                    }
+                 );
+            }
+        });
+   });
+};
+$('#modal_citas').on('hidden.bs.modal', function (event) {
+  $('#btnGuardar').attr('disabled', false);
+})
+$(function () {
+   $('#date-start').datetimepicker({
+    format: 'Y-MM-DD HH:mm',
+    locale: 'es',
+   });
+   $('#date-end').datetimepicker({
+   format: 'Y-MM-DD HH:mm',
+   locale: 'es',
+   });
+});
+/*FIN DE CITAS EN CONSULTAS*/
 </script>

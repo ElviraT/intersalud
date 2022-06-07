@@ -1,3 +1,7 @@
+<!-- Fullcalendar -->
+<link href="{{ asset('css/main.css')}}" rel="stylesheet" type="text/css" />
+{{--datepicker --}}
+ <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-datetimepicker.min.css')}}">
 <!-- Select2 -->
 <link href="{{ asset('css/select2.min.css')}}" rel="stylesheet" type="text/css" />
 
@@ -16,5 +20,11 @@ input.text {
    font-size: 20px;
    font-weight: bold;
    padding: 5px;
+}
+.fc .fc-non-business{
+  background: #FADBD8 !important;
+} 
+.fc-event{
+    cursor: pointer;
 }
 </style>

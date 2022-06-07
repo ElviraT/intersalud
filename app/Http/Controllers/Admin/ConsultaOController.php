@@ -41,7 +41,7 @@ class ConsultaOController extends Controller
              ->join('usuarios_pacientes', 'pacientes_especiales.Paciente_id','usuarios_pacientes.id_Paciente')
              ->get())->pluck('name','id'); 
       $servicios = Collection::make(Servicio::select(['id_Servicio','Servicio'])->where('Status_id',1)->orderBy('Servicio')->pluck("Servicio", "id_Servicio"));
-      
+
     	return view('admin.consultaO.index')->with(compact('pacientes','pacientesE','medico','especialidad','servicios'));
    }
 

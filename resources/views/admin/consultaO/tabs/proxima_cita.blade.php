@@ -1,6 +1,23 @@
 <div class="col-md-12">
 	<div class="card">
-			 <input type="hidden" name="agenda" id="agenda" value="{{auth()->user()->id_usuario}}">
-			 <div class="col-md-12" id='calendar_cita'></div>
+		<div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-4 mt-3">
+                    {!! Form::label('agenda', 'Agenda:') !!}
+                    {!! Form::select('agenda',$agenda, null, [
+                        'placeholder' => 'Seleccione', 
+                        'class' => 'select2 form-control',
+                        'id' => 'agenda',
+                        'required'=>'required'
+                        ])
+                    !!}
+                  </div>
+                  <div class="col-md-4 mt-4">
+                    <a href="#" class="btn-transition btn btn-outline-success mt-3" onclick="horario2();">{{ 'Consultar Horario' }}</a>
+                  </div>                  
+                </div>
+              </div>
+              
+			 <div class="col-md-12 mt-4" id='calendar_cita'></div>
 	</div>
 </div>

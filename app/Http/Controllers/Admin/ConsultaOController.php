@@ -11,6 +11,7 @@ use App\Model\UsuarioM;
 use App\Model\Especialidad;
 use App\Model\Antecedente;
 use App\Model\Anamenesi;
+use App\Model\Agenda;
 use App\Model\Citas;
 use App\Model\ControlHM;
 use App\Model\Servicio;
@@ -42,7 +43,33 @@ class ConsultaOController extends Controller
              ->get())->pluck('name','id'); 
       $servicios = Collection::make(Servicio::select(['id_Servicio','Servicio'])->where('Status_id',1)->orderBy('Servicio')->pluck("Servicio", "id_Servicio"));
 
-    	return view('admin.consultaO.index')->with(compact('pacientes','pacientesE','medico','especialidad','servicios'));
+      if(auth()->user()->id_usuario > 0 ){
+
+           $agenda= Collection::make(Agenda::
+             select(['agendas.id_Agenda AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica, " - ",turnos.nombre ) AS name')])
+             ->join('usuarios_medicos', 'agendas.Medico_id','usuarios_medicos.id_Medico')
+             ->join('especialidades_medicas', 'agendas.Especialidad_Medica','especialidades_medicas.id_Especialidad_Medica')
+             ->join('horarios_citas', 'agendas.Horario_Cita_id','horarios_citas.id_Horario_Cita')
+             ->join('turnos', 'horarios_citas.turno_id','turnos.id_turno')
+             ->where('usuarios_medicos.id_Medico', auth()->user()->id_usuario)
+             ->where('agendas.Status_id', 1)
+             ->get())->pluck('name','id');
+
+      }elseif(auth()->user()->id_usuarioA > 0){
+          $asistente = UsuarioA::where('id_asistente',auth()->user()->id_usuarioA)->first();           
+
+           $agenda= Collection::make(Agenda::
+             select(['agendas.id_Agenda AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica, " - ",turnos.nombre ) AS name')])
+             ->join('usuarios_medicos', 'agendas.Medico_id','usuarios_medicos.id_Medico')
+             ->join('especialidades_medicas', 'agendas.Especialidad_Medica','especialidades_medicas.id_Especialidad_Medica')
+             ->join('horarios_citas', 'agendas.Horario_Cita_id','horarios_citas.id_Horario_Cita')
+             ->join('turnos', 'horarios_citas.turno_id','turnos.id_turno')
+             ->where('usuarios_medicos.id_Medico', $asistente->id_Medico)
+             ->where('agendas.Status_id', 1)
+             ->get())->pluck('name','id');
+      }
+
+    	return view('admin.consultaO.index')->with(compact('pacientes','pacientesE','medico','especialidad','servicios','agenda'));
    }
 
    public function antecedentes()

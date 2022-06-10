@@ -46,12 +46,12 @@ $(document).ready(function() {
         theme : "classic",
     });
 
-    $('#id_servicio').select2({ 
+    $('#idServicio').select2({ 
     theme : "classic",
     dropdownParent: $('#exampleModal'),
      });
 
-    $('#serviciom').select2({ 
+    $('#id_servicio').select2({ 
     theme : "classic",
     dropdownParent: $('#modal_citas'),
      });
@@ -59,7 +59,7 @@ $(document).ready(function() {
 
 function add_servicio(){
     "use strict";
-    var id_servicio = $('#id_servicio').val();
+    var id_servicio = $('#idServicio').val();
     var Cita_Consulta_id = $('#Cita_Consulta_id').val();
 
     $.ajax({
@@ -69,7 +69,7 @@ function add_servicio(){
     }).done(function(res) {
         console.log(res);
         if(res.status == 'success') {
-            $('#id_servicio').val('').change();
+            $('#idServicio').val('').change();
             $('#status_servicio').html("<span class='badge mt-2 bg-green'>{{ 'Registro Agregado' }}</span>");
         }else{
             $('#status_servicio').html("<span class='badge mt-2 bg-red'>{{ 'Error al Agregar' }}</span>");
@@ -146,6 +146,7 @@ function buscar() {
                     $('#id_pacienteA').val(paciente);
                     $('#id_pacienteEA').val();
                     $('#nombre').html(objBP[0]['Nombres_Paciente']+' '+objBP[0]['Apellidos_Paciente']);
+                    $('#titleP').val(objBP[0]['Nombres_Paciente']+' '+objBP[0]['Apellidos_Paciente']);
                     $('#sexo').html(objBP[0]['Sexo']);
                     $('#control1').val(objBP[0]['id_Control_Historia_Medica']);
                     $('#control').val(objBP[0]['id_Control_Historia_Medica']);
@@ -440,7 +441,42 @@ function restarHoras(inicio1, fin1) {
 }
 
 /*CITAS EN CONSULTA*/
+$('#id_servicio').on('select2:select', function (e) {
+    var servicio = $('#id_servicio').val();
+    var start = $('#start').val();
+    var idpaciente = $('#paciente').val();
+    var idpacienteE = $('#pacienteE').val();
+    $('#idpaciente').val(idpaciente);
+    $('#idpacienteE').val(idpacienteE);
+
+    $('#modal_citas').addClass('loading');
+
+    $.getJSON('{{ route('duracion_servicio') }}?servicio='+servicio+'&start='+start, function(objS){
+      $('#costo').val(objS[1]['Costos']);
+      $('#end').val(objS[0][0]['end']);
+    });
+
+    $('#modal_citas').removeClass('loading');
+  });
+
+function disponibilidad(agenda, start) {
+  $.getJSON('{{ route('disponibilidad') }}?agenda='+agenda+'&start='+start, function(objDis){
+      var total = parseInt(objDis['Max_paciente']) - parseInt(objDis['count']);
+      $('#disponibilidad').val(total); 
+      
+      if (total == '0') {
+        $('#texto').attr('hidden', false);
+        $('#btnGuardar').attr('hidden', true);
+      }else{
+        $('#texto').attr('hidden', true);
+      }
+  });
+}
+
+
 function horario2() {
+  var idpaciente = $('#paciente').val();
+  var idpacienteE = $('#pacienteE').val();
   var formulario = document.getElementById("Myform");
   var agenda = $('#agenda').val();
   var array_businessHours = [];
@@ -452,6 +488,10 @@ function horario2() {
 
   $.getJSON('{{ route('consultar_horario') }}?agenda='+agenda, function(objch){     
     loading_show();
+
+    $('#idpaciente').val(idpaciente);
+    $('#idpacienteE').val(idpacienteE);
+
         if (objch['Lunes'] == 0) {
             array_dias.push(1);
         }else{
@@ -531,28 +571,28 @@ function horario2() {
         };
 
         $.getJSON('{{ route('servicios_lista') }}?medico='+objch['Medico_id'], function(objS){
-            var opcion = $('#serviciom').val();
-            $('#serviciom').empty();
-            $('#serviciom').prop('disabled', true);
-            $('#serviciom').change();
+            var opcion = $('#id_servicio').val();
+            $('#id_servicio').empty();
+            $('#id_servicio').prop('disabled', true);
+            $('#id_servicio').change();
 
               
             if(objS.length > 0){
-                $('#serviciom').append(
+                $('#id_servicio').append(
                     $('<option>', {
                         value: '',
                         text : 'Seleccione'
                     }),
                  );
                 $.each(objS, function (i, servicio) {
-                $('#serviciom').append(
+                $('#id_servicio').append(
                         $('<option>', {
                             value: servicio.id_Servicio,
                             text : servicio.Servicio
                         })
                     );
                 });
-                $('#serviciom').prop('disabled', false);
+                $('#id_servicio').prop('disabled', false);
             }
         });
 

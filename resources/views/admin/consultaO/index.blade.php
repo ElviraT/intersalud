@@ -62,7 +62,7 @@
                     <div class="row">
                       <div class="col-md-6 mt-3">
                             {!! Form::label('paciente', 'Paciente:') !!}
-                            {!! Form::select('Paciente_id',$pacientes, null, [
+                            {!! Form::select('Paciente',$pacientes, null, [
                                 'placeholder' => 'Seleccione', 
                                 'class' => 'select2 form-control',
                                 'id' => 'paciente',
@@ -71,7 +71,7 @@
                         </div>
                         <div class="col-md-6 mt-3">
                             {!! Form::label('pacienteE', 'Paciente Especial:') !!}
-                            {!! Form::select('Paciente_Especial_id',$pacientesE, null, [
+                            {!! Form::select('Paciente_Especial',$pacientesE, null, [
                                 'placeholder' => 'Seleccione', 
                                 'class' => 'select2 form-control',
                                 'id' => 'pacienteE',
@@ -79,7 +79,7 @@
                             ]) !!}
                         </div>
                         <div class="col-md-12 mt-3">
-                         <button type="button" class="mt-1 btn-transition btn btn-outline-primary btn-block" onclick="buscar(); horario();"><i class="ti-search"></i>{{'Buscar'}}</button> 
+                         <button type="button" class="mt-1 btn-transition btn btn-outline-primary btn-block" onclick="buscar();"><i class="ti-search"></i>{{'Buscar'}}</button> 
                         </div>
 
                         <div class="col-md-11 m-3 mr-3" style="background: #cdcdcd; padding: 5px;">
@@ -161,14 +161,16 @@
                  
                     <div class="row">
                         {{ Form::hidden('id', 0, ['id'=>'id'] ) }}
-                        
+                        {{ Form::hidden('Agenda_id', 0, ['id'=>'Agenda_id'] ) }}
                         {{ Form::hidden('titleP', null, ['id'=>'titleP'] ) }}
+                         <input type="hidden" name="Paciente_id" id="idpaciente">
+                         <input type="hidden" name="Paciente_Especial_id" id="idpacienteE">
                         <div class="col-md-4 mb-3">
                             {!! Form::label('servicio', 'Servicio:') !!}
-                            {!! Form::select('serviciom',$servicios, null, [
+                            {!! Form::select('id_servicio',$servicios, null, [
                                 'placeholder' => 'Seleccione', 
                                 'class' => 'select2 form-control',
-                                'id' => 'serviciom',
+                                'id' => 'id_servicio',
                                 'required'=>'required'
                             ]) !!}
                         </div>

@@ -37,7 +37,7 @@ class UsuarioAController extends Controller
       if(auth()->user()->name == 'Admin'){
           $usuariosA = UsuarioA::all();
       }else{
-          $usuariosA = UsuarioA::where('id_Medico', auth()->user()->id_usuario)->get();
+          $usuariosA = UsuarioA::select('*')->join('medicoxasistente', 'usuarios_asistentes.id_asistente','=', 'medicoxasistente.id_Asistente')->where('medicoxasistente.id_Medico', auth()->user()->id_usuario)->get();
       }  	
   		return view('admin.configuracion.usuarios.usuariosA.index', ['usuariosA' => $usuariosA]);
   	}

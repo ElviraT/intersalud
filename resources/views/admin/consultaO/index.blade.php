@@ -262,7 +262,7 @@
                 {!! Form::select('id_servicio',$servicios, null, [
                     'placeholder' => 'Seleccione', 
                     'class' => 'select2 form-control',
-                    'id' => 'id_servicio',
+                    'id' => 'addServicio',
                     'required'=>'required'
                 ]) !!}
                 <input type="hidden" class="form-control" name="Cita_Consulta_id" id="Cita_Consulta_id">
@@ -271,8 +271,8 @@
         <p id="status_servicio"></p>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">{{ 'Volver' }}</button>
         <button type="button" class="btn btn-outline-primary" onclick="return add_servicio();">{{ 'Agregar' }}</button>
-        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">{{ 'Cerrar' }}</button>
       </div>
     </div>
   </div>

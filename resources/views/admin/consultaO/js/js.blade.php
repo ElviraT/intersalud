@@ -46,7 +46,7 @@ $(document).ready(function() {
         theme : "classic",
     });
 
-    $('#idServicio').select2({ 
+    $('#addServicio').select2({ 
     theme : "classic",
     dropdownParent: $('#exampleModal'),
      });
@@ -59,7 +59,7 @@ $(document).ready(function() {
 
 function add_servicio(){
     "use strict";
-    var id_servicio = $('#idServicio').val();
+    var id_servicio = $('#addServicio').val();
     var Cita_Consulta_id = $('#Cita_Consulta_id').val();
 
     $.ajax({
@@ -69,7 +69,7 @@ function add_servicio(){
     }).done(function(res) {
         console.log(res);
         if(res.status == 'success') {
-            $('#idServicio').val('').change();
+            $('#addServicio').val('').change();
             $('#status_servicio').html("<span class='badge mt-2 bg-green'>{{ 'Registro Agregado' }}</span>");
         }else{
             $('#status_servicio').html("<span class='badge mt-2 bg-red'>{{ 'Error al Agregar' }}</span>");

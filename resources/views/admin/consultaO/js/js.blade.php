@@ -156,12 +156,14 @@ function buscar() {
                                 $('#Cita_Consulta_id').val(objBP[2]['id_Cita_Consulta']);
                                     var ini1= objBP[2]['start'].split(" ");
                                     var fin0= objBP[2]['end'].split(" ");
-                                    
                                     restarHoras(ini1[1], fin0[1]);
-                                $('#pop2-tab').attr('hidden', false);
-                            }else{
-                                $('#pop2-tab').attr('hidden', true);
-                            }
+                                    
+                                    $('#pop2-tab').attr('hidden', false);
+                                    $('#consulta').attr('hidden', false);
+                                }else{
+                                    $('#pop2-tab').attr('hidden', true);
+                                    $('#consulta').attr('hidden', true);
+                                }
                      var elemento = document.getElementById("enlace");
                        elemento.href = "http://wa.me/"+objBP[0]['Celular'];
 

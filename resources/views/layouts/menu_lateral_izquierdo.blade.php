@@ -391,7 +391,7 @@
       @endcan 
       @can('horario')
       <ul class="pcoded-item pcoded-left-item">
-          <li class="{{ @request()->routeIs('horario') ? 'active' : ' ' }}">
+          <li class="{{ @request()->routeIs('horario*') ? 'active' : ' ' }}">
               <a href="{{route('horario')}}"  onclick="loading_show();" class="waves-effect waves-dark">
                   <span class="pcoded-micon"><i class="ti-alarm-clock"></i><b>HC</b></span>
                   <span class="pcoded-mtext" data-i18n="nav.dash.main">{{'Horarios Citas'}}</span>

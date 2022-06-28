@@ -3,10 +3,10 @@
         <div class="col-md-12">
             <div class="row">
                 
-                <input type="text" name="id" value="{{isset($limite) ? $limite->id : null}}">
+                <input type="hidden" name="id" value="{{isset($limite) ? $limite->id : null}}">
                 <div class="col-md-12 mb-3">
                     <label>{{'Administrativo'}}</label>
-                    <input type="text" name="administrativo" class="form-control" id="administrativo" placeholder="Medico" value="{{isset($limite) ? $limite->administrativo : null}}" required onkeypress = 'return SoloNumeros(event)' autofocus="true">
+                    <input type="text" name="administrativo" class="form-control" id="administrativo" placeholder="administrativo" value="{{isset($limite) ? $limite->administrativo : null}}" required onkeypress = 'return SoloNumeros(event)' autofocus="true">
                 </div>
                 <div class="col-md-12 mb-3">
                     <label>{{'Medico'}}</label>

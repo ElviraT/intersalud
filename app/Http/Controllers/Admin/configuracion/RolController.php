@@ -32,12 +32,13 @@ class RolController extends Controller
 
     public function add(Request $request)
     {
+        //dd($request->all());
     	$role= Role::create($request->all());
     	$role->permissions()->sync($request->permissions);
 
     	Flash::success("Registro Agregado Correctamente");
 
-    	return redirect()->route('rol');
+    	return redirect()->route('rol.edit', $role->id);
     }
 
     public function edit(Role $role)

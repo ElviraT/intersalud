@@ -87,7 +87,7 @@
          <i class="fa fa-reply-all" aria-hidden="true"></i>
         </span>{{'Volver'}}
     </a>
-    <button type="submit" class="mt-1 btn btn-outline-success" id="btnusuario">
+    <button type="submit" class="mt-1 btn btn-outline-success" id="btnusuarioI">
         <span class="btn-icon-wrapper pr-2 opacity-7">
          <i class="fa fa-floppy-o" aria-hidden="true"></i>
         </span>{{'Guardar'}}

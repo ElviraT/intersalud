@@ -43,43 +43,43 @@
                     <p class="text-center">No se encontraron registros coincidentes</p>
               @else
 
-            <div class="col-md-12 mt-3">
-                <table id="table_usuariosA" class="table table-striped table-bordered" width="100%">
-                    <thead>
-                        <tr>
-                            <th>{{'Nombre'}}</th>
-                            <th>{{'Status'}}</th>
-                            <th>{{'Acción'}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($usuariosA as $resultado)
-                        <tr>
-                            <td>{{ $resultado->Nombre_Asistente.' '.$resultado->Apellidos_Asistente}}</td>
-                            <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
-                            <td width="20">
-                              @can('usuario_a.edit')
-                                <a href="{{ route('usuario_a.edit', $resultado['id_asistente'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success">
-                                    <span class="btn-icon-wrapper pr-2 opacity-7">
-                                        <i class="ti-pencil"></i>
-                                    </span>
-                                    {{'Editar'}}
-                                </a>
-                              @endcan
-                              @can('usuario_a.destroy')
-                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete16" data-record-id="{{$resultado->id_asistente}}" data-record-title="{{$resultado->Nombre_Asistente.' '.$resultado->Apellidos_Asistente}}" class="btn-transition btn btn-outline-danger" onclick="loading_show();">
-                                        <span class="btn-icon-wrapper pr-2 opacity-7">
-                                            <i class="ti-eraser"></i>
-                                        </span>{{'Eliminar'}}
-                                </a>
-                              @endcan
-                            </td>
-                        </tr>
-                      @endforeach
-                    </tbody>                   
-                </table>
-              </div>
-               @endif
+                  <div class="col-md-12 mt-3">
+                      <table id="table" class="table table-striped table-bordered" width="100%">
+                          <thead>
+                              <tr>
+                                  <th>{{'Nombre'}}</th>
+                                  <th>{{'Status'}}</th>
+                                  <th>{{'Acción'}}</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($usuariosA as $resultado)
+                              <tr>
+                                  <td>{{ $resultado->Nombre_Asistente.' '.$resultado->Apellidos_Asistente}}</td>
+                                  <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
+                                  <td width="20">
+                                    @can('usuario_a.edit')
+                                      <a href="{{ route('usuario_a.edit', $resultado['id_asistente'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success">
+                                          <span class="btn-icon-wrapper pr-2 opacity-7">
+                                              <i class="ti-pencil"></i>
+                                          </span>
+                                          {{'Editar'}}
+                                      </a>
+                                    @endcan
+                                    @can('usuario_a.destroy')
+                                      <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete16" data-record-id="{{$resultado->id_asistente}}" data-record-title="{{$resultado->Nombre_Asistente.' '.$resultado->Apellidos_Asistente}}" class="btn-transition btn btn-outline-danger" onclick="loading_show();">
+                                              <span class="btn-icon-wrapper pr-2 opacity-7">
+                                                  <i class="ti-eraser"></i>
+                                              </span>{{'Eliminar'}}
+                                      </a>
+                                    @endcan
+                                  </td>
+                              </tr>
+                            @endforeach
+                          </tbody>                   
+                      </table>
+                  </div>
+              @endif
             </div>
         </div>
     </div>

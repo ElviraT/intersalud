@@ -304,7 +304,7 @@ class UsuarioAController extends Controller
                 $asistente->id_Medico  = $request['id_Medico'];
                 $asistente->id_Asistente = $request['id_Asistente'];
                 $asistente->save();
-              Flash::error('Registro agregado correctamente'); 
+              Flash::success('Registro agregado correctamente'); 
             }catch(\Illuminate\Database\QueryException $e) {
               Flash::error('Ocurrió un error, por favor intente de nuevo'); 
             }

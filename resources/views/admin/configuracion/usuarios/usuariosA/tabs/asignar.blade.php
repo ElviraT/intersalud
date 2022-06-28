@@ -4,7 +4,7 @@
     <input type="hidden" name="id_Asistente" value="{{ isset($asistente) ? $asistente->id_asistente : null }}">
 
     <div class="row">
-         <div class="col-md-6 mb-3">
+         <div class="col-md-4 mb-3">
             {!! Form::label('Medico', 'Medico:') !!}
             {!! Form::select('id_Medico',$medicos, null, [
                 'placeholder' => 'Seleccione', 
@@ -40,7 +40,7 @@
               @endforeach
             </tbody>                   
         </table>
-      </div>
+    </div>
 @endif
     <div class="modal-footer">
         <a href="{{ route('usuario_a')}}" class="mt-1 btn btn-outline-secondary">
@@ -48,7 +48,7 @@
              <i class="fa fa-reply-all" aria-hidden="true"></i>
             </span>{{'Volver'}}
         </a>
-        <button type="submit" class="mt-1 btn btn-outline-success" id="btnusuario">
+        <button type="submit" class="mt-1 btn btn-outline-success" id="btnusuarioA">
             <span class="btn-icon-wrapper pr-2 opacity-7">
              <i class="fa fa-floppy-o" aria-hidden="true"></i>
             </span>{{'Guardar'}}

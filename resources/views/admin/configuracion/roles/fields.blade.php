@@ -5,19 +5,21 @@
         {!! form::text('name', null ,['class' => 'form-control', 'required' => 'required', 'autofocus'=>'autofocus'])!!}
     </div>
         <div class="col-md-12">
+            @if(isset($role->id))
             <div class="cont">
             <h5>{{'Listado de Permisos'}}</h5>
                 <div class="row mt-2">
-                @foreach($permisos as $permiso)
-                    <div class="single-item col-md-3 mt-2">
-                        <label>
-                            {!! form::checkbox('permissions[]', $permiso->id, null,['class' => 'form-control checkbox', 'data-toggle'=>"toggle" ,'data-on'=>"Si", 'data-off'=>"No" ,'data-size'=>"xs", 'id'=>"check"]) !!}
-                            {{$permiso->description}}
-                        </label>
-                    </div>
-                @endforeach                        
+                    @foreach($permisos as $permiso)
+                        <div class="single-item col-md-3 mt-2">
+                            <label>
+                                {!! form::checkbox('permissions[]', $permiso->id, null,['class' => 'form-control checkbox', 'data-toggle'=>"toggle" ,'data-on'=>"Si", 'data-off'=>"No" ,'data-size'=>"xs", 'id'=>"check"]) !!}
+                                {{$permiso->description}}
+                            </label>
+                        </div>
+                    @endforeach 
                 </div>
             </div>
+            @endif                       
         </div>
     </div>
 </div>

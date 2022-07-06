@@ -65,6 +65,10 @@ class UsuarioAController extends Controller
     {
       $total = UsuarioA::where('Status_id',1)->count();
       $limite = Limite::select('asistente')->where('status',1)->first();
+      if(!isset($limite)){
+        Flash::error('Ocurrió un error,se debe agregar un limite de usuarios');
+        return redirect()->route('usuario_a.create');
+      }
         	if($request->id == null){
             if($total < $limite->asistente){
               try {
@@ -78,10 +82,7 @@ class UsuarioAController extends Controller
                   $asistente->Status_id = $request['status'];
                   $asistente->Civil_id = $request['civil'];
                   $asistente->Pais_id = $request['nacionalidad'];
-                  $asistente->save();
-
-              //dd($asistente->id);
-                  
+                  $asistente->save();                  
 
                   Flash::success("Registro Agregado Correctamente");            
               return redirect()->route('usuario_a.edit', $asistente->id);

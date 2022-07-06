@@ -113,7 +113,8 @@ function buscar() {
 
     if (pacienteE.length == 0) {
        $.getJSON('{{ route('buscar_paciente') }}?paciente='+paciente+'&medico='+medico, function(objBP){
-                if(objBP[0].length == 0){
+            console.log(objBP[0]);
+                if(objBP[0] == null || objBP[0].length == 0){
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
                     $('#sexo').html('');

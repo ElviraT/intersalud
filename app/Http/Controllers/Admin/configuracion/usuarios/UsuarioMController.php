@@ -68,6 +68,10 @@ class UsuarioMController extends Controller
 	{
 	  $total = UsuarioM::where('Status_Medico_id',1)->count();
       $limite = Limite::select('medico')->where('status',1)->first();
+      if(!isset($limite)){
+        Flash::error('Ocurrió un error, se debe agregar un limite de usuarios');
+        return redirect()->route('usuario_m.create');
+      }
 		if($request->id == null){
       		if($total < $limite->medico){
 			  	try {

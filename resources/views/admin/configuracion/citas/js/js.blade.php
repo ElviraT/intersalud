@@ -270,6 +270,7 @@ var id_Agenda= objch['id_Agenda'];
                 $('#modal_citas').on('show.bs.modal', function (e) {
                   var agenda2 = $('#agenda').val();
                    $.getJSON('{{ route('datos_agenda') }}?agenda2='+agenda2, function(objA){
+                  
                      $('#Agenda_id').val(objA['id_Agenda']);
                      $('#mpaciente').val(objA['Max_pacientes']);
                      $('#notaM').val(objA['Nota']);
@@ -316,6 +317,16 @@ var id_Agenda= objch['id_Agenda'];
                         console.log(error.response.data);
                       }
                     });
+                  $('#modal_citas').on('show.bs.modal', function (e) {
+                      var agenda2 = $('#agenda').val();
+                       $.getJSON('{{ route('datos_agenda') }}?agenda2='+agenda2, function(objA){
+                      
+                         $('#notaM').val(objA['Nota']);
+                         
+                      });
+                    });
+                    $('#modal_citas').modal('show');
+                    loading_hide();
               },
               @endcan
               views: {

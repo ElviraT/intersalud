@@ -57,9 +57,10 @@ $('#turno_id').on('change', function (e) {
     var maxDate = '12:00';
   }
   if(turno === 'Tarde'){
-    var minDate ='12:01';
+    var minDate ='11:59';
     var maxDate = '23:59';
   }
+  console.log(minDate,maxDate);
 
        $('#fecha_lunes1').datetimepicker({
         useCurrent: false, //Important! See issue #1075

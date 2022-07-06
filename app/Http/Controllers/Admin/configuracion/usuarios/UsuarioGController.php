@@ -58,6 +58,10 @@ class UsuarioGController extends Controller
         $data = $request->except('_token');
       $total = UsuarioG::where('id_status',1)->count();
       $limite = Limite::select('administrativo')->where('status',1)->first();
+      if(!isset($limite)){
+        Flash::error('Ocurrió un error,se debe agregar un limite de usuarios');
+        return redirect()->route('usuario_g.create');
+      }
       	if($request->id == null){
           if($total < $limite->administrativo){
               try {

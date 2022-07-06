@@ -109,6 +109,7 @@
     <script type="text/javascript" src="{{ asset('assets/js/SmoothScroll.js')}}"></script>
     <script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js')}} "></script>
     <script type="text/javascript" src="{{ asset('assets/js/common-pages.js')}}"></script>
+    @include('layouts.validaciones')
     @yield('js')
     <script type="text/javascript">
       function mostrarPassword(){

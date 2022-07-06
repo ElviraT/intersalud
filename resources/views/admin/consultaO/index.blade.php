@@ -127,7 +127,7 @@
                         </form>
                         <button onclick="countDown()" class="btn mt-3 btn-outline-primary" hidden="true" id="inicio"> 
                           <i class="fa fa-play" aria-hidden="true"></i>
-                          {{'Iniciar'}}
+                          {{'Iniciar Cuenta atras'}}
                         </button>
                       </div>
                     </div>

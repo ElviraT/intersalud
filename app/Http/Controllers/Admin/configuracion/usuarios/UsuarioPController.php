@@ -67,6 +67,10 @@ class UsuarioPController extends Controller
     {
       $total = UsuarioP::where('Status_id',1)->count();
       $limite = Limite::select('paciente')->where('status',1)->first();
+      if(!isset($limite)){
+        Flash::error('Ocurrió un error, se debe agregar un limite de usuarios');
+        return redirect()->route('usuario_p.create');
+      }
       	if($request->id == null){
           if($total < $limite->paciente){
             try {
@@ -80,10 +84,7 @@ class UsuarioPController extends Controller
               $paciente->Status_id = $request['status'];
               $paciente->Civil_id = $request['civil'];
               $paciente->Pais_id = $request['nacionalidad'];
-              $paciente->save();
-
-          //dd($Paciente->id);
-              
+              $paciente->save();              
 
               Flash::success("Registro Agregado Correctamente");            
                return redirect()->route('usuario_p.edit', $paciente->id);

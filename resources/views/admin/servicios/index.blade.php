@@ -60,7 +60,11 @@
                         <tr>
                             <td>{{ $resultado->Servicio }}</td>
                             <td>{{ $resultado->Costos.' '.$resultado->simbolo}}</td>
+                            @if(isset($resultado->Especialidad->Espacialiadad_Medica))
                             <td>{{ $resultado->Especialidad->Espacialiadad_Medica }}</td>
+                            @else
+                            <td>{{'No tiene especialidad'}}</td>
+                            @endif
                             <td>{{ $resultado->UsuarioM->Nombres_Medico.' '.$resultado->UsuarioM->Apellidos_Medicos }}</td>
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
                             <td width="20">

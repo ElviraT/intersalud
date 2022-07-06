@@ -297,6 +297,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
 	/*REPORTES*/
 	Route::match(['get','post'],'reportes/consulta', ['as' => 'reporte_consulta', 'uses' => 'Admin\reportes\ReporteConsultaController@index']);
 	Route::match(['get','post'],'reportes/factura/', ['as' => 'facturaH', 'uses' =>  'Admin\reportes\ReporteFacturaController@index']);
+	Route::match(['get','post'],'reportes/consulta-servicios/', ['as' => 'cservicios', 'uses' =>  'Admin\reportes\ReporteCserviciosController@index']);
 
 	/*FACTURACION*/
 	Route::match(['get','post'],'factura/', ['as' => 'factura', 'uses' =>  'Admin\GeneratePdfController@index']);

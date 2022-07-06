@@ -21,6 +21,7 @@
       <link rel="stylesheet" href="{{ asset('assets/pages/waves/css/waves.min.css')}}" type="text/css" media="all">
       <!--Datatable-->
       <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"> 
+      <link href="{{ asset('css/buttons.bootstrap4.min.css') }}" rel="stylesheet">
       <link href="{{ asset('css/responsive.bootstrap.min.css') }}" rel="stylesheet">
       <!-- themify icon -->
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/icon/themify-icons/themify-icons.css')}}">
@@ -136,6 +137,12 @@
     <!-- DATATABLE -->
     <script src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{ asset('js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{ asset('js/buttons.bootstrap4.min.js')}}"></script>
+    <script src="{{ asset('js/pdfmake.min.js')}}"></script>
+    <script src="{{ asset('js/vfs_fonts.js')}}"></script>
+    <script src="{{ asset('js/buttons.html5.min.js')}}"></script>
+    <script src="{{ asset('js/buttons.colVis.min.js')}}"></script>
    
     <script src="{{ asset('js/dataTables.responsive.min.js')}}"></script>
     <script src="{{ asset('js/responsive.bootstrap.min.js')}}"></script>

@@ -53,7 +53,7 @@
                             <label>{{'Duración'}}</label>
                             <div class="form-group">
                                  <div class='input-group date' id='duracion'>
-                                    <input type='text' class="form-control" name="duracion" placeholder="Duración" id="duracion_input" />
+                                    <input type='text' class="form-control" name="duracion" placeholder="Duración" id="duracion_input" required/>
                                     <span class="input-group-addon">
                                     <span class="ti-timer"></span>
                                     </span>

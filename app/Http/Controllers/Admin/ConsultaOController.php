@@ -136,7 +136,7 @@ class ConsultaOController extends Controller
             $consulta2->save(); 
 
             $info= 'Registro Agregado Correctamente';     
-         //dd($_POST['control']);
+        
          $control= ControlHM::where('id_Control_Historia_Medica',$_POST['control'])->update([
                 'cerrado'=> 1,
             ]);
@@ -184,7 +184,7 @@ class ConsultaOController extends Controller
                     ->whereTime('start', '>=',date('H:00'))//date('h:00'))
                     ->orWhereTime('start', '>=',date('h:00'))//date('h:00'))
                     ->first();
-//dd($cita);
+
           $anamenesis = Anamenesi::select('anamnesis.Fecha','anamnesis.Enfermedad_Actual','anamnesis.Origen','anamnesis.Diagnostico_Definitivo','anamnesis.Pronostico')
                             ->join('control_historia_medicas','control_historia_medicas.id_Control_Historia_Medica','anamnesis.Control_Historia_Medico_id')
                             ->where('anamnesis.Paciente_Id', $paciente)      
@@ -200,7 +200,6 @@ class ConsultaOController extends Controller
              ->where('control_historia_medicas.cerrado',0)
              ->first();
              // }
-//dd($cita, $datos);
         }  
         $antecedentes= Antecedente::where('Paciente_Id', $paciente)->first();     
       return response()->json([$datos, $antecedentes, $cita, $anamenesis]);

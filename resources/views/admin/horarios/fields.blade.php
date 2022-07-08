@@ -50,7 +50,7 @@
 	        		<div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_lunes1'>
-				            <input type='text' class="form-control" name="hora_lunes1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Hora_Inicio_Lunes : null}}" />
+				            <input type='text' class="form-control" name="hora_lunes1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Hora_Inicio_Lunes : null}}" id="hlui"/>
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>
@@ -60,7 +60,7 @@
 				   <div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_lunes2'>
-				            <input type='text' class="form-control" name="hora_lunes2" placeholder="Hora fin" value="{{isset($horarios) ? $horarios->Hora_Fin_Lunes : null}}" />
+				            <input type='text' class="form-control" name="hora_lunes2" placeholder="Hora fin" value="{{isset($horarios) ? $horarios->Hora_Fin_Lunes : null}}" id="hluf"/>
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>
@@ -84,7 +84,7 @@
 		    		<div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_martes1'>
-				            <input type='text' class="form-control" name="hora_martes1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Hora_Inicio_Martes : null}}"/>
+				            <input type='text' class="form-control" name="hora_martes1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Hora_Inicio_Martes : null}}" id='hmai'/>
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>
@@ -94,7 +94,7 @@
 				   <div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_martes2'>
-				            <input type='text' class="form-control" name="hora_martes2" placeholder="Hora fin" value="{{isset($horarios) ? $horarios->Hora_Fin_Martes : null}}"/>
+				            <input type='text' class="form-control" name="hora_martes2" placeholder="Hora fin" value="{{isset($horarios) ? $horarios->Hora_Fin_Martes : null}}" id='hmaf'/>
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>
@@ -118,7 +118,7 @@
 		    		<div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_miercoles1'>
-				            <input type='text' class="form-control" name="hora_miercoles1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Horario_Inicio_Miercoles : null}}"/>
+				            <input type='text' class="form-control" name="hora_miercoles1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Horario_Inicio_Miercoles : null}}" id="hmii" />
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>
@@ -128,7 +128,7 @@
 				   <div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_miercoles2'>
-				            <input type='text' class="form-control" name="hora_miercoles2" placeholder="Hora fin" value="{{isset($horarios) ? $horarios->Horario_Fin_Miercoles : null}}"/>
+				            <input type='text' class="form-control" name="hora_miercoles2" placeholder="Hora fin" value="{{isset($horarios) ? $horarios->Horario_Fin_Miercoles : null}}" id="hmif" />
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>
@@ -152,7 +152,7 @@
 		    		<div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_jueves1'>
-				            <input type='text' class="form-control" name="hora_jueves1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Horario_Inicio_Jueves : null}}"/>
+				            <input type='text' class="form-control" name="hora_jueves1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Horario_Inicio_Jueves : null}}" id="hjui" />
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>
@@ -162,7 +162,7 @@
 				   <div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_jueves2'>
-				            <input type='text' class="form-control" name="hora_jueves2" placeholder="Hora fin" value="{{isset($horarios) ? $horarios->Horario_Fin_Jueves : null}}"/>
+				            <input type='text' class="form-control" name="hora_jueves2" placeholder="Hora fin" value="{{isset($horarios) ? $horarios->Horario_Fin_Jueves : null}}" id="hjuf" />
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>
@@ -186,7 +186,7 @@
 		    		<div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_viernes1'>
-				            <input type='text' class="form-control" name="hora_viernes1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Horario_Inicio_Viernes : null}}"/>
+				            <input type='text' class="form-control" name="hora_viernes1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Horario_Inicio_Viernes : null}}" id="hvii" />
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>
@@ -196,7 +196,7 @@
 				   <div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_viernes2'>
-				            <input type='text' class="form-control" name="hora_viernes2" placeholder="Hora fin" value="{{isset($horarios) ? $horarios->Horario_Fin_Viernes : null}}"/>
+				            <input type='text' class="form-control" name="hora_viernes2" placeholder="Hora fin" value="{{isset($horarios) ? $horarios->Horario_Fin_Viernes : null}}" id="hvif" />
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>
@@ -220,7 +220,7 @@
 		    		<div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_sabado1'>
-				            <input type='text' class="form-control" name="hora_sabado1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Horario_Inicio_Sabado : null}}"/>
+				            <input type='text' class="form-control" name="hora_sabado1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Horario_Inicio_Sabado : null}}" id="hsai" />
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>
@@ -230,7 +230,7 @@
 				   <div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_sabado2'>
-				            <input type='text' class="form-control" name="hora_sabado2" placeholder="Hora fin" value="{{isset($horarios) ? $horarios->Horario_Fin_Sabado : null}}"/>
+				            <input type='text' class="form-control" name="hora_sabado2" placeholder="Hora fin" value="{{isset($horarios) ? $horarios->Horario_Fin_Sabado : null}}" id="hsaf" />
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>
@@ -254,7 +254,7 @@
 		    		<div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_domingo1'>
-				            <input type='text' class="form-control" name="hora_domingo1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Horario_Inicio_Domingo : null}}"/>
+				            <input type='text' class="form-control" name="hora_domingo1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Horario_Inicio_Domingo : null}}" id="hdoi" />
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>
@@ -264,7 +264,7 @@
 				   <div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_domingo2'>
-				            <input type='text' class="form-control" name="hora_domingo2" placeholder="Hora fin" value="{{isset($horarios) ? $horarios->Horario_Fin_Domingo : null}}"/>
+				            <input type='text' class="form-control" name="hora_domingo2" placeholder="Hora fin" value="{{isset($horarios) ? $horarios->Horario_Fin_Domingo : null}}" id="hdof" />
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>

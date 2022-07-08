@@ -114,6 +114,7 @@ class ConsultaOController extends Controller
       }
         return $info;
    }
+   
    public function anamenesis()
    {
       DB::beginTransaction();

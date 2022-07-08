@@ -2,12 +2,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.js" type="text/javascript"></script>
 
 <script>
-    $(function() {
-        $('.pickerSelectClass').selectize({
-            valueField: 'name',
-            labelField: 'name',
-            searchField: 'name',
+   $(function() {
+        $('.otro').selectize({
             preload: true,
+            loadingClass: 'loading'
             });
     });
 </script>
@@ -61,72 +59,106 @@ $('#modal_consultorio').on('show.bs.modal', function (e) {
         });
     }
 });
-$('#estado').on('click', function (e) {
-   var estado = $('#estado').val();
-   console.log(estado);
-    $.getJSON('{{ route('ciudad_dependiente') }}?estado='+estado, function(objC){
-        var opcion = $('#ciudad').val();
-        $('#ciudad').empty();
-        $('#ciudad').prop('disabled', true);
-        $('#ciudad').change();
+var xhr;
+var xhr2;
+var xhr3;
+var select_state, $select_state;
+var select_city, $select_city;
+var select_municipality, $select_municipality;
+var select_parish, $select_parish;
 
-        if(objC.length > 0){
-            $.each(objC, function (i, ciudad) {
-            $('#ciudad').append(
-                    $('<option>', {
-                        value: ciudad.id_Ciudad,
-                        text : ciudad.Ciudad
-                    })
-                );
-            });
-            $('#ciudad').prop('disabled', false);
-            $("#ciudad option:first").attr("selected", "selected");
-        }        
-    });
-
-    $.getJSON('{{ route('municipio_dependiente') }}?estado='+estado, function(objM){
-        var opcion = $('#municipio').val();
-        $('#municipio').empty();
-        $('#municipio').prop('disabled', true);
-        $('#municipio').change();
-
-        if(objM.length > 0){
-            $.each(objM, function (i, municipio) {
-            $('#municipio').append(
-                    $('<option>', {
-                        value: municipio.id_Municipio,
-                        text : municipio.Municipio
-                    })
-                );
-            });
-            $('#municipio').change();
-            $('#municipio').prop('disabled', false);
-        }        
-    });
-    
+$select_state = $('#estado').selectize({
+    loadingClass: 'loading',
+    onChange: function(value) {
+        if (!value.length) return;
+        /*listar ciudades*/
+        select_city.disable();
+        select_city.clearOptions();
+        select_city.load(function(callback) {
+            xhr && xhr.abort();
+            xhr = $.ajax({
+                url: '{{ route('ciudad_dependiente') }}?estado='+value,
+                success: function(results) {
+                    select_city.enable();
+                    callback(results);
+                },
+                error: function() {
+                    callback();
+                }
+            })
+        });
+        /*listar municipios*/
+        select_municipality.disable();
+        select_municipality.clearOptions();
+        select_municipality.load(function(callback) {
+            xhr2 && xhr2.abort();
+            xhr2 = $.ajax({
+                url: '{{ route('municipio_dependiente') }}?estado='+value,
+                success: function(results) {
+                    select_municipality.enable();
+                    callback(results);
+                },
+                error: function() {
+                    callback();
+                }
+            })
+        });
+    }
 });
 
-$('#municipio').on('select2:select', function (e) {
-    var municipio = $('#municipio').val();
-    $.getJSON('{{ route('parroquia_dependiente') }}?municipio='+municipio, function(objP){
-        var opcion = $('#parroquia').val();
-        $('#parroquia').empty();
-        $('#parroquia').prop('disabled', true);
-        $('#parroquia').change();
+$select_city = $('#ciudad').selectize({
+                    valueField: 'id_Ciudad',
+                    labelField: 'Ciudad',
+                    searchField: ['Ciudad'],
+                    preload: true,
+                    loadingClass: 'loading',
+                });
 
-        if(objP.length > 0){
-            $.each(objP, function (i, parroquia) {
-            $('#parroquia').append(
-                    $('<option>', {
-                        value: parroquia.id_Parroquia,
-                        text : parroquia.Parroquia
-                    })
-                );
-            });
-            $('#parroquia').prop('disabled', false);
-        }        
-    });
-});
+$select_municipality = $('#municipio').selectize({
+                    valueField: 'id_Municipio',
+                    labelField: 'Municipio',
+                    searchField: ['Municipio'],
+                    preload: true,
+                    loadingClass: 'loading',
+
+                    onChange: function(value) {
+                    if (!value.length) return;
+                    /*listar parroquias*/
+                    select_parish.disable();
+                    select_parish.clearOptions();
+                    select_parish.load(function(callback) {
+                        xhr3 && xhr3.abort();
+                        xhr3 = $.ajax({
+                            url: '{{ route('parroquia_dependiente') }}?municipio='+value,
+                            success: function(results) {
+                                select_parish.enable();
+                                callback(results);
+                            },
+                            error: function() {
+                                callback();
+                            }
+                        })
+                    });
+                }
+     });
+
+$select_parish = $('#parroquia').selectize({
+                    valueField: 'id_Parroquia',
+                    labelField: 'Parroquia',
+                    searchField: ['Parroquia'],
+                    preload: true,
+                    loadingClass: 'loading'
+                });
+
+                select_city  = $select_city[0].selectize;
+                select_state = $select_state[0].selectize;
+                select_municipality = $select_municipality[0].selectize;
+                select_parish  = $select_parish[0].selectize;
+
+                select_city.disable();
+                select_municipality.disable();
+                select_parish.disable();
+
 
 $('#modal_consultorio').on('hidden.bs.modal', function (e) {
     $('#direccion').val('');

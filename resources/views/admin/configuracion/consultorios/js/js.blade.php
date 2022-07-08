@@ -1,6 +1,16 @@
 <!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.js" type="text/javascript"></script>
 
+<script>
+    $(function() {
+        $('.pickerSelectClass').selectize({
+            valueField: 'name',
+            labelField: 'name',
+            searchField: 'name',
+            preload: true,
+            });
+    });
+</script>
 <script type="text/javascript">
     $(document).ready(function() {
        var table_consultorios = $('#table_consultorios').DataTable({
@@ -11,13 +21,13 @@
               },
         });
     });
-$(document).ready(function() {
+/*$(document).ready(function() {
     $('.select2').select2({ 
         theme : "classic",
         closeOnSelect: true,
         dropdownParent: $('#modal_consultorio'),
          });
-    });
+    });*/
 
 $('#modal_consultorio').on('show.bs.modal', function (e) {
     var modal = $(e.delegateTarget),
@@ -51,8 +61,9 @@ $('#modal_consultorio').on('show.bs.modal', function (e) {
         });
     }
 });
-$('#estado').on('select2:select', function (e) {
+$('#estado').on('click', function (e) {
    var estado = $('#estado').val();
+   console.log(estado);
     $.getJSON('{{ route('ciudad_dependiente') }}?estado='+estado, function(objC){
         var opcion = $('#ciudad').val();
         $('#ciudad').empty();

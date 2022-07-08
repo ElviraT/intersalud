@@ -32,7 +32,7 @@
                             {!! Form::label('especialidad', 'Especialidad Medica:') !!}
                             {!! Form::select('especialidad',$especialidad, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'especialidad',
                                 'required'=>'required'
                                 ])
@@ -42,7 +42,7 @@
                             {!! Form::label('estado', 'Estado:') !!}
                             {!! Form::select('estado',$estado, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'estado',
                                 'required'=>'required'
                                 ])
@@ -53,7 +53,7 @@
                             {!! Form::select('municipio',$municipio, null, [
                                 'placeholder' => 'Seleccione',
                                 'disabled' => 'disabled', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'municipio',
                                 'required'=>'required'
                                 ])
@@ -64,7 +64,7 @@
                             {!! Form::select('ciudad',$ciudad, null, [
                                 'placeholder' => 'Seleccione', 
                                 'disabled' => 'disabled',
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'ciudad',
                                 'required'=>'required'
                                 ])
@@ -75,7 +75,7 @@
                             {!! Form::select('parroquia',$parroquia, null, [
                                 'placeholder' => 'Seleccione', 
                                 'disabled' => 'disabled',
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'parroquia',
                                 'required'=>'required'
                                 ])
@@ -85,7 +85,7 @@
                             {!! Form::label('status', 'Status:') !!}
                             {!! Form::select('status',$status, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'status',
                                 'required'=>'required'
                                 ])

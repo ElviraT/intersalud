@@ -50,7 +50,7 @@
 	        		<div class='col-md-6'>
 				      <div class="form-group">
 				         <div class='input-group date' id='fecha_lunes1'>
-				            <input type='text' class="form-control" name="hora_lunes1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Hora_Inicio_Lunes : null}}" id="hlui"/>
+				            <input type='text' class="form-control" name="hora_lunes1" placeholder="Hora inicio" value="{{isset($horarios) ? $horarios->Hora_Inicio_Lunes : null}}" id="hlui" />
 				            <span class="input-group-addon">
 				            <span class="ti-timer"></span>
 				            </span>

@@ -3,6 +3,8 @@
 <script src="{{ asset('js/moment-with-locales.js')}}"></script>
 <script src="{{ asset('js/bootstrap-datetimepicker.min.js')}}"></script>
 
+<!--nuevo time picker-->
+
 <!--Toggle -->
 <script src="{{ asset('js/bootstrap4-toggle.min.js')}}"></script>
 
@@ -60,18 +62,20 @@ $('#turno_id').on('change', function (e) {
   }
 
        $('#fecha_lunes1').datetimepicker({
-        useCurrent: false, //Important! See issue #1075
-        ampm= 'am',
-       	format: 'LT',
-        autoclose: true,
+        "allowInputToggle": true,
+        "showClose": true,
+        "showClear": true,
+        "showTodayButton": true,
+        "format": "hh:mm A",
        });
        $('#fecha_lunes2').datetimepicker({        
-        useCurrent: false, //Important! See issue #1075
-        ampm= 'am',
-		    format: 'LT',
-        autoclose: true,
+        "allowInputToggle": true,
+        "showClose": true,
+        "showClear": true,
+        "showTodayButton": true,
+        "format": "hh:mm A",
 		   });
-       $('#fecha_lunes1').data("DateTimePicker").minDate(minDate);
+    /*   $('#fecha_lunes1').data("DateTimePicker").minDate(minDate);
        $('#fecha_lunes1').data("DateTimePicker").maxDate(maxDate);
 
        $('#fecha_lunes2').data("DateTimePicker").minDate(minDate);
@@ -220,7 +224,7 @@ $('#turno_id').on('change', function (e) {
        });
        $("#fecha_domingo2").on("dp.change", function (e) {
            $('#fecha_domingo1').data("DateTimePicker").maxDate(e.date);
-       });
+       });*/
    });
 $('#confirm-delete32').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);

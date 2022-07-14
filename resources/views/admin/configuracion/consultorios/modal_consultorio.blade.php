@@ -50,7 +50,7 @@
                         </div>
                         <div class="col-md-3 mb-3">
                             {!! Form::label('municipio', 'Municipio:') !!}
-                            {!! Form::select('municipio',[], null, [
+                            {!! Form::select('municipio',$municipio, null, [
                                 'placeholder' => 'Seleccione',
                                 'class' => 'pickerSelectClass',
                                 'id' => 'municipio',
@@ -60,7 +60,7 @@
                         </div>
                         <div class="col-md-3 mb-3">
                             {!! Form::label('ciudad', 'Ciudad:') !!}
-                            {!! Form::select('ciudad',[], null, [
+                            {!! Form::select('ciudad',$ciudad, null, [
                                 'placeholder' => 'Seleccione',
                                 'class' => 'pickerSelectClass',
                                 'id' => 'ciudad',
@@ -70,7 +70,7 @@
                         </div>
                         <div class="col-md-3 mb-3">
                             {!! Form::label('parroquia', 'Parroquia:') !!}
-                            {!! Form::select('parroquia',[], null, [
+                            {!! Form::select('parroquia',$parroquia, null, [
                                 'placeholder' => 'Seleccione',
                                 'class' => 'pickerSelectClass',
                                 'id' => 'parroquia',

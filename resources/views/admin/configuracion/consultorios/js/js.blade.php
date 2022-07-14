@@ -1,11 +1,12 @@
 <!-- Select2 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.js" type="text/javascript"></script>
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 
 <script>
    $(function() {
         $('.otro').selectize({
             preload: true,
-            loadingClass: 'loading'
+            loadingClass: 'loading',
+            closeAfterSelect: true
             });
     });
 </script>
@@ -19,46 +20,7 @@
               },
         });
     });
-/*$(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        closeOnSelect: true,
-        dropdownParent: $('#modal_consultorio'),
-         });
-    });*/
 
-$('#modal_consultorio').on('show.bs.modal', function (e) {
-    var modal = $(e.delegateTarget),
-        data = $(e.relatedTarget).data();
-        $('#nombre').focus();
-        loading_hide();
-    if (data.recordId != undefined) {
-        modal.addClass('loading');
-        $('.modal_registro_consultorio_id', modal).val(data.recordId);
-        $.getJSON(modal.data().consulta + '?id=' + data.recordId, function (data) {
-            var obj = data[0];
-            $('#direccion', modal).val(obj.Direccion);
-            $('#local', modal).val(obj.Local);
-            $('#telefono', modal).val(obj.Telefono);
-            $('#celular', modal).val(obj.Celular);
-            $('#correo', modal).val(obj.Correo);
-            $('#especialidad').val(obj.Especialidad_Medica_id);
-            $('#especialidad').change();
-            $('#estado').val(obj.Estado_id);
-            $('#estado').change();
-            $('#ciudad').val(obj.Ciudad_id);
-            $('#ciudad').change();
-            $('#municipio').val(obj.Municipio_id);
-            $('#municipio').change();
-            $('#parroquia').val(obj.Parroquia_id);
-            $('#parroquia').change();
-            $('#status').val(obj.Status_id);
-            $('#status').change();
-            modal.removeClass('loading');
-            loading_hide();
-        });
-    }
-});
 var xhr;
 var xhr2;
 var xhr3;
@@ -107,19 +69,18 @@ $select_state = $('#estado').selectize({
 });
 
 $select_city = $('#ciudad').selectize({
-                    valueField: 'id_Ciudad',
                     labelField: 'Ciudad',
+                    valueField: 'id_Ciudad',
                     searchField: ['Ciudad'],
-                    preload: true,
                     loadingClass: 'loading',
                 });
 
 $select_municipality = $('#municipio').selectize({
-                    valueField: 'id_Municipio',
                     labelField: 'Municipio',
+                    valueField: 'id_Municipio',
                     searchField: ['Municipio'],
-                    preload: true,
                     loadingClass: 'loading',
+                    preload: true,
 
                     onChange: function(value) {
                     if (!value.length) return;
@@ -143,22 +104,55 @@ $select_municipality = $('#municipio').selectize({
      });
 
 $select_parish = $('#parroquia').selectize({
-                    valueField: 'id_Parroquia',
                     labelField: 'Parroquia',
+                    valueField: 'id_Parroquia',
                     searchField: ['Parroquia'],
-                    preload: true,
                     loadingClass: 'loading'
                 });
 
                 select_city  = $select_city[0].selectize;
-                select_state = $select_state[0].selectize;
-                select_municipality = $select_municipality[0].selectize;
                 select_parish  = $select_parish[0].selectize;
+                select_municipality = $select_municipality[0].selectize;
+                select_state = $select_state[0].selectize;
 
                 select_city.disable();
                 select_municipality.disable();
                 select_parish.disable();
 
+
+$('#modal_consultorio').on('show.bs.modal', function (e) {
+    var modal = $(e.delegateTarget),
+        data = $(e.relatedTarget).data();
+        $('#nombre').focus();
+        loading_hide();
+    if (data.recordId != undefined) {
+        modal.addClass('loading');
+        $('.modal_registro_consultorio_id', modal).val(data.recordId);
+        $.getJSON(modal.data().consulta + '?id=' + data.recordId, function (data) {
+            var obj = data[0];
+            var $especialidad = $('#especialidad').selectize();
+            $especialidad[0].selectize.setValue(obj.Especialidad_Medica_id);
+            var $status = $('#status').selectize();
+            $status[0].selectize.setValue(obj.Status_id);
+            $select_state[0].selectize.setValue(obj.Estado_id, true);
+            //select_state.disable();
+
+            $('#direccion', modal).val(obj.Direccion);
+            $('#local', modal).val(obj.Local);
+            $('#telefono', modal).val(obj.Telefono);
+            $('#celular', modal).val(obj.Celular);
+            $('#correo', modal).val(obj.Correo);
+
+            //$select_municipality[0].selectize.clearOptions();
+            $select_municipality[0].selectize.setValue(obj.Municipio_id, true);
+            $select_city[0].selectize.setValue(obj.Ciudad_id);
+            $select_parish[0].selectize.setValue(obj.Parroquia_id);
+
+            modal.removeClass('loading');
+            loading_hide();
+        });
+    }
+});
 
 $('#modal_consultorio').on('hidden.bs.modal', function (e) {
     $('#direccion').val('');
@@ -166,12 +160,12 @@ $('#modal_consultorio').on('hidden.bs.modal', function (e) {
     $('#telefono').val('');
     $('#celular').val('');
     $('#correo').val('');
-    $('#especialidad').val('').change();
-    $('#estado').val('').change();
-    $('#ciudad').val('').change();
-    $('#municipio').val('').change();
-    $('#parroquia').val('').change();
-    $('#status').val('').change();
+    $('#especialidad')[0].selectize.refreshItems();
+    $('#estado')[0].selectize.refreshItems();
+    $('#ciudad')[0].selectize.refreshItems();
+    $('#municipio')[0].selectize.refreshItems();
+    $('#parroquia')[0].selectize.refreshItems();
+    $('#status')[0].selectize.refreshItems();
 });
 $('#confirm-delete23').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);

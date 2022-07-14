@@ -254,6 +254,7 @@ var id_Agenda= objch['id_Agenda'];
                 $('#btnModificar').attr('hidden', true);
                 $('#btnEliminar').attr('hidden', true);
                 $('#confirmado').attr('checked',false).change();
+                $('#online').attr('checked',false).change();
                 $('#paciente').val('').change();
                 $('#pacienteE').val('').change();
                 if(info.allDay){
@@ -303,6 +304,9 @@ var id_Agenda= objch['id_Agenda'];
                    $('#costo').val(cita.extendedProps.Costo.toFixed(2));
                    if(respuesta.data[0].confirmado == '1'){
                       $('#confirmado').prop("checked",true);
+                   }
+                   if(respuesta.data[0].online == '1'){
+                      $('#online').prop("checked",true);
                    }
                    $('#nota').val(cita.extendedProps.Nota);
                    $('#title').val(cita.title);
@@ -376,6 +380,7 @@ var id_Agenda= objch['id_Agenda'];
 }
 $('#modal_citas').on('hidden.bs.modal', function (event) {
   $('#btnGuardar').attr('disabled', false);
+  $('#id_servicio').val('').change();
 })
 $(function () {
    $('#date-start').datetimepicker({
@@ -386,5 +391,8 @@ $(function () {
    format: 'Y-MM-DD HH:mm',
    locale: 'es',
    });
+});
+$(".cierra").click(function(){
+  $("#modal_citas").modal('hide')
 });
 </script>

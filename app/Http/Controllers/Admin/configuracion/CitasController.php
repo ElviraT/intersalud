@@ -123,12 +123,18 @@ class CitasController extends Controller
     }
     public function store(Request $request)
     {
+    
       $title = $request['titleP'].' - '.$request['title'];
 
       $agenda= Agenda::where('id_Agenda',$request->Agenda_id)->first();
       $Medico_id=$agenda['Medico_id'];
       $Horario_Cita_Paciente=$agenda['Horario_Cita_id'];
       $Especialidad_Medica=$agenda['Especialidad_Medica'];
+      if($request['online'] == 'on'){
+        $online = 1;
+      }else{
+        $online= 0;
+      }
 
       DB::beginTransaction();
       try {
@@ -149,6 +155,7 @@ class CitasController extends Controller
         $cita->color = '#378006';
         $cita->confirmado = 1;
         $cita->id_servicio = $request['id_servicio'];
+        $cita->online = $online;
         $cita->save();
 
         $control_data = ['Especialidad_Medica_id' => $Especialidad_Medica, 'Medico_id'=> $Medico_id, 'Paciente_id'=> $request['Paciente_id'], 'Paciente_Especial_id'=> $request['Paciente_Especial_id'], 'Cita_Consulta_id'=> $cita['id'], 'Fecha'=> date('Y-m-d'), 'id_servicio'=> $request['id_servicio']];
@@ -190,8 +197,13 @@ class CitasController extends Controller
        $confirmado=1;
        $color= '#378006'; 
        $title = $request['titleP'].' - '.$request['title'];
+       if($request['online'] == 'on'){
+        $online = 1;
+      }else{
+        $online= 0;
+      }
                 
-      $request->merge(['color' => $color,'confirmado' => $confirmado, 'title'=> $title]);
+      $request->merge(['color' => $color,'confirmado' => $confirmado, 'title'=> $title, 'online'=> $online]);
       $data = $request->all();
       $data = $request->except('_token','id','titleP','NotaM');
 

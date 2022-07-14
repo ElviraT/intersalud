@@ -26,13 +26,16 @@ class ConsultorioController extends Controller
     public function index(Consultorio $model)
   	{   
   		$especialidad=Collection::make(Especialidad::select(['id_Especialidad_Medica','Espacialiadad_Medica'])->orderBy('Espacialiadad_Medica')->get())->pluck("Espacialiadad_Medica", "id_Especialidad_Medica"); 
-  		$ciudad=Collection::make(Ciudad::select(['id_Ciudad','Ciudad'])->orderBy('Ciudad')->get())->pluck("Ciudad", "id_Ciudad"); 
+  		
   		$estado=Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado"); 
-  		$municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
-  		$parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia"); 
+  		
   		$status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status"); 
 
-  		return view('admin.configuracion.consultorios.index', ['consultorios' => $model->all(),'status'=>$status,'especialidad'=>$especialidad,'ciudad'=>$ciudad,'estado'=>$estado,'municipio'=>$municipio,'parroquia'=>$parroquia]);
+      $ciudad=Collection::make(Ciudad::select(['id_Ciudad','Ciudad'])->orderBy('Ciudad')->get())->pluck("Ciudad", "id_Ciudad"); 
+      $municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
+      $parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia");
+
+  		return view('admin.configuracion.consultorios.index', ['consultorios' => $model->all(),'status'=>$status,'especialidad'=>$especialidad,'estado'=>$estado,'ciudad'=>$ciudad,'municipio'=>$municipio,'parroquia'=>$parroquia]);
   	}
   	public function add (Request $request)
     {   

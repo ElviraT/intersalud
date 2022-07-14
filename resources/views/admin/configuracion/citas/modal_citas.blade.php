@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">{{ 'Agregar Cita' }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close cierra" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -44,18 +44,22 @@
                                 'required'=>'required'
                             ]) !!}
                         </div>
-                        <div class="col-md-4 mb-3" style="pointer-events: none">
+                     <div class="col-md-3 mb-3" style="pointer-events: none">
                             <label for="validationCustom01">{{'Maximo de Pacientes'}}</label>
                             <input type="number" name="Max_paciente" class="form-control" id="mpaciente" placeholder="Maximo de Pacientes" required>
                         </div>
-                        <div class="col-md-4 mb-3" style="pointer-events: none">
+                        <div class="col-md-3 mb-3" style="pointer-events: none">
                             <label for="validationCustom01">{{'Disponibilidad'}}</label>
                             <input type="number" name="disponibilidad" class="form-control" id="disponibilidad">
                             <small id="texto" style="color: red;" hidden>{{'No hay cupos disponibles'}}</small>
                         </div>
-                        <div class="col-md-4 mb-3" style="pointer-events: none">
+                        <div class="col-md-3 mb-3" style="pointer-events: none">
                             <label for="validationCustom01">{{'Costo'}}</label>
                             <input type="number" name="Costo" class="form-control" id="costo" step="0.01" required>
+                        </div>
+                        <div class="col-md-3 mt-4">
+                            <input type="checkbox" name="online" id="online">
+                            <label>{{'Online'}}</label>
                         </div>
                         <div class="col-md-4 mt-4" hidden>
                             <label>{{'Confirmar Cita'}}</label>
@@ -102,7 +106,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="mt-1 btn-transition btn btn-outline-secondary" data-dismiss="modal">
+                <button type="button" class="mt-1 btn-transition btn btn-outline-secondary cierra" data-dismiss="modal">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                     </span>{{'Volver'}}
                 </button>

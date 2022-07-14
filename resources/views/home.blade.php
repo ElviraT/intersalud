@@ -37,7 +37,7 @@
                 @if($diff)
                   <div class="card" align="center">
                    @if($diff->invert == 1)
-                    <h2>{{'Ya pasaron'}}&nbsp;{{$diff->days}}&nbsp;{{'de su cita'}}</h2>
+                    <h2>{{'Su última cita programada ya pasó'}}</h2>
                    @else
                     <h2>{{'Faltan'}}&nbsp;{{$diff->days}}&nbsp;{{'para su cita'}}</h2>
                    @endif

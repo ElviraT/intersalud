@@ -25,7 +25,7 @@ $('#duracion').datetimepicker({
     useCurrent: false, //Important! See issue #1075
     format: 'HH:mm',
 });
-$('#medico_id').on('change', function (e) {
+$('#medico_id').on('select2:select', function (e) {
    var medico = $('#medico_id').val();
     $.getJSON('{{ route('especialidad_dependiente') }}?medico='+medico, function(objC){
         var opcion = $('#especialidad').val();
@@ -59,8 +59,8 @@ $('#modal_servicio').on('show.bs.modal', function (e) {
             $('#servicio', modal).val(obj.Servicio);
             $('#costo', modal).val(obj.Costos);
             $('#simbolo', modal).val(obj.simbolo).change();
-            $('#especialidad', modal).val(obj.Especialidad_Medica_id).change();
             $('#medico_id', modal).val(obj.Medico_id).change();
+            $('#especialidad', modal).val(obj.Especialidad_Medica_id).change();
             $('#status', modal).val(obj.Status_id).change();
             $('#duracion_input').val(obj.duracion);
             modal.removeClass('loading');

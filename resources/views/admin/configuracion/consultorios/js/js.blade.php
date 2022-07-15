@@ -160,12 +160,8 @@ $('#modal_consultorio').on('hidden.bs.modal', function (e) {
     $('#telefono').val('');
     $('#celular').val('');
     $('#correo').val('');
-    $('#especialidad')[0].selectize.refreshItems();
-    $('#estado')[0].selectize.refreshItems();
-    $('#ciudad')[0].selectize.refreshItems();
-    $('#municipio')[0].selectize.refreshItems();
-    $('#parroquia')[0].selectize.refreshItems();
-    $('#status')[0].selectize.refreshItems();
+    $('#especialidad')[0].selectize.clear();
+    $('#status')[0].selectize.clear();
 });
 $('#confirm-delete23').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);

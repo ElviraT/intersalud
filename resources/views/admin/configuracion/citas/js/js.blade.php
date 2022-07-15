@@ -304,9 +304,13 @@ var id_Agenda= objch['id_Agenda'];
                    $('#costo').val(cita.extendedProps.Costo.toFixed(2));
                    if(respuesta.data[0].confirmado == '1'){
                       $('#confirmado').prop("checked",true);
+                   }else{
+                      $('#confirmado').prop("checked",false);                    
                    }
                    if(respuesta.data[0].online == '1'){
                       $('#online').prop("checked",true);
+                   }else{
+                      $('#online').prop("checked",false);
                    }
                    $('#nota').val(cita.extendedProps.Nota);
                    $('#title').val(cita.title);
@@ -378,6 +382,9 @@ var id_Agenda= objch['id_Agenda'];
         });
    });
 }
+$(".cierra").click(function(){
+  $("#modal_citas").modal('hide');
+});
 $('#modal_citas').on('hidden.bs.modal', function (event) {
   $('#btnGuardar').attr('disabled', false);
   $('#id_servicio').val('').change();
@@ -392,7 +399,5 @@ $(function () {
    locale: 'es',
    });
 });
-$(".cierra").click(function(){
-  $("#modal_citas").modal('hide')
-});
+
 </script>

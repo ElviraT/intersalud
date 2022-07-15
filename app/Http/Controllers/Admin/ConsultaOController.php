@@ -74,7 +74,7 @@ class ConsultaOController extends Controller
 
    public function antecedentes()
    {
-      if($_POST['id_antecedente'] == 0){
+      if($_POST['id_antecedente'] == 0 || $_POST['id_antecedente'] == ''){
          try {
                 $consultao= new Antecedente();
                 $consultao->Paciente_Id = $_POST['id_paciente'];
@@ -161,6 +161,7 @@ class ConsultaOController extends Controller
         if ($pacienteE != null) {
             $cita= Citas::where('Paciente_Especial_id', $pacienteE)
                         ->where('Medico_id', $medico)
+                        ->where('online', 1)
                         ->whereDate('start', date('Y-m-d'))//date('Y-m-d'))
                         ->whereTime('start', '>=',date('H:00'))//date('h:00'))
                         ->first(); 
@@ -181,6 +182,7 @@ class ConsultaOController extends Controller
         }else{
           $cita= Citas::where('Paciente_id',$paciente)
                     ->where('Medico_id', $medico)
+                    ->where('online', 1)
                     ->whereDate('start', date('Y-m-d'))//date('Y-m-d'))
                     ->whereTime('start', '>=',date('H:00'))//date('h:00'))
                     ->orWhereTime('start', '>=',date('h:00'))//date('h:00'))

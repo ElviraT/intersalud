@@ -3,8 +3,6 @@
 <script src="{{ asset('js/moment-with-locales.js')}}"></script>
 <script src="{{ asset('js/bootstrap-datetimepicker.min.js')}}"></script>
 
-<!--nuevo time picker-->
-
 <!--Toggle -->
 <script src="{{ asset('js/bootstrap4-toggle.min.js')}}"></script>
 
@@ -55,27 +53,23 @@ $('#medico').on('change', function (e) {
 $('#turno_id').on('change', function (e) {
   var turno = $('select[name="turno_id"] option:selected').text();
   if(turno === 'Mañana') {
-     var horario= 'am';
+    var minDate ='00:00';
+    var maxDate = '12:00';
   }
   if(turno === 'Tarde'){
-     var horario= 'pm';
+    var minDate ='12:01';
+    var maxDate = '23:59';
   }
 
        $('#fecha_lunes1').datetimepicker({
-        "allowInputToggle": true,
-        "showClose": true,
-        "showClear": true,
-        "showTodayButton": true,
-        "format": "hh:mm A",
+        useCurrent: false, //Important! See issue #1075
+       	format: 'HH:mm',
        });
        $('#fecha_lunes2').datetimepicker({        
-        "allowInputToggle": true,
-        "showClose": true,
-        "showClear": true,
-        "showTodayButton": true,
-        "format": "hh:mm A",
+        useCurrent: false, //Important! See issue #1075
+		    format: 'HH:mm',
 		   });
-    /*   $('#fecha_lunes1').data("DateTimePicker").minDate(minDate);
+       $('#fecha_lunes1').data("DateTimePicker").minDate(minDate);
        $('#fecha_lunes1').data("DateTimePicker").maxDate(maxDate);
 
        $('#fecha_lunes2').data("DateTimePicker").minDate(minDate);
@@ -90,13 +84,11 @@ $('#turno_id').on('change', function (e) {
 
        $('#fecha_martes1').datetimepicker({
         useCurrent: false, //Important! See issue #1075
-        format: 'LT',
-        autoclose: true,
+        format: 'HH:mm',
        });
        $('#fecha_martes2').datetimepicker({
        useCurrent: false, //Important! See issue #1075
-       format: 'LT',
-       autoclose: true,
+       format: 'HH:mm',
        });
        $('#fecha_martes1').data("DateTimePicker").minDate(minDate);
        $('#fecha_martes1').data("DateTimePicker").maxDate(maxDate);
@@ -113,13 +105,11 @@ $('#turno_id').on('change', function (e) {
 
        $('#fecha_miercoles1').datetimepicker({
         useCurrent: false, //Important! See issue #1075
-        format: 'LT',
-        autoclose: true,
+        format: 'HH:mm',
        });
        $('#fecha_miercoles2').datetimepicker({
        useCurrent: false, //Important! See issue #1075
-       format: 'LT',
-       autoclose: true,
+       format: 'HH:mm',
        });
        $('#fecha_miercoles1').data("DateTimePicker").minDate(minDate);
        $('#fecha_miercoles1').data("DateTimePicker").maxDate(maxDate);
@@ -136,13 +126,11 @@ $('#turno_id').on('change', function (e) {
 
        $('#fecha_jueves1').datetimepicker({
         useCurrent: false, //Important! See issue #1075
-        format: 'LT',
-        autoclose: true,
+        format: 'HH:mm',
        });
        $('#fecha_jueves2').datetimepicker({
-        useCurrent: false, //Important! See issue #1075
-        format: 'LT',
-        autoclose: true,
+       useCurrent: false, //Important! See issue #1075
+       format: 'HH:mm',
        });
        $('#fecha_jueves1').data("DateTimePicker").minDate(minDate);
        $('#fecha_jueves1').data("DateTimePicker").maxDate(maxDate);
@@ -159,14 +147,12 @@ $('#turno_id').on('change', function (e) {
 
        $('#fecha_viernes1').datetimepicker({
         useCurrent: false, //Important! See issue #1075
-        format: 'LT',
-        autoclose: true,
+        format: 'HH:mm',
        });
        $('#fecha_viernes2').datetimepicker({
-        useCurrent: false, //Important! See issue #1075
-        format: 'LT',      
-        autoclose: true,
-        });
+       useCurrent: false, //Important! See issue #1075
+       format: 'HH:mm',
+       });
        $('#fecha_viernes1').data("DateTimePicker").minDate(minDate);
        $('#fecha_viernes1').data("DateTimePicker").maxDate(maxDate);
 
@@ -182,13 +168,11 @@ $('#turno_id').on('change', function (e) {
 
        $('#fecha_sabado1').datetimepicker({
         useCurrent: false, //Important! See issue #1075
-        format: 'LT',
-        autoclose: true,
+        format: 'HH:mm',
        });
        $('#fecha_sabado2').datetimepicker({
-        useCurrent: false, //Important! See issue #1075
-        format: 'LT',
-        autoclose: true,
+       useCurrent: false, //Important! See issue #1075
+       format: 'HH:mm',
        });
        $('#fecha_sabado1').data("DateTimePicker").minDate(minDate);
        $('#fecha_sabado1').data("DateTimePicker").maxDate(maxDate);
@@ -205,13 +189,11 @@ $('#turno_id').on('change', function (e) {
 
        $('#fecha_domingo1').datetimepicker({
         useCurrent: false, //Important! See issue #1075
-        format: 'LT',
-        autoclose: true,
+        format: 'HH:mm',
        });
        $('#fecha_domingo2').datetimepicker({
-        useCurrent: false, //Important! See issue #1075
-        format: 'LT',
-        autoclose: true,
+       useCurrent: false, //Important! See issue #1075
+       format: 'HH:mm',
        });
        $('#fecha_domingo1').data("DateTimePicker").minDate(minDate);
        $('#fecha_domingo1').data("DateTimePicker").maxDate(maxDate);
@@ -224,7 +206,7 @@ $('#turno_id').on('change', function (e) {
        });
        $("#fecha_domingo2").on("dp.change", function (e) {
            $('#fecha_domingo1').data("DateTimePicker").maxDate(e.date);
-       });*/
+       });
    });
 $('#confirm-delete32').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);
@@ -248,12 +230,8 @@ $(function() {
         var lu = $(this).prop('checked');
     if(lu == true) {
        document.getElementById('div_lunes').style.display = 'block';
-       $('#hlui').attr('required',true);
-       $('#hluf').attr('required',true);
     }else{
        document.getElementById('div_lunes').style.display = 'none';
-       $('#hlui').attr('required',false);
-       $('#hluf').attr('required',false);
     }
     });
 
@@ -261,72 +239,48 @@ $(function() {
         var ma = $(this).prop('checked');
     if(ma == true) {
        document.getElementById('div_martes').style.display = 'block';
-       $('#hmai').attr('required',true);
-       $('#hmaf').attr('required',true);
     }else{
        document.getElementById('div_martes').style.display = 'none';
-       $('#hmai').attr('required',false);
-       $('#hmaf').attr('required',false);
     }
     });
     $('#miercoles').change(function() {      
         var mi = $(this).prop('checked');
     if(mi == true) {
        document.getElementById('div_miercoles').style.display = 'block';
-       $('#hmii').attr('required',true);
-       $('#hmif').attr('required',true);
     }else{
        document.getElementById('div_miercoles').style.display = 'none';
-       $('#hmii').attr('required',false);
-       $('#hmif').attr('required',false);
     }
     });
     $('#jueves').change(function() {      
         var ju = $(this).prop('checked');
     if(ju == true) {
        document.getElementById('div_jueves').style.display = 'block';
-       $('#hjui').attr('required',true);
-       $('#hjuf').attr('required',true);
     }else{
        document.getElementById('div_jueves').style.display = 'none';
-       $('#hjui').attr('required',false);
-       $('#hjuf').attr('required',false);
     }
     });
     $('#viernes').change(function() {      
         var vi = $(this).prop('checked');
     if(vi == true) {
        document.getElementById('div_viernes').style.display = 'block';
-       $('#hvii').attr('required',true);
-       $('#hvif').attr('required',true);
     }else{
        document.getElementById('div_viernes').style.display = 'none';
-       $('#hvii').attr('required',false);
-       $('#hvif').attr('required',false);
     }
     });
     $('#sabado').change(function() {      
         var sa = $(this).prop('checked');
     if(sa == true) {
        document.getElementById('div_sabado').style.display = 'block';
-       $('#hsai').attr('required',true);
-       $('#hsaf').attr('required',true);
     }else{
        document.getElementById('div_sabado').style.display = 'none';
-       $('#hsai').attr('required',false);
-       $('#hsaf').attr('required',false);
     }
     });
     $('#domingo').change(function() {      
         var dom = $(this).prop('checked');
     if(dom == true) {
        document.getElementById('div_domingo').style.display = 'block';
-       $('#hdoi').attr('required',true);
-       $('#hdof').attr('required',true);
     }else{
        document.getElementById('div_domingo').style.display = 'none';
-       $('#hdoi').attr('required',false);
-       $('#hdof').attr('required',false);
     }
     });
 });

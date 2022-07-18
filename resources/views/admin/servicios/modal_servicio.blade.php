@@ -25,7 +25,7 @@
                             {!! Form::label('simbolo', 'Moneda:') !!}
                             {!! Form::select('simbolo',$simbol, null, [
                                 'placeholder' => '...', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass otro',
                                 'id' => 'simbolo',
                                 'required'=>'required'
                                 ]) !!}
@@ -34,7 +34,7 @@
                             {!! Form::label('medico_id', 'Medico:') !!}
                             {!! Form::select('medico_id',$medico, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'medico_id',
                                 'required'=>'required'
                                 ]) !!}
@@ -43,11 +43,11 @@
                             {!! Form::label('especialidad', 'Especialidad Medica:') !!}
                             {!! Form::select('especialidad',$especialidad, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'especialidad',
-                                'readonly' => 'readonly',
                                 'required'=>'required'
                                 ]) !!}
+                              <span id="negacion" class="negacion" hidden><small>{{'El médico no tiene especialidad registrada'}}</small></span>  
                         </div>
                         <div class='col-md-6 mb-3'>
                             <label>{{'Duración'}}</label>
@@ -65,7 +65,7 @@
                             {!! Form::label('status', 'Status:') !!}
                             {!! Form::select('status',$status, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass otro',
                                 'id' => 'status',
                                 'required'=>'required'
                                 ]) !!}

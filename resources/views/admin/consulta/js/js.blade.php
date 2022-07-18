@@ -44,6 +44,7 @@ $('#paciente').on('select2:select', function (e) {
         }        
     });
 });
+
 function buscar() {
     var paciente = $('#paciente').val();
     var pacienteE =$('#pacienteE').val();

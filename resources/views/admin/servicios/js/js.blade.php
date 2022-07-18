@@ -1,5 +1,5 @@
 <!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 <!--datepicker-->
 <script src="{{ asset('js/moment.js')}}"></script>
 <script src="{{ asset('js/moment-with-locales.js')}}"></script>
@@ -15,38 +15,65 @@
               },
         });
     });
-$(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        dropdownParent: $('#modal_servicio'),
-         });
-    });
+$(function() {
+    $('.otro').selectize({
+        preload: true,
+        loadingClass: 'loading',
+        closeAfterSelect: true
+        });
+});
+
+var xhr;
+var select_medico, $select_medico;
+var select_especialidad, $select_especialidad;
+
+$select_medico = $('#medico_id').selectize({
+    loadingClass: 'loading',
+    onChange: function(value) {
+        if (!value.length) return;
+        /*listar especialidades*/
+        select_especialidad.disable();
+        select_especialidad.clearOptions();
+        select_especialidad.load(function(callback) {
+            xhr && xhr.abort();
+            xhr = $.ajax({
+                url: '{{ route('especialidad_dependiente') }}?medico='+value,
+                success: function(results) {
+                    select_especialidad.enable();
+                    if (!results[0]) {
+                        $('#negacion').attr('hidden', false);
+                    }else{
+                        callback(results);
+                        select_especialidad.setValue(results[0].id);
+                        $('#negacion').attr('hidden', true);
+                    }
+                },
+                error: function() {
+                    callback();
+                }
+            })
+        });
+    }
+});
+
+$select_especialidad = $('#especialidad').selectize({
+                    labelField: 'name',
+                    valueField: 'id',
+                    searchField: ['name'],
+                    loadingClass: 'loading',
+                });
+
+
+                select_especialidad  = $select_especialidad[0].selectize;
+                select_medico = $select_medico[0].selectize;
+
+                select_especialidad.disable();
+
 $('#duracion').datetimepicker({        
     useCurrent: false, //Important! See issue #1075
     format: 'HH:mm',
 });
-$('#medico_id').on('select2:select', function (e) {
-   var medico = $('#medico_id').val();
-    $.getJSON('{{ route('especialidad_dependiente') }}?medico='+medico, function(objC){
-        var opcion = $('#especialidad').val();
-        $('#especialidad').empty();
-        $('#especialidad').attr('readonly', true);
-        $('#especialidad').change();
 
-        if(objC.length > 0){
-            $.each(objC, function (i, especialidad) {
-            $('#especialidad').append(
-                    $('<option>', {
-                        value: especialidad.id,
-                        text : especialidad.name
-                    })
-                );
-            });
-            $('#especialidad').attr('readonly', false);
-            $("#especialidad option:first").attr("selected", "selected");
-        }        
-    });
-});
 $('#modal_servicio').on('show.bs.modal', function (e) {
     var modal = $(e.delegateTarget),
         data = $(e.relatedTarget).data();

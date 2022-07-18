@@ -161,17 +161,18 @@ class ConsultaOController extends Controller
         if ($pacienteE != null) {
             $cita= Citas::where('Paciente_Especial_id', $pacienteE)
                         ->where('Medico_id', $medico)
-                        ->where('online', 1)
+                        ->where('online','=','1')
                         ->whereDate('start', date('Y-m-d'))//date('Y-m-d'))
                         ->whereTime('start', '>=',date('H:00'))//date('h:00'))
                         ->first(); 
+
             $anamenesis = Anamenesi::select('anamnesis.Fecha','anamnesis.Enfermedad_Actual','anamnesis.Origen','anamnesis.Diagnostico_Definitivo','anamnesis.Pronostico')
                             ->join('control_historia_medicas','control_historia_medicas.id_Control_Historia_Medica','anamnesis.Control_Historia_Medico_id')
                             ->where('anamnesis.Paciente_Especial_id', $pacienteE)      
                             ->where('control_historia_medicas.cerrado', 1)
                             ->get();
              // if($cita){   
-                 $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica','servicios.Servicio')
+            $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica','servicios.Servicio')
                      ->join('sexos', 'sexos.id_Sexo','pacientes_especiales.Sexo_id')
                      ->join('control_historia_medicas', 'control_historia_medicas.Paciente_Especial_id','pacientes_especiales.id_Pacientes_Especiales')
                      ->join('servicios', 'servicios.id_Servicio','control_historia_medicas.id_servicio')
@@ -183,11 +184,11 @@ class ConsultaOController extends Controller
           $cita= Citas::where('Paciente_id',$paciente)
                     ->where('Medico_id', $medico)
                     ->where('online', 1)
-                    ->whereDate('start', date('Y-m-d'))//date('Y-m-d'))
+                    ->whereDate('start','=',date('Y-m-d'))//date('Y-m-d'))
                     ->whereTime('start', '>=',date('H:00'))//date('h:00'))
-                    ->orWhereTime('start', '>=',date('h:00'))//date('h:00'))
+                   // ->orWhereTime('start', '>=',date('h:00'))//date('h:00'))
                     ->first();
-
+                    //dd($cita, date('H:00'));
           $anamenesis = Anamenesi::select('anamnesis.Fecha','anamnesis.Enfermedad_Actual','anamnesis.Origen','anamnesis.Diagnostico_Definitivo','anamnesis.Pronostico')
                             ->join('control_historia_medicas','control_historia_medicas.id_Control_Historia_Medica','anamnesis.Control_Historia_Medico_id')
                             ->where('anamnesis.Paciente_Id', $paciente)      

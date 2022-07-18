@@ -113,7 +113,6 @@ function buscar() {
 
     if (pacienteE.length == 0) {
        $.getJSON('{{ route('buscar_paciente') }}?paciente='+paciente+'&medico='+medico, function(objBP){
-            console.log(objBP[0]);
                 if(objBP[0] == null || objBP[0].length == 0){
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
@@ -153,6 +152,7 @@ function buscar() {
                     $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                     $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente']));
                     $('#Servicio').html(objBP[0]['Servicio']);
+                    //console.log(objBP[2]);
                             if (objBP[2] != null) {
                                 $('#Cita_Consulta_id').val(objBP[2]['id_Cita_Consulta']);
                                     var ini1= objBP[2]['start'].split(" ");

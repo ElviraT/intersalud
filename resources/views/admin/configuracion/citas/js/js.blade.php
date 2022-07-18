@@ -247,40 +247,52 @@ var id_Agenda= objch['id_Agenda'];
               events: url,
               @can('citas.add')
               dateClick:function(info) {
-                let fechaHora = info.dateStr.split("T");
-                loading_show();
-                formulario.reset();
-                $('#btnGuardar').attr('hidden', false);
-                $('#btnModificar').attr('hidden', true);
-                $('#btnEliminar').attr('hidden', true);
-                $('#confirmado').attr('checked',false).change();
-                $('#online').attr('checked',false).change();
-                $('#paciente').val('').change();
-                $('#pacienteE').val('').change();
-                if(info.allDay){
-                  $('#start').val(info.dateStr);
-                }else{
-                  var fechaInicio= fechaHora[0]+' '+fechaHora[1].substring(0, 8);
-                  var fecha_minima = fechaHora[0]+' '+hora_minima;
-                  if(fechaHora[1].substring(0, 8) >= hora_minima){
-                      $('#start').val(fechaInicio);
-                  }else{
-                      $('#start').val(fecha_minima);
-                  }
+                var check = moment(info.dateStr).format('Y-M-D');
+                var today = moment(new Date()).format('Y-M-D');
+                if (check >= today) {
+                    let fechaHora = info.dateStr.split("T");
+                    loading_show();
+                    formulario.reset();
+                    $('#btnGuardar').attr('hidden', false);
+                    $('#btnModificar').attr('hidden', true);
+                    $('#btnEliminar').attr('hidden', true);
+                    $('#confirmado').attr('checked',false).change();
+                    $('#online').attr('checked',false).change();
+                    $('#paciente').val('').change();
+                    $('#pacienteE').val('').change();
+                    if(info.allDay){
+                      $('#start').val(info.dateStr);
+                    }else{
+                      var fechaInicio= fechaHora[0]+' '+fechaHora[1].substring(0, 8);
+                      var fecha_minima = fechaHora[0]+' '+hora_minima;
+                      if(fechaHora[1].substring(0, 8) >= hora_minima){
+                          $('#start').val(fechaInicio);
+                      }else{
+                          $('#start').val(fecha_minima);
+                      }
+                    }
+                    $('#modal_citas').on('show.bs.modal', function (e) {
+                      var agenda2 = $('#agenda').val();
+                       $.getJSON('{{ route('datos_agenda') }}?agenda2='+agenda2, function(objA){
+                      
+                         $('#Agenda_id').val(objA['id_Agenda']);
+                         $('#mpaciente').val(objA['Max_pacientes']);
+                         $('#notaM').val(objA['Nota']);
+                         
+                      });
+                    });
+                    $('#modal_citas').modal('show');
+                    loading_hide();
+                    disponibilidad(id_Agenda,fechaHora[0]);
+                    }
+                // si no, mostramos una alerta de error
+                else {
+                  Swal.fire(
+                    '¡Error!',
+                    'No se pueden crear eventos en el pasado!',
+                    'error'
+                  );
                 }
-                $('#modal_citas').on('show.bs.modal', function (e) {
-                  var agenda2 = $('#agenda').val();
-                   $.getJSON('{{ route('datos_agenda') }}?agenda2='+agenda2, function(objA){
-                  
-                     $('#Agenda_id').val(objA['id_Agenda']);
-                     $('#mpaciente').val(objA['Max_pacientes']);
-                     $('#notaM').val(objA['Nota']);
-                     
-                  });
-                });
-                $('#modal_citas').modal('show');
-                loading_hide();
-                disponibilidad(id_Agenda,fechaHora[0]);
               },
               @endcan
               @can('citas.edit')

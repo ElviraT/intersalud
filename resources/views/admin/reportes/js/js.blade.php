@@ -24,11 +24,20 @@
         });
 
        var table_cservicios = $('#table_cservicios').DataTable({
-            lengthChange: false,
-            responsive: true,
+            dom: 'Bfrtip',
               buttons: [
-                 'pdf'
+                {
+                  extend: 'pdf',
+                  title: 'Consulta de Servicios',
+                  footer: true,
+                  customize: function (doc) {
+                    doc.defaultStyle.alignment = "center";
+                    doc.content[1].table.widths = 
+                        Array(doc.content[1].table.body[0].length + 1).join('*').split('');    
+                  }
+                }
               ],
+            responsive: true,
 
             language: {
                 url: "{{ asset('js/Spanish.json') }}",
@@ -48,8 +57,7 @@
                 
             }
         });
-        table_cservicios.buttons().container()
-        .appendTo( '#table_cservicios_wrapper .col-md-6:eq(0)' );
+        
     });
 
 $(document).ready(function() {

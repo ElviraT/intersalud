@@ -103,11 +103,11 @@
 
                     </tbody> 
                     <tfoot>
-            <tr>
-                <th colspan="3">{{'Total General:'}}</th>
-                <th>Total:</th>
-            </tr>
-        </tfoot>                  
+                        <tr>
+                            <th colspan="3">{{'Total General:'}}</th>
+                            <th>Total:</th>
+                        </tr>
+                    </tfoot>                  
                 </table>
               </div>
                @endif

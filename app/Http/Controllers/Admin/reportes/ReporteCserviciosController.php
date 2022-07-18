@@ -37,11 +37,12 @@ class ReporteCserviciosController extends Controller
 
        /* SELECT Servicio_id, count(Cantidad), SUM(Costo_Servicio), Fecha FROM factura_detalle JOIN facturas ON Factura_id = id_Factura GROUP BY Servicio_id, Fecha;*/
 
-        $cservicios=  Factura::select('servicios.Servicio','facturas.Fecha', DB::raw('COUNT(factura_detalle.Cantidad) AS cantidad, SUM(factura_detalle.Costo_Servicio) AS costo'))
+        $cservicios= Factura::select('servicios.Servicio','facturas.Fecha', DB::raw('COUNT(factura_detalle.Cantidad) AS cantidad, SUM(factura_detalle.Costo_Servicio) AS costo'))
 		        ->join('factura_detalle', 'factura_detalle.Factura_id', 'facturas.id_Factura')
 		        ->join('servicios', 'servicios.id_Servicio', 'factura_detalle.Servicio_id')
 		        ->groupBy('servicios.Servicio','facturas.Fecha')
 		        ->get();
+
 		//dd($cservicios);
 
     	$status=Collection::make(StatusF::select(['id_Status_Factura','Status_Factura'])->orderBy('Status_Factura')->get())->pluck("Status_Factura", "id_Status_Factura");

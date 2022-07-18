@@ -142,7 +142,6 @@
     <script src="{{ asset('js/pdfmake.min.js')}}"></script>
     <script src="{{ asset('js/vfs_fonts.js')}}"></script>
     <script src="{{ asset('js/buttons.html5.min.js')}}"></script>
-    <script src="{{ asset('js/buttons.colVis.min.js')}}"></script>
    
     <script src="{{ asset('js/dataTables.responsive.min.js')}}"></script>
     <script src="{{ asset('js/responsive.bootstrap.min.js')}}"></script>

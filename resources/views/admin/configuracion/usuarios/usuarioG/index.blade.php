@@ -28,11 +28,11 @@
            <div class="card">
               <div class="col-md-4 mt-2 mb-2">
                 @can('usuario_g.add')
-                <a href="{{ route('usuario_g.create')}}" type="button" class="btn-transition btn btn-outline-primary btn-sm" onclick="loading_show();">
+                <a href="{{ route('usuario_g.create')}}" type="button" class="btn-transition btn btn-outline-primary" onclick="loading_show();">
                     <span class="btn-icon-wrapper pr-2 opacity-7">
                         <i class="fa fa-plus-circle"></i>
                     </span>
-                    {{'AGREGAR'}}
+                    {{'Agregar'}}
                 </a>
                 @endcan
               </div>
@@ -63,18 +63,18 @@
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
                             <td width="20">
                               @can('usuario_g.edit')
-                                <a href="{{ route('usuario_g.edit', $resultado['id'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success btn-sm">
+                                <a href="{{ route('usuario_g.edit', $resultado['id'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                       <i class="ti-pencil"></i>
                                     </span>
-                                    {{'EDITAR'}}
+                                    {{'Editar'}}
                                 </a>
                               @endcan
                               @can('usuario_g.delete')
-                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete34" data-record-id="{{$resultado->id}}" data-record-title="{{$resultado->nombre}}" class="btn-transition btn btn-outline-danger btn-sm" onclick="loading_show();">
+                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete34" data-record-id="{{$resultado->id}}" data-record-title="{{$resultado->nombre}}" class="btn-transition btn btn-outline-danger" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                         <i class="ti-eraser"></i>
-                                    </span>{{'ELIMINAR'}}
+                                    </span>{{'Eliminar'}}
                                 </a>
                               @endcan
                             </td>

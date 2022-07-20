@@ -8,7 +8,7 @@
             {!! Form::label('Medico', 'Medico:') !!}
             {!! Form::select('id_Medico',$medicos, null, [
                 'placeholder' => 'Seleccione', 
-                'class' => 'select2 form-control',
+                'class' => 'pickerSelectClass',
                 'id' => 'id_Medico',
                 'required'=>'required'
                 ]) !!}

@@ -135,15 +135,11 @@ $('#modal_consultorio').on('show.bs.modal', function (e) {
             var $status = $('#status').selectize();
             $status[0].selectize.setValue(obj.Status_id);
             $select_state[0].selectize.setValue(obj.Estado_id, true);
-            //select_state.disable();
-
             $('#direccion', modal).val(obj.Direccion);
             $('#local', modal).val(obj.Local);
             $('#telefono', modal).val(obj.Telefono);
             $('#celular', modal).val(obj.Celular);
             $('#correo', modal).val(obj.Correo);
-
-            //$select_municipality[0].selectize.clearOptions();
             $select_municipality[0].selectize.setValue(obj.Municipio_id, true);
             $select_city[0].selectize.setValue(obj.Ciudad_id);
             $select_parish[0].selectize.setValue(obj.Parroquia_id);

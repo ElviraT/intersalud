@@ -185,7 +185,7 @@ class UsuarioMController extends Controller
         $estado=Collection::make(Estado::select(['id_Estado','Estado'])->orderBy('Estado')->get())->pluck("Estado", "id_Estado"); 
         $municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
         $parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia");
-         $roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
+        $roles = Collection::make(Role::select(['id','name'])->orderBy('name')->get())->pluck("name", "id");
 		return view('admin.configuracion.usuarios.usuariosM.edit')->with(compact('medico','login','seniat','sexo','prefijo','estadoC','statusM','nacionalidad','ciudad','estado','municipio','parroquia','rol','roles'));
 	}
 

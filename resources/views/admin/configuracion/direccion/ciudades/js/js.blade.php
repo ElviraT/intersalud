@@ -1,8 +1,8 @@
 <!--Toggle -->
 <script src="{{ asset('js/bootstrap4-toggle.min.js')}}"></script>
 
-<!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<!-- selectize -->
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -14,13 +14,13 @@
               },
         });
     });
-
-$(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        dropdownParent: $('#modal_ciudad'),
-         });
-    });
+$(function() {
+    $('.pickerSelectClass').selectize({
+        preload: true,
+        loadingClass: 'loading',
+        closeAfterSelect: true
+        });
+});
 $('#modal_ciudad').on('show.bs.modal', function (e) {
     var modal = $(e.delegateTarget),
         data = $(e.relatedTarget).data();
@@ -30,8 +30,8 @@ $('#modal_ciudad').on('show.bs.modal', function (e) {
         $('.modal_registro_ciudad_id', modal).val(data.recordId);
         $.getJSON(modal.data().consulta + '?id=' + data.recordId, function (data) {
             var obj = data[0];
-            $('#estado').val(obj.Estado_id);
-            $('#estado').change();
+            var $estado = $('#estado').selectize();
+            $estado[0].selectize.setValue(obj.Estado_id);
             $('#nombre', modal).val(obj.Ciudad);
             if (obj.Capital == 1) {
                 $('#capital').prop('checked', true).change();
@@ -44,7 +44,7 @@ $('#modal_ciudad').on('show.bs.modal', function (e) {
     }
 });
 $('#modal_ciudad').on('hidden.bs.modal', function (e) {
-    $('#estado').val('').change();
+    $('#estado')[0].selectize.clear();
     $('#nombre').val('');
     $('#capital').prop('checked',false).change();
 });

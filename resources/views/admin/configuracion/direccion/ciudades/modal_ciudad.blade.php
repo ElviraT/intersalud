@@ -12,7 +12,7 @@
                 {{ Form::hidden('id', 0, ['class'=>'modal_registro_ciudad_id'] ) }}
                 <div class="form-group col-md-12">
                     <label>{{'Estados'}}</label>
-                    {!! Form::select('estado', $estados, null, ['id'=>"estado",'class'=>'select2 form-control','placeholder' => 'Seleccione', 'required' => 'required']) !!}                    
+                    {!! Form::select('estado', $estados, null, ['id'=>"estado",'class'=>'pickerSelectClass','placeholder' => 'Seleccione', 'required' => 'required']) !!}                    
                 </div>
                 <div class="col-md-12 mb-3">
                     <label for="validationCustom01">{{'Nombre'}}</label>

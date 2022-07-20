@@ -1,5 +1,5 @@
 <!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -12,12 +12,13 @@
         });
     });
 
-$(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        dropdownParent: $('#modal_parroquia'),
-         });
-    });
+$(function() {
+    $('.pickerSelectClass').selectize({
+        preload: true,
+        loadingClass: 'loading',
+        closeAfterSelect: true
+        });
+});
 $('#modal_parroquia').on('show.bs.modal', function (e) {
     var modal = $(e.delegateTarget),
         data = $(e.relatedTarget).data();
@@ -27,8 +28,8 @@ $('#modal_parroquia').on('show.bs.modal', function (e) {
         $('.modal_registro_parroquia_id', modal).val(data.recordId);
         $.getJSON(modal.data().consulta + '?id=' + data.recordId, function (data) {
             var obj = data[0];
-            $('#municipio').val(obj.Municipio_id);
-            $('#municipio').change();
+            var $municipio = $('#municipio').selectize();
+            $municipio[0].selectize.setValue(obj.Municipio_id);
             $('#nombre', modal).val(obj.Parroquia);
             modal.removeClass('loading');
             loading_hide();
@@ -36,7 +37,7 @@ $('#modal_parroquia').on('show.bs.modal', function (e) {
     }
 });
 $('#modal_parroquia').on('hidden.bs.modal', function (e) {
-    $('#municipio').val('').change();
+    $('#municipio')[0].selectize.clear();
     $('#nombre').val('');
 });
 $('#confirm-delete5').on('click', '.btn-ok', function(e) {

@@ -15,7 +15,7 @@
             {!! Form::label('roles', 'Rol:') !!}
             {!! Form::select('rol',$roles, isset($rol[0]) ? $rol[0]->role_id : null, [
                 'placeholder' => 'Seleccione', 
-                'class' => 'select2 form-control',
+                'class' => 'pickerSelectClass',
                 'id' => 'rol',
                 'required'=>'required'
                 ]) !!}

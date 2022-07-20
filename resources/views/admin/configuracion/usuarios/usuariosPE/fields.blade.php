@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-12 mt-3">
        {!! Form::open(['route' => ['usuario_pe.add'],  'method' => 'post', 'autocomplete' =>'off' ]) !!}
     <div class="form-group col-md-12">
         <div class="row">
@@ -20,14 +20,14 @@
              <div class="col-md-4 form-group mb-3">
                 <label>{{ 'Cedula' }}</label>
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-3" style="padding-right: 0.5px !important">
                         {!! Form::select('prefijo',$prefijo, isset($paciente) ? $paciente->Prefijo_CIDNI_id : null, [
                             'placeholder' => '...', 
-                            'class' => 'select2 form-control',
+                            'class' => 'pickerSelectClass',
                             'id' => 'prefijo'
                             ]) !!}
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-9" style="padding-left: 0.5px !important">
                         <input type="text" class="form-control" name="cedula" id="cedula" placeholder="Cedula" onkeypress = 'return SoloNumeros(event)' value="{{ isset($paciente) ? $paciente->CIDNI : null }}" maxlength="20">
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                 {!! Form::label('sexo', 'Sexo:') !!}
                 {!! Form::select('sexo',$sexo, isset($paciente) ? $paciente->Sexo_id : null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass',
                     'id' => 'sexo',
                     'required'=>'required'
                     ]) !!}
@@ -62,7 +62,7 @@
                 <label>{{ 'Lugar de Nacimiento' }}</label>
                 {!! Form::select('nacionalidad',$nacionalidad, isset($paciente) ? $paciente->Pais_id : null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass',
                     'id' => 'nacionalidad'
                     ]) !!}
             </div>
@@ -70,7 +70,7 @@
                 <label>{{ 'Estado Civil' }}</label>
                 {!! Form::select('civil',$estadoC, isset($paciente) ? $paciente->Civil_id : null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control required',
+                    'class' => 'pickerSelectClass required',
                     'id' => 'civil'
                     ]) !!}
             </div>
@@ -78,7 +78,7 @@
                 {!! Form::label('status', 'Status:') !!}
                 {!! Form::select('status',$status, isset($paciente) ? $paciente->Status_id : null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass',
                     'id' => 'status',
                     'required'=>'required'
                     ]) !!}

@@ -30,20 +30,20 @@
                 <div class="row">
                   <div class="col-md-6">
                     @can('usuario_pe.add')
-                    <a href="{{ route('usuario_pe.agregar', $id)}}" type="button" class="btn-transition btn btn-outline-primary btn-sm" onclick="loading_show();">
+                    <a href="{{ route('usuario_pe.agregar', $id)}}" type="button" class="btn-transition btn btn-outline-primary" onclick="loading_show();">
                         <span class="btn-icon-wrapper pr-2 opacity-7">
                             <i class="fa fa-plus-circle"></i>
                         </span>
-                        {{'AGREGAR'}}
+                        {{'Agregar'}}
                     </a>
                     @endcan
                   </div>
                   <div class="col-md-6" align="right">
-                    <a href="{{ route('usuario_p') }}" type="button" class="btn-transition btn btn-outline-secondary btn-sm" onclick="loading_show();">
+                    <a href="{{ route('usuario_p') }}" type="button" class="btn-transition btn btn-outline-secondary" onclick="loading_show();">
                       <span class="btn-icon-wrapper pr-2 opacity-7">
                             <i class="ti-back-left"></i>
                         </span>
-                        {{'VOLVER'}}
+                        {{'Volver'}}
                     </a>
                   </div>
                 </div>
@@ -81,18 +81,18 @@
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
                             <td width="20">
                               @can('usuario_pe.edit')
-                                <a href="{{ route('usuario_pe.edit', $resultado['id_Pacientes_Especiales'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success btn-sm">
+                                <a href="{{ route('usuario_pe.edit', $resultado['id_Pacientes_Especiales'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                         <i class="ti-pencil"></i>
                                     </span>
-                                    {{'EDITAR'}}
+                                    {{'Editar'}}
                                 </a>
                               @endcan
                               @can('usuario_pe.destroy')
-                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete28" data-record-id="{{$resultado->id_Pacientes_Especiales}}" data-record-title="{{$resultado->Nombre_Paciente_Especial.' '.$resultado->Apellido_Paciente_Especial}}" class="btn-transition btn btn-outline-danger btn-sm" onclick="loading_show();">
+                                <a href="#" type="button" data-toggle="modal" data-target="#confirm-delete28" data-record-id="{{$resultado->id_Pacientes_Especiales}}" data-record-title="{{$resultado->Nombre_Paciente_Especial.' '.$resultado->Apellido_Paciente_Especial}}" class="btn-transition btn btn-outline-danger" onclick="loading_show();">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                         <i class="ti-eraser"></i>
-                                    </span>{{'ELIMINAR'}}
+                                    </span>{{'Eliminar'}}
                                 </a>
                               @endcan
                             </td>

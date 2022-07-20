@@ -23,7 +23,7 @@
                     {!! Form::label('status', 'Status:') !!}
                     {!! Form::select('status',$status, null, [
                         'placeholder' => 'Seleccione', 
-                        'class' => 'select2 form-control',
+                        'class' => 'pickerSelectClass',
                         'id' => 'status',
                         'required'=>'required'
                         ]) !!}

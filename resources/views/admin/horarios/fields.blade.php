@@ -7,7 +7,7 @@
 	            {!! Form::label('medico', 'Medico:') !!}
 	            {!! Form::select('medico',$medico, isset($horarios) ? $horarios->Medico_id : null, [
 	                'placeholder' => 'Seleccione', 
-	                'class' => 'select2 form-control',
+	                'class' => 'pickerSelectClass',
 	                'id' => 'medico',
 	                'required'=>'required'
 	                ])
@@ -17,17 +17,17 @@
                 {!! Form::label('especialidad', 'Especialidad Medica:') !!}
                 {!! Form::select('especialidad',$especialidad, isset($horarios) ? $horarios->Especialidad_id : null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
-                    'readonly' => 'readonly',
+                    'class' => 'pickerSelectClass',
                     'id' => 'especialidad',
                     'required'=>'required'
                     ]) !!}
+              <span id="negacion" class="negacion" hidden><small>{{'El médico no tiene especialidad registrada'}}</small></span>
             </div>
 		  	<div class="col-md-4 mt-3">
                 {!! Form::label('turno', 'Turno:') !!}
                 {!! Form::select('turno_id',$turnos, isset($horarios) ? $horarios->turno_id : null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass otro',
                     'id' => 'turno_id',
                     'required'=>'required'
                     ]) !!}

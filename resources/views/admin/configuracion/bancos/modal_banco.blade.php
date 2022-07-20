@@ -16,14 +16,14 @@
                     <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true">
                 </div>
                 <div class="col-md-12 mb-3">
-                    <label for="validationCustom01">{{'Codigo'}}</label>
-                    <input type="text" name="codigo" class="form-control" id="codigo" placeholder="Codigo" required maxlength="11" onkeypress="return SoloNumeros(event)">
+                    <label for="validationCustom01">{{'Código'}}</label>
+                    <input type="text" name="codigo" class="form-control" id="codigo" placeholder="Código" required maxlength="11" onkeypress="return SoloNumeros(event)">
                 </div>
                  <div class="col-md-12 mb-3">
                     {!! Form::label('status', 'Status:') !!}
                     {!! Form::select('status',$status, null, [
                         'placeholder' => 'Seleccione', 
-                        'class' => 'select2 form-control',
+                        'class' => 'pickerSelectClass',
                         'id' => 'status',
                         'required'=>'required'
                         ]) !!}

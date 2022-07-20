@@ -74,7 +74,7 @@ class AgendaController extends Controller
     	if($request->id == 0){
             try {
                 $Agenda= new Agenda();
-                $Agenda->Medico_id = ucfirst($request['medico']);
+                $Agenda->Medico_id = $request['medico'];
                 $Agenda->Consultorio_id = $request['consultorio'];
                 $Agenda->Especialidad_Medica = $request['especialidad'];
                 $Agenda->Horario_Cita_id = $request['horario'];

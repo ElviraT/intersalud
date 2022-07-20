@@ -2,8 +2,8 @@
 <script src="{{ asset('js/bootstrap-datepicker.min.js')}}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.es.js')}}"></script>
 
-<!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<!-- selectize -->
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -27,12 +27,13 @@ $(function () {
         language: 'es'
     });
 });
-$(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        dropdownParent: $('#modal_cuentaUSD'),
-         });
-    });
+$(function() {
+    $('.pickerSelectClass').selectize({
+        preload: true,
+        loadingClass: 'loading',
+        closeAfterSelect: true
+        });
+});
 
 $('#modal_cuentaUSD').on('show.bs.modal', function (e) {
     var modal = $(e.delegateTarget),
@@ -44,15 +45,15 @@ $('#modal_cuentaUSD').on('show.bs.modal', function (e) {
         $('.modal_registro_cuentaUSD_id', modal).val(data.recordId);
         $.getJSON(modal.data().consulta + '?id=' + data.recordId, function (data) {
             var obj = data[0];
-            $('#entidad').val(obj.Entidad_USD_id);
-            $('#entidad').change();
-            $('#medico').val(obj.Medico_id);
-            $('#medico').change();
-            $('#status').val(obj.Status_Pago);
-            $('#status').change();
-            $('#numero', modal).val(obj.Numero_Cuenta);
-            $('#tipo', modal).val(obj.Tipo);
-            $('#tipo').change();
+            var $entidad = $('#entidad').selectize();
+            $entidad[0].selectize.setValue(obj.Entidad_USD_id);
+            var $medico = $('#medico').selectize();
+            $medico[0].selectize.setValue(obj.Medico_id);
+            var $tipo = $('#tipo').selectize();
+            $tipo[0].selectize.setValue(obj.Tipo);
+            var $status = $('#status').selectize();
+            $status[0].selectize.setValue(obj.Status_Pago);            
+            $('#numero', modal).val(obj.Numero_Cuenta);            
             $('#fecha', modal).val(obj.Fecha);
             modal.removeClass('loading');
             loading_hide();
@@ -63,9 +64,9 @@ $('#modal_cuentaUSD').on('hidden.bs.modal', function (e) {
     $('#numero').val('');
     $('#tipo').val('');
     $('#fecha').val('');
-    $('#entidad').val('').change();
-    $('#medico').val('').change();
-    $('#status').val('').change();
+    $('#entidad')[0].selectize.clear();
+    $('#medico')[0].selectize.clear();
+    $('#status')[0].selectize.clear();
 });
 $('#confirm-delete26').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);

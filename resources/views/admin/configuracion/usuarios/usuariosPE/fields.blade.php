@@ -7,11 +7,11 @@
             <input type="hidden" name="idP" value="{{$idp}}">
             <div class="col-md-4 mb-3">
                 <label for="validationCustom01">{{'Parentesco'}}</label>
-                <input type="text" name="parentesco" class="form-control" id="Parentesco" placeholder="parentesco" required value="{{ isset($paciente) ? $paciente->Parentesco_Familiar : null }}">
+                <input type="text" name="parentesco" class="form-control" id="Parentesco" placeholder="parentesco" required value="{{ isset($paciente) ? $paciente->Parentesco_Familiar : null }}" autofocus="true">
             </div>
             <div class="col-md-4 mb-3">
                 <label for="validationCustom01">{{'Nombre'}}</label>
-                <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true" value="{{ isset($paciente) ? $paciente->Nombre_Paciente_Especial : null }}" maxlength="200">
+                <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required value="{{ isset($paciente) ? $paciente->Nombre_Paciente_Especial : null }}" maxlength="200">
             </div>
             <div class="col-md-4 mb-3">
                 <label for="validationCustom01">{{'Apellido'}}</label>

@@ -1,5 +1,5 @@
-<!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<!-- selectize -->
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -11,12 +11,13 @@
               },
         });
     });
-$(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        dropdownParent: $('#modal_billetera'),
-         });
-    });
+$(function() {
+    $('.pickerSelectClass').selectize({
+        preload: true,
+        loadingClass: 'loading',
+        closeAfterSelect: true
+        });
+});
 
 $('#modal_billetera').on('show.bs.modal', function (e) {
     var modal = $(e.delegateTarget),
@@ -29,12 +30,12 @@ $('#modal_billetera').on('show.bs.modal', function (e) {
         $.getJSON(modal.data().consulta + '?id=' + data.recordId, function (data) {
             var obj = data[0];
             $('#nombre', modal).val(obj.Billetera);
-            $('#medico').val(obj.Medicos_id);
-            $('#medico').change();
-            $('#cripto').val(obj.Cripto_id);
-            $('#cripto').change();
-            $('#status').val(obj.Status_id);
-            $('#status').change();
+            var $medico = $('#medico').selectize();
+            $medico[0].selectize.setValue(obj.Medicos_id);
+            var $cripto = $('#cripto').selectize();
+            $cripto[0].selectize.setValue(obj.Cripto_id);
+            var $status = $('#status').selectize();
+            $status[0].selectize.setValue(obj.Status_id);
             modal.removeClass('loading');
             loading_hide();
         });
@@ -42,9 +43,9 @@ $('#modal_billetera').on('show.bs.modal', function (e) {
 });
 $('#modal_billetera').on('hidden.bs.modal', function (e) {
     $('#nombre').val('');
-    $('#medico').val('').change();
-    $('#cripto').val('').change();
-    $('#status').val('').change();
+    $('#medico')[0].selectize.clear();
+    $('#cripto')[0].selectize.clear();
+    $('#status')[0].selectize.clear();
 });
 $('#confirm-delete20').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);

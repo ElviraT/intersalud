@@ -1,5 +1,5 @@
-<!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<!-- selectize -->
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 
 
 <script type="text/javascript">
@@ -12,57 +12,78 @@
               },
         });
     });
-$(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        closeOnSelect: true,
-        dropdownParent: $('#modal_agenda'),
-         });
-    });
-
-
-$('#horario').on('select2:select', function (e) {
-   $('#modal_agenda').addClass('loading');
-   var horario = $('#horario').val();
-    $.getJSON('{{ route('horario_datos') }}?horario='+horario, function(objC){
-        $('#medico').val(objC['Medico_id']);
-        $('#especialidad').val(objC['Especialidad_id']).change();        
-    });
-    $('#modal_agenda').removeClass('loading');
-  });
-  $('#especialidad').on('change', function (e) {
-   var especialidad = $('#especialidad').val();
-   $('#modal_agenda').addClass('loading');
-    $.getJSON('{{ route('consultorio_dependiente') }}?especialidad='+especialidad, function(objE){
-         var opcion = $('#consultorio').val();
-            $('#consultorio').empty();
-            $('#consultorio').prop('disabled', true);
-            $('#consultorio').change();
-        
-        if(objE.length > 0){
-            $.each(objE, function (i, consultorios) {
-            $('#consultorio').append(
-                    $('<option>', {
-                        value: consultorios.id_Consultorio,
-                        text : consultorios.Local
-                    })
-                );
-            });
-            $('#consultorio').prop('disabled', false);
-            $("#consultorio option:first").attr("selected", "selected");
-            $('#modal_agenda').removeClass('loading');
-        }else{
-            $('#modal_agenda').removeClass('loading');
-            Swal.fire(
-              '¡Error!',
-              'Esta especialidad no tiene consultorio',
-              'error'
-            );
-            $('#modal_agenda').modal('hide');
-        }        
-    });
-    
+$(function() {
+    $('.otro').selectize({
+        preload: true,
+        loadingClass: 'loading',
+        closeAfterSelect: true
+        });
 });
+
+var xhr;
+var xhr2;
+var select_horario, $select_horario;
+var select_consultorio, $select_consultorio;
+
+$select_horario = $('#horario').selectize({
+    loadingClass: 'loading',
+    onChange: function(value) {
+        if (!value.length) return;
+        /*listar consultorioes*/
+        select_consultorio.disable();
+        select_consultorio.clearOptions();
+        select_consultorio.load(function(callback) {
+            xhr && xhr.abort();
+            xhr = $.ajax({
+                url: '{{ route('consultorio_dependiente') }}?especialidad='+value,
+                success: function(results) {
+                    select_consultorio.enable();                    
+                    if (!results[0]) {
+                         Swal.fire(
+                              '¡Error!',
+                              'Esta especialidad no tiene consultorio',
+                              'error'
+                            );
+                    }else{
+                        callback(results);
+                        select_consultorio.setValue(results[0].id_Consultorio);
+                    }
+                },
+                error: function() {
+                    callback();
+                }
+            })
+        });
+
+            xhr2 && xhr2.abort();
+            xhr2 = $.ajax({
+                url: '{{ route('horario_datos') }}?horario='+value,
+                success: function(results) {
+                   $('#medico').val(results.Medico_id);
+                   var $especialidad = $('#especialidad').selectize();
+                   $especialidad[0].selectize.setValue(results.Especialidad_id);
+                },
+                error: function() {
+                    callback();
+                }
+            })
+    }
+});
+
+$select_consultorio = $('#consultorio').selectize({
+                    labelField: 'Local',
+                    valueField: 'id_Consultorio',
+                    searchField: ['Local'],
+                    loadingClass: 'loading',
+                });
+
+
+                select_consultorio  = $select_consultorio[0].selectize;
+                select_horario = $select_horario[0].selectize;
+
+                //select_especialidad.disable();
+
+
 $('#modal_agenda').on('show.bs.modal', function (e) {
     var modal = $(e.delegateTarget),
         data = $(e.relatedTarget).data();
@@ -73,16 +94,13 @@ $('#modal_agenda').on('show.bs.modal', function (e) {
         $.getJSON(modal.data().consulta + '?id=' + data.recordId, function (data) {
             var obj = data[0];
             $('#medico', modal).val(obj.Medico_id);
-            $('#medico').change();
-            $('#especialidad', modal).val(obj.Especialidad_Medica);
-            $('#especialidad').change();
-            $('#horario', modal).val(obj.Horario_Cita_id);
-            $('#horario').change();
-            $('#consultorio', modal).val(obj.Consultorio_id);
-            $('#consultorio').change();
+            var $especialidad = $('#especialidad').selectize();
+            $especialidad[0].selectize.setValue(obj.Especialidad_Medica);            
+            $select_horario[0].selectize.setValue(obj.Horario_Cita_id, true);
+            $select_consultorio[0].selectize.setValue(obj.Consultorio_id);
             $('#mpaciente', modal).val(obj.Max_pacientes);
-            $('#status', modal).val(obj.Status_id);
-            $('#status').change();
+            var $status = $('#status').selectize();
+            $status[0].selectize.setValue(obj.Status_id);
             $('#nota').val(obj.Nota);
             modal.removeClass('loading');
             loading_hide();
@@ -90,12 +108,12 @@ $('#modal_agenda').on('show.bs.modal', function (e) {
     }
 });
 $('#modal_agenda').on('hidden.bs.modal', function (e) {
-    $('#horario').val('').change();
+    $('#horario')[0].selectize.clear();
     $('#medico').val('');
-    $('#especialidad').val('');
-    $('#consultorio').val('').change();
+    $('#especialidad')[0].selectize.clear();
+    $('#consultorio')[0].selectize.clear();
     $('#mpaciente').val('');
-    $('#status').val('').change();
+    $('#status')[0].selectize.clear();
     $('#nota').val('');
 });
 

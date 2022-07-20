@@ -85,10 +85,14 @@ $('#modal_servicio').on('show.bs.modal', function (e) {
             var obj = data[0];
             $('#servicio', modal).val(obj.Servicio);
             $('#costo', modal).val(obj.Costos);
-            $('#simbolo', modal).val(obj.simbolo).change();
-            $('#medico_id', modal).val(obj.Medico_id).change();
-            $('#especialidad', modal).val(obj.Especialidad_Medica_id).change();
-            $('#status', modal).val(obj.Status_id).change();
+            var $simbolo = $('#simbolo').selectize();
+            $simbolo[0].selectize.setValue(obj.simbolo);
+            var $medico_id = $('#medico_id').selectize();
+            $medico_id[0].selectize.setValue(obj.Medico_id, true);
+            var $especialidad = $('#especialidad').selectize();
+            $especialidad[0].selectize.setValue(obj.Especialidad_Medica_id);
+            var $status = $('#status').selectize();
+            $status[0].selectize.setValue(obj.Status_id);
             $('#duracion_input').val(obj.duracion);
             modal.removeClass('loading');
             loading_hide();
@@ -98,11 +102,12 @@ $('#modal_servicio').on('show.bs.modal', function (e) {
 $('#modal_servicio').on('hidden.bs.modal', function (e) {
     $('#servicio').val('');
     $('#costo').val('');
-    $('#especialidad').val('').change();
-    $('#medico_id').val('').change();
-    $('#status').val('').change();
-    $('#simbolo').val('').change();
-    $('#duracion').val('').change();
+    $('#especialidad')[0].selectize.clear();
+    $('#medico_id')[0].selectize.clear();
+    $('#status')[0].selectize.clear();
+    $('#simbolo')[0].selectize.clear();
+    $('#duracion').data('DateTimePicker').date(null);
+    $('#duracion').datetimepicker('update');
 });
 $('#confirm-delete31').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);

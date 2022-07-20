@@ -1,8 +1,8 @@
 {{--datepicker--}}
 <script src="{{ asset('js/bootstrap-datepicker.min.js')}}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.es.js')}}"></script>
-<!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<!-- selectize -->
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -14,12 +14,13 @@
               },
         });
     });
-$(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        dropdownParent: $('#modal_tcambio'),
-         });
+$(function() {
+    $('.pickerSelectClass').selectize({
+        preload: true,
+        loadingClass: 'loading',
+        closeAfterSelect: true
     });
+});
 $(function () {
     $('#fecha').datepicker({
         autoclose: true,
@@ -45,7 +46,8 @@ $('#modal_tcambio').on('show.bs.modal', function (e) {
             $('#btc', modal).val(obj.BitCoins);
             $('#eth', modal).val(obj.Ethereum);
             $('#fecha', modal).val(obj.Fecha);
-            $('#status', modal).val(obj.Status_Tasa_id).change();
+            var $status = $('#status').selectize();
+            $status[0].selectize.setValue(obj.Status_Tasa_id);
             modal.removeClass('loading');
             loading_hide();
         });
@@ -57,7 +59,7 @@ $('#modal_tcambio').on('hidden.bs.modal', function (e) {
     $('#btc').val('');
     $('#eth').val('');
     $('#fecha').val('');
-    $('#status').val(0).change();
+    $('#status')[0].selectize.clear();
 });
 $('#confirm-delete30').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);

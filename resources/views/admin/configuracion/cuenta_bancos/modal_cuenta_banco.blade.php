@@ -13,42 +13,15 @@
                 <div class="col-md-12">
                     <div class="row">                        
                         <div class="col-md-6 mb-3">
-                            {!! Form::label('banco', 'Banco:') !!}
-                            {!! Form::select('banco',$banco, null, [
-                                'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
-                                'id' => 'banco',
-                                'required'=>'required'
-                                ]) !!}
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            {!! Form::label('medico', 'Medico:') !!}
-                            {!! Form::select('medico',$medico, null, [
-                                'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
-                                'id' => 'medico',
-                                'required'=>'required'
-                                ]) !!}
-                        </div>
-                        <div class="col-md-6 mb-3">
                             <label for="validationCustom01">{{'Número de cuenta'}}</label>
                             <input type="text" name="numero" class="form-control" id="numero" placeholder="Número de cuenta" required autofocus="true" maxlength="30" onkeypress="return SoloNumeros(event)">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="validationCustom01">{{'Tipo'}}</label>
-                            {!! Form::select('tipo',$tipo, null, [
-                                'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
-                                'id' => 'tipo',
-                                'required'=>'required'
-                                ]) !!}
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>{{ 'Fecha' }}</label>
                               <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                    <i class="ti-calendar"></i>
+                                    <i class="fa fa-calendar"></i>
                                     </span>
                                 </div>
                                  {!!
@@ -61,10 +34,37 @@
                              </div>
                         </div>
                         <div class="col-md-6 mb-3">
+                            {!! Form::label('banco', 'Banco:') !!}
+                            {!! Form::select('banco',$banco, null, [
+                                'placeholder' => 'Seleccione', 
+                                'class' => 'pickerSelectClass',
+                                'id' => 'banco',
+                                'required'=>'required'
+                                ]) !!}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {!! Form::label('medico', 'Medico:') !!}
+                            {!! Form::select('medico',$medico, null, [
+                                'placeholder' => 'Seleccione', 
+                                'class' => 'pickerSelectClass',
+                                'id' => 'medico',
+                                'required'=>'required'
+                                ]) !!}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom01">{{'Tipo'}}</label>
+                            {!! Form::select('tipo',$tipo, null, [
+                                'placeholder' => 'Seleccione', 
+                                'class' => 'pickerSelectClass',
+                                'id' => 'tipo',
+                                'required'=>'required'
+                                ]) !!}
+                        </div>
+                        <div class="col-md-6 mb-3">
                             {!! Form::label('status', 'Status:') !!}
                             {!! Form::select('status',$status, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'status',
                                 'required'=>'required'
                                 ]) !!}

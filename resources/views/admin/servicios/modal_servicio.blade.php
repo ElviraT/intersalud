@@ -17,18 +17,22 @@
                             <label>{{'Servicio'}}</label>
                             <input type="text" name="servicio" class="form-control" id="servicio" placeholder="Servicio" required autofocus="true" maxlength="200">
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <label>{{'Costo'}}</label>
-                            <input type="text" name="costo" class="form-control" id="costo" placeholder="Costo" required onkeypress = 'return SoloNumeros(event)'>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            {!! Form::label('simbolo', 'Moneda:') !!}
-                            {!! Form::select('simbolo',$simbol, null, [
-                                'placeholder' => '...', 
-                                'class' => 'pickerSelectClass otro',
-                                'id' => 'simbolo',
-                                'required'=>'required'
-                                ]) !!}
+                        <div class="col-md-6 form-group mb-3">
+                             <div class="row">
+                                <div class="col-md-6 mb-3" style="padding-right: 0.5px !important">
+                                    <label>{{'Costo'}}</label>
+                                    <input type="text" name="costo" class="form-control" id="costo" placeholder="Costo" required onkeypress = 'return SoloNumeros(event)'>
+                                </div>
+                                <div class="col-md-6 mb-3" style="padding-left: 0.5px !important">
+                                    {!! Form::label('simbolo', 'Moneda:') !!}
+                                    {!! Form::select('simbolo',$simbol, null, [
+                                        'placeholder' => '...', 
+                                        'class' => 'pickerSelectClass otro',
+                                        'id' => 'simbolo',
+                                        'required'=>'required'
+                                        ]) !!}
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             {!! Form::label('medico_id', 'Medico:') !!}

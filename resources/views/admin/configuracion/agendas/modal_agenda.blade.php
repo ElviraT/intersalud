@@ -14,42 +14,42 @@
                     <div class="row">
                         {{ Form::hidden('id', 0, ['class'=>'modal_registro_agenda_id'] ) }}             
                         {!! Form::hidden('medico', null, ['id' => 'medico']) !!}
-                        <div class="col-md-4 mb-3" hidden>
+                        <div class="col-md-3 mb-3" hidden>
                             {!! Form::select('especialidad',$especialidad, null, [
-                                  'class' => 'select2 form-control',
+                                  'class' => 'pickerSelectClass',
                                   'id' => 'especialidad',
                                   'required'=>'required'
                             ]) !!}
                         </div>
                         
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             {!! Form::label('horario', 'Horario:') !!}
                             {!! Form::select('horario',$horarios, null, [
                                   'placeholder' => 'Seleccione', 
-                                  'class' => 'select2 form-control',
+                                  'class' => 'pickerSelectClass',
                                   'id' => 'horario',
                                   'required'=>'required'
                             ]) !!}
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             {!! Form::label('consultorio', 'Consultorios:') !!}
                             {!! Form::select('consultorio',$consultorios, null, [
                                   'placeholder' => 'Seleccione', 
-                                  'class' => 'select2 form-control',
+                                  'class' => 'pickerSelectClass',
                                   'disabled' => 'disabled',
                                   'id' => 'consultorio',
                                   'required'=>'required'
                             ]) !!}
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label for="validationCustom01">{{'Maximo de Pacientes'}}</label>
                             <input type="number" name="mpaciente" class="form-control" id="mpaciente" placeholder="Maximo de Pacientes" required min="0">
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             {!! Form::label('status', 'Status:') !!}
                             {!! Form::select('status',$status, null, [
                                   'placeholder' => 'Seleccione', 
-                                  'class' => 'select2 form-control',
+                                  'class' => 'pickerSelectClass otro',
                                   'id' => 'status',
                                   'required'=>'required'
                             ]) !!}

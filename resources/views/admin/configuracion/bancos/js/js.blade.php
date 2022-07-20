@@ -1,5 +1,5 @@
 <!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -11,12 +11,13 @@
               },
         });
     });
-$(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        dropdownParent: $('#modal_banco'),
-         });
+$(function() {
+    $('.pickerSelectClass').selectize({
+        preload: true,
+        loadingClass: 'loading',
+        closeAfterSelect: true
     });
+});
 
 $('#modal_banco').on('show.bs.modal', function (e) {
     var modal = $(e.delegateTarget),
@@ -30,8 +31,8 @@ $('#modal_banco').on('show.bs.modal', function (e) {
             var obj = data[0];
             $('#nombre', modal).val(obj.Bancos);
             $('#codigo', modal).val(obj.Codigo_Bancario);
-            $('#status').val(obj.Status_Id);
-            $('#status').change();
+            var $status = $('#status').selectize();
+            $status[0].selectize.setValue(obj.Status_Id);
             modal.removeClass('loading');
             loading_hide();
         });
@@ -40,7 +41,7 @@ $('#modal_banco').on('show.bs.modal', function (e) {
 $('#modal_banco').on('hidden.bs.modal', function (e) {
     $('#nombre').val('');
     $('#codigo').val('');
-    $('#status').val('').change();
+    $('#status')[0].selectize.clear();
 });
 $('#confirm-delete18').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);

@@ -2,8 +2,8 @@
 <script src="{{ asset('js/bootstrap-datepicker.min.js')}}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.es.js')}}"></script>
 
-<!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<!-- selectize -->
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -27,12 +27,13 @@ $(function () {
         language: 'es'
     });
 });
-$(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        dropdownParent: $('#modal_cuenta_banco'),
-         });
-    });
+$(function() {
+    $('.pickerSelectClass').selectize({
+        preload: true,
+        loadingClass: 'loading',
+        closeAfterSelect: true
+        });
+});
 
 $('#modal_cuenta_banco').on('show.bs.modal', function (e) {
     var modal = $(e.delegateTarget),
@@ -44,15 +45,15 @@ $('#modal_cuenta_banco').on('show.bs.modal', function (e) {
         $('.modal_registro_cuenta_banco_id', modal).val(data.recordId);
         $.getJSON(modal.data().consulta + '?id=' + data.recordId, function (data) {
             var obj = data[0];
-            $('#banco').val(obj.Banco_id);
-            $('#banco').change();
-            $('#medico').val(obj.Medico_id);
-            $('#medico').change();
-            $('#status').val(obj.Status_id);
-            $('#status').change();
-            $('#numero', modal).val(obj.Numero_Cuenta);
-            $('#tipo', modal).val(obj.Tipo);
-            $('#tipo').change();
+            var $banco = $('#banco').selectize();
+            $banco[0].selectize.setValue(obj.Banco_id);
+            var $medico = $('#medico').selectize();
+            $medico[0].selectize.setValue(obj.Medico_id);
+            var $status = $('#status').selectize();
+            $status[0].selectize.setValue(obj.Status_id);
+            var $tipo = $('#tipo').selectize();
+            $tipo[0].selectize.setValue(obj.Tipo);  
+            $('#numero', modal).val(obj.Numero_Cuenta);            
             $('#fecha', modal).val(obj.Fecha);
             modal.removeClass('loading');
             loading_hide();
@@ -61,11 +62,11 @@ $('#modal_cuenta_banco').on('show.bs.modal', function (e) {
 });
 $('#modal_cuenta_banco').on('hidden.bs.modal', function (e) {
     $('#numero').val('');
-    $('#tipo').val('');
     $('#fecha').val('');
-    $('#banco').val('').change();
-    $('#medico').val('').change();
-    $('#status').val('').change();
+    $('#banco')[0].selectize.clear();
+    $('#medico')[0].selectize.clear();
+    $('#status')[0].selectize.clear();
+    $('#tipo')[0].selectize.clear();
 });
 $('#confirm-delete21').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);

@@ -14,7 +14,7 @@
                     {!! Form::label('medico', 'Medico:') !!}
                     {!! Form::select('medico',$medico, null, [
                         'placeholder' => 'Seleccione', 
-                        'class' => 'select2 form-control',
+                        'class' => 'pickerSelectClass',
                         'id' => 'medico',
                         'required'=>'required'
                         ])
@@ -24,7 +24,7 @@
                     {!! Form::label('especialidad', 'Especialidad Medica:') !!}
                     {!! Form::select('especialidad',$especialidad, null, [
                         'placeholder' => 'Seleccione', 
-                        'class' => 'select2 form-control',
+                        'class' => 'pickerSelectClass',
                         'id' => 'especialidad',
                         'required'=>'required'
                         ])
@@ -34,7 +34,7 @@
                     {!! Form::label('status', 'Status:') !!}
                     {!! Form::select('status',$statusM, null, [
                         'placeholder' => 'Seleccione', 
-                        'class' => 'select2 form-control',
+                        'class' => 'pickerSelectClass',
                         'id' => 'status',
                         'required'=>'required'
                         ])

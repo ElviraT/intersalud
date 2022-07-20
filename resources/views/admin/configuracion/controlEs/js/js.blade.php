@@ -1,5 +1,5 @@
-<!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<!-- selectize -->
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -11,13 +11,13 @@
               },
         });
     });
-$(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        closeOnSelect: true,
-        dropdownParent: $('#modal_controlE'),
-         });
-    });
+$(function() {
+    $('.pickerSelectClass').selectize({
+        preload: true,
+        loadingClass: 'loading',
+        closeAfterSelect: true
+        });
+});
 
 $('#modal_controlE').on('show.bs.modal', function (e) {
     var modal = $(e.delegateTarget),
@@ -28,21 +28,21 @@ $('#modal_controlE').on('show.bs.modal', function (e) {
         $('.modal_registro_controlE_id', modal).val(data.recordId);
         $.getJSON(modal.data().consulta + '?id=' + data.recordId, function (data) {
             var obj = data[0];
-            $('#especialidad').val(obj.Especialidades_Medicas_id);
-            $('#especialidad').change();
-            $('#medico').val(obj.Medico_id);
-            $('#medico').change();
-            $('#status').val(obj.Status_Medico_id);
-            $('#status').change();
+            var $especialidad = $('#especialidad').selectize();
+            $especialidad[0].selectize.setValue(obj.Especialidades_Medicas_id);
+            var $medico = $('#medico').selectize();
+            $medico[0].selectize.setValue(obj.Medico_id);
+            var $status = $('#status').selectize();
+            $status[0].selectize.setValue(obj.Status_Medico_id);
             modal.removeClass('loading');
             loading_hide();
         });
     }
 });
 $('#modal_controlE').on('hidden.bs.modal', function (e) {
-    $('#especialidad').val('').change();
-    $('#medico').val('').change();
-    $('#status').val('').change();
+    $('#especialidad')[0].selectize.clear();
+    $('#medico')[0].selectize.clear();
+    $('#status')[0].selectize.clear();
 });
 $('#confirm-delete27').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);

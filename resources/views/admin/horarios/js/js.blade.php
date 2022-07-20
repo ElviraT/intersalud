@@ -6,8 +6,8 @@
 <!--Toggle -->
 <script src="{{ asset('js/bootstrap4-toggle.min.js')}}"></script>
 
-<!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<!-- selectize -->
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -20,35 +20,59 @@ $(document).ready(function() {
     });
 });
 
-$(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        closeOnSelect: true,
-         });
-    });
-
-$('#medico').on('change', function (e) {
-   var medico = $('#medico').val();
-    $.getJSON('{{ route('especialidad_dependiente') }}?medico='+medico, function(objC){
-        var opcion = $('#especialidad').val();
-        $('#especialidad').empty();
-        $('#especialidad').attr('readonly', true);
-        $('#especialidad').change();
-
-        if(objC.length > 0){
-            $.each(objC, function (i, especialidad) {
-            $('#especialidad').append(
-                    $('<option>', {
-                        value: especialidad.id,
-                        text : especialidad.name
-                    })
-                );
-            });
-            $('#especialidad').attr('readonly', false);
-            $("#especialidad option:first").attr("selected", "selected");
-        }        
-    });
+$(function() {
+    $('.otro').selectize({
+        preload: true,
+        loadingClass: 'loading',
+        closeAfterSelect: true
+        });
 });
+
+var xhr;
+var select_medico, $select_medico;
+var select_especialidad, $select_especialidad;
+
+$select_medico = $('#medico').selectize({
+    loadingClass: 'loading',
+    onChange: function(value) {
+        if (!value.length) return;
+        /*listar especialidades*/
+        select_especialidad.disable();
+        select_especialidad.clearOptions();
+        select_especialidad.load(function(callback) {
+            xhr && xhr.abort();
+            xhr = $.ajax({
+                url: '{{ route('especialidad_dependiente') }}?medico='+value,
+                success: function(results) {
+                    select_especialidad.enable();
+                    if (!results[0]) {
+                        $('#negacion').attr('hidden', false);
+                    }else{
+                        callback(results);
+                        select_especialidad.setValue(results[0].id);
+                        $('#negacion').attr('hidden', true);
+                    }
+                },
+                error: function() {
+                    callback();
+                }
+            })
+        });
+    }
+});
+
+$select_especialidad = $('#especialidad').selectize({
+                    labelField: 'name',
+                    valueField: 'id',
+                    searchField: ['name'],
+                    loadingClass: 'loading',
+                });
+
+
+                select_especialidad  = $select_especialidad[0].selectize;
+                select_medico = $select_medico[0].selectize;
+
+                //select_especialidad.disable();
 
 $('#turno_id').on('change', function (e) {
   var turno = $('select[name="turno_id"] option:selected').text();
@@ -230,8 +254,12 @@ $(function() {
         var lu = $(this).prop('checked');
     if(lu == true) {
        document.getElementById('div_lunes').style.display = 'block';
+       $('#hlui').attr('required', true);
+       $('#hluf').attr('required', true);
     }else{
        document.getElementById('div_lunes').style.display = 'none';
+       $('#hlui').attr('required', false);
+       $('#hluf').attr('required', false);
     }
     });
 
@@ -239,48 +267,72 @@ $(function() {
         var ma = $(this).prop('checked');
     if(ma == true) {
        document.getElementById('div_martes').style.display = 'block';
+       $('#hmai').attr('required', true);
+       $('#hmaf').attr('required', true);
     }else{
        document.getElementById('div_martes').style.display = 'none';
+       $('#hmai').attr('required', false);
+       $('#hmaf').attr('required', false);
     }
     });
     $('#miercoles').change(function() {      
         var mi = $(this).prop('checked');
     if(mi == true) {
        document.getElementById('div_miercoles').style.display = 'block';
+       $('#hmii').attr('required', true);
+       $('#hmif').attr('required', true);
     }else{
        document.getElementById('div_miercoles').style.display = 'none';
+       $('#hmii').attr('required', false);
+       $('#hmif').attr('required', false);
     }
     });
     $('#jueves').change(function() {      
         var ju = $(this).prop('checked');
     if(ju == true) {
        document.getElementById('div_jueves').style.display = 'block';
+       $('#hjui').attr('required', true);
+       $('#hjuf').attr('required', true);
     }else{
        document.getElementById('div_jueves').style.display = 'none';
+       $('#hjui').attr('required', false);
+       $('#hjuf').attr('required', false);
     }
     });
     $('#viernes').change(function() {      
         var vi = $(this).prop('checked');
     if(vi == true) {
        document.getElementById('div_viernes').style.display = 'block';
+       $('#hvii').attr('required', true);
+       $('#hvif').attr('required', true);
     }else{
        document.getElementById('div_viernes').style.display = 'none';
+       $('#hvii').attr('required', false);
+       $('#hvif').attr('required', false);
     }
     });
     $('#sabado').change(function() {      
         var sa = $(this).prop('checked');
     if(sa == true) {
        document.getElementById('div_sabado').style.display = 'block';
+       $('#hsai').attr('required', true);
+       $('#hsaf').attr('required', true);
     }else{
        document.getElementById('div_sabado').style.display = 'none';
+       $('#hsai').attr('required', false);
+       $('#hsaf').attr('required', false);
     }
     });
     $('#domingo').change(function() {      
         var dom = $(this).prop('checked');
     if(dom == true) {
        document.getElementById('div_domingo').style.display = 'block';
+       $('#hdoi').attr('required', true);
+       $('#hdof').attr('required', true);
     }else{
        document.getElementById('div_domingo').style.display = 'none';
+       $('#hdoi').attr('required', false);
+       $('#hdof').attr('required', false);
     }
     });
 });

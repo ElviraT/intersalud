@@ -9,6 +9,7 @@
         <div class="auth-box card" style="margin-top: -30px">
             <div class="card-block">
                 <div class="row m-b-20">
+                     @include('flash::message')
                     <div class="col-md-12">
                         <h3 class="text-center">{{ __('Login') }}</h3>
                     </div>

@@ -84,12 +84,6 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 localStorage.setItem('selectedTab', $(e.target).attr('id'));
 });
 
-//go to the latest tab, if it exists:
-var selectedTab = localStorage.getItem('selectedTab');
-if (selectedTab) {
-  $('#'+selectedTab).tab('show');
-}
-
 $('#confirm-delete17').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);
         $modalDiv.addClass('loading');

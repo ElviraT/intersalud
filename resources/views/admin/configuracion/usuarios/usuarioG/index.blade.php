@@ -58,7 +58,7 @@
                       @foreach($usuarioG as $resultado)
                         <tr>
                             <td>{{ $resultado->nombre}}</td>
-                            <td>{{ $resultado->Prefijo_CIDNI_id.' '.$resultado->cedula }}</td>
+                            <td>{{ $resultado->PrefijoDNI->Prefijo_CIDNI.' '.$resultado->cedula }}</td>
                             <td>{{ $resultado->Sexo->Sexo }}</td>
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
                             <td width="20">

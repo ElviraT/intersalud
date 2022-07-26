@@ -4,7 +4,7 @@
             {{ Form::hidden('id', isset($general) ? $general->id : null, ['class'=>'modal_registro_usuarioG_id'] ) }}
             <div class="col-md-4 mb-3">
                 <label for="validationCustom01">{{'Nombre y Apellido'}}</label>
-                <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre y Apellido" required autofocus="true" value="{{ isset($general) ? $general->nombre : null }}" maxlength="200">
+                <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre y Apellido" required autofocus="true" value="{{ isset($general) ? $general->nombre : null }}" maxlength="200" onkeypress="soloLetras(event)">
             </div>
              <div class="col-md-4 form-group mb-3">
                 <label>{{ 'Cedula' }}</label>
@@ -50,7 +50,7 @@
             </div>
             <div class="col-md-4 mb-3">
                 <label for="validationCustom01">{{'Teléfono'}}</label>
-                <input type="text" name="telefono" class="form-control" id="telefono" placeholder="Telefono" value="{{ isset($general) ? $general->telefono : null }}" maxlength="20">
+                <input type="text" name="telefono" class="form-control" id="telefono" placeholder="Teléfono" value="{{ isset($general) ? $general->telefono : null }}" maxlength="20">
             </div>
             @if(isset(auth()->user()->name) && auth()->user()->name == 'Admin')
             <div class="col-md-4 mb-3">
@@ -65,7 +65,7 @@
             @endif
             <div class="col-md-12 mb-3">
                 <label for="validationCustom01">{{'Dirección'}}</label>
-                <textarea name="direccion" class="form-control" id="direccion" placeholder="Telefono" rows="3">{{ isset($general) ? $general->direccion : null }}</textarea>
+                <textarea name="direccion" class="form-control" id="direccion" placeholder="Dirección" rows="3">{{ isset($general) ? $general->direccion : null }}</textarea>
             </div>
         </div>
     </div>

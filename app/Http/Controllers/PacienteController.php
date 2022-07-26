@@ -18,8 +18,10 @@ use App\Model\Ciudad;
 use App\Model\Estado;
 use App\Model\Municipio;
 use App\Model\Parroquia;
+use App\Limite;
 use App\Model\DireccionPaciente;
 use Flash;
+use DB;
 
 class PacienteController extends Controller
 {
@@ -45,6 +47,14 @@ class PacienteController extends Controller
 
     public function add(Request $request)
     {
+      $total = UsuarioP::where('Status_id',1)->count();
+      $limite = Limite::select('paciente')->where('status',1)->first();
+      if(!isset($limite)){
+        Flash::error('Ocurrió un error, se debe agregar un limite de usuarios');
+        return redirect()->route('paciente.volver');
+      }
+      if($total < $limite->paciente){
+       
         try {
             $paciente= new UsuarioP();
             $paciente->Nombres_Paciente = ucfirst($request['nombre']);
@@ -59,19 +69,21 @@ class PacienteController extends Controller
             $paciente->save();            
 
             Flash::success("Registro Agregado Correctamente");
-          
+         
         return redirect()->route('paciente.edit', $paciente->id);
          
-        } catch (\Illuminate\Database\QueryException $e) {
+        }catch (\Illuminate\Database\QueryException $e) {
+         
             Flash::error('Ocurrió un error, por favor intente de nuevo');
             return redirect()->route('paciente.create');
         }
-      
       }
+    }
 
     public function edit($id)
     {
       $login = LoginP::where('id_login_Pacientes', $id)->first();
+      $direccion = DireccionPaciente::where('Paciente_id', $id)->first();
       
       $paciente = UsuarioP::where('id_Paciente',$id)->first();
       $sexo=Collection::make(Sexo::select(['id_Sexo','Sexo'])->orderBy('Sexo')->get())->pluck("Sexo", "id_Sexo");
@@ -85,12 +97,13 @@ class PacienteController extends Controller
       $municipio=Collection::make(Municipio::select(['id_Municipio','Municipio'])->orderBy('Municipio')->get())->pluck("Municipio", "id_Municipio"); 
       $parroquia=Collection::make(Parroquia::select(['id_Parroquia','Parroquia'])->orderBy('Parroquia')->get())->pluck("Parroquia", "id_Parroquia"); 
 
-      return view('paciente.edit')->with(compact('paciente','sexo','prefijo','estadoC','status','nacionalidad','login','ciudad','estado','municipio','parroquia')); 
+      return view('paciente.edit')->with(compact('paciente','sexo','prefijo','estadoC','status','nacionalidad','login','ciudad','estado','municipio','parroquia','direccion')); 
          
     }
 
   public function login(Request $request)
   {
+        DB::beginTransaction();
       try {
             $login= new LoginP();
             $login->Paciente_id = $request['id'];
@@ -109,12 +122,37 @@ class PacienteController extends Controller
             $login2->save();
 
             $login2->assignRole('Paciente');
-
-          Flash::success("Registro Agregado Correctamente");            
-        } catch (\Illuminate\Database\QueryException $e) {
-            Flash::error('Ocurrió un error, por favor intente de nuevo');  
+          DB::commit();
+          Flash::success("Registro Agregado Correctamente, ahora puede ingresar al sistema")->important();            
+            return redirect()->route('login');
+        }catch(\Illuminate\Database\QueryException $e) {
+          DB::rollback();
+            Flash::error('Ocurrió un error, por favor intente de nuevo');
+            return redirect()->route('paciente.edit', $request['id']);  
         }
 
-    return redirect()->route('paciente.edit', $request['id']);
   }
+
+  public function direccion(Request $request)
+    {
+        try {
+            $direccion= new DireccionPaciente();
+            $direccion->Paciente_id = $request['idP'];
+            $direccion->Direccion = ucfirst($request['direccion']);
+            $direccion->Numero_Casa = $request['ncasa'];
+            $direccion->Telefono = $request['telefono'];
+            $direccion->Celular = $request['celular'];
+            $direccion->Correo = $request['correo'];
+            $direccion->Cuidad_id = $request['ciudad'];
+            $direccion->Estado_id = $request['estado'];
+            $direccion->Municipio_id = $request['municipio'];
+            $direccion->Parroquia_id = $request['parroquia'];
+            $direccion->save();            
+            
+            Flash::success("Registro Agregado Correctamente");            
+        } catch (\Illuminate\Database\QueryException $e) {
+            Flash::error('Ocurrió un error, por favor intente de nuevo');
+        }
+        return redirect()->route('paciente.edit', $request['idP']);
+    }
 }

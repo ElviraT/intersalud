@@ -1,15 +1,18 @@
 <!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 {{--datepicker--}}
 <script src="{{ asset('js/bootstrap-datepicker.min.js')}}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.es.js')}}"></script>
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        closeOnSelect: true,
-         });
+   $(function() {
+        $('.otro').selectize({
+            preload: true,
+            loadingClass: 'loading',
+            closeAfterSelect: true
+            });
+    });
     //Date picker
     var dtn = new Date();
     $('#fecha').datepicker({
@@ -22,54 +25,75 @@
     });
    
   });
-$('#id_medico').on('select2:select', function (e) {
-   var id_medico = $('#id_medico').val();
-    $.getJSON('{{ route('paciente_medico') }}?id_medico='+id_medico, function(objP){
-        var opcion = $('#paciente').val();
-        $('#paciente').empty();
-        $('#paciente').prop('disabled', true);
-        $('#paciente').change();
 
-        if(objP.length > 0){
-            $.each(objP, function (i, paciente) {
-            $('#paciente').append(
-                    $('<option>', {
-                        value: paciente.id,
-                        text : paciente.nombre
-                    })
-                );
-            });
-            $('#paciente').prop('disabled', false);
-            $('#paciente').change();
+var xhr;
+var select_medico, $select_medico;
+var select_paciente, $select_paciente;
 
-        }        
-    });
-  });
-
-  $('#moneda').on('select2:select', function (e) {
-    var moneda = $('#moneda').val();
-    switch (moneda) {
-      case "Bs":
-        $('#bs').attr('hidden', false);
-        $('#usd').attr('hidden', true);
-        $('#billetera').attr('hidden', true);
-        break;
-      case "USD":
-        $('#usd').attr('hidden', false);
-        $('#bs').attr('hidden', true);
-        $('#billetera').attr('hidden', true);
-        break;
-      default:
-        $('#billetera').attr('hidden', false);
-        $('#usd').attr('hidden', true);
-        $('#bs').attr('hidden', true);
-        break;
+$select_medico = $('#id_medico').selectize({
+    loadingClass: 'loading',
+    onChange: function(value) {
+        if (!value.length) return;
+        /*listar pacientes*/
+        select_paciente.disable();
+        select_paciente.clearOptions();
+        select_paciente.load(function(callback) {
+            xhr && xhr.abort();
+            xhr = $.ajax({
+                url: '{{ route('paciente_medico') }}?id_medico='+value,
+                success: function(results) {
+                    select_paciente.enable();
+                    callback(results);
+                },
+                error: function() {
+                    callback();
+                }
+            })
+        });
     }
-    
-  });
-  $('#tpago').on('select2:select', function (e) {
-    var tpago = $('#tpago').val();
-        switch (tpago) {
+});
+
+$select_paciente = $('#paciente').selectize({
+                    labelField: 'nombre',
+                    valueField: 'id',
+                    searchField: ['nombre'],
+                    loadingClass: 'loading',
+                });
+
+                select_paciente  = $select_paciente[0].selectize;
+                select_medico = $select_medico[0].selectize;
+
+                select_paciente.disable();
+
+$select_moneda = $('#moneda').selectize({
+    loadingClass: 'loading',
+    onChange: function(value) {
+        if (!value.length) return;
+        switch (value) {
+          case "Bs":
+            $('#bs').attr('hidden', false);
+            $('#usd').attr('hidden', true);
+            $('#billetera').attr('hidden', true);
+            break;
+          case "USD":
+            $('#usd').attr('hidden', false);
+            $('#bs').attr('hidden', true);
+            $('#billetera').attr('hidden', true);
+            break;
+          default:
+            $('#billetera').attr('hidden', false);
+            $('#usd').attr('hidden', true);
+            $('#bs').attr('hidden', true);
+            break;
+        }
+    }
+});
+
+$select_tpago = $('#tpago').selectize({
+    loadingClass: 'loading',
+    onChange: function(value) {
+        if (!value.length) return;
+        switch (value) {
           case "2":
             $('#referencia').attr('hidden', true);
             break;
@@ -77,7 +101,9 @@ $('#id_medico').on('select2:select', function (e) {
             $('#referencia').attr('hidden', false);
             break;
         }
+    }
 });
+  
   function calcular() {
       var total_pagar = $('#total_pagar').val();
       var simbolo = $('#simbolo').val();//factura original

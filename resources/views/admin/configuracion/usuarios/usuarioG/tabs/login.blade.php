@@ -7,11 +7,11 @@
     <input type="hidden" name="status" value="{{ isset($general) ? $general->id_status : null }}">
 
     <div class="row">
-        <div class="col-md-6 mb-3">
+        <div class="col-md-3 mb-3">
             <label>{{ 'Correo' }}</label>
             <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo" value="{{ isset($login) ? $login->Correo : null }}" required>
         </div> 
-        <div class="col-md-6 mb-3">
+        <div class="col-md-3 mb-3">
             {!! Form::label('roles', 'Rol:') !!}
             {!! Form::select('rol',$roles, isset($rol[0]) ? $rol[0]->role_id : null, [
                 'placeholder' => 'Seleccione', 
@@ -20,11 +20,11 @@
                 'required'=>'required'
                 ]) !!}
         </div>
-        <div class="col-md-6 mb-3">
+        <div class="col-md-3 mb-3">
             <label>{{ 'Contraseña' }}</label>
             <input type="password" class="form-control" name="contrasena" id="contrasena" placeholder="Contraseña">
         </div>
-        <div class="col-md-6 mb-3">
+        <div class="col-md-3 mb-3">
             <label>{{ 'Confirma Contraseña' }}</label>
             <input type="password" class="form-control" name="contrasena2" id="contrasena2" placeholder="Confirma Contraseña">
         </div>

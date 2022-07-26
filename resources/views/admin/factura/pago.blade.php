@@ -30,9 +30,9 @@
             <div class="row">
                 <div class="col-md-3 mt-3 mb-3">
                   {!! Form::label('id_medico', 'Medico:') !!}
-                  {!! Form::select('id_medico',$medico,  $id_medico, [
+                  {!! Form::select('id_medico',$medico, $id_medico, [
                       'placeholder' => 'Seleccione', 
-                      'class' => 'select2 form-control',
+                      'class' => 'pickerSelectClass',
                       'id' => 'id_medico',
                       'required'=>'required'
                       ])
@@ -40,9 +40,9 @@
                 </div>
                 <div class="col-md-3 mt-3 mb-3">
                   {!! Form::label('paciente', 'Usuario:') !!}
-                  {!! Form::select('paciente',$pacientes,  $paciente, [
+                  {!! Form::select('paciente',$pacientes, $paciente, [
                       'placeholder' => 'Seleccione', 
-                      'class' => 'select2 form-control',
+                      'class' => 'pickerSelectClass',
                       'id' => 'paciente',
                       'required'=>'required'
                       ])
@@ -129,7 +129,7 @@
                 {!! Form::label('statusF', 'Estatus Factura:') !!}
                 {!! Form::select('statusF',$statusf, null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass otro',
                     'id' => 'statusF',
                     'required'=>'required'
                     ])
@@ -139,7 +139,7 @@
                 {!! Form::label('tpago', 'Tipo de Pago:') !!}
                 {!! Form::select('tpago',$tpago, null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass',
                     'id' => 'tpago',
                     'required'=>'required'
                     ])
@@ -149,7 +149,7 @@
                 {!! Form::label('moneda', 'Moneda:') !!}
                 {!! Form::select('moneda',$monedas, null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass',
                     'id' => 'moneda',
                     'required'=>'required'
                     ])
@@ -159,35 +159,35 @@
                 {!! Form::label('statusP', 'Estatus Pago:') !!}
                 {!! Form::select('statusP',$status, null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass otro',
                     'id' => 'statusP',
                     'required'=>'required'
                     ])
                 !!}
               </div>
-              <div class="col-md-2" id="bs" hidden>
+              <div class="col-md-3" id="bs" hidden>
                 {!! Form::label('cbs', 'Cuenta BS:') !!}
                 {!! Form::select('cbs',$cbs, null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass otro',
                     'id' => 'cbs'
                     ])
                 !!}
               </div>
-              <div class="col-md-2" id="usd" hidden>
+              <div class="col-md-3" id="usd" hidden>
                 {!! Form::label('cusd', 'Cuenta USD:') !!}
                 {!! Form::select('cusd',$cusd, null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass otro',
                     'id' => 'cusd'
                     ])
                 !!}
               </div>
-              <div class="col-md-2" id="billetera" hidden>
+              <div class="col-md-3" id="billetera" hidden>
                 {!! Form::label('billetera', 'Billetera:') !!}
                 {!! Form::select('billetera',$cbilletera, null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass otro',
                     'id' => 'billetera'
                     ])
                 !!}

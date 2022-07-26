@@ -23,6 +23,7 @@ Route::get('paciente/create', ['as' => 'paciente.create', 'uses' => 'PacienteCon
 Route::post('paciente/login', ['as' => 'paciente.login', 'uses' => 'PacienteController@login']);
 Route::post('paciente/add', ['as' => 'paciente.add', 'uses' => 'PacienteController@add']);
 Route::get('paciente/edit/{id}', ['as' => 'paciente.edit', 'uses' => 'PacienteController@edit']);
+Route::post('paciente/direccion', ['as' => 'paciente.direccion', 'uses' => 'PacienteController@direccion']);
 
 
 Route::group(['middleware' => ['auth','verified']], function () {

@@ -21,7 +21,7 @@
                             {!! Form::label('paciente', 'Paciente:') !!}
                             {!! Form::select('Paciente_id',$pacientes, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'paciente',
                                 'required'=>'required'
                             ]) !!}
@@ -30,16 +30,16 @@
                             {!! Form::label('pacienteE', 'Paciente Especial:') !!}
                             {!! Form::select('Paciente_Especial_id',$pacientesE, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'pacienteE',
                                 'disabled'=>'disabled'
                             ]) !!}
                         </div>
                         <div class="col-md-4 mb-3">
                             {!! Form::label('servicio', 'Servicio:') !!}
-                            {!! Form::select('id_servicio',$servicios, null, [
+                            {!! Form::select('id_servicio',[], null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'id_servicio',
                                 'required'=>'required'
                             ]) !!}
@@ -84,7 +84,7 @@
                                  <div class='input-group date' id="date-start">
                                     <input type='text' class="form-control" name="start" id="start" readonly/>
                                     <span class="input-group-addon">
-                                    <span class="ti-timer"></span>
+                                    <span class="fa fa-calendar"></span>
                                     </span> 
                                  </div>
                               </div>
@@ -95,7 +95,7 @@
                                  <div class='input-group' id="date-end">
                                     <input type='text' class="form-control" name="end" id="end" />
                                     <span class="input-group-addon">
-                                    <span class="ti-timer"></span>
+                                    <span class="fa fa-calendar"></span>
                                     </span>
                                  </div>
                               </div>

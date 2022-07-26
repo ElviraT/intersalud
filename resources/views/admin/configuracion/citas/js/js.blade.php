@@ -11,79 +11,68 @@
 <script src="{{ asset('js/bootstrap4-toggle.min.js')}}"></script>
 
 <!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 
 <script src="{{ asset('js/axios.min.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
   var array_dias = [];
 
-$(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        closeOnSelect: true,
-         });
-
-    $('#paciente').select2({ 
-    theme : "classic",
-    dropdownParent: $('#modal_citas'),
-     });
-
-    $('#pacienteE').select2({ 
-    theme : "classic",
-    dropdownParent: $('#modal_citas'),
-     });
-
-    $('#id_servicio').select2({ 
-    theme : "classic",
-    dropdownParent: $('#modal_citas'),
-     });
-    });
-
-$('#paciente').on('select2:select', function (e) {
-  var tituloP = $('select[name="Paciente_id"] option:selected').text();
-  $('#titleP').val(tituloP);
-  $('#modal_citas').addClass('loading');
-   var paciente = $('#paciente').val();
-    $.getJSON('{{ route('paciente_dependiente') }}?paciente='+paciente, function(objPE){
-        var opcion = $('#pacienteE').val();
-        $('#pacienteE').empty();
-        $('#pacienteE').prop('disabled', true);
-        $('#pacienteE').change();
-
-        if(objPE.length > 0){
-            $('#pacienteE').append(
-                $('<option>', {
-                    value: '',
-                    text : 'Seleccione'
-                }),
-             );
-            $.each(objPE, function (i, pacienteE) {
-            $('#pacienteE').append(
-                    $('<option>', {
-                        value: pacienteE.id,
-                        text : pacienteE.name
-                    })
-                );
+   $(function() {
+        $('.otro').selectize({
+            preload: true,
+            loadingClass: 'loading',
+            closeAfterSelect: true
             });
-            $('#pacienteE').prop('disabled', false);
-        }        
     });
-  $('#modal_citas').removeClass('loading');
-});
-$('#id_servicio').on('select2:select', function (e) {
-    var servicio = $('#id_servicio').val();
-    var start = $('#start').val();
+
+var xhr;
+var select_paciente, $select_paciente;
+var select_pacienteE, $select_pacienteE;
+
+$select_paciente = $('#paciente').selectize({
+    loadingClass: 'loading',
+    onChange: function(value) {
+    var tituloP = $('select[name="Paciente_id"] option:selected').text();
+    $('#titleP').val(tituloP);
     $('#modal_citas').addClass('loading');
+        if (!value.length) return;
+        /*listar paciente especial*/
+        select_pacienteE.disable();
+        select_pacienteE.clearOptions();
+        select_pacienteE.load(function(callback) {
+            xhr && xhr.abort();
+            xhr = $.ajax({
+                url: '{{ route('paciente_dependiente') }}?paciente='+value,
+                success: function(results) {
+                    select_pacienteE.enable();
+                    callback(results);
+                    if (results[0]) {
+                        select_pacienteE.setValue(results[0].id);
+                    }
+                },
+                error: function() {
+                    callback();
+                }
+            })
+        });
+        $('#modal_citas').removeClass('loading');
+    }
+});
 
-    $.getJSON('{{ route('duracion_servicio') }}?servicio='+servicio+'&start='+start, function(objS){
-      console.log(objS);
-      $('#costo').val(objS[1]['Costos']);
-      $('#end').val(objS[0][0]['end']);
-    });
 
-    $('#modal_citas').removeClass('loading');
-  });
+$select_pacienteE = $('#pacienteE').selectize({
+                    labelField: 'name',
+                    valueField: 'id',
+                    searchField: ['name'],
+                    loadingClass: 'loading'
+                });
+
+                select_pacienteE  = $select_pacienteE[0].selectize;
+                select_paciente = $select_paciente[0].selectize;
+
+                select_pacienteE.disable();
+
 function disponibilidad(agenda, start) {
   $.getJSON('{{ route('disponibilidad') }}?agenda='+agenda+'&start='+start, function(objDis){
       var total = parseInt(objDis['Max_paciente']) - parseInt(objDis['count']);
@@ -187,32 +176,47 @@ function horario() {
           hora_minima = objch['Horario_inicio_Domingo'];
           hora_maxima = objch['Horario_Fin_Domingo'];
         };
+        var xhr;
+var select_servicio, $select_servicio;
 
-      $.getJSON('{{ route('servicios_lista') }}?medico='+objch['Medico_id'], function(objS){
-        var opcion = $('#id_servicio').val();
-        $('#id_servicio').empty();
-        $('#id_servicio').prop('disabled', true);
-        $('#id_servicio').change();
-
-          
-        if(objS.length > 0){
-            $('#id_servicio').append(
-                $('<option>', {
-                    value: '',
-                    text : 'Seleccione'
-                }),
-             );
-            $.each(objS, function (i, servicio) {
-            $('#id_servicio').append(
-                    $('<option>', {
-                        value: servicio.id_Servicio,
-                        text : servicio.Servicio
-                    })
-                );
-            });
-            $('#id_servicio').prop('disabled', false);
+$select_servicio = $('#id_servicio').selectize({
+    loadingClass: 'loading',
+    preload: true,
+    valueField: 'id_Servicio',
+    labelField: 'Servicio',
+    searchField: 'text',
+    load: function(query, callback) {
+      $.ajax({
+        url: '{{ route('servicios_lista') }}?medico='+objch['Medico_id']+ encodeURIComponent(query),
+        type: 'GET',
+        error: function() {
+          callback();
+        },
+        success: function(res) {
+          callback(res);
         }
       });
+    },
+    onChange: function(value) {
+    $('#modal_citas').addClass('loading');
+        if (!value.length) return;
+          var start = $('#start').val();
+            xhr && xhr.abort();
+            xhr = $.ajax({
+                url: '{{ route('duracion_servicio') }}?servicio='+value+'&start='+start,
+                success: function(results) {
+                    $('#costo').val(results[1].Costos);
+                    $('#end').val(results[0][0].end);             
+                },
+                error: function() {
+                    callback();
+                }
+            });
+
+        $('#modal_citas').removeClass('loading');
+    }
+});
+        select_servicio = $select_servicio[0].selectize;
 
 var id_Agenda= objch['id_Agenda'];
    $(function() {
@@ -284,6 +288,7 @@ var id_Agenda= objch['id_Agenda'];
                     $('#modal_citas').modal('show');
                     loading_hide();
                     disponibilidad(id_Agenda,fechaHora[0]);
+                      $('#modal_citas').removeClass('loading');
                     }
                 // si no, mostramos una alerta de error
                 else {
@@ -310,8 +315,8 @@ var id_Agenda= objch['id_Agenda'];
                     disponibilidad(cita.extendedProps.Agenda_id,fechaHora[0]);
                    $('#id').val(cita.extendedProps.id_Cita_Consulta);
                    $('#Agenda_id').val(cita.extendedProps.Agenda_id);
-                   $('#paciente').val(cita.extendedProps.Paciente_id).change();
-                   $('#pacienteE').val(cita.extendedProps.Paciente_Especial_id).change();
+                   $select_paciente[0].selectize.setValue(cita.extendedProps.Paciente_id, true);
+                   $select_pacienteE[0].selectize.setValue(cita.extendedProps.Paciente_Especial_id);
                    $('#mpaciente').val(cita.extendedProps.Max_paciente);
                    $('#costo').val(cita.extendedProps.Costo.toFixed(2));
                    if(respuesta.data[0].confirmado == '1'){
@@ -328,8 +333,9 @@ var id_Agenda= objch['id_Agenda'];
                    $('#title').val(cita.title);
                    $('#start').val(respuesta.data[0].start);
                    $('#end').val(respuesta.data[0].end);
-                   $('#id_servicio').val(respuesta.data[0].id_servicio).change();
+                   $select_servicio[0].selectize.setValue(respuesta.data[0].id_servicio, true);
                    $('#modal_citas').modal('show');
+                   $('#modal_citas').removeClass('loading');
                   }
                   ).catch(
                     error => {
@@ -399,7 +405,9 @@ $(".cierra").click(function(){
 });
 $('#modal_citas').on('hidden.bs.modal', function (event) {
   $('#btnGuardar').attr('disabled', false);
-  $('#id_servicio').val('').change();
+  $('#id_servicio')[0].selectize.clear();
+  $('#pacienteE')[0].selectize.clear();
+  $('#paciente')[0].selectize.clear();
 })
 $(function () {
    $('#date-start').datetimepicker({

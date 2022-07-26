@@ -110,10 +110,8 @@ class CitasController extends Controller
              select(['pacientes_especiales.id_Pacientes_Especiales AS id', DB::raw('CONCAT(pacientes_especiales.Nombre_Paciente_Especial, " ",pacientes_especiales. Apellido_Paciente_Especial) AS name')])
              ->join('usuarios_pacientes', 'pacientes_especiales.Paciente_id','usuarios_pacientes.id_Paciente')
              ->get())->pluck('name','id'); 
-          
-           $servicios = Collection::make(Servicio::select(['id_Servicio','Servicio'])->where('Status_id',1)->orderBy('Servicio')->pluck("Servicio", "id_Servicio"));
 
-    	return view('admin.configuracion.citas.index')->with(compact('medico','especialidad','pacientes','pacientesE','agenda','servicios'));
+    	return view('admin.configuracion.citas.index')->with(compact('medico','especialidad','pacientes','pacientesE','agenda'));
     }
 
     public function show ($id)
@@ -130,6 +128,7 @@ class CitasController extends Controller
       $Medico_id=$agenda['Medico_id'];
       $Horario_Cita_Paciente=$agenda['Horario_Cita_id'];
       $Especialidad_Medica=$agenda['Especialidad_Medica'];
+      
       if($request['online'] == 'on'){
         $online = 1;
       }else{

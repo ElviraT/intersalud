@@ -4,11 +4,11 @@
             {{ Form::hidden('id', isset($asistente) ? $asistente->id_asistente : null, ['class'=>'modal_registro_usuarioa_id'] ) }}
             <div class="col-md-3 mb-3">
                 <label for="validationCustom01">{{'Nombre'}}</label>
-                <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true" value="{{ isset($asistente) ? $asistente->Nombre_Asistente : null }}" maxlength="150">
+                <input type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre" required autofocus="true" value="{{ isset($asistente) ? $asistente->Nombre_Asistente : null }}" maxlength="150" onkeypress="soloLetras(event)">
             </div>
             <div class="col-md-3 mb-3">
                 <label for="validationCustom01">{{'Apellido'}}</label>
-                <input type="text" name="apellido" class="form-control" id="apellido" placeholder="Apellido" required value="{{ isset($asistente) ? $asistente->Apellidos_Asistente : null }}" maxlength="150">
+                <input type="text" name="apellido" class="form-control" id="apellido" placeholder="Apellido" required value="{{ isset($asistente) ? $asistente->Apellidos_Asistente : null }}" maxlength="150" onkeypress="soloLetras(event)">
             </div>
              <div class="col-md-3 form-group mb-3">
                 <label>{{ 'Cedula' }}</label>

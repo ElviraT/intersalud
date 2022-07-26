@@ -33,7 +33,7 @@
                     {!! Form::label('agenda', 'Agenda:') !!}
                     {!! Form::select('agenda',$agenda, null, [
                         'placeholder' => 'Seleccione', 
-                        'class' => 'select2 form-control',
+                        'class' => 'pickerSelectClass otro',
                         'id' => 'agenda',
                         'required'=>'required'
                         ])

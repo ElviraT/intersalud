@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
            @include('flash::message')
-            <div class="card">
+            <div class="card mt-5">
               @include('paciente.fields')
             </div>
         </div>

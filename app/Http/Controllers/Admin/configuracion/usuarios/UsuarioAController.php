@@ -173,7 +173,7 @@ class UsuarioAController extends Controller
                 $login= new LoginT();
                 $login->Usuario = ucfirst($request['nombre_usuario']);
                 $login->Correo = $request['correo'];
-                $login->Status_Medico_id = $request['status'];
+                $login->Status_Medico_id = $request['statusl'];
                 $login->Contrasena = Hash::make($request['contrasena']);
                 $login->Asistente_id = $request['id'];
                 $login->save();
@@ -182,7 +182,7 @@ class UsuarioAController extends Controller
                 $login2->name = ucfirst($request['nombre_usuario']);
                 $login2->email = $request['correo'];
                 $login2->password = Hash::make($request['contrasena']);
-                $login2->status = $request['status'];
+                $login2->status = $request['statusl'];
                 $login2->id_usuarioA = $request['id'];
                 $login2->save();
 
@@ -191,7 +191,7 @@ class UsuarioAController extends Controller
                Flash::success("Registro Agregado Correctamente");            
           } catch (\Illuminate\Database\QueryException $e) {
              DB::rollback();
-              Flash::error('Ocurrió un error, por favor intente de nuevo');  
+              Flash::error($e.'Ocurrió un error, por favor intente de nuevo');  
           }
           return redirect()->route('usuario_a.edit', $request['id']);
       }else{

@@ -30,7 +30,7 @@
                 {!! Form::label('servicio', 'Servicio:') !!}
                 {!! Form::select('id_servicio',$servicio, $id_servicio, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass',
                     'id' => 'id_servicio'
                     ]) !!}
               </div>
@@ -38,7 +38,7 @@
                 {!! Form::label('status', 'Estatus:') !!}
                 {!! Form::select('id_status',$status, $id_status, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass',
                     'id' => 'id_status'
                     ]) !!}
               </div>  

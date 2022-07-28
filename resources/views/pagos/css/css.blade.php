@@ -1,5 +1,5 @@
 <!-- Select2 -->
-<link href="{{ asset('css/select2.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/selectize.min.css')}}" rel="stylesheet" type="text/css" />
 {{--datepicker --}}
 <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-datepicker.min.css')}}">
 {{--fileinput--}}
@@ -7,7 +7,8 @@
  
 <!-- the fileinput plugin styling CSS file -->
 <link rel="stylesheet" type="text/css" href="{{ asset('css/fileinput.min.css')}}">
-
 <style type="text/css">
-
-</style>
+ 	.negacion{
+ 		color: red;
+ 	}
+ </style>

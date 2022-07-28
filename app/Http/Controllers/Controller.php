@@ -19,6 +19,8 @@ use App\Model\Agenda;
 use App\Model\Citas;
 use App\Model\Servicio;
 use App\Model\DireccionPaciente;
+use App\Model\CuentaUSD;
+use App\Model\CuentaBanco;
 use DB;
 
 class Controller extends BaseController
@@ -206,5 +208,36 @@ class Controller extends BaseController
       $servicios = Servicio::select(['id_Servicio','Servicio'])->where('Status_id',1)->where('Medico_id',$id)->get();
       }
         return response()->json($servicios);
+    }
+
+    public function medico_cuentausd(Request $request){
+      $medico = empty($request->input('medico')) ? 0 : $request->input('medico');
+
+      $cuentaUsd = [];
+
+      if ($medico > 0) {
+         $cuentaUsd = CuentaUSD:: select(['cuenta_usd.id_Cuenta_USD AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",entidades_usd.Entidad_USD) AS name')])
+             ->join('usuarios_medicos', 'cuenta_usd.Medico_id','usuarios_medicos.id_Medico')
+             ->join('entidades_usd', 'cuenta_usd.Entidad_USD_id','entidades_usd.id_Entidad_USD')
+             ->where('cuenta_usd.Medico_id', $medico)
+             ->get();
+      }
+
+      return response()->json($cuentaUsd);
+    }
+    public function medico_cuentabs(Request $request){
+      $medico = empty($request->input('medico')) ? 0 : $request->input('medico');
+
+      $cuentaBs = [];
+
+      if ($medico > 0) {
+         $cuentaBs = CuentaBanco::select(['cuenta_bancaria_bs.id_Cuenta_Bancaria_BS AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",bancos_bs.Bancos) AS name')])
+             ->join('usuarios_medicos', 'cuenta_bancaria_bs.Medico_id','usuarios_medicos.id_Medico')
+             ->join('bancos_bs', 'cuenta_bancaria_bs.Banco_id','bancos_bs.id_Bancos_Bs')
+             ->where('cuenta_bancaria_bs.Medico_id', $medico)
+             ->get();
+      }
+
+      return response()->json($cuentaBs);
     }
 }

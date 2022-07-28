@@ -42,7 +42,7 @@
             {!! Form::label('status', 'Estatus Factura:') !!}
               {!! Form::select('statusF',$statusf, null, [
                   'placeholder' => 'Seleccione', 
-                  'class' => 'select2 form-control',
+                  'class' => 'pickerSelectClass',
                   'id' => 'statusF',
                   'required'=>'required'
                   ])
@@ -52,7 +52,7 @@
             {!! Form::label('statusP', 'Estatus Pago:') !!}
               {!! Form::select('statusP',$status, null, [
                   'placeholder' => 'Seleccione', 
-                  'class' => 'select2 form-control',
+                  'class' => 'pickerSelectClass',
                   'id' => 'statusP',
                   'required'=>'required'
                   ])

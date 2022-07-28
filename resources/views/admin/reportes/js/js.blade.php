@@ -1,5 +1,5 @@
 <!-- Select2 -->
-<script src="{{ asset('js/select2.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 {{--datepicker--}}
 <script src="{{ asset('js/bootstrap-datepicker.min.js')}}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.es.js')}}"></script>
@@ -60,21 +60,24 @@
         
     });
 
-$(document).ready(function() {
-    $('.select2').select2({ 
-        theme : "classic",
-        closeOnSelect: true,
-         });
-    });  
+$(function() {
+    $('.pickerSelectClass').selectize({
+        preload: true,
+        loadingClass: 'loading',
+        closeAfterSelect: true
+        });
+});
 
 $(function () {
     //Date picker
+    var dtn = new Date();
     $('#fecha').datepicker({
         autoclose: true,
         format: 'yyyy-mm-dd',
         viewMode: "years",
         todayHighlight: true,
-        language: 'es'
+        language: 'es',
+        endDate : dtn
     });
 });
 

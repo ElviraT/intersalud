@@ -57,18 +57,6 @@ class PagosController extends Controller
     	$monedas = ['Bs'=>'Bs','USD'=>'USD'];
     	$tpago=Collection::make(TipoPago::select(['id_Tipos_Pago','Tipo_Pago'])->orderBy('Tipo_Pago')->pluck("Tipo_Pago", "id_Tipos_Pago"));
 
-    	 $cbs= Collection::make(CuentaBanco::
-             select(['cuenta_bancaria_bs.id_Cuenta_Bancaria_BS AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",bancos_bs.Bancos) AS name')])
-             ->join('usuarios_medicos', 'cuenta_bancaria_bs.Medico_id','usuarios_medicos.id_Medico')
-             ->join('bancos_bs', 'cuenta_bancaria_bs.Banco_id','bancos_bs.id_Bancos_Bs')
-             ->get())->pluck('name','id');
-
-        $cusd= Collection::make(CuentaUSD::
-             select(['cuenta_usd.id_Cuenta_USD AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",entidades_usd.Entidad_USD) AS name')])
-             ->join('usuarios_medicos', 'cuenta_usd.Medico_id','usuarios_medicos.id_Medico')
-             ->join('entidades_usd', 'cuenta_usd.Entidad_USD_id','entidades_usd.id_Entidad_USD')
-             ->get())->pluck('name','id');
-
         $bancos=Collection::make(Banco::select(['id_Bancos_Bs', DB::raw('CONCAT(Codigo_Bancario, " - ",Bancos) AS name')])->orderBy('Bancos')->pluck("name", "id_Bancos_Bs"));
 
         $entidades=Collection::make(EntidadesUSD::select(['id_Entidad_USD', 'Entidad_USD'])->where('Status_id',1)->orderBy('Entidad_USD')->pluck("Entidad_USD", "id_Entidad_USD"));
@@ -76,7 +64,7 @@ class PagosController extends Controller
         $medico=Collection::make(UsuarioM::select(['id_Medico',DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])->where('Status_Medico_id',1)->orderBy('Nombres_Medico')->pluck("Nombre", "id_Medico"));
 
 
-    	return view('pagos.index')->with(compact('pacientes','paciente','telefono','celular','correo','monedas','tpago','cbs','cusd','bancos','entidades','medico'));
+    	return view('pagos.index')->with(compact('pacientes','paciente','telefono','celular','correo','monedas','tpago','bancos','entidades','medico'));
     }
 
     public function add(Request $request)

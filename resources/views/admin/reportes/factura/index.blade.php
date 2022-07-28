@@ -30,7 +30,7 @@
                       {!! Form::label('id_medico', 'Medico:') !!}
                       {!! Form::select('id_medico',$medico, $id_medico, [
                           'placeholder' => 'Seleccione', 
-                          'class' => 'select2 form-control',
+                          'class' => 'pickerSelectClass',
                           'id' => 'id_medico'
                           ]) !!}
                     </div>
@@ -51,13 +51,13 @@
                               !!}
                          </div>
                     </div> 
-                    <div class="col-md-3 mt-4">
-                      <button type="submit" class="mt-1 btn btn-outline-success" id="submit">
-                          <span class="btn-icon-wrapper pr-2 opacity-7">
+                    <div class="col-md-3 mt-3">
+                      <button type="submit" class="mt-1 btn btn-outline-success" id="submit" style="width: 45% !important;">
+                          <span class="btn-icon-wrapper opacity-7">
                           </span>{{'Buscar'}}
                       </button>
-                      <button type="submit" class="mt-1 btn btn-outline-info" onclick="limpiar();">
-                          <span class="btn-icon-wrapper pr-2 opacity-7">
+                      <button type="submit" class="mt-1 btn btn-outline-info" onclick="limpiar();" style="width: 45% !important;">
+                          <span class="btn-icon-wrapper opacity-7">
                           </span>{{'Limpiar'}}
                       </button>                   
                     </div>

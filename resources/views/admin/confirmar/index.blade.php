@@ -32,7 +32,7 @@
                   {!! Form::label('paciente', 'Usuario:') !!}
                   {!! Form::select('paciente',$pacientes,  $paciente, [
                       'placeholder' => 'Seleccione', 
-                      'class' => 'select2 form-control',
+                      'class' => 'pickerSelectClass',
                       'id' => 'paciente',
                       'required'=>'required'
                       ])
@@ -76,7 +76,7 @@
 	                  <th>{{'Total'}}</th>
 	                </tr>
 	              </thead>
-	              @php($iva= ($dataf->Servicio->Costos * 12 / 100)) 
+	              @php($iva= ($dataf->Servicio->Costos * 16 / 100)) 
 	              @php($tsa = 0)
 	              <tbody>
 	                @if($servicios)
@@ -95,7 +95,7 @@
 	                  <td>{{($tsa)}}&nbsp;{{$servicio->simbolo}}</td>
 	                </tr>
 	                <tr>
-	                  <td colspan="3">{{'IVA 12%'}}</td>
+	                  <td colspan="3">{{'IVA 16%'}}</td>
 	                  <td>{{ $iva }}</td>
 	                </tr>
 	                <tr>

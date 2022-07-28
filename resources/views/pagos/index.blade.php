@@ -33,7 +33,7 @@
 			              {!! Form::label('paciente', 'Usuario:') !!}
 			              {!! Form::select('paciente',$pacientes,  $paciente, [
 			                  'placeholder' => 'Seleccione', 
-			                  'class' => 'select2 form-control',
+			                  'class' => 'pickerSelectClass',
 			                  'id' => 'paciente',
 			                  'required'=>'required'
 			                  ])
@@ -55,7 +55,7 @@
                             {!! Form::label('medico_id', 'Medico:') !!}
                             {!! Form::select('medico_id',$medico, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'medico_id',
                                 'required'=>'required'
                                 ]) !!}
@@ -72,7 +72,7 @@
 			              {!! Form::label('moneda', 'Moneda:') !!}
 			              {!! Form::select('moneda',$monedas,  null, [
 			                  'placeholder' => 'Seleccione', 
-			                  'class' => 'select2 form-control',
+			                  'class' => 'pickerSelectClass',
 			                  'id' => 'moneda',
 			                  'required'=>'required'
 			                  ])
@@ -104,7 +104,7 @@
 			                {!! Form::label('tpago', 'Tipo de Pago:') !!}
 			                {!! Form::select('tpago',$tpago, null, [
 			                    'placeholder' => 'Seleccione', 
-			                    'class' => 'select2 form-control',
+			                    'class' => 'pickerSelectClass otro',
 			                    'id' => 'tpago',
 			                    'required'=>'required'
 			                    ])
@@ -112,27 +112,29 @@
 			            </div>
 			            <div class="col-md-3 mt-3" id="bs" hidden>
 			                {!! Form::label('cbs', 'Cuenta BS:') !!}
-			                {!! Form::select('cbs',$cbs, null, [
+			                {!! Form::select('cbs',[], null, [
 			                    'placeholder' => 'Seleccione', 
-			                    'class' => 'select2 form-control',
+			                    'class' => 'pickerSelectClass',
 			                    'id' => 'cbs'
 			                    ])
 			                !!}
+			                <span id="negacion2" class="negacion" hidden><small>{{'El médico no tiene cuenta en esta moneda registrada'}}</small></span>  
 			            </div>
 			            <div class="col-md-3 mt-3" id="usd" hidden>
 			                {!! Form::label('cusd', 'Cuenta USD:') !!}
-			                {!! Form::select('cusd',$cusd, null, [
+			                {!! Form::select('cusd',[], null, [
 			                    'placeholder' => 'Seleccione', 
-			                    'class' => 'select2 form-control',
+			                    'class' => 'pickerSelectClass',
 			                    'id' => 'cusd'
 			                    ])
 			                !!}
+			                <span id="negacion" class="negacion" hidden><small>{{'El médico no tiene cuenta en esta moneda registrada'}}</small></span>  
 			            </div>
 			            <div class="col-md-3 mt-3" id="banco" hidden>
 			              {!! Form::label('banco', 'De que banco transfirío:') !!}
 			              {!! Form::select('banco',$bancos,  null, [
 			                  'placeholder' => 'Seleccione', 
-			                  'class' => 'select2 form-control',
+			                  'class' => 'pickerSelectClass otro',
 			                  'id' => 'id_banco'
 			                  ])
 			              !!}
@@ -141,7 +143,7 @@
 			              {!! Form::label('entidad', 'De que entidad transfirío:') !!}
 			              {!! Form::select('entidad',$entidades, null, [
 			                  'placeholder' => 'Seleccione', 
-			                  'class' => 'select2 form-control',
+			                  'class' => 'pickerSelectClass otro',
 			                  'id' => 'id_entidad'
 			                  ])
 			              !!}

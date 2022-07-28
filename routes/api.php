@@ -33,3 +33,5 @@ Route::match(['get','post'],'/duracion_servicio.json', 'Controller@duracion_serv
 Route::match(['get','post'],'/paciente_medico.json', 'Controller@paciente_medico')->name('paciente_medico');
 Route::match(['get','post'],'/paciente_datos.json', 'Controller@paciente_datos')->name('paciente_datos');
 Route::match(['get','post'],'/servicios_lista.json', 'Controller@servicios_lista')->name('servicios_lista');
+Route::match(['get','post'],'/medico_cuentausd.json', 'Controller@medico_cuentausd')->name('medico_cuentausd');
+Route::match(['get','post'],'/medico_cuentabs.json', 'Controller@medico_cuentabs')->name('medico_cuentabs');

@@ -64,7 +64,7 @@
                             {!! Form::label('paciente', 'Paciente:') !!}
                             {!! Form::select('Paciente',$pacientes, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'paciente',
                                 'required'=>'required'
                             ]) !!}
@@ -73,7 +73,7 @@
                             {!! Form::label('pacienteE', 'Paciente Especial:') !!}
                             {!! Form::select('Paciente_Especial',$pacientesE, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'pacienteE',
                                 'disabled'=>'disabled'
                             ]) !!}
@@ -169,10 +169,14 @@
                             {!! Form::label('servicio', 'Servicio:') !!}
                             {!! Form::select('id_servicio',$servicios, null, [
                                 'placeholder' => 'Seleccione', 
-                                'class' => 'select2 form-control',
+                                'class' => 'pickerSelectClass',
                                 'id' => 'id_servicio',
                                 'required'=>'required'
                             ]) !!}
+                        </div>
+                        <div class="col-md-3 mt-4" hidden>
+                            <input type="checkbox" name="online" id="online" checked>
+                            <label>{{'Online'}}</label>
                         </div>
                         <div class="col-md-4 mb-3" style="pointer-events: none">
                             <label for="validationCustom01">{{'Maximo de Pacientes'}}</label>
@@ -261,7 +265,7 @@
                 {!! Form::label('servicio', 'Servicio:') !!}
                 {!! Form::select('id_servicio',$servicios, null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass otro',
                     'id' => 'addServicio',
                     'required'=>'required'
                 ]) !!}

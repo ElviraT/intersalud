@@ -58,7 +58,7 @@
                 {!! Form::label('paciente', 'Paciente:') !!}
                 {!! Form::select('Paciente_id',$pacientes, null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass',
                     'id' => 'paciente',
                     'required'=>'required'
                 ]) !!}
@@ -67,7 +67,7 @@
                 {!! Form::label('pacienteE', 'Paciente Especial:') !!}
                 {!! Form::select('Paciente_Especial_id',$pacientesE, null, [
                     'placeholder' => 'Seleccione', 
-                    'class' => 'select2 form-control',
+                    'class' => 'pickerSelectClass',
                     'id' => 'pacienteE',
                     'disabled'=>'disabled'
                 ]) !!}

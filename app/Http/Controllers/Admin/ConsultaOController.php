@@ -67,6 +67,15 @@ class ConsultaOController extends Controller
              ->where('usuarios_medicos.id_Medico', $asistente->id_Medico)
              ->where('agendas.Status_id', 1)
              ->get())->pluck('name','id');
+      }else{
+        $agenda = Collection::make(Agenda::
+             select(['agendas.id_Agenda AS id', DB::raw('CONCAT(usuarios_medicos.Nombres_Medico, " ",usuarios_medicos. Apellidos_Medicos," - ",especialidades_medicas.Espacialiadad_Medica, " - ",turnos.nombre ) AS name')])
+             ->join('usuarios_medicos', 'agendas.Medico_id','usuarios_medicos.id_Medico')
+             ->join('especialidades_medicas', 'agendas.Especialidad_Medica','especialidades_medicas.id_Especialidad_Medica')
+             ->join('horarios_citas', 'agendas.Horario_Cita_id','horarios_citas.id_Horario_Cita')
+             ->join('turnos', 'horarios_citas.turno_id','turnos.id_turno')
+             ->where('agendas.Status_id', 1)
+             ->get())->pluck('name','id');
       }
 
     	return view('admin.consultaO.index')->with(compact('pacientes','pacientesE','medico','especialidad','servicios','agenda'));

@@ -16,7 +16,8 @@
                         {!! Form::hidden('medico', null, ['id' => 'medico']) !!}
                         <div class="col-md-3 mb-3" hidden>
                             {!! Form::select('especialidad',$especialidad, null, [
-                                  'class' => 'pickerSelectClass',
+                                  'placeholder' => 'Seleccione',
+                                  'class' => 'pickerSelectClass otro',
                                   'id' => 'especialidad',
                                   'required'=>'required'
                             ]) !!}

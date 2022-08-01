@@ -172,7 +172,7 @@ class ConsultaOController extends Controller
                         ->where('Medico_id', $medico)
                         ->where('online','=','1')
                         ->whereDate('start', date('Y-m-d'))//date('Y-m-d'))
-                        ->whereTime('start', '>=',date('H:00'))//date('h:00'))
+                        ->whereTime('start', '>=',date('h:00'))//date('h:00'))
                         ->first(); 
 
             $anamenesis = Anamenesi::select('anamnesis.Fecha','anamnesis.Enfermedad_Actual','anamnesis.Origen','anamnesis.Diagnostico_Definitivo','anamnesis.Pronostico')
@@ -194,7 +194,7 @@ class ConsultaOController extends Controller
                     ->where('Medico_id', $medico)
                     ->where('online', 1)
                     ->whereDate('start','=',date('Y-m-d'))//date('Y-m-d'))
-                    ->whereTime('start', '>=',date('H:00'))//date('h:00'))
+                    ->whereTime('start', '>=',date('h:00'))//date('h:00'))
                    // ->orWhereTime('start', '>=',date('h:00'))//date('h:00'))
                     ->first();
                     //dd($cita, date('H:00'));

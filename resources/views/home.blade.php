@@ -34,7 +34,7 @@
 
                     {{'Hora Actual '}}-{{ date('g:ia') }}
                 </div>
-                @if($diff)
+                @if(isset($diff) && auth()->user()->id_usuarioP != null)
                   <div class="card" align="center">
                    @if($diff->invert == 1)
                     <h2>{{'Su última cita programada ya pasó'}}</h2>

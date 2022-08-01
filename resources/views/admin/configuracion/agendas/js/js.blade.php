@@ -29,32 +29,10 @@ $select_horario = $('#horario').selectize({
     loadingClass: 'loading',
     onChange: function(value) {
         if (!value.length) return;
-        /*listar consultorioes*/
+        /*listar consultorios*/
         select_consultorio.disable();
         select_consultorio.clearOptions();
         select_consultorio.load(function(callback) {
-            xhr && xhr.abort();
-            xhr = $.ajax({
-                url: '{{ route('consultorio_dependiente') }}?especialidad='+value,
-                success: function(results) {
-                    select_consultorio.enable();                    
-                    if (!results[0]) {
-                         Swal.fire(
-                              '¡Error!',
-                              'Esta especialidad no tiene consultorio',
-                              'error'
-                            );
-                    }else{
-                        callback(results);
-                        select_consultorio.setValue(results[0].id_Consultorio);
-                    }
-                },
-                error: function() {
-                    callback();
-                }
-            })
-        });
-
             xhr2 && xhr2.abort();
             xhr2 = $.ajax({
                 url: '{{ route('horario_datos') }}?horario='+value,
@@ -62,11 +40,34 @@ $select_horario = $('#horario').selectize({
                    $('#medico').val(results.Medico_id);
                    var $especialidad = $('#especialidad').selectize();
                    $especialidad[0].selectize.setValue(results.Especialidad_id);
+
+                    xhr && xhr.abort();
+                    xhr = $.ajax({
+                        url: '{{ route('consultorio_dependiente') }}?especialidad='+results.Especialidad_id,
+                        success: function(results) {
+                            select_consultorio.enable();                    
+                            if (!results[0]) {
+                                $('#modal_agenda').modal('hide');
+                                 Swal.fire(
+                                      '¡Error!',
+                                      'Esta especialidad no tiene consultorio',
+                                      'error'
+                                    );
+                            }else{
+                                callback(results);
+                                select_consultorio.setValue(results[0].id_Consultorio);
+                            }
+                        },
+                        error: function() {
+                            callback();
+                        }
+                    })
                 },
                 error: function() {
                     callback();
                 }
-            })
+            })            
+        });          
     }
 });
 

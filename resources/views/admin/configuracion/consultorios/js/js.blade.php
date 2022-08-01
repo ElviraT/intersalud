@@ -157,6 +157,10 @@ $('#modal_consultorio').on('hidden.bs.modal', function (e) {
     $('#correo').val('');
     $('#especialidad')[0].selectize.clear();
     $('#status')[0].selectize.clear();
+    $('#estado')[0].selectize.clear();
+    $('#ciudad')[0].selectize.clear();
+    $('#municipio')[0].selectize.clear();
+    $('#parroquia')[0].selectize.clear();
 });
 $('#confirm-delete23').on('click', '.btn-ok', function(e) {
         var $modalDiv = $(e.delegateTarget);

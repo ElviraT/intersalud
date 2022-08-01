@@ -62,8 +62,8 @@ $('#modal_cuentaUSD').on('show.bs.modal', function (e) {
 });
 $('#modal_cuentaUSD').on('hidden.bs.modal', function (e) {
     $('#numero').val('');
-    $('#tipo').val('');
     $('#fecha').val('');
+    $('#tipo')[0].selectize.clear();
     $('#entidad')[0].selectize.clear();
     $('#medico')[0].selectize.clear();
     $('#status')[0].selectize.clear();

@@ -62,7 +62,7 @@
 
       @yield('css')
 </head>
-<body onloadstart='loading_show();'>
+<body>
     <!-- Pre-loader start -->
     <div class="theme-loader">
         <div class="loader-track">
@@ -177,6 +177,51 @@
       loading_hide();
       $(".alert").alert(); 
       window.setTimeout(function() { $(".alert").alert('close'); }, 5000);
+      
+      var idleTime = 0
+        $(document).ready(function(){
+          var idleInterval= setInterval(timerIncrement, 30000); //1/2 minuto
+
+          $(this).mousemove(function (e) {
+            idleTime = 0
+          });
+          $(this).keypress(function (e) {
+            idleTime = 0
+          });
+        });
+        function timerIncrement() {
+          idleTime = idleTime +1;
+          var token = '{{auth()->user()->remember_token}}';
+          if (idleTime == 1  &&  token == '') {
+              let timerInterval
+              Swal.fire({
+                title: 'La sesión caduca en 30 segundos!',
+                html: 'por inactividad...',
+                timer: 30000,
+                showCancelButton: true,
+                timerProgressBar: true,
+                didOpen: () => {
+                  Swal.showLoading()
+                  const b = Swal.getHtmlContainer().querySelector('b')
+                  timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                  }, 500)
+                },
+                willClose: () => {
+                  clearInterval(timerInterval)
+                }
+              }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+          
+                }
+              });
+          }
+          if(idleTime == 10 && token == ''){
+            document.getElementById('logout-form').submit();
+          }
+        }
+
     </script>
 </body>
 

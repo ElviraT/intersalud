@@ -181,7 +181,7 @@ class Controller extends BaseController
           ->join('control_historia_medicas', 'usuarios_pacientes.id_Paciente', 'control_historia_medicas.Paciente_id')
           ->where('control_historia_medicas.Medico_id', $id)
           ->distinct('usuarios_pacientes.id_Paciente')
-          ->orderBy('usuarios_pacientes.Nombres_Paciente')
+          ->orderBy('nombre')
           ->get();
       }
         return response()->json($pacientes);

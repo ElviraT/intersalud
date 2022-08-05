@@ -43,8 +43,6 @@ class ReporteCserviciosController extends Controller
 		        ->groupBy('servicios.Servicio','facturas.Fecha')
 		        ->get();
 
-		//dd($cservicios);
-
     	$status=Collection::make(StatusF::select(['id_Status_Factura','Status_Factura'])->orderBy('Status_Factura')->get())->pluck("Status_Factura", "id_Status_Factura");
 
     	$servicio=Collection::make(Servicio::select(['id_Servicio','Servicio'])->orderBy('Servicio')->get())->pluck("Servicio", "id_Servicio");

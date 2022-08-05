@@ -187,6 +187,7 @@ class ConsultaOController extends Controller
                      ->join('servicios', 'servicios.id_Servicio','control_historia_medicas.id_servicio')
                      ->where('pacientes_especiales.id_Pacientes_Especiales',$pacienteE)
                      ->where('control_historia_medicas.cerrado',0)
+                     ->where('control_historia_medicas.Fecha', date('Y-m-d'))
                      ->first();       
              // }
         }else{
@@ -211,6 +212,7 @@ class ConsultaOController extends Controller
              ->join('servicios', 'servicios.id_Servicio','control_historia_medicas.id_servicio')
              ->where('usuarios_pacientes.id_Paciente',$paciente)
              ->where('control_historia_medicas.cerrado',0)
+             ->where('control_historia_medicas.Fecha', date('Y-m-d'))
              ->first();
              // }
         }  

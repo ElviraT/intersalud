@@ -260,6 +260,7 @@ function buscar() {
                 $('#control').val(objBP[0]['id_Control_Historia_Medica']);
                 $('#edad').html(calcularEdad(objBP[0]['Fecha_Nacimiento_Paciente_Especial']));
                 $('#Servicio').html(objBP[0]['Servicio']);
+                $('#titleP').val(objBP[0]['Nombres_Paciente']+' '+objBP[0]['Apellidos_Paciente']);
                  if (objBP[2] != null) {
                                 $('#Cita_Consulta_id').val(objBP[2]['id_Cita_Consulta']);
                                     var ini1= objBP[2]['start'].split(" ");
@@ -371,7 +372,7 @@ $("#formulario2").submit(function(event) {
         success: function(info)
         {
             Swal.fire(info);
-            location.reload();
+            //location.reload();
         }
     });
 });
@@ -578,6 +579,8 @@ function horario2() {
                   callback(res);
                     $select_paciente[0].selectize.setValue(idpaciente);
                     $select_pacienteE[0].selectize.setValue(idpacienteE);
+                    $('#idpaciente').val(idpaciente);
+                    $('#idpacienteE').val(idpacienteE);
                 }
               });
             },

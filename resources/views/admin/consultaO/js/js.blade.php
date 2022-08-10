@@ -200,10 +200,10 @@ function buscar() {
                     }
 
                     $('#myTable').DataTable({
+                      responsive: true,
                       destroy: true,
                       info: false,
                       data: objBP[3],
-                      responsive: true,
                         language: {
                             url: "{{ asset('js/Spanish.json') }}",
                         },
@@ -232,10 +232,10 @@ function buscar() {
                         $('#pop5-tab').attr('hidden', false);
 
                         $('#myTable').DataTable({
+                          responsive: true,
                           destroy: true,
                           info: false,
                           data: objBP[3],
-                          responsive: true,
                             language: {
                                 url: "{{ asset('js/Spanish.json') }}",
                             },
@@ -300,6 +300,7 @@ function buscar() {
                         $('#pop5-tab').attr('hidden', true);
                     }
                     $('#myTable').DataTable({
+                      responsive: true,
                       destroy: true,
                       info: false,
                       data: objBP[3],

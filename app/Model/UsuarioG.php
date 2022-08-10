@@ -24,6 +24,6 @@ class UsuarioG extends Model
 
     public function PrefijoDNI()
     {
-        return $this->hasOne('App\Model\PrefijoDNI', 'id_prefijo_dni','Prefijo_CIDNI_id');
+        return $this->hasOne('App\Model\PrefijoDNI', 'id_Prefijo_CIDNI', 'id_prefijo_dni');
     }
 }

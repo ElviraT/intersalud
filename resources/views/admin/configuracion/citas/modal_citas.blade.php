@@ -104,6 +104,9 @@
                     </div>
                 </form>
                 </div>
+                
+                 <span style="background-color: red; color: white; display: none; padding: 10px;" id="validaciones"><strong>{{'Los campos: Paciente, Servicio, Nota y Titulo no pueden estar vacíos, verifique por favor'}}</strong></span> 
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="mt-1 btn-transition btn btn-outline-secondary cierra" data-dismiss="modal">

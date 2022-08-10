@@ -3,7 +3,7 @@
       <nav class="nav-justified">
         <div class="nav nav-tabs " id="nav-tab" role="tablist">
           <a class="nav-item nav-link active" id="pop1-tab" data-toggle="tab" href="#pop1" role="tab" aria-controls="pop1" aria-selected="true">{{'Antecedentes'}}</a>         
-          <a class="nav-item nav-link" id="pop2-tab" data-toggle="tab" href="#pop2" role="tab" aria-controls="pop2" aria-selected="false" hidden>{{'Anamenesis'}}</a>
+          <a class="nav-item nav-link" id="pop2-tab" data-toggle="tab" href="#pop2" role="tab" aria-controls="pop2" aria-selected="false" hidden>{{'Anamnesis'}}</a>
           <a class="nav-item nav-link" id="pop3-tab" data-toggle="tab" href="#pop3" role="tab" aria-controls="pop3" aria-selected="false" hidden>{{'Especialidad'}}</a>
           <a class="nav-item nav-link" id="pop5-tab" data-toggle="tab" href="#pop5" role="tab" aria-controls="pop5" aria-selected="false" hidden>{{'Proxima Cita'}}</a> 
           <a class="nav-item nav-link" id="pop4-tab" data-toggle="tab" href="#pop4" role="tab" aria-controls="pop4" aria-selected="false" hidden>{{'Historial'}}</a> 

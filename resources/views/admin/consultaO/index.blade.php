@@ -103,7 +103,7 @@
                         <button class="btn btn-outline-info" onclick="iniciar_reunion()">{{'Iniciar Consulta'}}</button>
                       </div>
                       
-                      <div class="col-md-12" id="meet" hidden></div>
+                      <div class="col-md-12 table-responsive" id="meet" hidden></div>
 
                       <div class="col-md-10 mt-2" align="center">
                         <form name="form" class="clok">

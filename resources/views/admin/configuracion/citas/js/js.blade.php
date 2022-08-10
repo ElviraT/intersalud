@@ -15,9 +15,9 @@
 
 <script src="{{ asset('js/axios.min.js') }}" type="text/javascript"></script>
 
+
 <script type="text/javascript">
   var array_dias = [];
-
    $(function() {
         $('.otro').selectize({
             preload: true,
@@ -364,9 +364,16 @@ var id_Agenda= objch['id_Agenda'];
             loading_hide();
             calendar.render();
             document.getElementById('btnGuardar').addEventListener('click',function() {
-              $('#btnGuardar').attr('disabled', true);
-              enviar_datos('{{ route('citas.add') }}');
-              
+              var id_servicio = $("#id_servicio").val();
+              var nota = $("#nota").val();
+              var title =$("#title").val();
+                if (id_servicio.length == 0 || nota.length == 0|| title.length == 0) {
+                  $('#validaciones').css('display', 'block');
+                  $('#btnGuardar').attr('disabled', false);
+                }else{
+                  $('#btnGuardar').attr('disabled', true);           
+                  enviar_datos('{{ route('citas.add') }}');
+                }           
             });
             document.getElementById('btnEliminar').addEventListener('click',function() {
               var id_cita= $('#id').val();
@@ -408,6 +415,7 @@ $('#modal_citas').on('hidden.bs.modal', function (event) {
   $('#id_servicio')[0].selectize.clear();
   $('#pacienteE')[0].selectize.clear();
   $('#paciente')[0].selectize.clear();
+  $('#validaciones').css('display', 'none');
 })
 $(function () {
    $('#date-start').datetimepicker({

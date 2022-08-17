@@ -253,7 +253,8 @@ var id_Agenda= objch['id_Agenda'];
               dateClick:function(info) {
                 var check = moment(info.dateStr).format('Y-M-D');
                 var today = moment(new Date()).format('Y-M-D');
-                if (check >= today) {
+                //alert(Date.parse(check)+' '+Date.parse(today));
+                if (Date.parse(check) >= Date.parse(today)) {
                     let fechaHora = info.dateStr.split("T");
                     loading_show();
                     formulario.reset();

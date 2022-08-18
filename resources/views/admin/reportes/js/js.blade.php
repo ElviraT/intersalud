@@ -58,6 +58,40 @@
             }
         });
         
+        var table_cxps = $('#table_cxps').DataTable({
+            dom: 'Bfrtip',
+              buttons: [
+                {
+                  extend: 'pdf',
+                  title: 'Consulta CxP',
+                  footer: true,
+                  customize: function (doc) {
+                    doc.defaultStyle.alignment = "center";
+                    doc.content[1].table.widths = 
+                        Array(doc.content[1].table.body[0].length + 1).join('*').split('');    
+                  }
+                }
+              ],
+            responsive: true,
+
+            language: {
+                url: "{{ asset('js/Spanish.json') }}",
+              },
+
+            "footerCallback": function ( row, data, start, end, display ) {
+        
+                total = this.api()
+                    .column(1)//numero de columna a sumar
+                    //.column(1, {page: 'current'})//para sumar solo la pagina actual
+                    .data()
+                    .reduce(function (a, b) {
+                        return parseInt(a) + parseInt(b);
+                    }, 0 );
+
+                $(this.api().column(1).footer()).html(total.toFixed(2));
+                
+            }
+        });
     });
 
 $(function() {

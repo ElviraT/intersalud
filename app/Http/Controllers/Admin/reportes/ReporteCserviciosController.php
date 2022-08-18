@@ -34,8 +34,6 @@ class ReporteCserviciosController extends Controller
             $id_servicio = $request->input('id_servicio');
         }
 
-       /* SELECT Servicio_id, count(Cantidad), SUM(Costo_Servicio), Fecha FROM factura_detalle JOIN facturas ON Factura_id = id_Factura GROUP BY Servicio_id, Fecha;*/
-
         $cservicios= Factura::select('servicios.Servicio','facturas.Fecha', DB::raw('COUNT(factura_detalle.Cantidad) AS cantidad, SUM(factura_detalle.Costo_Servicio) AS costo'))
 		        ->join('factura_detalle', 'factura_detalle.Factura_id', 'facturas.id_Factura')
 		        ->join('servicios', 'servicios.id_Servicio', 'factura_detalle.Servicio_id')

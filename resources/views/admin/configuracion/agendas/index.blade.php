@@ -60,7 +60,11 @@
                         <tr>
                             <td>{{ $resultado->UsuarioM->Nombres_Medico.' '.$resultado->UsuarioM->Apellidos_Medicos }}</td>
                             <td>{{ $resultado->Especialidad->Espacialiadad_Medica }}</td>
-                            <td>{{ $resultado->Consultorio->Local }}</td>
+                            @if(isset($resultado->Consultorio->Local))
+                              <td>{{ $resultado->Consultorio->Local }}</td>
+                            @else
+                              <td>{{'sin consultorio'}}</td>
+                            @endif
                             <td>{{ $resultado->Max_pacientes }}</td>
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
                             <td width="20">

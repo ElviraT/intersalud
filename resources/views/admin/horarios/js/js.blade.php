@@ -28,51 +28,7 @@ $(function() {
         });
 });
 
-var xhr;
-var select_medico, $select_medico;
-var select_especialidad, $select_especialidad;
 
-$select_medico = $('#medico').selectize({
-    loadingClass: 'loading',
-    onChange: function(value) {
-        if (!value.length) return;
-        /*listar especialidades*/
-        select_especialidad.disable();
-        select_especialidad.clearOptions();
-        select_especialidad.load(function(callback) {
-            xhr && xhr.abort();
-            xhr = $.ajax({
-                url: '{{ route('especialidad_dependiente') }}?medico='+value,
-                success: function(results) {
-                    select_especialidad.enable();
-                    if (!results[0]) {
-                        $('#negacion').attr('hidden', false);
-                    }else{
-                        callback(results);
-                        select_especialidad.setValue(results[0].id);
-                        $('#negacion').attr('hidden', true);
-                    }
-                },
-                error: function() {
-                    callback();
-                }
-            })
-        });
-    }
-});
-
-$select_especialidad = $('#especialidad').selectize({
-                    labelField: 'name',
-                    valueField: 'id',
-                    searchField: ['name'],
-                    loadingClass: 'loading',
-                });
-
-
-                select_especialidad  = $select_especialidad[0].selectize;
-                select_medico = $select_medico[0].selectize;
-
-                //select_especialidad.disable();
 
 $('#turno_id').on('change', function (e) {
   var turno = $('select[name="turno_id"] option:selected').text();

@@ -68,6 +68,7 @@ $select_paciente = $('#paciente').selectize({
 $select_moneda = $('#moneda').selectize({
     loadingClass: 'loading',
     onChange: function(value) {
+      var tpago= $('#tpago').val();
         if (!value.length) return;
         switch (value) {
           case "Bs":
@@ -86,6 +87,11 @@ $select_moneda = $('#moneda').selectize({
             $('#bs').attr('hidden', true);
             break;
         }
+        if (tpago == '5') {
+          $('#billetera').attr('hidden', true);
+          $('#usd').attr('hidden', true);
+          $('#bs').attr('hidden', true);
+        }
     }
 });
 
@@ -93,8 +99,9 @@ $select_tpago = $('#tpago').selectize({
     loadingClass: 'loading',
     onChange: function(value) {
         if (!value.length) return;
+        //alert(value);
         switch (value) {
-          case "2":
+          case "5":
             $('#referencia').attr('hidden', true);
             break;
           default:

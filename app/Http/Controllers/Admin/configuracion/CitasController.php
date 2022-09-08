@@ -157,7 +157,7 @@ class CitasController extends Controller
         $cita->online = $online;
         $cita->save();
 
-        $control_data = ['Especialidad_Medica_id' => $Especialidad_Medica, 'Medico_id'=> $Medico_id, 'Paciente_id'=> $request['Paciente_id'], 'Paciente_Especial_id'=> $request['Paciente_Especial_id'], 'Cita_Consulta_id'=> $cita['id'], 'Fecha'=> date('Y-m-d'), 'id_servicio'=> $request['id_servicio']];
+        $control_data = ['Especialidad_Medica_id' => $Especialidad_Medica, 'Medico_id'=> $Medico_id, 'Paciente_id'=> $request['Paciente_id'], 'Paciente_Especial_id'=> $request['Paciente_Especial_id'], 'Cita_Consulta_id'=> $cita['id'], 'Fecha'=> $request['start'], 'id_servicio'=> $request['id_servicio']];
 
         $control= ControlHM::create($control_data);
 

@@ -1,5 +1,6 @@
 {!! Form::open(['method' => 'post', 'autocomplete' =>'off', 'id'=>"facturaAdd"]) !!}
     {{--ENCABEZADO DE FACTURA ENVIAR--}}
+    @if(isset($dataf->UsuarioM->Seniat))
       <input type="hidden" name="Cita_Consulta_id" value="{{ $dataf->Cita_Consulta_id }}">
       <input type="hidden" name="Fecha" value="{{ date('Y-m-d') }}">
       <input type="hidden" name="Datos_SENIAT_id" value="{{ $dataf->UsuarioM->Seniat->id_Datos_SENIAT }}">
@@ -23,6 +24,7 @@
           <input type="hidden" name="Servicio[{{$servicio->id_servicio}}]" value="{{$servicio->Costos}}">
         @endforeach
       @endif
+
       {{--FIN DETALLE FACTURA ENVIAR--}}
 
       {{--FACTURA MONEDA--}}
@@ -47,4 +49,11 @@
       </div>
       @endif
       @endcan
+  @else
+
+  <div class="col-md-12" align="center">
+    <h1>{{'Debe agregar datos de SENIAT del medico'}}</h1>
+  </div>
+
+  @endif
 {!! Form::close() !!}

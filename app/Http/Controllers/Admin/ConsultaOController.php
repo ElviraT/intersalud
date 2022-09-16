@@ -147,7 +147,7 @@ class ConsultaOController extends Controller
 
             $info= 'Registro Agregado Correctamente';     
         
-         $control= ControlHM::where('id_Control_Historia_Medica',$_POST['control'])->update([
+            $control= ControlHM::where('id_Control_Historia_Medica','=', $consulta2['Control_Historia_Medico_id'])->update([
                 'cerrado'=> 1,
             ]);
 
@@ -180,6 +180,7 @@ class ConsultaOController extends Controller
                             ->where('anamnesis.Paciente_Especial_id', $pacienteE)      
                             ->where('control_historia_medicas.cerrado', 1)
                             ->get();
+        //dd($anamenesis);
              // if($cita){   
             $datos = UsuarioPE::select('pacientes_especiales.Nombre_Paciente_Especial', 'pacientes_especiales.Apellido_Paciente_Especial', 'pacientes_especiales.Fecha_Nacimiento_Paciente_Especial', 'sexos.Sexo','control_historia_medicas.id_Control_Historia_Medica','servicios.Servicio')
                      ->join('sexos', 'sexos.id_Sexo','pacientes_especiales.Sexo_id')
@@ -187,8 +188,9 @@ class ConsultaOController extends Controller
                      ->join('servicios', 'servicios.id_Servicio','control_historia_medicas.id_servicio')
                      ->where('pacientes_especiales.id_Pacientes_Especiales',$pacienteE)
                      ->where('control_historia_medicas.cerrado',0)
-                     ->where('control_historia_medicas.Fecha', date('Y-m-d'))
-                     ->first();       
+                     ->whereDate('control_historia_medicas.Fecha', date('Y-m-d'))
+                     ->first(); 
+                    //dd($datos);      
              // }
         }else{
           $cita= Citas::where('Paciente_id',$paciente)
@@ -212,7 +214,7 @@ class ConsultaOController extends Controller
              ->join('servicios', 'servicios.id_Servicio','control_historia_medicas.id_servicio')
              ->where('usuarios_pacientes.id_Paciente',$paciente)
              ->where('control_historia_medicas.cerrado',0)
-             ->where('control_historia_medicas.Fecha', date('Y-m-d'))
+             ->whereDate('control_historia_medicas.Fecha', date('Y-m-d'))
              ->first();
              // }
         }  

@@ -66,7 +66,7 @@ function buscar() {
 
     if (pacienteE.length == 0) {
        $.getJSON('{{ route('buscarP') }}?paciente='+paciente+'&medico='+medico, function(objBP){
-            if(objBP[0].length == 0){
+            if(objBP[0] == null || objBP[0].length == 0){
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
                     $('#sexo').html('');
@@ -154,7 +154,7 @@ function buscar() {
     }else{
         $.getJSON('{{ route('buscarP') }}?pacienteE='+pacienteE+'&medico='+medico, function(objBPE){
             //console.log(objBPE[0]);
-            if(objBPE[0] == null){
+            if(objBP[0] == null || objBP[0].length == 0){
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
                     $('#sexo').html('');

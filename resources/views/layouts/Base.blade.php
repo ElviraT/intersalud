@@ -180,7 +180,7 @@
       
       var idleTime = 0
         $(document).ready(function(){
-          var idleInterval= setInterval(timerIncrement, 30000); //1/2 minuto
+          var idleInterval= setInterval(timerIncrement, 500000); //1/2 minuto
 
           $(this).mousemove(function (e) {
             idleTime = 0
@@ -192,7 +192,7 @@
         function timerIncrement() {
           idleTime = idleTime +1;
           var token = '{{auth()->user()->remember_token}}';
-          if (idleTime == 1  &&  token == '') {
+          if (idleTime == 5  &&  token == '') {
               let timerInterval
               Swal.fire({
                 title: 'La sesión caduca en 30 segundos!',

@@ -78,6 +78,6 @@ $select_especialidad = $('#especialidad').selectize({
                 select_especialidad  = $select_especialidad[0].selectize;
                 select_medico = $select_medico[0].selectize;
 
-                select_especialidad.disable();
+                //select_especialidad.disable();
   </script>
 @endsection

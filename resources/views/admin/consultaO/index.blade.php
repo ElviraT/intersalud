@@ -100,7 +100,7 @@
                   <div class="col-md-12 col-lg-7">
                     <div class="row">
                       <div class="col-md-12 mt-3 mb-2" id="consulta" hidden>
-                        <button class="btn btn-outline-info" onclick="iniciar_reunion()">{{'Iniciar Consulta'}}</button>
+                        <button class="btn btn-outline-info" id="reunion" onclick="iniciar_reunion()">{{'Iniciar Consulta'}}</button>
                       </div>
                       
                       <div class="col-md-12 table-responsive" id="meet" hidden></div>
@@ -110,17 +110,17 @@
                           <div class="row">
                              <div class="col-md-4">
                                 <span>
-                                  <input type="number" class="text" name="hour" id="hour" value="0">
+                                  <input type="number" class="text" name="hour" id="hour" value="0">{{'H'}}
                                 </span>
                             </div>
                             <div class="col-md-4">
                                 <span>
-                                  <input type="number" class="text" name="minute" id="minute" value="0">
+                                  <input type="number" class="text" name="minute" id="minute" value="0">{{'m'}}
                                 </span>
                             </div>
                             <div class="col-md-4">
                                 <span>
-                                  <input type="number" class="text" id="second" name="second" value="0">
+                                  <input type="number" class="text" id="second" name="second" value="0">{{'s'}}
                                 </span>
                             </div>
                           </div>

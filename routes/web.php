@@ -163,6 +163,7 @@ Route::group(['middleware' => ['auth','verified']], function () {
 	Route::post('usuario_p/login', ['as' => 'usuario_p.login', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@login']);
 	Route::post('usuario_p/destroy', ['as' => 'usuario_p.destroy', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@destroy']);
 	Route::post('usuario_p/direccion', ['as' => 'usuario_p.direccion', 'uses' => 'Admin\configuracion\usuarios\DireccionPController@add']);
+	Route::match(['get','post'],'usuario_p/show', ['as' => 'usuario_p.show', 'uses' => 'Admin\configuracion\usuarios\UsuarioPController@show']);
 
 
 	//CONFIGURACIÓN-USUARIOS-PACIENTES-ESPECIALES

@@ -93,7 +93,6 @@ $('#confirm-delete17').on('click', '.btn-ok', function(e) {
     });
 $('#confirm-delete17').on('show.bs.modal', function(e) {
     var data = $(e.relatedTarget).data();
-    console.log(data);
     $("#form_usuariosP_eliminar",  this).attr('action', data.action);
     $('#modal_registo_usuariosP_id', this).val(data.recordId);
     $('.title', this).text(data.recordTitle);
@@ -101,101 +100,39 @@ $('#confirm-delete17').on('show.bs.modal', function(e) {
     loading_hide();
 });
 
-var xhr;
-var xhr2;
-var xhr3;
-var select_state, $select_state;
-var select_city, $select_city;
-var select_municipality, $select_municipality;
-var select_parish, $select_parish;
+function show_paciente(id) {
+    loading_show();
+    $.getJSON('{{ route('usuario_p.show') }}?id='+id, function(obj_Paciente){ 
+        var data_familia = obj_Paciente[1];
+        $("#ver-paciente").modal("show");
+        $("#titulo_h4").text(obj_Paciente[0]['nombre']);
+        $("#cedula").text(obj_Paciente[0]['cedula']);
+        $("#telefono").text(obj_Paciente[0]['Telefono']);
 
-$select_state = $('#estado').selectize({
-    loadingClass: 'loading',
-    onChange: function(value) {
-        if (!value.length) return;
-        /*listar ciudades*/
-        select_city.disable();
-        select_city.clearOptions();
-        select_city.load(function(callback) {
-            xhr && xhr.abort();
-            xhr = $.ajax({
-                url: '{{ route('ciudad_dependiente') }}?estado='+value,
-                success: function(results) {
-                    select_city.enable();
-                    callback(results);
-                },
-                error: function() {
-                    callback();
-                }
-            })
+        var table = $("#familiares").DataTable({
+            lengthChange: false,
+            responsive: true,
+            destroy: true,
+            info: false,
+            data: data_familia,
+            columns: [
+                { title: "Parentesco", data: "Parentesco_Familiar" },
+                { title: "Nombre", data: "nombre" }
+              ],
+
+            language: {
+                url: "{{ asset('js/Spanish.json') }}",
+            },
         });
-        /*listar municipios*/
-        select_municipality.disable();
-        select_municipality.clearOptions();
-        select_municipality.load(function(callback) {
-            xhr2 && xhr2.abort();
-            xhr2 = $.ajax({
-                url: '{{ route('municipio_dependiente') }}?estado='+value,
-                success: function(results) {
-                    select_municipality.enable();
-                    callback(results);
-                },
-                error: function() {
-                    callback();
-                }
-            })
-        });
-    }
+    });
+    loading_hide();
+}
+$('#ver-paciente').on('hidden.bs.modal', function (e) {
+    loading_show();
+    $('#titulo_h4').val('');
+    $('#cedula').val('');
+    $('#telefono').val('');
+    loading_hide();
 });
 
-$select_city = $('#ciudad').selectize({
-                    labelField: 'Ciudad',
-                    valueField: 'id_Ciudad',
-                    searchField: ['Ciudad'],
-                    loadingClass: 'loading',
-                });
-
-$select_municipality = $('#municipio').selectize({
-                    labelField: 'Municipio',
-                    valueField: 'id_Municipio',
-                    searchField: ['Municipio'],
-                    loadingClass: 'loading',
-                    preload: true,
-
-                    onChange: function(value) {
-                    if (!value.length) return;
-                    /*listar parroquias*/
-                    select_parish.disable();
-                    select_parish.clearOptions();
-                    select_parish.load(function(callback) {
-                        xhr3 && xhr3.abort();
-                        xhr3 = $.ajax({
-                            url: '{{ route('parroquia_dependiente') }}?municipio='+value,
-                            success: function(results) {
-                                select_parish.enable();
-                                callback(results);
-                            },
-                            error: function() {
-                                callback();
-                            }
-                        })
-                    });
-                }
-     });
-
-$select_parish = $('#parroquia').selectize({
-                    labelField: 'Parroquia',
-                    valueField: 'id_Parroquia',
-                    searchField: ['Parroquia'],
-                    loadingClass: 'loading',
-                });
-
-                select_city  = $select_city[0].selectize;
-                select_parish  = $select_parish[0].selectize;
-                select_municipality = $select_municipality[0].selectize;
-                select_state = $select_state[0].selectize;
-
-                select_city.disable();
-                select_municipality.disable();
-                select_parish.disable();
 </script>

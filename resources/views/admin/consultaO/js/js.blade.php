@@ -17,6 +17,7 @@
     var array_dias = [];
 localStorage.removeItem('selectedTab');
 function iniciar_reunion() {
+    $('#reunion').css('pointer-events', 'none');
     $('#meet').attr('hidden',false);
     const domain = 'meet.jit.si';
     const options = {
@@ -220,8 +221,7 @@ function buscar() {
 
     }else{
         $.getJSON('{{ route('buscar_paciente') }}?pacienteE='+pacienteE+'&medico='+medico, function(objBP){
-            switch(objBP[0]){
-                case null:
+           if(objBP[0] == null || objBP[0].length == 0){
                     $("form textarea").each(function() { this.value = '' });
                     $('#nombre').html('');
                     $('#sexo').html('');
@@ -232,13 +232,13 @@ function buscar() {
                         $('#pop5-tab').attr('hidden', false);
 
                         $('#myTable').DataTable({
-                          responsive: true,
                           destroy: true,
                           info: false,
                           data: objBP[3],
-                            language: {
-                                url: "{{ asset('js/Spanish.json') }}",
-                            },
+                          responsive: true,
+                                language: {
+                                    url: "{{ asset('js/Spanish.json') }}",
+                                },
                           columns: [
                             { title: "Fecha", data: "Fecha" },
                             { title: "Enfermedad Actual", data: "Enfermedad_Actual" },
@@ -248,8 +248,8 @@ function buscar() {
                           ]
                         });
                     Swal.fire('No tiene cita');
-                break;
-                default:
+                }else{
+                    
                 $('#id_paciente').val(paciente);
                 $('#id_pacienteE').val(pacienteE);
                 $('#id_pacienteA').val(paciente);
@@ -300,18 +300,21 @@ function buscar() {
                         $('#pop5-tab').attr('hidden', true);
                     }
                     $('#myTable').DataTable({
-                      responsive: true,
-                      destroy: true,
-                      info: false,
-                      data: objBP[3],
-                      columns: [
-                        { title: "Fecha", data: "Fecha" },
-                        { title: "Enfermedad Actual", data: "Enfermedad_Actual" },
-                        { title: "Origen", data: "Origen" },
-                        { title: "Diagnostico Definitivo", data: "Diagnostico_Definitivo" },
-                        { title: "Pronostico", data: "Pronostico" }
-                      ]
-                    });
+                          destroy: true,
+                          info: false,
+                          data: objBP[3],
+                          responsive: true,
+                                language: {
+                                    url: "{{ asset('js/Spanish.json') }}",
+                                },
+                          columns: [
+                            { title: "Fecha", data: "Fecha" },
+                            { title: "Enfermedad Actual", data: "Enfermedad_Actual" },
+                            { title: "Origen", data: "Origen" },
+                            { title: "Diagnostico Definitivo", data: "Diagnostico_Definitivo" },
+                            { title: "Pronostico", data: "Pronostico" }
+                          ]
+                        });
             }
         });
     }

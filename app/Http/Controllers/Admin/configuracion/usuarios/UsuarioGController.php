@@ -151,7 +151,7 @@ class UsuarioGController extends Controller
 
         return redirect()->route('usuario_g.edit', $request['id']);
     }else{
-      
+      //dd($request);
           $id = (int)$request->id;
           $login= User::where('id_usuarioG', $id)->first();
           $fecha= date('Y-m-d');

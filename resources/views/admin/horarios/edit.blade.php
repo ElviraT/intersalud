@@ -74,10 +74,7 @@ $select_especialidad = $('#especialidad').selectize({
                     loadingClass: 'loading',
                 });
 
-
                 select_especialidad  = $select_especialidad[0].selectize;
                 select_medico = $select_medico[0].selectize;
-
-                select_especialidad.disable();
   </script>
 @endsection

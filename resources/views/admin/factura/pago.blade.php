@@ -99,12 +99,12 @@
                     <td>{{$servicio->Costos}}&nbsp;{{$servicio->simbolo}}</td>
                     @php($tsa += $servicio->Costos)                  
                 </tr>
-                <tr>
                   @endforeach
-                @endif
+                <tr>
                   <td colspan="3">{{'Subtotal'}}</td>
                   <td>{{($tsa)}}&nbsp;{{$servicio->simbolo}}</td>
                 </tr>
+                @endif
                 <tr>
                   <td colspan="3">{{'IVA 16%'}}</td>
                   <td>{{ $iva }}</td>

@@ -107,7 +107,7 @@ class ConsultaController extends Controller
 
             $info= 'Registro Agregado Correctamente';     
          
-         $control= ControlHM::where('id_Control_Historia_Medica',$_POST['control'])->update([
+         $control= ControlHM::where('id_Control_Historia_Medica','=', $consulta2['Control_Historia_Medico_id'])->update([
                 'cerrado'=> 1,
             ]);
        DB::commit();

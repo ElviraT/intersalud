@@ -95,16 +95,14 @@ class GeneratePdfController extends Controller
 
         $medico=Collection::make(
           UsuarioM::select(['id_Medico', DB::raw('CONCAT(Nombres_Medico, " ", Apellidos_Medicos) AS Nombre')])
-          ->leftJoin('control_historia_medicas', 'id_Medico', 'Medico_id')
-          ->where('usuarios_medicos.Status_Medico_id',1)
+          ->join('control_historia_medicas', 'id_Medico', 'Medico_id')
+          ->where('Status_Medico_id',1)
           ->where('cerrado', 1)
           ->where('factura_generada', 0)
           ->distinct('Nombre')
-          ->orderBy('Nombre')
           ->pluck("Nombre", "id_Medico"));
-
-
       }
+      
         $pacientes=Collection::make(UsuarioP::select(['id_Paciente',DB::raw('CONCAT(Nombres_Paciente, " ", Apellidos_Paciente) AS Nombre')])->where('Status_id',1)->orderBy('Nombres_Paciente')->pluck("Nombre", "id_Paciente"));
         
         $status=Collection::make(Status::select(['id_Status','Status'])->orderBy('Status')->get())->pluck("Status", "id_Status");

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection as Collection;
 use Illuminate\Support\Facades\Hash;
 use App\Model\UsuarioP;
+use App\Model\UsuarioPE;
 use App\Model\LoginP;
 use App\User;
 use App\Model\Pais;
@@ -297,5 +298,19 @@ class UsuarioPController extends Controller
        Flash::success('Registro eliminado correctamente');
          
       return redirect()->route('usuario_p');
+    }
+
+    public function show(Request $request)
+    {
+      $data = UsuarioP::select(['direcciones_pacientes.Telefono AS Telefono',DB::raw('CONCAT(prefijos_cidni.Prefijo_CIDNI, usuarios_pacientes.CIDNI) AS cedula'), DB::raw('CONCAT(Nombres_Paciente, " ",
+Apellidos_Paciente) AS nombre')])
+      ->join('prefijos_cidni', 'usuarios_pacientes.Prefijo_CIDNI_id', 'prefijos_cidni.id_Prefijo_CIDNI')
+      ->join('direcciones_pacientes', 'usuarios_pacientes.id_Paciente', 'direcciones_pacientes.Paciente_id')
+      ->where('usuarios_pacientes.id_Paciente', $request->id)->first();
+
+      $data2 = UsuarioPE::select('Parentesco_Familiar', DB::raw('CONCAT(Nombre_Paciente_Especial, " ",
+Apellido_Paciente_Especial) AS nombre'))->
+      where('Paciente_id', $request->id)->get();
+      return response()->json([$data, $data2]);
     }
 }

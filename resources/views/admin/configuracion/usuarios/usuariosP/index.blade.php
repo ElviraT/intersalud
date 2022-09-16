@@ -47,6 +47,7 @@
                 <table id="table_usuariosP" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
+                            <th>{{'Ver'}}</th>
                             <th>{{'Nombre'}}</th>
                             <th>{{'DNI'}}</th>
                             <th>{{'Sexo'}}</th>
@@ -57,25 +58,26 @@
                     <tbody>
                       @foreach($usuariosP as $resultado)
                         <tr>
+                            <td><a href="#" class="btn btn-outline-warning btn-sm" onclick="show_paciente({{$resultado['id_Paciente']}})"><i class="ti-eye" style="font-size: 15px;"></i></a></td>
                             <td>{{ $resultado->Nombres_Paciente.' '.$resultado->Apellidos_Paciente}}</td>
                             <td>{{ $resultado->PrefijoDNI->Prefijo_CIDNI.' '.$resultado->CIDNI }}</td>
                             <td>{{ $resultado->Sexo->Sexo }}</td>
                             <td style="background-color: {{$resultado->Status->color}}; color: #fff">{{ $resultado->Status->Status }}</td>
                             <td width="20">
-                              @can('usuario_p.edit')
-                                <a href="{{ route('usuario_p.edit', $resultado['id_Paciente'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success">
-                                    <span class="btn-icon-wrapper pr-2 opacity-7">
-                                      <i class="ti-pencil"></i>
-                                    </span>
-                                    {{'Editar'}}
-                                </a>
-                              @endcan
                               @can('usuario_pe')
                                 <a href="{{ route('usuario_pe', $resultado['id_Paciente'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-info">
                                     <span class="btn-icon-wrapper pr-2 opacity-7">
                                       <i class="fa fa-plus-circle"></i>
                                     </span>
                                     {{'Familiar'}}
+                                </a>
+                              @endcan
+                              @can('usuario_p.edit')
+                                <a href="{{ route('usuario_p.edit', $resultado['id_Paciente'])}}" type="button" onclick="loading_show();" class="btn-transition btn btn-outline-success">
+                                    <span class="btn-icon-wrapper pr-2 opacity-7">
+                                      <i class="ti-pencil"></i>
+                                    </span>
+                                    {{'Editar'}}
                                 </a>
                               @endcan
                               @can('usuario_p.destroy')
@@ -99,6 +101,7 @@
 @endsection
 @section('modal')
     @include('admin.modales.elimina_paciente')
+    @include('admin.modales.ver_paciente')
 @endsection
 
 @section('js')

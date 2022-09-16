@@ -47,9 +47,9 @@ $select_paciente = $('#paciente').selectize({
                 success: function(results) {
                     select_pacienteE.enable();
                     callback(results);
-                    if (results[0]) {
+                   /* if (results[0]) {
                         select_pacienteE.setValue(results[0].id);
-                    }
+                    }*/
                 },
                 error: function() {
                     callback();

@@ -98,10 +98,11 @@ $select_moneda = $('#moneda').selectize({
 $select_tpago = $('#tpago').selectize({
     loadingClass: 'loading',
     onChange: function(value) {
+    var pago = $("#tpago option:selected").text();
         if (!value.length) return;
         //alert(value);
-        switch (value) {
-          case "5":
+        switch (pago) {
+          case "Efectivo":
             $('#referencia').attr('hidden', true);
             break;
           default:

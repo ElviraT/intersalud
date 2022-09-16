@@ -111,7 +111,7 @@ $(function () {
         viewMode: "years",
         todayHighlight: true,
         language: 'es',
-        endDate : dtn
+        //endDate : dtn
     });
 });
 

@@ -28,14 +28,16 @@ class ReporteConsultaController extends Controller
             $id_medico = NULL;
             $id_especialidad = NULL;
             $id_servicio = NULL;
-            $fecha = NULL;
+            $fecha_ini = date('Y-m-d');
+            $fecha_fin = date('Y-m-d');
             $id_cerrado = NULL;
           } 
         if ($request->isMethod('post')) {
             $id_medico = $request->input('id_medico'); 
             $id_especialidad = $request->input('id_especialidad');      
             $id_servicio = $request->input('id_servicio');
-            $fecha = $request->input('fecha');
+            $fecha_ini = $request->input('fecha_ini');
+            $fecha_fin = $request->input('fecha_fin');
             $id_cerrado = $request->input('cerrado');
         }
         
@@ -50,8 +52,8 @@ class ReporteConsultaController extends Controller
             $reporte->where('id_servicio', $id_servicio)->get();
         }
 
-        if ($fecha != NULL) {
-            $reporte->whereDate('Fecha', $fecha)->get();
+        if ($fecha_ini != NULL && $fecha_fin != NULL) {
+            $reporte->whereBetween('Fecha', [$fecha_ini, $fecha_fin])->get();
         }
 
         if ($id_cerrado != NULL) {
@@ -65,6 +67,6 @@ class ReporteConsultaController extends Controller
         $servicio = Collection::make(Servicio::select(['id_Servicio','Servicio'])->orderBy('Servicio')->pluck("Servicio", "id_Servicio")); 
 
     	$reportes = $reporte->get();
-    	return view('admin.reportes.index')->with(compact('reportes','medico','especialidad','servicio','id_medico','id_especialidad','id_servicio','fecha','id_cerrado'));
+    	return view('admin.reportes.index')->with(compact('reportes','medico','especialidad','servicio','id_medico','id_especialidad','id_servicio','fecha_ini','fecha_fin','id_cerrado'));
     }
 }

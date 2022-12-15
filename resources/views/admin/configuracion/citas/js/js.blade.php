@@ -206,7 +206,8 @@ $select_servicio = $('#id_servicio').selectize({
                 url: '{{ route('duracion_servicio') }}?servicio='+value+'&start='+start,
                 success: function(results) {
                     $('#costo').val(results[1].Costos);
-                    $('#end').val(results[0][0].end);             
+                    console.log(results);
+                    $('#end').val(results[0][0].end);         
                 },
                 error: function() {
                     callback();

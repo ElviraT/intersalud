@@ -164,9 +164,8 @@ class Controller extends BaseController
       if ($servicio > 0) {
         $tiempo= Servicio::where('id_Servicio',$servicio)->first();
         $minu1= explode(":", $tiempo['duracion']);
-        $minu= $minu1['1'];
-        $duracion =DB::select("Select DATE_ADD('".$start."', INTERVAL '$minu 0'  minute_second) AS 'end'");
-
+        $minu= $minu1['0'].':'.$minu1['1'];
+        $duracion =DB::select("Select DATE_ADD('".$start."', INTERVAL '$minu' HOUR_MINUTE) AS 'end'");
       }
 
       return response()->json([$duracion, $tiempo]);

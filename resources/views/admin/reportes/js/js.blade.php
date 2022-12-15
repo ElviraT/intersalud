@@ -1,6 +1,10 @@
 <!-- Select2 -->
 <script src="{{ asset('js/selectize.js') }}" type="text/javascript"></script>
 {{--datepicker--}}
+<script src="{{ asset('js/moment.js')}}"></script>
+<script src="{{ asset('js/moment-with-locales.js')}}"></script>
+<script src="{{ asset('js/bootstrap-datetimepicker.min.js')}}"></script>
+
 <script src="{{ asset('js/bootstrap-datepicker.min.js')}}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.es.js')}}"></script>
 
@@ -105,13 +109,30 @@ $(function() {
 $(function () {
     //Date picker
     var dtn = new Date();
+       $('#fecha1').datetimepicker({
+        useCurrent: false, //Important! See issue #1075
+        format: 'Y-MM-DD',
+        locale: 'es'
+       });
+       $('#fecha2').datetimepicker({
+       useCurrent: false, //Important! See issue #1075
+       format: 'Y-MM-DD',
+       locale: 'es'
+       });
+   $("#fecha1").on("dp.change", function (e) {
+       $('#fecha2').data("DateTimePicker").minDate(e.date);
+   });
+   $("#fecha2").on("dp.change", function (e) {
+       $('#fecha1').data("DateTimePicker").maxDate(e.date);
+   });
+
+ var dtn = new Date();
     $('#fecha').datepicker({
         autoclose: true,
         format: 'yyyy-mm-dd',
         viewMode: "years",
         todayHighlight: true,
-        language: 'es',
-        //endDate : dtn
+        language: 'es'
     });
 });
 
@@ -120,6 +141,8 @@ function limpiar() {
   	$('#id_especialidad').val('').change();
   	$('#id_servicio').val('').change();
   	$('#cerrado').val('').change();
-  	$('#fecha').val('');
+    $('#fecha').val('');
+    $('#fecha_ini').val('');
+  	$('#fecha_fin').val('');
   }  
 </script>

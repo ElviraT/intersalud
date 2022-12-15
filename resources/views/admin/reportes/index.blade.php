@@ -26,7 +26,7 @@
         <div class="col-md-12 mt-3">
           {!! Form::open(['route' => ['reporte_consulta'],  'method' => 'post', 'autocomplete' =>'off','name'=>'form_transaction','id'=>'form' ]) !!}
           <div class="row">
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                       {!! Form::label('id_medico', 'Medico:') !!}
                       {!! Form::select('id_medico',$medico, $id_medico, [
                           'placeholder' => 'Seleccione', 
@@ -34,7 +34,7 @@
                           'id' => 'id_medico'
                           ]) !!}
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                       {!! Form::label('especialidad', 'Especialidad:') !!}
                       {!! Form::select('id_especialidad',$especialidad, $id_especialidad, [
                           'placeholder' => 'Seleccione', 
@@ -42,7 +42,7 @@
                           'id' => 'id_especialidad'
                           ]) !!}
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                       {!! Form::label('servicio', 'Servicio:') !!}
                       {!! Form::select('id_servicio',$servicio, $id_servicio, [
                           'placeholder' => 'Seleccione', 
@@ -50,7 +50,7 @@
                           'id' => 'id_servicio'
                           ]) !!}
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                       {!! Form::label('cerrado', 'Asistio el paciente:') !!}
                       {!! Form::select('cerrado',['1'=> 'Si', '0'=>'No'], $id_cerrado, [
                           'placeholder' => 'Seleccione', 
@@ -58,29 +58,32 @@
                           'id' => 'cerrado'
                           ]) !!}
                     </div> 
-                    <div class="col-md-4 mb-3">
-                        <label>{{ 'Fecha' }}</label>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                <i class="fa fa-calendar"></i>
-                                </span>
-                            </div>
-                             {!!
-                                Form::text('fecha', $fecha, [
-                                     'id' => 'fecha',
-                                     'placeholder'=>'Y-M-D',
-                                     'class' => 'form-control pull-right datepicker',
-                                ] )
-                              !!}
-                         </div>
-                    </div> 
-                    <div class="col-md-4 mt-3">
-                      <button type="submit" class="mt-1 btn btn-outline-success" id="submit" style="width: 45% !important;">
+                    <div class="col-md-3 mb-3">
+                      <div class="form-group">
+                        <div class='input-group date' id='fecha1'>
+                            <input type='text' class="form-control" name="fecha_ini" value="{{ $fecha_ini }}" />
+                            <span class="input-group-addon">
+                            <span class="ti-calendar"></span>
+                            </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class='col-md-3 mb-3'>
+                      <div class="form-group">
+                        <div class='input-group date' id='fecha2'>
+                            <input type='text' class="form-control" name="fecha_fin" value="{{ $fecha_fin }}" />
+                            <span class="input-group-addon">
+                            <span class="ti-calendar"></span>
+                            </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <button type="submit" class="btn btn-outline-success" id="submit" style="width: 49% !important;">
                           <span class="btn-icon-wrapper opacity-7">
                           </span>{{'Buscar'}}
                       </button>
-                      <button type="submit" class="mt-1 btn btn-outline-info" onclick="limpiar();" style="width: 45% !important;">
+                      <button type="submit" class="btn btn-outline-info" onclick="limpiar();" style="width: 49% !important;">
                           <span class="btn-icon-wrapper opacity-7">
                           </span>{{'Limpiar'}}
                       </button>                   
